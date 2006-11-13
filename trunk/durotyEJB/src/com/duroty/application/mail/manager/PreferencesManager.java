@@ -280,20 +280,20 @@ public class PreferencesManager implements LuceneMessageConstants {
 
         try {
             Criteria crit = hsession.createCriteria(Contact.class);
-            crit.add(Restrictions.or(Restrictions.ilike("conName", token,
-                        MatchMode.ANYWHERE),
-                    Restrictions.ilike("conEmail", token, MatchMode.ANYWHERE)));
+            crit.add(Restrictions.or(Restrictions.ilike("conName", token, MatchMode.ANYWHERE), Restrictions.ilike("conEmail", token, MatchMode.ANYWHERE)));
             crit.add(Restrictions.eq("users", getUser(hsession, repositoryName)));
+            crit.add(Restrictions.isNotNull("conSentDate"));
+            crit.add(Restrictions.isNotNull("conReceivedDate"));
 
             int hits = crit.list().size();
 
             sobj.setHits(hits);
 
             crit = hsession.createCriteria(Contact.class);
-            crit.add(Restrictions.or(Restrictions.ilike("conName", token,
-                        MatchMode.ANYWHERE),
-                    Restrictions.ilike("conEmail", token, MatchMode.ANYWHERE)));
+            crit.add(Restrictions.or(Restrictions.ilike("conName", token, MatchMode.ANYWHERE), Restrictions.ilike("conEmail", token, MatchMode.ANYWHERE)));
             crit.add(Restrictions.eq("users", getUser(hsession, repositoryName)));
+            crit.add(Restrictions.isNotNull("conSentDate"));
+            crit.add(Restrictions.isNotNull("conReceivedDate"));
 
             switch (order) {
             case ORDER_BY_EMAIL:
@@ -472,10 +472,7 @@ public class PreferencesManager implements LuceneMessageConstants {
             }
 
             crit = hsession.createCriteria(Contact.class);
-            crit.add(Restrictions.or(Restrictions.ilike("conName", token,
-                        MatchMode.ANYWHERE),
-                    Restrictions.ilike("conEmail", token, MatchMode.ANYWHERE)));
-            
+            crit.add(Restrictions.or(Restrictions.ilike("conName", token, MatchMode.ANYWHERE), Restrictions.ilike("conEmail", token, MatchMode.ANYWHERE)));            
             crit.add(Restrictions.isNotNull("conSentDate"));
             crit.add(Restrictions.isNotNull("conReceivedDate"));
             crit.add(Restrictions.eq("users", getUser(hsession, repositoryName)));
@@ -521,7 +518,9 @@ public class PreferencesManager implements LuceneMessageConstants {
 
         try {
             Criteria crit = hsession.createCriteria(Contact.class);
-            crit.add(Restrictions.eq("users", getUser(hsession, repositoryName)));
+            crit.add(Restrictions.isNotNull("conSentDate"));
+            crit.add(Restrictions.isNotNull("conReceivedDate"));
+            crit.add(Restrictions.eq("users", getUser(hsession, repositoryName)));            
 
             int hits = crit.list().size();
 
