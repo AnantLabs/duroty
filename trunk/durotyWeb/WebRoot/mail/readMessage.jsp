@@ -67,7 +67,7 @@ String path = request.getContextPath();
 										</option>
 										<c:forEach var="folder" items="${folders}">
 											<option value="folder:<c:out value="${folder.name}" />">
-												<c:out value="${folder.name}" />
+												<fmt:message key="folder.${folder.name}" />
 											</option>
 										</c:forEach>
 										<option value="" disabled="disabled">
@@ -104,7 +104,7 @@ String path = request.getContextPath();
 										</option>
 										<c:forEach var="folder" items="${folders}">
 											<option value="folder:<c:out value="${folder.name}" />">
-												<c:out value="${folder.name}" />
+												<fmt:message key="folder.${folder.name}" />
 											</option>
 										</c:forEach>
 										<option value="" disabled="disabled">
@@ -143,7 +143,7 @@ String path = request.getContextPath();
 										</option>
 										<c:forEach var="folder" items="${folders}">
 											<option value="folder:<c:out value="${folder.name}" />">
-												<c:out value="${folder.name}" />
+												<fmt:message key="folder.${folder.name}" />
 											</option>
 										</c:forEach>
 										<option value="" disabled="disabled">
@@ -423,7 +423,7 @@ String path = request.getContextPath();
 										</option>
 										<c:forEach var="folder" items="${folders}">
 											<option value="folder:<c:out value="${folder.name}" />">
-												<c:out value="${folder.name}" />
+												<fmt:message key="folder.${folder.name}" />
 											</option>
 										</c:forEach>
 										<option value="" disabled="disabled">
@@ -460,7 +460,7 @@ String path = request.getContextPath();
 										</option>
 										<c:forEach var="folder" items="${folders}">
 											<option value="folder:<c:out value="${folder.name}" />">
-												<c:out value="${folder.name}" />
+												<fmt:message key="folder.${folder.name}" />
 											</option>
 										</c:forEach>
 										<option value="" disabled="disabled">
@@ -499,7 +499,7 @@ String path = request.getContextPath();
 										</option>
 										<c:forEach var="folder" items="${folders}">
 											<option value="folder:<c:out value="${folder.name}" />">
-												<c:out value="${folder.name}" />
+												<fmt:message key="folder.${folder.name}" />
 											</option>
 										</c:forEach>
 										<option value="" disabled="disabled">

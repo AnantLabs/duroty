@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<title>Help</title>
+		<title>Ajuda Cerca Avançada</title>
 		<STYLE>
 			BODY,TR,TD,DIV,P {
 				font-family: arial;
@@ -16,27 +16,23 @@
 	</head>
 	<body>
 		<h3>
-			How do I use Advanced Search?
+			Com utilitzar la cerca avançada?
 		</h3>
 		<div>
-			Advanced search operators are query words or symbols that perform special actions in Duroty search. These operators allow you to find what you're looking for quickly and accurately. They can also be used to set up filters so you can organize your inbox
-			automatically. Some of the most useful operators are listed below.
-			<br />
-			<br />
-			You can also use advanced search operators by clicking on <b>Show search options</b> beneath the Duroty search box.
+			Els operadors avançats de la cerca són paraules de la consulta o símbols que realitzen accions especials a Duroty. Aquests operadors permeten que trobis el que estàs buscant ràpida i exactament. Poden ser utilitzats per a crear filtres a les etiquetes, de manera que pots organitzar els teus missatges automàticament.
 			<br />
 			<br />
 		</div>
 		<table border="1" cellpadding="2" cellspacing="0" width="100%">
-			<tr bgcolor="#c3d9ff">
+			<tr bgcolor="#FBCC4B">
 				<th align="center" valign="middle">
-					Operator
+					Operador
 				</th>
 				<th align="center" valign="middle">
-					Definition
+					Definició
 				</th>
 				<th align="center" valign="middle">
-					Example(s)
+					Exemples
 				</th>
 			</tr>
 			<tr>
@@ -44,12 +40,12 @@
 					from:
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Used to specify the sender
+					Utilitzat per especificar el remitent
 				</td>
 				<td valign="top">
-					Example - <strong> from:amy</strong>
+					Exemple - <strong>from:jordi</strong>
 					<br>
-					Meaning - Messages from Amy
+					Significa - Missatges enviats per Jordi
 				</td>
 			</tr>
 			<tr>
@@ -57,12 +53,12 @@
 					to:
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Used to specify a recipient
+					Utilitzat per especificar un destinatari
 				</td>
 				<td valign="top">
-					Example - <strong>to:david</strong>
+					Exemple - <strong>to:david</strong>
 					<br>
-					Meaning - All messages that were sent to David (by you or someone else)
+					Significa - Tots els missatges que han estat enviats a David (per tu o per algú altre)
 				</td>
 			</tr>
 			<tr>
@@ -70,12 +66,12 @@
 					subject:
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Search for words in the subject line
+					Cerca per les paraules de l'assumpte
 				</td>
 				<td valign="top">
-					Example - <strong>subject:dinner</strong>
+					Exemple - <strong>subject:sopar</strong>
 					<br>
-					Meaning - Messages that have the word "dinner" in the subject
+					Significa - Missatges que tenen la paraula "sopar" a l'assumpte
 				</td>
 			</tr>
 			<tr>
@@ -83,12 +79,12 @@
 					body:
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Search for words in the body (text or html)
+					Cerca per les paraules del cos del missatge (text o html)
 				</td>
 				<td valign="top">
-					Example - <strong>body:dinner</strong>
+					Exemple - <strong>body:sopar</strong>
 					<br>
-					Meaning - Messages that have the word "dinner" in the body (text or html)
+					Significa - Missatges que tenen la paraula "sopar" al cos del missatge (text or html)
 				</td>
 			</tr>
 			<tr>
@@ -96,16 +92,12 @@
 					attachments:
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Search for words in the attachments <br/>(word, excel, pdf, txt, etc.)
+					Cerca per les paraules dels fitxers adjunts<br/>(word, excel, pdf, txt, etc.)
 				</td>
 				<td valign="top">
-					Example - <strong>body:dinner</strong>
+					Exemple - <strong>attachments:projecte</strong>
 					<br>
-					Meaning - Messages that have the word "dinner" in the attachments (word, excel, pdf, txt, etc.)
-					<br>
-					Example - <strong> filetype:physicshomework.txt</strong>
-					<br>
-					Meaning - Messages with an attachment named "physicshomework.txt"
+					Significa - Missatges que tenen la paraula "projecte" en algun dels fitxers adjunts (word, excel, pdf, txt, etc.)
 				</td>
 			</tr>
 			<tr>
@@ -113,30 +105,29 @@
 					OR
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-
-					Search for messages matching term A or term B*
+					Cerca missatges que presenten el terme A o el terme B*
 					<br>
-					*OR must be in all caps
+					*OR ha d'estar en majúscules
 				</td>
 				<td valign="top">
-					Example - <strong>from:amy OR from:david</strong>
+					Exemple - <strong>from:jordi OR from:david</strong>
 					<br>
-					Meaning - Messages from Amy or from David
+					Significa - Missatges enviats per Jordi o David
 				</td>
 			</tr>
 			<tr>
 				<th align="center" valign="middle">
 					-
 					<br>
-					(hyphen) 
+					(guió) 
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Used to exclude messages from your search
+					Utilitzat per excluir missatges d'un cerca<br>(cal combinar amb algun altre tipus de cerca)
 				</td>
 				<td valign="top">
-					Example - <strong>dinner -movie</strong>
+					Exemple - <strong>from:david -subject:sopar</strong>
 					<br>
-					Meaning - Messages that contain the word "dinner" but do not contain the word "movie"
+					Significa - Missatges enviats per David que NO contenen la paraula "sopar" a l'assumpte
 				</td>
 			</tr>
 			<tr>
@@ -145,12 +136,12 @@
 					<br>
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Search for messages with an attachment
+					Cerca missatges que tenen fitxers adjunts
 				</td>
 				<td valign="top">
-					Example - <strong> from:david hasattachments:true </strong>
+					Exemple - <strong>from:david hasattachments:true</strong>
 					<br>
-					Meaning - Messages from David that have an attachment
+					Significa - Missatges enviat per David que tenen algun fitxer adjunt
 				</td>
 			</tr>
 			<tr>
@@ -159,12 +150,12 @@
 				</th>
 
 				<td align="center" nowrap="nowrap" valign="middle">
-					Search for an attachment by name or type
+					Cerca missatges pel tipus o pel nom dels fitxers adjunts
 				</td>
 				<td valign="top">
-					Example - <strong>filetype:pdf</strong>
+					Exemple - <strong>filetype:pdf</strong>
 					<br>
-					Meaning - Messages have a PDF file as an attachment
+					Significa - Missatges que tenen un PDF com a fitxer adjunt
 
 				</td>
 			</tr>
@@ -172,19 +163,21 @@
 				<th align="center" valign="middle">
 					" "
 					<br>
-					<strong>(quotes)</strong><br>
+					<strong>(cometes)</strong><br>
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Used to search for an exact phrase*
+					Utilitzades per cerques de frase exacta*
 					<br>
-					*Capitalization isn't taken into consideration 
+					*Les majúscules no es tenen en compte
 				</td>
 				<td valign="top">
-					Example - <strong> "i'm feeling lucky"</strong>
+					Exemple - <strong>"el sopar del divendres"</strong>
 					<br>
-					Meaning - Messages containing the phrase "i'm feeling lucky" or "I'm feeling lucky" Example - <strong> subject:"dinner and a movie"</strong>
+					Significa - Missatges que contenen la frase "el sopar del divendres" or "El sopar del divendres"
 					<br>
-					Meaning - Messages containing the phrase "dinner and a movie" in the subject
+					Exemple - <strong>subject:"el sopar del divendres"</strong>
+					<br>
+					Significa - Missatges que contenen la frase "el sopar del divendres" or "El sopar del divendres" a l'assumpte
 				</td>
 			</tr>
 			<tr>
@@ -193,17 +186,16 @@
 					<br>
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Used to group words
-					<br>
-					Used to specify terms that shouldn't be excluded
+					Utilitzat per agrupacions/combinacions de cerques
 				</td>
 				<td valign="top">
-					Example - <strong> from:amy(dinner OR movie)</strong>
+					Exemple - <strong> from:david body:(sopar OR dinar)</strong>
 					<br>
-					Meaning - Messages from Amy that contain either the word "dinner" or the word "movie" Example - <strong> subject:(dinner movie)</strong>
+					Significa - Missatges enviats pel David que contenen la paraula "sopar" o "dinar" al cos del missatge
+					<br/>
+					Exemple - <strong>subject:(sopar OR dinar)</strong>
 					<br>
-					Meaning - Messages in which the subject contains both the word "dinner" and the word "movie"
-
+					Significa - Missatges que contenen la paraula "sopar" o "dinar" a l'assumpte del missatge
 				</td>
 			</tr>
 		</table>

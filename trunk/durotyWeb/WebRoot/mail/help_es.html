@@ -1,11 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<title>Help</title>
+		<title>Ayuda Búsqueda Avanzada</title>
 		<STYLE>
 			BODY,TR,TD,DIV,P {
 				font-family: arial;
-				font-stretch: normal;
+				font-stretch: normal;			
 				font-style: normal;
 				font-variant: normal;
 				font-weight: normal;
@@ -16,27 +16,23 @@
 	</head>
 	<body>
 		<h3>
-			How do I use Advanced Search?
+			¿Cómo utilizar la Búsqueda Avanzada?
 		</h3>
 		<div>
-			Advanced search operators are query words or symbols that perform special actions in Duroty search. These operators allow you to find what you're looking for quickly and accurately. They can also be used to set up filters so you can organize your inbox
-			automatically. Some of the most useful operators are listed below.
-			<br />
-			<br />
-			You can also use advanced search operators by clicking on <b>Show search options</b> beneath the Duroty search box.
+			Los operadores avanzados de la búsqueda son palabras de la consulta o los símbolos que realizan acciones especiales en Duroty. Estos operadores permiten que encuentres lo que estás buscando rápidamente y exactamente. Pueden ser utilizados para crear filtros en las etiquetas de manera que puedes organizar tus mensajes automáticamente.
 			<br />
 			<br />
 		</div>
 		<table border="1" cellpadding="2" cellspacing="0" width="100%">
-			<tr bgcolor="#c3d9ff">
+			<tr bgcolor="#FBCC4B">
 				<th align="center" valign="middle">
-					Operator
+					Operador
 				</th>
 				<th align="center" valign="middle">
-					Definition
+					Definición
 				</th>
 				<th align="center" valign="middle">
-					Example(s)
+					Ejemplos
 				</th>
 			</tr>
 			<tr>
@@ -44,12 +40,12 @@
 					from:
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Used to specify the sender
+					Utilizado para especificar el remitente
 				</td>
 				<td valign="top">
-					Example - <strong> from:amy</strong>
+					Ejemplo - <strong>from:jordi</strong>
 					<br>
-					Meaning - Messages from Amy
+					Significa - Mensajes enviados por Jordi
 				</td>
 			</tr>
 			<tr>
@@ -57,12 +53,12 @@
 					to:
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Used to specify a recipient
+					Utilitzat per especificar un destinatari
 				</td>
 				<td valign="top">
-					Example - <strong>to:david</strong>
+					Ejemplo - <strong>to:david</strong>
 					<br>
-					Meaning - All messages that were sent to David (by you or someone else)
+					Significa - Todos los mensajes que han sido enviados a David (por ti o por alguien)
 				</td>
 			</tr>
 			<tr>
@@ -70,12 +66,12 @@
 					subject:
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Search for words in the subject line
+					Busca por las palabras del asunto
 				</td>
 				<td valign="top">
-					Example - <strong>subject:dinner</strong>
+					Ejemplo - <strong>subject:cena</strong>
 					<br>
-					Meaning - Messages that have the word "dinner" in the subject
+					Significa - Mensajes que tienen la palabra "cena" en el asunto
 				</td>
 			</tr>
 			<tr>
@@ -83,12 +79,12 @@
 					body:
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Search for words in the body (text or html)
+					Busca por las palabras del cuerpo del mensaje (text o html)
 				</td>
 				<td valign="top">
-					Example - <strong>body:dinner</strong>
+					Ejemplo - <strong>body:cena</strong>
 					<br>
-					Meaning - Messages that have the word "dinner" in the body (text or html)
+					Significa - Mensajes que tienen la palabra "cena" en el cuerpo del mensaje (text or html)
 				</td>
 			</tr>
 			<tr>
@@ -96,16 +92,12 @@
 					attachments:
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Search for words in the attachments <br/>(word, excel, pdf, txt, etc.)
+					Busca por las palabras de los ficheros adjuntos<br/>(word, excel, pdf, txt, etc.)
 				</td>
 				<td valign="top">
-					Example - <strong>body:dinner</strong>
+					Ejemplo - <strong>attachments:proyecto</strong>
 					<br>
-					Meaning - Messages that have the word "dinner" in the attachments (word, excel, pdf, txt, etc.)
-					<br>
-					Example - <strong> filetype:physicshomework.txt</strong>
-					<br>
-					Meaning - Messages with an attachment named "physicshomework.txt"
+					Significa - Mensajes que presentan la palabra "proyecto" en alguno de los ficheros adjuntos (word, excel, pdf, txt, etc.)
 				</td>
 			</tr>
 			<tr>
@@ -113,30 +105,29 @@
 					OR
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-
-					Search for messages matching term A or term B*
+					Busca mensajes que presentan el término A o el término B*
 					<br>
-					*OR must be in all caps
+					*OR tiene que estar en mayúsculas
 				</td>
 				<td valign="top">
-					Example - <strong>from:amy OR from:david</strong>
+					Ejemplo - <strong>from:jordi OR from:david</strong>
 					<br>
-					Meaning - Messages from Amy or from David
+					Significa - Mensajes enviador por Jordi o David
 				</td>
 			</tr>
 			<tr>
 				<th align="center" valign="middle">
 					-
 					<br>
-					(hyphen) 
+					(guión) 
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Used to exclude messages from your search
+					Utilizado para excluir mensajes de un búsqueda<br>(es necesario combinar con otro tipo de búsqueda)
 				</td>
 				<td valign="top">
-					Example - <strong>dinner -movie</strong>
+					Ejemplo - <strong>from:david -subject:cena</strong>
 					<br>
-					Meaning - Messages that contain the word "dinner" but do not contain the word "movie"
+					Significa - Mensajes enviados por David que NO contienen la palabra "cena" en el asunto
 				</td>
 			</tr>
 			<tr>
@@ -145,12 +136,12 @@
 					<br>
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Search for messages with an attachment
+					Busca mensajes que tienen adjuntos
 				</td>
 				<td valign="top">
-					Example - <strong> from:david hasattachments:true </strong>
+					Ejemplo - <strong>from:david hasattachments:true</strong>
 					<br>
-					Meaning - Messages from David that have an attachment
+					Significa - Mensajes enviados por David que presentan algun fichero adjunto
 				</td>
 			</tr>
 			<tr>
@@ -159,12 +150,12 @@
 				</th>
 
 				<td align="center" nowrap="nowrap" valign="middle">
-					Search for an attachment by name or type
+					Busca mensajes por tipo o nombre de los ficheros adjuntos
 				</td>
 				<td valign="top">
-					Example - <strong>filetype:pdf</strong>
+					Ejemplo - <strong>filetype:pdf</strong>
 					<br>
-					Meaning - Messages have a PDF file as an attachment
+					Significa - Mensajes que tienen un PDF cómo adjunto
 
 				</td>
 			</tr>
@@ -172,19 +163,21 @@
 				<th align="center" valign="middle">
 					" "
 					<br>
-					<strong>(quotes)</strong><br>
+					<strong>(comillas)</strong><br>
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Used to search for an exact phrase*
+					Utilizadas para búsquedas de frase exacta*
 					<br>
-					*Capitalization isn't taken into consideration 
+					*Las mayúsculas no se tienen en cuenta
 				</td>
 				<td valign="top">
-					Example - <strong> "i'm feeling lucky"</strong>
+					Ejemplo - <strong>"la cena del viernes"</strong>
 					<br>
-					Meaning - Messages containing the phrase "i'm feeling lucky" or "I'm feeling lucky" Example - <strong> subject:"dinner and a movie"</strong>
+					Significa - Mensajes que contienen la frase "la cena del viernes" o "La cena del Viernes"
 					<br>
-					Meaning - Messages containing the phrase "dinner and a movie" in the subject
+					Ejemplo - <strong>subject:"la cena del viernes"</strong>
+					<br>
+					Significa - Mensajes que contienen la frase "la cena del viernes" o "La cena del Viernes" en el asunto
 				</td>
 			</tr>
 			<tr>
@@ -193,17 +186,16 @@
 					<br>
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Used to group words
-					<br>
-					Used to specify terms that shouldn't be excluded
+					Utilizado para agrupaciones/combinaciones de búsquedas
 				</td>
 				<td valign="top">
-					Example - <strong> from:amy(dinner OR movie)</strong>
+					Ejemplo - <strong> from:david body:(cena OR comida)</strong>
 					<br>
-					Meaning - Messages from Amy that contain either the word "dinner" or the word "movie" Example - <strong> subject:(dinner movie)</strong>
+					Significa - Mensajes enviados por David que contienen la palabra "cena" o "comida" en el cuerpo del mensaje
+					<br/>
+					Ejemplo - <strong>subject:(cena OR dinar)</strong>
 					<br>
-					Meaning - Messages in which the subject contains both the word "dinner" and the word "movie"
-
+					Significa - Mensajes que contienen la palabra "cena" o "comida" en el asunto del mensaje
 				</td>
 			</tr>
 		</table>

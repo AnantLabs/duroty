@@ -1,7 +1,7 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+	<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
-		<title>Help</title>
+		<title>Help Advanced Search</title>
 		<STYLE>
 			BODY,TR,TD,DIV,P {
 				font-family: arial;
@@ -19,16 +19,12 @@
 			How do I use Advanced Search?
 		</h3>
 		<div>
-			Advanced search operators are query words or symbols that perform special actions in Duroty search. These operators allow you to find what you're looking for quickly and accurately. They can also be used to set up filters so you can organize your inbox
-			automatically. Some of the most useful operators are listed below.
-			<br />
-			<br />
-			You can also use advanced search operators by clicking on <b>Show search options</b> beneath the Duroty search box.
+			Advanced search operators are query words or symbols that perform special actions in Duroty search. These operators allow you to find what you're looking for quickly and accurately.
 			<br />
 			<br />
 		</div>
 		<table border="1" cellpadding="2" cellspacing="0" width="100%">
-			<tr bgcolor="#dcf6db">
+			<tr bgcolor="#FBCC4B">
 				<th align="center" valign="middle">
 					Operator
 				</th>
@@ -44,12 +40,12 @@
 					title:
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Used to specify the title
+					Used to specify the bookmark title
 				</td>
 				<td valign="top">
-					Example - <strong> title:google</strong>
+					Example - <strong> title:amy</strong>
 					<br>
-					Meaning - Bookmarks with title google
+					Meaning - Bookmarks with title Amy
 				</td>
 			</tr>
 			<tr>
@@ -57,12 +53,10 @@
 					url:
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Used to specify una URL
+					Used to specify a bookmark:url
 				</td>
 				<td valign="top">
-					Example - <strong>url:www.iigov.org</strong>
-					<br>
-					Meaning - All bookmarks that contains links www.iigov.org
+					Example - <strong>url:duroty.com</strong>
 				</td>
 			</tr>
 			<tr>
@@ -70,58 +64,48 @@
 					keywords:
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Search for words in the keywords line
+					Search for words in the keywords field
 				</td>
 				<td valign="top">
 					Example - <strong>keywords:dinner</strong>
-					<br>
-					Meaning - Bookmarks that have the keyword "dinner"
 				</td>
 			</tr>
 			<tr>
 				<th align="center" valign="middle">
-					body:
+					contents:
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Search for words in the body (text or html)
+					Search for words in the bookmark contents
 				</td>
 				<td valign="top">
-					Example - <strong>body:dinner</strong>
-					<br>
-					Meaning - Messages that have the word "dinner" in the body (text or html)
+					Example - <strong>contents:dinner</strong>
 				</td>
 			</tr>
 			<tr>
 				<th align="center" valign="middle">
-					attachments:
+					comments:
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Search for words in the attachments <br/>(word, excel, pdf, txt, etc.)
+					Search for words in the comments
 				</td>
 				<td valign="top">
-					Example - <strong>body:dinner</strong>
-					<br>
-					Meaning - Messages that have the word "dinner" in the attachments (word, excel, pdf, txt, etc.)
-					<br>
-					Example - <strong> filetype:physicshomework.txt</strong>
-					<br>
-					Meaning - Messages with an attachment named "physicshomework.txt"
+					Example - <strong>comments:project</strong>
 				</td>
 			</tr>
+			
 			<tr>
 				<th align="center" valign="middle">
 					OR
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-
-					Search for messages matching term A or term B*
+					Search for bookmarks matching term A or term B*
 					<br>
 					*OR must be in all caps
 				</td>
 				<td valign="top">
-					Example - <strong>from:amy OR from:david</strong>
+					Example - <strong>title:amy OR title:david</strong>
 					<br>
-					Meaning - Messages from Amy or from David
+					Meaning - Bookmarks title Amy or title David
 				</td>
 			</tr>
 			<tr>
@@ -131,41 +115,10 @@
 					(hyphen) 
 				</th>
 				<td align="center" nowrap="nowrap" valign="middle">
-					Used to exclude messages from your search
+					Used to exclude bookmarks from your search
 				</td>
 				<td valign="top">
 					Example - <strong>dinner -movie</strong>
-					<br>
-					Meaning - Messages that contain the word "dinner" but do not contain the word "movie"
-				</td>
-			</tr>
-			<tr>
-				<th align="center" valign="middle">
-					hasattachments:true
-					<br>
-				</th>
-				<td align="center" nowrap="nowrap" valign="middle">
-					Search for messages with an attachment
-				</td>
-				<td valign="top">
-					Example - <strong> from:david hasattachments:true </strong>
-					<br>
-					Meaning - Messages from David that have an attachment
-				</td>
-			</tr>
-			<tr>
-				<th align="center" valign="middle">
-					filetype:
-				</th>
-
-				<td align="center" nowrap="nowrap" valign="middle">
-					Search for an attachment by name or type
-				</td>
-				<td valign="top">
-					Example - <strong>filetype:pdf</strong>
-					<br>
-					Meaning - Messages have a PDF file as an attachment
-
 				</td>
 			</tr>
 			<tr>
@@ -182,9 +135,7 @@
 				<td valign="top">
 					Example - <strong> "i'm feeling lucky"</strong>
 					<br>
-					Meaning - Messages containing the phrase "i'm feeling lucky" or "I'm feeling lucky" Example - <strong> subject:"dinner and a movie"</strong>
-					<br>
-					Meaning - Messages containing the phrase "dinner and a movie" in the subject
+					Meaning - Bookmarks containing the phrase "i'm feeling lucky" or "I'm feeling lucky"
 				</td>
 			</tr>
 			<tr>
@@ -198,12 +149,9 @@
 					Used to specify terms that shouldn't be excluded
 				</td>
 				<td valign="top">
-					Example - <strong> from:amy(dinner OR movie)</strong>
+					Example - <strong> title:amy(dinner OR movie)</strong>
 					<br>
-					Meaning - Messages from Amy that contain either the word "dinner" or the word "movie" Example - <strong> subject:(dinner movie)</strong>
-					<br>
-					Meaning - Messages in which the subject contains both the word "dinner" and the word "movie"
-
+					Meaning - Bookmarks from Amy that contain either the word "dinner" or the word "movie"
 				</td>
 			</tr>
 		</table>
