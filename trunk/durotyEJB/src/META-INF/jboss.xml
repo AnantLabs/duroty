@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE jboss PUBLIC "-//JBoss//DTD JBOSS 3.0//EN" "http://www.jboss.org/j2ee/dtd/jboss_3_0.dtd">
+
+<jboss>
+	<!-- All secured web content uses this security manager -->
+	<security-domain>java:/jaas/duroty</security-domain>
+	<enterprise-beans>
+
+		<!--
+			To add beans that you have deployment descriptor info for, add
+			a file to your XDoclet merge directory called jboss-beans.xml that contains
+			the <session></session>, <entity></entity> and <message-driven></message-driven>
+			markup for those beans.
+		-->
+
+		<session>
+			<ejb-name>Open</ejb-name>
+			<jndi-name>duroty/ejb/Open</jndi-name>
+
+		</session>
+		<session>
+			<ejb-name>Chat</ejb-name>
+			<jndi-name>duroty/ejb/Chat</jndi-name>
+
+		</session>
+		<session>
+			<ejb-name>Home</ejb-name>
+			<jndi-name>duroty/ejb/Home</jndi-name>
+
+		</session>
+		<session>
+			<ejb-name>Preferences</ejb-name>
+			<jndi-name>duroty/ejb/Preferences</jndi-name>
+
+		</session>
+		<session>
+			<ejb-name>Admin</ejb-name>
+			<jndi-name>duroty/ejb/Admin</jndi-name>
+
+		</session>
+		<session>
+			<ejb-name>Bookmark</ejb-name>
+			<jndi-name>duroty/ejb/Bookmark</jndi-name>
+
+		</session>
+		<session>
+			<ejb-name>Send</ejb-name>
+			<jndi-name>duroty/ejb/Send</jndi-name>
+
+		</session>
+		<session>
+			<ejb-name>Mail</ejb-name>
+			<jndi-name>duroty/ejb/Mail</jndi-name>
+
+		</session>
+		<session>
+			<ejb-name>Search</ejb-name>
+			<jndi-name>duroty/ejb/Search</jndi-name>
+
+		</session>
+
+		<!--
+			write a merge file jboss-webservices.ent for webservice-description 
+		-->
+
+	</enterprise-beans>
+
+	<resource-managers></resource-managers>
+
+	<!--
+		| for container settings, you can merge in jboss-container.xml
+		| this can contain <invoker-proxy-bindings/> and <container-configurations/>
+	-->
+
+</jboss>
