@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ===================================================================== -->
+<!--                                                                       -->
+<!--  JBoss Server Configuration                                           -->
+<!--                                                                       -->
+<!-- ===================================================================== -->
+
+<!-- $Id: postgres-ds.xml,v 1.3 2004/09/15 14:37:40 loubyansky Exp $ -->
+<!-- ==================================================================== -->
+<!--  Datasource config for Postgres                                      -->
+<!-- ==================================================================== -->
+
+
+<datasources>
+	<local-tx-datasource>
+		<jndi-name>/duroty/jdbc/DataSource</jndi-name>
+
+		<connection-url>jdbc:postgresql://localhost:5432/duroty</connection-url>
+
+		<driver-class>org.postgresql.Driver</driver-class>
+
+		<user-name>duroty</user-name>
+
+		<password>password</password>
+		
+		<!-- The minimum connections in a pool/sub-pool. Pools are lazily constructed on first use -->
+		<min-pool-size>5</min-pool-size>
+
+		<!-- The maximum connections in a pool/sub-pool -->
+		<max-pool-size>25</max-pool-size>
+
+		<!-- The time before an unused connection is destroyed -->
+		<!-- NOTE: This is the check period. It will be destroyed somewhere between 1x and 2x this timeout after last use -->
+		<!-- TEMPORARY FIX! - Disable idle connection removal, HSQLDB has a problem with not reaping threads on closed connections -->
+		<idle-timeout-minutes>0</idle-timeout-minutes>
+
+		<!-- HSQL DB benefits from prepared statement caching -->
+		<prepared-statement-cache-size>32</prepared-statement-cache-size>
+
+		<!-- corresponding type-mapping in the standardjbosscmp-jdbc.xml (optional) -->
+		<metadata>
+			<type-mapping>PostgreSQL 8.0</type-mapping>
+		</metadata>
+	</local-tx-datasource>
+
+</datasources>
