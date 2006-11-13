@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+	<data-sources />
+	
+	<form-beans>
+		<form-bean name="formBookmark" dynamic="true" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="idint" type="java.lang.String"/>
+			<form-property name="url" type="java.lang.String"/>
+			<form-property name="title" type="java.lang.String"/>
+			<form-property name="keywords" type="java.lang.String"/>
+			<form-property name="comments" type="java.lang.String"/>
+			<form-property name="flagged" type="java.lang.Boolean"/>
+		</form-bean>
+	</form-beans>
+	
+	<global-exceptions />
+	<global-forwards />
+	<action-mappings>
+		<action path="/bookmark/bookmark"
+			type="com.duroty.application.bookmark.actions.IndexAction"
+			scope="request" 
+			validate="false">
+			<forward name="success" path="/bookmark/bookmark.jsp" />
+			<forward name="failure" path="/bookmark/bookmark.jsp" />
+		</action>	
+		
+		<action path="/bookmark/control"
+			type="com.duroty.application.bookmark.actions.ControlAction"
+			scope="request" 
+			validate="false">
+			<forward name="success" path="/bookmark/control.jsp" />
+			<forward name="failure" path="/bookmark/control.jsp" />
+		</action>
+		
+		<action path="/bookmark/util"
+			type="com.duroty.application.bookmark.actions.UtilAction" 
+			scope="request"
+			validate="false">
+			<forward name="success" path="/bookmark/util.jsp" />
+			<forward name="failure" path="/bookmark/util.jsp" />
+		</action>
+		
+		<action path="/bookmark/refresh"
+			type="com.duroty.application.mail.actions.RefreshAction" 
+			scope="request"
+			validate="false">
+			<forward name="success" path="/bookmark/refresh.jsp" />
+			<forward name="failure" path="/bookmark/refresh.jsp" />
+		</action>
+		
+		<action path="/bookmark/search"
+			type="com.duroty.application.bookmark.actions.SearchAction" 
+			scope="request"
+			validate="false">
+			<forward name="success" path="/bookmark/search.jsp" />
+			<forward name="failure" path="/bookmark/search.jsp" />
+		</action>
+		
+		<action path="/bookmark/formBookmark"
+			type="com.duroty.application.bookmark.actions.FormBookmarkAction" 
+			scope="request"
+			name="formBookmark"
+			validate="false">
+			<forward name="success" path="/bookmark/formBookmark.jsp" />
+			<forward name="failure" path="/bookmark/formBookmark.jsp" />
+		</action>
+		
+		<action path="/bookmark/insertBookmark"
+			type="com.duroty.application.bookmark.actions.InsertBookmarkAction" 
+			scope="request"
+			name="formBookmark"
+			validate="false">
+			<forward name="success" path="/bookmark/insertBookmark.jsp" />
+			<forward name="failure" path="/bookmark/insertBookmark.jsp" />
+		</action>
+		
+		<action path="/bookmark/updateBookmark"
+			type="com.duroty.application.bookmark.actions.UpdateBookmarkAction" 
+			scope="request"
+			name="formBookmark"
+			validate="false">
+			<forward name="success" path="/bookmark/close.jsp" />
+			<forward name="failure" path="/bookmark/updateBookmark.jsp" />
+		</action>
+		
+		<action path="/bookmark/insertBookmarklet"
+			type="com.duroty.application.bookmark.actions.InsertBookmarkletAction" 
+			scope="request"
+			name="formBookmark"
+			validate="false">
+			<forward name="success" path="/bookmark/close.jsp" />
+			<forward name="failure" path="/bookmark/bookmarklet.jsp" />
+		</action>
+		
+		<action path="/bookmark/bookmarklet"
+			type="com.duroty.application.bookmark.actions.BookmarkletAction" 
+			scope="request"
+			validate="false">
+			<forward name="success" path="/bookmark/bookmarklet.jsp" />
+			<forward name="failure" path="/bookmark/bookmarklet.jsp" />
+		</action>
+		
+		<action path="/bookmark/extractor"
+			type="com.duroty.application.bookmark.actions.BookmarkExtractorAction" 
+			scope="request"
+			validate="false">
+			<forward name="success" path="/bookmark/extractor.jsp" />
+			<forward name="failure" path="/bookmark/extractor.jsp" />
+		</action>
+		
+		<action path="/bookmark/deleteBookmark"
+			type="com.duroty.application.bookmark.actions.DeleteBookmarkAction" 
+			scope="request"
+			validate="false">
+			<forward name="success" path="/bookmark/deleteBookmark.jsp" />
+			<forward name="failure" path="/bookmark/deleteBookmark.jsp" />
+		</action>
+		
+		<action path="/bookmark/flagBookmark"
+			type="com.duroty.application.bookmark.actions.FlagBookmarkAction" 
+			scope="request"
+			validate="false">
+			<forward name="success" path="/bookmark/flagBookmark.jsp" />
+			<forward name="failure" path="/bookmark/flagBookmark.jsp" />
+		</action>
+		
+		<action path="/bookmark/unflagBookmark"
+			type="com.duroty.application.bookmark.actions.UnflagBookmarkAction" 
+			scope="request"
+			validate="false">
+			<forward name="success" path="/bookmark/unflagBookmark.jsp" />
+			<forward name="failure" path="/bookmark/unflagBookmark.jsp" />
+		</action>
+	</action-mappings>
+</struts-config>
+

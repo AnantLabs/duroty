@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.4" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee   http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<context-param>
+		<param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+		<param-value>com.duroty.messages.Messages</param-value>
+	</context-param>
+	
+	<filter>
+		<filter-name>UTF8Filter</filter-name>
+		<filter-class>com.duroty.controller.filters.UTF8Filter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+		<filter-name>UTF8Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>	
+
+	<filter>
+		<filter-name>CompressionFilter</filter-name>
+		<filter-class>com.duroty.controller.filters.CompressionFilter</filter-class>
+
+		<init-param>
+			<param-name>compressionThreshold</param-name>
+			<param-value>10</param-value>
+		</init-param>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>0</param-value>
+		</init-param>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>CompressionFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<listener>
+		<listener-class>com.duroty.controller.listeners.SessionListener</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>com.duroty.controller.listeners.ContextListener</listener-class>
+	</listener>
+
+	<!-- Controller Configuration. Standard Action Servlet (with debugging) -->
+	<servlet>
+		<servlet-name>action</servlet-name>
+		<servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
+		<init-param>
+			<param-name>config</param-name>
+			<param-value>
+				/WEB-INF/configuration/struts-config.xml,
+				/WEB-INF/configuration/struts-admin-config.xml,
+				/WEB-INF/configuration/struts-home-config.xml,
+				/WEB-INF/configuration/struts-mail-config.xml,
+				/WEB-INF/configuration/struts-bookmark-config.xml,
+				/WEB-INF/configuration/struts-notebook-config.xml,
+				/WEB-INF/configuration/struts-chat-config.xml
+			</param-value>
+		</init-param>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>3</param-value>
+		</init-param>
+		<init-param>
+			<param-name>detail</param-name>
+			<param-value>3</param-value>
+		</init-param>
+		<load-on-startup>3</load-on-startup>
+	</servlet>
+	
+	<!-- Captcha Servlet -->
+	<servlet>
+        <servlet-name>jcaptcha</servlet-name>
+        <servlet-class>com.duroty.controller.actions.ImageCaptchaServlet</servlet-class>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+
+	<!-- 
+		<servlet>
+		<servlet-name>CewolfServlet</servlet-name>
+		<servlet-class>de.laures.cewolf.CewolfRenderer</servlet-class>
+		<init-param>
+		<param-name>storage</param-name>
+		<param-value>de.laures.cewolf.storage.TransientSessionStorage</param-value>
+		</init-param>
+		<init-param>
+		<param-name>overliburl</param-name>
+		<param-value>/public/javascript/overlib.js</param-value>
+		</init-param>
+		<init-param>
+		<param-name>debug</param-name>
+		<param-value>false</param-value>
+		</init-param>
+		<load-on-startup>4</load-on-startup>
+		</servlet>
+	-->
+
+	<!-- Standard Action Servlet Render Images 
+		<servlet-mapping>
+		<servlet-name>CewolfServlet</servlet-name>
+		<url-pattern>/public/cewolf/*</url-pattern>
+		</servlet-mapping>
+	-->
+
+	<!-- Captcha Servelet Mapping -->
+	<servlet-mapping>
+        <servlet-name>jcaptcha</servlet-name>
+        <url-pattern>/jcaptcha</url-pattern>
+    </servlet-mapping>
+
+	<!-- Standard Action Servlet Mapping -->
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.drt</url-pattern>
+	</servlet-mapping>
+
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+
+	<welcome-file-list>
+		<welcome-file>index.html</welcome-file>
+		<welcome-file>index.htm</welcome-file>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	
+	<error-page>
+		<error-code>403</error-code>
+		<location>/login/roleRequired.jsp</location>
+	</error-page>
+
+	<error-page>
+		<error-code>404</error-code>
+		<location>/public/errors/404.jsp</location>
+	</error-page>
+
+	<error-page>
+		<error-code>500</error-code>
+		<location>/public/errors/500.jsp</location>
+	</error-page>
+
+	<!-- SECURITY -->
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Application protected index pages</web-resource-name>
+			<description>Require users to authenticate</description>
+			<url-pattern>/admin/*</url-pattern>
+			<http-method>HEAD</http-method>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+			<http-method>PUT</http-method>
+			<http-method>DELETE</http-method>
+		</web-resource-collection>
+
+		<auth-constraint>
+			<description>Allow Admin role to acces Application Admin pages and actions</description>
+			<role-name>admin</role-name>
+		</auth-constraint>
+
+		<user-data-constraint>
+			<description>no description</description>
+			<!-- 
+			per obligar a un accés ssl
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+			-->
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Application protected index pages</web-resource-name>
+			<description>Require users to authenticate</description>
+			<url-pattern>/home/*</url-pattern>
+			<http-method>HEAD</http-method>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+			<http-method>PUT</http-method>
+			<http-method>DELETE</http-method>
+		</web-resource-collection>
+
+		<auth-constraint>
+			<description>Allow Member role to acces Application Member pages and actions</description>
+			<role-name>member</role-name>
+		</auth-constraint>
+
+		<user-data-constraint>
+			<description>no description</description>
+			<!-- 
+			per obligar a un accés ssl
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+			-->
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Application protected Mail pages and actions</web-resource-name>
+			<description>Require users to authenticate</description>
+			<url-pattern>/mail/*</url-pattern>
+			<http-method>HEAD</http-method>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+			<http-method>PUT</http-method>
+			<http-method>DELETE</http-method>
+		</web-resource-collection>
+
+		<auth-constraint>
+			<description>Allow Mail role to acces Application Mail pages and actions</description>
+			<role-name>mail</role-name>
+		</auth-constraint>
+
+		<user-data-constraint>
+			<description>no description</description>
+			<!-- 
+			per obligar a un accés ssl
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+			-->
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Application protected Bookmark pages and actions</web-resource-name>
+			<description>Require users to authenticate</description>
+			<url-pattern>/bookmark/*</url-pattern>
+			<http-method>HEAD</http-method>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+			<http-method>PUT</http-method>
+			<http-method>DELETE</http-method>
+		</web-resource-collection>
+
+		<auth-constraint>
+			<description>Allow Bookmark role to acces Application Bookmark pages and actions</description>
+			<role-name>bookmark</role-name>
+		</auth-constraint>
+
+		<user-data-constraint>
+			<description>no description</description>
+			<!-- 
+			per obligar a un accés ssl
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+			-->
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Application protected Notebook pages and actions</web-resource-name>
+			<description>Require users to authenticate</description>
+			<url-pattern>/notebook/*</url-pattern>
+			<http-method>HEAD</http-method>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+			<http-method>PUT</http-method>
+			<http-method>DELETE</http-method>
+		</web-resource-collection>
+
+		<auth-constraint>
+			<description>Allow Bookmark role to acces Application Bookmark pages and actions</description>
+			<role-name>bookmark</role-name>
+		</auth-constraint>
+
+		<user-data-constraint>
+			<description>no description</description>
+			<!-- 
+			per obligar a un accés ssl
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+			-->
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Application protected index pages</web-resource-name>
+			<description>Require users to authenticate</description>
+			<url-pattern>/chat/*</url-pattern>
+			<http-method>HEAD</http-method>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+			<http-method>PUT</http-method>
+			<http-method>DELETE</http-method>
+		</web-resource-collection>
+
+		<auth-constraint>
+			<description>Allow Chat role to acces Comunication Application</description>
+			<role-name>chat</role-name>
+		</auth-constraint>
+
+		<user-data-constraint>
+			<description>no description</description>
+			<!-- 
+			per obligar a un accés ssl
+			<transport-guarantee>CONFIDENTIAL</transport-guarantee>
+			-->
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	
+	<security-role>
+		<description>A user allowed to invoke Application Admin</description>
+		<role-name>admin</role-name>
+	</security-role>
+
+	<security-role>
+		<description>A user allowed to invoke Application Member</description>
+		<role-name>member</role-name>
+	</security-role>
+
+	<security-role>
+		<description>A user allowed to invoke Application Mail</description>
+		<role-name>mail</role-name>
+	</security-role>
+
+	<security-role>
+		<description>A user allowed to invoke Application Bookmark</description>
+		<role-name>bookmark</role-name>
+	</security-role>
+	
+	<security-role>
+		<description>A user allowed to invoke Application Chat</description>
+		<role-name>chat</role-name>
+	</security-role>
+
+	<login-config>
+		<auth-method>FORM</auth-method>
+		<realm-name>duroty</realm-name>
+		<form-login-config>
+			<form-login-page>/login/login.jsp</form-login-page>
+			<form-error-page>/login/loginError.jsp</form-error-page>
+		</form-login-config>
+	</login-config>	
+</web-app>
+
