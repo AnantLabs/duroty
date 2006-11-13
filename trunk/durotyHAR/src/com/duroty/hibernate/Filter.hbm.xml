@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-ago-2006 17:07:31 by Hibernate Tools 3.1.0.beta5 -->
+<hibernate-mapping>
+	<class name="com.duroty.hibernate.Filter" table="filter">
+		<id name="filIdint" type="int">
+			<column name="fil_idint" />
+			<generator class="sequence">
+				<param name="sequence">seq_duroty</param>
+			</generator>
+		</id>
+		<many-to-one name="label" class="com.duroty.hibernate.Label" fetch="select">
+			<column name="fil_lab_idint" not-null="true" />
+		</many-to-one>
+		<property name="filFrom" type="string">
+			<column name="fil_from" />
+		</property>
+		<property name="filTo" type="string">
+			<column name="fil_to" />
+		</property>
+		<property name="filSubject" type="string">
+			<column name="fil_subject" />
+		</property>
+		<property name="filHasWords" type="string">
+			<column name="fil_has_words" />
+		</property>
+		<property name="filDoesntHaveWords" type="string">
+			<column name="fil_doesnt_have_words" />
+		</property>
+		<property name="filHasAttacment" type="boolean">
+			<column name="fil_has_attacment" not-null="true" />
+		</property>
+		<property name="filArchive" type="boolean">
+			<column name="fil_archive" not-null="true" />
+		</property>
+		<property name="filImportant" type="boolean">
+			<column name="fil_important" not-null="true" />
+		</property>
+		<property name="filTrash" type="boolean">
+			<column name="fil_trash" not-null="true" />
+		</property>
+		<property name="filForwardTo" type="string">
+			<column name="fil_forward_to" />
+		</property>
+		<property name="filOrOperator" type="boolean">
+			<column name="fil_or_operator" not-null="true" />
+		</property>
+	</class>
+	
+	<sql-query name="filters">
+		<return alias="i" class="com.duroty.hibernate.Filter" />
+		SELECT {i.*} FROM FILTER {i} WHERE FIL_LAB_IDINT IN (SELECT LAB_IDINT FROM LABEL WHERE LAB_USE_IDINT = :user)
+	</sql-query>
+	
+	<sql-query name="filter">
+		<return alias="i" class="com.duroty.hibernate.Filter" />
+		SELECT {i.*} FROM FILTER {i} WHERE FIL_IDINT = :idint AND FIL_LAB_IDINT IN (SELECT LAB_IDINT FROM LABEL WHERE LAB_USE_IDINT = :user)
+	</sql-query>
+	
+	<query name="delete-filter-by-idint">
+    	DELETE FROM Filter a WHERE a.filIdint = :idint AND a.label in (from Label b where b.users = (from Users i where i.useUsername = :username))
+	</query>
+</hibernate-mapping>

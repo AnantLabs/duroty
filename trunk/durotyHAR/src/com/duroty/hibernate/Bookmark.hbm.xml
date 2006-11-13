@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 07-sep-2006 11:32:29 by Hibernate Tools 3.1.0.beta5 -->
+<hibernate-mapping>
+	<class name="com.duroty.hibernate.Bookmark" table="bookmark">
+		<id name="booIdint" type="int">
+			<column name="boo_idint" />
+			<generator class="sequence">
+				<param name="sequence">seq_bookmark</param>
+			</generator>
+		</id>
+		<many-to-one name="users" class="com.duroty.hibernate.Users" fetch="select">
+			<column name="boo_use_idint" not-null="true" />
+		</many-to-one>
+		<property name="booUrl" type="string">
+			<column name="boo_url" not-null="true" />
+		</property>
+		<property name="booTitle" type="string">
+			<column name="boo_title" />
+		</property>
+		<property name="booKeywords" type="string">
+			<column name="boo_keywords" />
+		</property>
+		<property name="booComments" type="string">
+			<column name="boo_comments" />
+		</property>
+	</class>
+</hibernate-mapping>

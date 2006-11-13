@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 10-ago-2006 15:30:54 by Hibernate Tools 3.1.0.beta5 -->
+<hibernate-mapping>
+    <class name="com.duroty.hibernate.MailPreferences" table="mail_preferences">
+        <id name="maprIdint" type="int">
+            <column name="mapr_idint" />
+            <generator class="sequence">
+				<param name="sequence">seq_duroty</param>
+			</generator>
+        </id>
+        <many-to-one name="users" class="com.duroty.hibernate.Users" fetch="select">
+            <column name="mapr_use_idint" not-null="true" unique="true" />
+        </many-to-one>
+        <property name="maprMessagesByPage" type="int">
+            <column name="mapr_messages_by_page" not-null="true" />
+        </property>
+        <property name="maprSignature" type="string">
+            <column name="mapr_signature" />
+        </property>
+        <property name="maprHtmlMessage" type="boolean">
+            <column name="mapr_html_message" not-null="true" />
+        </property>
+        <property name="maprVacationActive" type="boolean">
+            <column name="mapr_vacation_active" not-null="true" />
+        </property>
+        <property name="maprVacationSubject" type="string">
+            <column name="mapr_vacation_subject" />
+        </property>
+        <property name="maprVacationBody" type="string">
+            <column name="mapr_vacation_body" />
+        </property>
+        <property name="maprQuotaSize" type="int">
+            <column name="mapr_quota_size" not-null="true" />
+        </property>
+        <property name="maprSpamTolerance" type="int">
+            <column name="mapr_spam_tolerance" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

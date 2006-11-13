@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 31-jul-2006 11:12:15 by Hibernate Tools 3.1.0.beta5 -->
+<hibernate-mapping>
+    <class name="com.duroty.hibernate.FeedData" table="feed_data">
+        <id name="fedaIdint" type="int">
+            <column name="feda_idint" />
+            <generator class="sequence">
+				<param name="sequence">seq_duroty</param>
+			</generator>
+        </id>
+        <many-to-one name="feedChannel" class="com.duroty.hibernate.FeedChannel" fetch="select">
+            <column name="feda_fech_idint" not-null="true" />
+        </many-to-one>
+        <property name="fedaName" type="string">
+            <column name="feda_name" length="50" not-null="true" />
+        </property>
+        <property name="fedaValue" type="string">
+            <column name="feda_value" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

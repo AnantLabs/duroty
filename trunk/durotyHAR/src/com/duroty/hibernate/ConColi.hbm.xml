@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 14-sep-2006 11:28:33 by Hibernate Tools 3.1.0.beta5 -->
+<hibernate-mapping>
+    <class name="com.duroty.hibernate.ConColi" table="con_coli">
+        <composite-id name="id" class="com.duroty.hibernate.ConColiId">
+            <key-many-to-one name="contact" class="com.duroty.hibernate.Contact">
+                <column name="con_idint" />
+            </key-many-to-one>
+            <key-many-to-one name="contactList" class="com.duroty.hibernate.ContactList">
+                <column name="coli_idint" />
+            </key-many-to-one>
+        </composite-id>
+    </class>
+</hibernate-mapping>
