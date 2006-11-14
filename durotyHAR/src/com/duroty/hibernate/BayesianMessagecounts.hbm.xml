@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 17-oct-2006 10:28:12 by Hibernate Tools 3.1.0.beta5 -->
+<hibernate-mapping>
+    <class name="com.duroty.hibernate.BayesianMessagecounts" table="bayesian_messagecounts">
+        <id name="idint" type="int">
+            <column name="idint" />
+            <generator class="sequence">
+				<param name="sequence">seq_bayesian</param>
+			</generator>
+        </id>
+        <many-to-one name="users" class="com.duroty.hibernate.Users" fetch="select">
+            <column name="use_idint" not-null="true" unique="true" />
+        </many-to-one>
+        <property name="hamCount" type="int">
+            <column name="ham_count" not-null="true" />
+        </property>
+        <property name="spamCount" type="int">
+            <column name="spam_count" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

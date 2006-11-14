@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 31-jul-2006 11:12:15 by Hibernate Tools 3.1.0.beta5 -->
+<hibernate-mapping>
+    <class name="com.duroty.hibernate.Roles" table="roles">
+        <id name="rolIdint" type="int">
+            <column name="rol_idint" />
+            <generator class="sequence">
+				<param name="sequence">seq_duroty</param>
+			</generator>
+        </id>
+        <property name="rolName" type="string">
+            <column name="rol_name" length="25" not-null="true" unique="true" />
+        </property>
+        <set name="userRoles" inverse="true" cascade="all">
+            <key>
+                <column name="rol_idint" not-null="true" />
+            </key>
+            <one-to-many class="com.duroty.hibernate.UserRole" />
+        </set>
+    </class>
+</hibernate-mapping>
