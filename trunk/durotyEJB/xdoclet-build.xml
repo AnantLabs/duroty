@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="XDoclet Generator" default="_xdoclet_generation_">
+<property file="xdoclet-build.properties"/>
+<property name="eclipse.home" value="/opt/eclipse"/>
+<property name="xdoclet.basedir" value="${eclipse.home}/plugins/org.jboss.ide.eclipse.xdoclet.core_1.6.0.GA"/>
+<property name="jboss.net.version" value="4.0"/>
+<path id="project.classpath"><pathelement location="classes"/>
+<pathelement location="/opt/MyEclipse_3.1.2/eclipse/plugins/com.genuitec.eclipse.j2eedt.core_4.1.1/data/libraryset/1.4/jboss-jaxrpc.jar"/>
+<pathelement location="/opt/MyEclipse_3.1.2/eclipse/plugins/com.genuitec.eclipse.j2eedt.core_4.1.1/data/libraryset/1.4/javax.servlet.jsp.jar"/>
+<pathelement location="/opt/MyEclipse_3.1.2/eclipse/plugins/com.genuitec.eclipse.j2eedt.core_4.1.1/data/libraryset/1.4/mail.jar"/>
+<pathelement location="/opt/MyEclipse_3.1.2/eclipse/plugins/com.genuitec.eclipse.j2eedt.core_4.1.1/data/libraryset/1.4/javax.servlet.jar"/>
+<pathelement location="/opt/MyEclipse_3.1.2/eclipse/plugins/com.genuitec.eclipse.j2eedt.core_4.1.1/data/libraryset/1.4/activation.jar"/>
+<pathelement location="/opt/MyEclipse_3.1.2/eclipse/plugins/com.genuitec.eclipse.j2eedt.core_4.1.1/data/libraryset/1.4/jboss-jsr77.jar"/>
+<pathelement location="/opt/MyEclipse_3.1.2/eclipse/plugins/com.genuitec.eclipse.j2eedt.core_4.1.1/data/libraryset/1.4/namespace.jar"/>
+<pathelement location="/opt/MyEclipse_3.1.2/eclipse/plugins/com.genuitec.eclipse.j2eedt.core_4.1.1/data/libraryset/1.4/jboss-j2ee.jar"/>
+<pathelement location="/opt/MyEclipse_3.1.2/eclipse/plugins/com.genuitec.eclipse.j2eedt.core_4.1.1/data/libraryset/1.4/xml-apis.jar"/>
+<pathelement location="/opt/MyEclipse_3.1.2/eclipse/plugins/com.genuitec.eclipse.j2eedt.core_4.1.1/data/libraryset/1.4/jboss-saaj.jar"/>
+<pathelement location="/usr/java_library/hibernate/hibernate-3.1/hibernate3.jar"/>
+<pathelement location="/home/durot/java_library/jakarta/lucene1.9.1/lucene-1.9.1/lucene-core-1.9.1.jar"/>
+<pathelement location="/home/durot/java_library/jakarta/lucene1.9.1/lucene-1.9.1/lucene-demos-1.9.1.jar"/>
+<pathelement location="/usr/java_library/jakarta/lucene/lucene-durot.jar"/>
+<pathelement location="/usr/java_library/jakarta/lucene/lucene-highlighter.jar"/>
+<pathelement location="/usr/java_library/jakarta/lucene/lucene-sandbox.jar"/>
+<pathelement location="../durotyHAR/bin"/>
+<pathelement location="/usr/java_library/jakarta/commons/commons-io-1.1/commons-io-1.1.jar"/>
+<pathelement location="/usr/java_library/jakarta/commons/commons-email-1.0/commons-email-1.0.jar"/>
+<pathelement location="/usr/java_library/apache/xerces/xerces-2_7_1/xercesImpl.jar"/>
+<pathelement location="/usr/java_library/apache/xerces/xerces-2_7_1/xercesSamples.jar"/>
+<pathelement location="/usr/java_library/apache/xerces/xerces-2_7_1/xml-apis.jar"/>
+<pathelement location="/usr/java_library/jtidy/jtidy-r8-SNAPSHOT/jtidy-r8-SNAPSHOT.jar"/>
+<pathelement location="/usr/java_library/ldap/ldapjdk.jar"/>
+<pathelement location="/usr/java_library/jakarta/poi/poi-src-2.5.1-final-20040804/poi-2.5.1-final-20040804.jar"/>
+<pathelement location="/usr/java_library/jakarta/poi/poi-src-2.5.1-final-20040804/poi-contrib-2.5.1-final-20040804.jar"/>
+<pathelement location="/usr/java_library/jakarta/poi/poi-bin-3.0-alpha1-20050704/poi-scratchpad-3.0-alpha1-20050704.jar"/>
+<pathelement location="/usr/java_library/pdf/PDFBox-0.7.2/lib/PDFBox-0.7.2.jar"/>
+<pathelement location="/usr/java_library/classifier/Classifier4J-0.6.jar"/>
+<pathelement location="/usr/java_library/classifier/Classifier4J-Optional-0.6.jar"/>
+<pathelement location="/usr/java_library/jdbc/postgresql-8.0-310.jdbc3.jar"/>
+<pathelement location="/usr/java_library/jakarta/commons/commons-net-1.4.0/commons-net-1.4.0.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/lib/commons-logging.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/lib/concurrent.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/lib/dom4j.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/lib/getopt.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/lib/jboss-common.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/lib/jboss-jmx.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/lib/jboss-system.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/lib/jboss-xml-binding.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/lib/log4j-boot.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/lib/namespace.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/lib/webdavlib.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/activation.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/antlr-2.7.6.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/avalon-framework.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/commons-logging.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/concurrent.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/getopt.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jacorb.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/javassist.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/javax.servlet.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jbossall-client.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jboss-backport-concurrent.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jboss-client.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jboss-common-client.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jbosscx-client.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jboss-deployment.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jbossha-client.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jboss-iiop-client.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jboss-j2ee.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jboss-jaxrpc.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jbossjmx-ant.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jboss-jsr77-client.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jbossmq-client.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jboss-remoting.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jbossretro-rt.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jboss-saaj.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jboss-serialization.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jboss-srp-client.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jbosssx-client.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jboss-system-client.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jboss-transaction-client.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jbossws14-client.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jboss-xml-binding.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jmx-client.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jmx-invoker-adaptor-client.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/jnp-client.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/juddisaaj.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/log4j.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/logkit.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/mail.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/namespace.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/scout.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/wsdl4j.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/client/xmlsec.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/server/default/lib/scheduler-plugin.jar"/>
+<pathelement location="/opt/jboss-4.0.4.GA/server/default/lib/scheduler-plugin-example.jar"/>
+<pathelement location="/usr/java_library/jakarta/commons/commons-collections-3.1/commons-collections-3.1.jar"/>
+<pathelement location="/usr/java_library/jakarta/oro/jakarta-oro-2.0.8/jakarta-oro-2.0.8.jar"/>
+<pathelement location="/usr/java_library/jakarta/commons/commons-beanutils-1.7.0/commons-beanutils-bean-collections.jar"/>
+<pathelement location="/usr/java_library/jakarta/commons/commons-beanutils-1.7.0/commons-beanutils-core.jar"/>
+<pathelement location="/usr/java_library/jakarta/commons/commons-beanutils-1.7.0/commons-beanutils.jar"/>
+<pathelement location="/usr/java_library/json/ezmorph-0.8.1.jar"/>
+<pathelement location="/usr/java_library/xom/xom-1.1.jar"/>
+<pathelement location="/usr/java_library/jakarta/commons/commons-lang-2.2/commons-lang-2.2.jar"/>
+<pathelement location="/home/durot/java_library/jakarta/commons/commons-dbcp-1.2.1/commons-dbcp-1.2.1.jar"/>
+<pathelement location="/home/durot/java_library/jakarta/commons/commons-pool-1.2/commons-pool-1.2.jar"/>
+</path>
+<path id="xdoclet.classpath">
+<path refid="project.classpath"/>
+<fileset dir="${xdoclet.basedir}">
+<include name="*.jar"/>
+<exclude name="xdoclet-module-jboss-net-*.jar"/>
+</fileset>
+<fileset dir="${xdoclet.basedir}">
+<include name="xdoclet-module-jboss-net-${jboss.net.version}*.jar"/>
+</fileset>
+</path>
+<target name="_xdoclet_generation_" depends="N65540"/>
+<target name="N65540" description="EJB">
+<taskdef name="ejbdoclet" classname="xdoclet.modules.ejb.EjbDocletTask" classpathref="xdoclet.classpath"/><ejbdoclet ejbSpec="2.0"  excludedTags="@version,@author,@todo"  destDir="src"  verbose="true"  addedTags="@xdoclet-generated at ${TODAY},@copyright The XDoclet Team,@author XDoclet,@version ${version}" >
+
+
+
+
+
+
+
+
+
+
+<fileset dir="src"  includes="**/*.java" >
+
+
+
+</fileset>
+<packageSubstitution packages="ejb"  substituteWith="interfaces" >
+
+
+</packageSubstitution>
+<remoteinterface>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</remoteinterface>
+<localinterface>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</localinterface>
+<homeinterface>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</homeinterface>
+<localhomeinterface>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</localhomeinterface>
+<dataobject>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</dataobject>
+<valueobject>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</valueobject>
+<entitypk>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</entitypk>
+<entitycmp>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</entitycmp>
+<entitybmp>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</entitybmp>
+<session>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</session>
+<dao>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<PackageSubstitution packages="ejb"  substituteWith="dao" >
+
+
+</PackageSubstitution>
+</dao>
+<utilobject includeGUID="true"  cacheHomes="true" >
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</utilobject>
+<deploymentdescriptor validateXML="true"  destDir="src/META-INF" >
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</deploymentdescriptor>
+<jboss Version="3.0"  destDir="src/META-INF" >
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</jboss>
+</ejbdoclet></target>
+</project>
