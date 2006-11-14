@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<jboss-web>
-	<!-- All secured web content uses this security manager -->
-	<security-domain>java:/jaas/duroty</security-domain>
-	<!-- 
-	<context-root>/duroty</context-root>
-	-->
-</jboss-web>
