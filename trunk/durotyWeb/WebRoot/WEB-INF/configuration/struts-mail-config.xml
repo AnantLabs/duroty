@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+	<data-sources />
+	
+	<form-beans>
+		<form-bean name="messagesForm" dynamic="true" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="mid" type="java.lang.String[]"/>
+			<form-property name="folder" type="java.lang.String"/>
+			<form-property name="displayLocation" type="java.lang.String"/>
+		</form-bean>
+		
+		<form-bean name="formLabel" dynamic="true" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="name" type="java.lang.String"/>	
+			<form-property name="from" type="java.lang.String"/>
+			<form-property name="to" type="java.lang.String"/>
+			<form-property name="subject" type="java.lang.String"/>
+			<form-property name="hasWords" type="java.lang.String"/>
+			<form-property name="doesntHaveWords" type="java.lang.String"/>
+			<form-property name="hasAttachment" type="java.lang.Boolean"/>
+			<form-property name="archive" type="java.lang.Boolean"/>
+			<form-property name="important" type="java.lang.Boolean"/>
+			<form-property name="forward" type="java.lang.String"/>
+			<form-property name="trash" type="java.lang.Boolean"/>
+			<form-property name="operator" type="java.lang.Boolean"/>
+		</form-bean>
+		
+		<form-bean name="formSettings" dynamic="true" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="name" type="java.lang.String"/>
+			<form-property name="contactEmail" type="java.lang.String"/>
+			<form-property name="language" type="java.lang.String"/>
+			<form-property name="signature" type="java.lang.String"/>
+			<form-property name="vacationResponderActive" type="java.lang.Boolean"/>
+			<form-property name="vacationResponderSubject" type="java.lang.String"/>
+			<form-property name="vacationResponderBody" type="java.lang.String"/>
+			<form-property name="htmlMessage" type="java.lang.Boolean"/>
+			<form-property name="byPage" type="java.lang.Integer"/>
+			<form-property name="spamTolerance" type="java.lang.Boolean" />
+		</form-bean>
+		
+		<form-bean name="formContacts" dynamic="true" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="idint" type="java.lang.Integer[]"/>
+		</form-bean>
+		
+		<form-bean name="formGroups" dynamic="true" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="idint" type="java.lang.Integer[]"/>
+		</form-bean>
+		
+		<form-bean name="formUpdateFilter" dynamic="true" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="idint" type="java.lang.Integer"/>
+			<form-property name="label" type="java.lang.Integer"/>
+			<form-property name="name" type="java.lang.String"/>
+			<form-property name="from" type="java.lang.String"/>
+			<form-property name="to" type="java.lang.String"/>
+			<form-property name="subject" type="java.lang.String"/>
+			<form-property name="hasWords" type="java.lang.String"/>
+			<form-property name="doesntHaveWords" type="java.lang.String"/>
+			<form-property name="hasAttachment" type="java.lang.Boolean"/>
+			<form-property name="archive" type="java.lang.Boolean"/>
+			<form-property name="important" type="java.lang.Boolean"/>
+			<form-property name="forward" type="java.lang.String"/>
+			<form-property name="trash" type="java.lang.Boolean"/>
+			<form-property name="operator" type="java.lang.Boolean" />
+		</form-bean>
+		
+		<form-bean name="formFilter" dynamic="true" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="label" type="java.lang.Integer"/>
+			<form-property name="name" type="java.lang.String"/>
+			<form-property name="from" type="java.lang.String"/>
+			<form-property name="to" type="java.lang.String"/>
+			<form-property name="subject" type="java.lang.String"/>
+			<form-property name="hasWords" type="java.lang.String"/>
+			<form-property name="doesntHaveWords" type="java.lang.String"/>
+			<form-property name="hasAttachment" type="java.lang.Boolean"/>
+			<form-property name="archive" type="java.lang.Boolean"/>
+			<form-property name="important" type="java.lang.Boolean"/>
+			<form-property name="forward" type="java.lang.String"/>
+			<form-property name="trash" type="java.lang.Boolean"/>
+			<form-property name="operator" type="java.lang.Boolean" />
+		</form-bean>
+		
+		<form-bean name="formUpdateLabel" dynamic="true" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="idint" type="java.lang.Integer"/>
+			<form-property name="name" type="java.lang.String"/>
+		</form-bean>
+		
+		<form-bean name="formContact" dynamic="true" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="action" type="java.lang.String"/>
+			<form-property name="name" type="java.lang.String"/>
+			<form-property name="email" type="java.lang.String"/>
+			<form-property name="description" type="java.lang.String"/>
+		</form-bean>
+		
+		<form-bean name="formGroup" dynamic="true" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="action" type="java.lang.String"/>
+			<form-property name="name" type="java.lang.String"/>
+			<form-property name="emails" type="java.lang.String"/>
+		</form-bean>
+		
+		<form-bean name="formIdentity" dynamic="true" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="name" type="java.lang.String"/>
+			<form-property name="email" type="java.lang.String"/>
+			<form-property name="replyTo" type="java.lang.String"/>
+			<form-property name="default" type="java.lang.Boolean" initial="false" />
+		</form-bean>
+		
+		<form-bean name="formInvitateToChat" dynamic="true" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="identity" type="java.lang.Integer"/>
+			<form-property name="to" type="java.lang.String"/>
+			<form-property name="priority" type="java.lang.String"/>
+		</form-bean>
+	</form-beans>
+	
+	<global-exceptions />
+	<global-forwards />
+
+	<action-mappings>
+		<action path="/mail/mail"
+			type="com.duroty.application.mail.actions.IndexAction"
+			scope="request" validate="false">
+			<forward name="success" path="/mail/mail.jsp" />
+			<forward name="failure" path="/mail/mail.jsp" />
+		</action>	
+		
+		<action path="/mail/control"
+			type="com.duroty.application.mail.actions.ControlAction"
+			scope="request" validate="false">
+			<forward name="success" path="/mail/control.jsp" />
+			<forward name="failure" path="/mail/control.jsp" />
+		</action>
+		
+		<action path="/mail/util"
+			type="com.duroty.application.mail.actions.UtilAction" scope="request"
+			validate="false">
+			<forward name="success" path="/mail/util.jsp" />
+			<forward name="failure" path="/mail/util.jsp" />
+		</action>
+		
+		<action path="/mail/refresh"
+			type="com.duroty.application.mail.actions.RefreshAction" scope="request"
+			validate="false">
+			<forward name="success" path="/mail/refresh.jsp" />
+			<forward name="failure" path="/mail/refresh.jsp" />
+		</action>
+		
+		<action path="/mail/messages"
+			type="com.duroty.application.mail.actions.MessagesAction" scope="request"
+			validate="false">
+			<forward name="success" path="/mail/messages.jsp" />
+			<forward name="failure" path="/mail/messages.jsp" />
+		</action>
+		
+		<action path="/mail/readMessage"
+			type="com.duroty.application.mail.actions.ReadMessageAction" scope="request"
+			validate="false">
+			<forward name="success" path="/mail/readMessage.jsp" />
+			<forward name="failure" path="/mail/readMessage.jsp" />
+		</action>
+		
+		<action path="/mail/send"
+			type="com.duroty.application.mail.actions.SendAction" scope="request"
+			validate="false">
+			<forward name="success" path="/mail/send.jsp" />
+			<forward name="failure" path="/mail/send.jsp" />
+		</action>
+		
+		<action path="/mail/suggestContacts"
+			type="com.duroty.application.mail.actions.SuggestContactsAction" scope="request"
+			validate="false">
+			<forward name="success" path="/mail/suggestContacts.jsp" />
+			<forward name="failure" path="/mail/suggestContacts.jsp" />
+		</action>
+		
+		<action path="/mail/attachment"
+			type="com.duroty.application.mail.actions.AttachmentAction" scope="request"
+			validate="false">
+			<forward name="success" path="/mail/attachment.jsp" />
+			<forward name="failure" path="/mail/attachment.jsp" />
+		</action>
+		
+		<action path="/mail/saveDraft"
+			type="com.duroty.application.mail.actions.SaveDraftAction" scope="request"
+			validate="false">
+			<forward name="success" path="/mail/saveDraft.jsp" />
+			<forward name="failure" path="/mail/saveDraft.jsp" />
+		</action>
+		
+		<action path="/mail/properties"
+			type="com.duroty.application.mail.actions.PropertiesAction" scope="request"
+			validate="false">
+			<forward name="success" path="/mail/properties.jsp" />
+			<forward name="failure" path="/mail/properties.jsp" />
+		</action>
+		
+		<action path="/mail/spam"
+			type="com.duroty.application.mail.actions.SpamAction" scope="request"
+			validate="false"
+			name="messagesForm">
+			<forward name="success" path="/mail/spam.jsp" />
+			<forward name="failure" path="/mail/spam.jsp" />
+		</action>
+		
+		<action path="/mail/notSpam"
+			type="com.duroty.application.mail.actions.NotSpamAction" scope="request"
+			validate="false"
+			name="messagesForm">
+			<forward name="success" path="/mail/notSpam.jsp" />
+			<forward name="failure" path="/mail/notSpam.jsp" />
+		</action>
+		
+		<action path="/mail/move"
+			type="com.duroty.application.mail.actions.MoveAction" scope="request"
+			validate="false"
+			name="messagesForm">
+			<forward name="success" path="/mail/move.jsp" />
+			<forward name="failure" path="/mail/move.jsp" />
+		</action>
+		
+		<action path="/mail/flag"
+			type="com.duroty.application.mail.actions.FlagAction" scope="request"
+			validate="false"
+			name="messagesForm">
+			<forward name="success" path="/mail/flag.jsp" />
+			<forward name="failure" path="/mail/flag.jsp" />
+		</action>
+		
+		<action path="/mail/delete"
+			type="com.duroty.application.mail.actions.DeleteAction" scope="request"
+			validate="false"
+			name="messagesForm">
+			<forward name="success" path="/mail/delete.jsp" />
+			<forward name="failure" path="/mail/delete.jsp" />
+		</action>
+		
+		<action path="/mail/deleteAll"
+			type="com.duroty.application.mail.actions.DeleteAllAction" scope="request"
+			validate="false"
+			name="messagesForm">
+			<forward name="success" path="/mail/delete.jsp" />
+			<forward name="failure" path="/mail/delete.jsp" />
+		</action>
+		
+		<action path="/mail/archive"
+			type="com.duroty.application.mail.actions.ArchiveAction" scope="request"
+			validate="false"
+			name="messagesForm">
+			<forward name="success" path="/mail/archive.jsp" />
+			<forward name="failure" path="/mail/archive.jsp" />
+		</action>
+		
+		<action path="/mail/deleteLabelsFromMessages"
+			type="com.duroty.application.mail.actions.DeleteLabelsFromMessagesAction" scope="request"
+			validate="false"
+			name="messagesForm">
+			<forward name="success" path="/mail/deleteLabelsFromMessages.jsp" />
+			<forward name="failure" path="/mail/deleteLabelsFromMessages.jsp" />
+		</action>
+		
+		<action path="/mail/simpleSearch"
+			type="com.duroty.application.mail.actions.SimpleSearchAction" scope="request"
+			validate="false"
+			name="messagesForm">
+			<forward name="success" path="/mail/messages.jsp" />
+			<forward name="failure" path="/mail/messages.jsp" />
+		</action>
+		
+		<action path="/mail/advancedSearch"
+			type="com.duroty.application.mail.actions.AdvancedSearchAction" scope="request"
+			validate="false"
+			name="messagesForm">
+			<forward name="success" path="/mail/messages.jsp" />
+			<forward name="failure" path="/mail/messages.jsp" />
+		</action>
+		
+		<action path="/mail/testFilter"
+			type="com.duroty.application.mail.actions.TestFilterAction" scope="request"
+			validate="false"
+			name="messagesForm">
+			<forward name="success" path="/mail/messages.jsp" />
+			<forward name="failure" path="/mail/messages.jsp" />
+		</action>
+		
+		<action path="/mail/insertFilter"
+				type="com.duroty.application.mail.actions.InsertFilterAction" 
+				scope="request"
+				name="formFilter" 
+				validate="false">				
+			<forward name="success" path="/mail/insertFilter.jsp" />
+			<forward name="failure" path="/mail/insertFilter.jsp" />			
+		</action>
+		
+		<action path="/mail/invitateToChat"
+				type="com.duroty.application.mail.actions.InvitateToChatAction" 
+				scope="request"
+				name="formInvitateToChat" 
+				validate="false">				
+			<forward name="success" path="/mail/closePopup.jsp" />
+			<forward name="failure" path="/mail/invitateToChat.jsp" />			
+		</action>
+		
+		<!-- Actions for mail preferences -->
+		<action path="/mail/preferences/formLabel"
+				type="com.duroty.application.mail.actions.FormLabelAction" 
+				scope="request"
+				name="formLabel" 
+				validate="false">				
+			<forward name="success" path="/mail/preferences/formLabel.jsp" />
+			<forward name="failure" path="/mail/preferences/formLabel.jsp" />			
+		</action>
+		
+		<action path="/mail/preferences/insertLabel"
+				type="com.duroty.application.mail.actions.InsertLabelAction" 
+				scope="request"
+				name="formLabel" 
+				validate="false">				
+			<forward name="success" path="/mail/mail.drt" redirect="true"/>
+			<forward name="failure" path="/mail/preferences/formLabel.jsp" />			
+		</action>
+		
+		<action path="/mail/preferences/settings"
+				type="com.duroty.application.mail.actions.SettingsAction" 
+				scope="request"
+				name="formSettings" 
+				validate="false">				
+			<forward name="success" path="/mail/preferences/settings.jsp"/>
+			<forward name="failure" path="/mail/preferences/settings.jsp" />			
+		</action>
+		
+		<action path="/mail/preferences/updateSettings"
+				type="com.duroty.application.mail.actions.UpdateSettingsAction" 
+				scope="request"
+				name="formSettings" 
+				validate="false">				
+			<forward name="success" path="/mail/preferences/updateSettings.jsp"/>
+			<forward name="failure" path="/mail/preferences/updateSettings.jsp" />			
+		</action>
+		
+		<action path="/mail/preferences/contacts"
+				type="com.duroty.application.mail.actions.ContactsAction" 
+				scope="request"
+				validate="false">				
+			<forward name="success" path="/mail/preferences/contacts.jsp"/>
+			<forward name="failure" path="/mail/preferences/contacts.jsp" />			
+		</action>
+		
+		<action path="/mail/preferences/searchContacts"
+				type="com.duroty.application.mail.actions.SearchContactsAction" 
+				scope="request"
+				validate="false">				
+			<forward name="success" path="/mail/preferences/searchContacts.jsp"/>
+			<forward name="failure" path="/mail/preferences/searchContacts.jsp" />			
+		</action>
+		
+		<action path="/mail/preferences/searchGroups"
+				type="com.duroty.application.mail.actions.SearchGroupsAction" 
+				scope="request"
+				validate="false">				
+			<forward name="success" path="/mail/preferences/searchGroups.jsp"/>
+			<forward name="failure" path="/mail/preferences/searchGroups.jsp" />			
+		</action>
+		
+		<action path="/mail/preferences/addContact"
+				type="com.duroty.application.mail.actions.AddContactAction" 
+				name="formContact" 
+				scope="request"
+				validate="false">				
+			<forward name="success" path="/mail/preferences/addContact.jsp"/>
+			<forward name="failure" path="/mail/preferences/addContact.jsp" />			
+		</action>
+		
+		<action path="/mail/preferences/addGroup"
+				type="com.duroty.application.mail.actions.AddGroupAction" 
+				name="formGroup" 
+				scope="request"
+				validate="false">				
+			<forward name="success" path="/mail/preferences/addGroup.jsp"/>
+			<forward name="failure" path="/mail/preferences/addGroup.jsp" />			
+		</action>
+		
+		<action path="/mail/preferences/updateContact"
+				type="com.duroty.application.mail.actions.UpdateContactAction" 
+				scope="request"
+				validate="false">				
+			<forward name="success" path="/mail/preferences/updateContact.jsp"/>
+			<forward name="failure" path="/mail/preferences/updateContact.jsp" />			
+		</action>
+		
+		<action path="/mail/preferences/deleteContacts"
+				type="com.duroty.application.mail.actions.DeleteContactsAction" 
+				scope="request"
+				name="formContacts"
+				validate="false">				
+			<forward name="success" path="/mail/preferences/deleteContacts.jsp"/>
+			<forward name="failure" path="/mail/preferences/deleteContacts.jsp" />			
+		</action>
+		
+		<action path="/mail/preferences/deleteGroups"
+				type="com.duroty.application.mail.actions.DeleteGroupsAction" 
+				scope="request"
+				name="formGroups"
+				validate="false">				
+			<forward name="success" path="/mail/preferences/deleteGroups.jsp"/>
+			<forward name="failure" path="/mail/preferences/deleteGroups.jsp" />			
+		</action>
+		
+		<action path="/mail/preferences/labels"
+				type="com.duroty.application.mail.actions.LabelsAction" 
+				scope="request"
+				validate="false">				
+			<forward name="success" path="/mail/preferences/labels.jsp"/>
+			<forward name="failure" path="/mail/preferences/labels.jsp" />			
+		</action>
+		
+		<action path="/mail/preferences/deleteLabel"
+				type="com.duroty.application.mail.actions.DeleteLabelAction" 
+				scope="request"
+				validate="false">				
+			<forward name="success" path="/mail/preferences/labels.drt" redirect="true" />
+			<forward name="failure" path="/mail/preferences/labels.drt" redirect="true" />			
+		</action>
+		
+		<action path="/mail/preferences/updateLabel"
+				type="com.duroty.application.mail.actions.UpdateLabelAction" 
+				scope="request"
+				name="formUpdateLabel"
+				validate="false">				
+			<forward name="success" path="/mail/preferences/labels.drt" redirect="true" />
+			<forward name="failure" path="/mail/preferences/labels.drt" redirect="true" />			
+		</action>		
+		
+		<action path="/mail/preferences/filters"
+				type="com.duroty.application.mail.actions.FiltersAction" 
+				scope="request"
+				validate="false">				
+			<forward name="success" path="/mail/preferences/filters.jsp"/>
+			<forward name="failure" path="/mail/preferences/filters.jsp" />			
+		</action>
+		
+		<action path="/mail/preferences/deleteFilter"
+				type="com.duroty.application.mail.actions.DeleteFilterAction" 
+				scope="request"
+				validate="false">				
+			<forward name="success" path="/mail/preferences/filters.drt" redirect="true" />
+			<forward name="failure" path="/mail/preferences/filters.drt" redirect="true" />			
+		</action>
+		
+		<action path="/mail/preferences/formFilter"
+				type="com.duroty.application.mail.actions.FormFilterAction" 
+				scope="request"
+				name="formFilter" 
+				validate="false">				
+			<forward name="success" path="/mail/preferences/formFilter.jsp" />
+			<forward name="failure" path="/mail/preferences/formFilter.jsp" />			
+		</action>
+		
+		<action path="/mail/preferences/insertFilter"
+				type="com.duroty.application.mail.actions.InsertFilterAction" 
+				scope="request"
+				name="formFilter" 
+				validate="false">				
+			<forward name="success" path="/mail/preferences/filters.drt" redirect="true" />
+			<forward name="failure" path="/mail/preferences/filters.drt" redirect="true" />
+		</action>
+		
+		<action path="/mail/preferences/formUpdateFilter"
+				type="com.duroty.application.mail.actions.FormUpdateFilterAction" 
+				scope="request"
+				name="formUpdateFilter" 
+				validate="false">				
+			<forward name="success" path="/mail/preferences/formUpdateFilter.jsp" />
+			<forward name="failure" path="/mail/preferences/formUpdateFilter.jsp" />			
+		</action>
+		
+		<action path="/mail/preferences/updateFilter"
+				type="com.duroty.application.mail.actions.UpdateFilterAction" 
+				scope="request"
+				name="formUpdateFilter" 
+				validate="false">				
+			<forward name="success" path="/mail/preferences/filters.drt" redirect="true" />
+			<forward name="failure" path="/mail/preferences/filters.drt" redirect="true" />
+		</action>		
+		
+		<action path="/mail/preferences/identities"
+				type="com.duroty.application.mail.actions.IdentitiesAction" 
+				scope="request"
+				validate="false">				
+			<forward name="success" path="/mail/preferences/identities.jsp"/>
+			<forward name="failure" path="/mail/preferences/identities.jsp" />			
+		</action>
+		
+		<action path="/mail/preferences/formIdentity"
+				type="com.duroty.application.mail.actions.FormIdentityAction" 
+				scope="request"
+				validate="false">				
+			<forward name="success" path="/mail/preferences/formIdentity.jsp"/>
+			<forward name="failure" path="/mail/preferences/formIdentity.jsp" />			
+		</action>
+		
+		<action path="/mail/preferences/createIdentity"
+				type="com.duroty.application.mail.actions.CreateIdentityAction" 
+				name="formIdentity" 
+				scope="request"
+				validate="false">				
+			<forward name="success" path="/mail/preferences/createIdentity.jsp"/>
+			<forward name="failure" path="/mail/preferences/createIdentity.jsp" />			
+		</action>
+		
+		<action path="/mail/preferences/setDefaultIdentity"
+				type="com.duroty.application.mail.actions.SetDefaultIdentityAction" 
+				scope="request"
+				validate="false">				
+			<forward name="success" path="/mail/preferences/setDefaultIdentity.jsp"/>
+			<forward name="failure" path="/mail/preferences/setDefaultIdentity.jsp" />			
+		</action>
+		
+		<action path="/mail/preferences/validateIdentity"
+				type="com.duroty.application.mail.actions.ValidateIdentityAction" 
+				scope="request"
+				validate="false">				
+			<forward name="success" path="/mail/preferences/validateIdentityOk.jsp"/>
+			<forward name="failure" path="/mail/preferences/validateIdentityKo.jsp" />			
+		</action>
+		
+		<action path="/mail/preferences/deleteIdentity"
+				type="com.duroty.application.mail.actions.DeleteIdentityAction" 
+				scope="request"
+				validate="false">				
+			<forward name="success" path="/mail/preferences/identities.drt" redirect="true"/>
+			<forward name="failure" path="/mail/preferences/identities.drt" redirect="true"/>			
+		</action>
+	</action-mappings>
+</struts-config>
+

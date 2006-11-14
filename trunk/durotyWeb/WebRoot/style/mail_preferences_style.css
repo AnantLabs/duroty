@@ -1,0 +1,491 @@
+BODY {
+	font-family: arial;
+	font-stretch: normal;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	font-size: 12px;
+	margin: 0px;
+}
+
+TR,TD,DIV,P {
+	font-family: arial;
+	font-stretch: normal;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	font-size: 12px;
+	color: #000000;
+}
+
+SELECT,INPUT,TEXTAREA {
+	font-family: arial;
+	font-stretch: normal;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	font-size: 12px;
+	color: #000000;
+}
+
+.BUTTON {
+	border: 1px solid black;
+}
+
+FORM {
+	margin: 0px;
+	padding: 0px;
+}
+
+SELECT:focus,input:focus,textarea:focus {
+	background-color: lightyellow;
+	color: black;
+}
+
+A,A:VISITED {
+	color: blue;
+	text-decoration: underline;
+}
+
+A:HOVER {
+	color: blue;
+	text-decoration: underline;
+}
+
+.link {
+	color: blue;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.linkUnderline {
+	color: blue;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+/* hide a block */
+.hide {
+	display: none;
+	visibility: hidden;
+}
+
+/* show a block */
+.show { /*display: inline;*/
+	visibility: visible;
+}
+
+.showError { /*display: inline;*/
+	visibility: visible;
+	color: white;
+	background-color: red;
+	padding: 2px;
+	border: 1px solid black;
+	font-size: 11px;
+	width: 500px;
+	text-align: left;
+}
+
+.showInfo { /*display: inline;*/
+	visibility: visible;
+	color: white;
+	background-color: #38afe2;
+	padding: 2px;
+	border: 1px solid black;
+	font-size: 11px;
+	width: 500px;
+	text-align: left;
+}
+
+.mesh {
+	width: 100%;
+}
+
+.headLeft {
+	width: 0px;
+	font-size: 16px;
+	font-weight: bold;
+	padding-left: 8px;
+	white-space: nowrap;
+}
+
+.headCenter {
+	width: 100%;
+	text-align: right;
+	vertical-align: top;
+	font-size: 11px;
+}
+
+.toolbarInfo {
+	background-color: #fbcc4b;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+.navLeft {
+	height: 22px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+	width: 100%;
+}
+
+.navCenter {
+	height: 22px;
+	padding-right: 20px;
+	padding-bottom: 5px;
+	text-align: right;
+	font-size: 14px;
+}
+
+.left {
+	vertical-align: top;
+	padding-left: 5px;
+	padding-bottom: 5px;
+}
+
+.menu {
+	width: 0px;
+}
+
+.contents {
+	vertical-align: top;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 8px;
+	text-align: left;
+}
+
+.layout {
+	border-left: 4px solid #fbcc4b;
+}
+
+.foot {
+	height: 22px;
+	font-size: 11px;
+	padding-left: 8px;
+	padding-right: 10px;
+	text-align: center;
+}
+
+.folders {
+	
+}
+
+.folder {
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 5px;
+	padding-right: 5px;
+	width: 150px;
+	cursor: pointer;
+	font-size: 13px;
+}
+
+.folderSelected { /*c7dfaa2*/
+	background-color: #fbcc4b;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 5px;
+	padding-right: 5px;
+	font-weight: bold;
+	width: 150px;
+	cursor: pointer;
+	font-size: 13px;
+}
+
+.buttonCompose {
+	border: 1px solid black;
+	width: 100%;
+	background-color: #38afe2;
+	color: white;
+	font-weight: bold;
+}
+
+.buttonEditDraft {
+	border: 1px solid black;
+	background-color: #38afe2;
+	color: white;
+	font-weight: bold;
+}
+
+#cornerLoading {
+	width: 100px;
+	padding: 5px 5px 5px 5px;
+	font: 11px/ 1.2em "lucida console", "courier new", monospace;
+	text-align: left;
+	color: white;
+	background-color: red;
+	border: 1px solid black;
+	display: none;
+}
+
+/* star html hack - IE only */
+* html #cornerLoading {
+}
+
+/* a bet on future IEs */
+#cornerLoading [id] {
+	position: fixed;
+}
+
+.messages {
+	
+}
+
+.tableHeader {
+	
+}
+
+.tableHeader td.title {
+	background-color: #fbcc4b;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+}
+
+.tableHeader td.area {
+}
+
+.tableHeader td.areaWithPadding {
+	padding: 5px;
+}
+
+.composeArea {
+	background-color: #eeeeee;
+}
+
+.tableMessages {
+	table-layout: fixed;
+	width: 100%;
+}
+
+.tableMessages td.noMail {
+	width: 100%;
+	text-align: center;
+	font-weight: bold;
+	font-size: 14px;
+	vertical-align: middle;
+	height: 300px;
+}
+
+.tableMessages td.error {
+	width: 100%;
+	padding-top: 50px;
+	padding-bottom: 50px;
+	text-align: center;
+	font-weight: bold;
+	font-size: 14px;
+	color: maroon;
+}
+
+.tableMessages td.message {
+	white-space: nowrap;
+	overflow: hidden;
+/*	text-overflow: ellipsis;*/
+	empty-cells: show;
+	background-color: #f1f1f1;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	border-bottom: 1px solid #cccccc;
+	cursor: pointer;
+}
+
+.tableMessages td.messageNew {
+	white-space: nowrap;
+	overflow: hidden;
+/*	text-overflow: ellipsis;*/
+	empty-cells: show;
+	background-color: #ffffcc;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	border-bottom: 1px solid #bbbbbb;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.tableMessages td.messageImportant {
+	white-space: nowrap;
+	overflow: hidden;
+/*	text-overflow: ellipsis;*/
+	empty-cells: show;
+	background-color: #c6e4ff;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	border-bottom: 1px solid #cccccc;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+.tableMessages span.infoBox {
+	font-size: 10px;
+	font-weight: normal;
+	color: green;
+}
+
+.tableReadMessage {
+	table-layout: fixed;
+	width: 85%;
+}
+
+.tableReadMessage td.subject {
+	font-weight: bold;
+	font-size: 14px;
+	padding: 5px;
+	background-color: #eeeeee;
+	width: 100%;
+}
+
+.tableReadMessage td.options {
+	padding: 5px;
+	width: 100%;
+	background-color: #eeeeee;
+}
+
+.tableReadMessage td.print {
+	padding-bottom: 0px;
+	padding-top: 10px;
+	width: 100%;
+	text-align: right;
+}
+
+.tableReadMessage span.from {
+	font-weight: bold;
+	font-size: 13px;
+	color: blue;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.tableReadMessage td.body {
+	width: 100%;
+	border: 1px solid #eeeeee;
+	padding: 5px;
+}
+
+.tableReadMessage td.attachment {
+	padding: 5px;
+	width: 100%;
+	background-color: #eeeeee;
+}
+
+.tableOptions {
+	border: 1px solid #eeeeee;
+	background-color: #fbf9c1;
+	padding: 3px;
+}
+
+.tableOptions td {
+	font-size: 13px;
+}
+
+
+/************ DYNAMIC LIST CONTACTS ***************/
+/* Big box with list of options */
+#ajax_listOfOptions {
+	position: absolute; /* Never change this one */
+	width: 500px; /* Width of box */
+	height: 250px; /* Height of box */
+	overflow: auto; /* Scrolling features */
+	border: 1px solid #3d6a9b; /* Dark green border */
+	background-color: #fff; /* White background color */
+	text-align: left;
+	font-size: 12px;
+	z-index: 100;
+}
+
+#ajax_listOfOptions div { /* General rule for both .optionDiv and .optionDivSelected */
+	margin: 1px;
+	padding: 1px;
+	cursor: pointer;
+	font-size: 12px;
+}
+
+#ajax_listOfOptions .optionDiv { /* Div for each item in list */
+	
+}
+
+#ajax_listOfOptions .optionDivSelected { /* Selected item in the list */
+	background-color: #f7bc3e;
+	color: #000000;
+}
+
+.paginationLink {
+	font-size: 13px;
+	font-weight: bold;
+	color: blue;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.pagination {
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.paginationActual {
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.paginationTotal {
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.formLabel {
+	border: 5px solid #800000;
+}
+
+.formLabel td.title {
+	color: white;
+	font-weight: bold;
+	background-color: #800000;
+	padding: 5px;
+	font-size: 14px;
+}
+
+.formLabel td.title a {
+	color: white;
+}
+
+.formLabel td.area {
+	background: #f5f5f5;
+	padding: 10px;
+}
+
+.formSettings {
+	border: 5px solid #38afe2;
+}
+
+.formSettings td.title {
+	color: white;
+	font-weight: bold;
+	background-color: #38afe2;
+	padding: 5px;
+	font-size: 14px;
+}
+
+.formSettings span.titleActive {
+	color: black;
+	font-weight: bold;
+	background-color: #b8dbe2;
+	padding: 5px;
+	font-size: 14px;
+}
+
+.formSettings td.title a {
+	color: white;
+}
+
+.formSettings td.area {
+	background: #b8dbe2;
+	padding: 10px;
+}

@@ -1,0 +1,356 @@
+BODY {
+	font-family: arial;
+	font-stretch: normal;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	font-size: 12px;
+	margin: 20px;
+}
+
+TR,TD,DIV,P {
+	font-family: arial;
+	font-stretch: normal;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	font-size: 12px;
+	color: #000000;
+}
+
+SELECT,INPUT,TEXTAREA {
+	font-family: arial;
+	font-stretch: normal;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: normal;
+	font-size: 12px;
+	color: #000000;
+}
+
+A,A:VISITED {
+	color: blue;
+	text-decoration: underline;
+}
+
+A:HOVER {
+	color: blue;
+	text-decoration: underline;
+}
+
+/* hide a block */
+.hide {
+	display: none;
+	visibility: hidden;
+}
+
+/* show a block */
+.show { /*display: inline;*/
+	visibility: visible;
+}
+
+.mesh {
+	width: 100%;
+}
+
+.headLeft {
+	width: 0px;
+	font-size: 16px;
+	font-weight: bold;
+	padding-left: 8px;
+	padding-right: 8px;
+	white-space: nowrap;	
+}
+
+.headCenter {
+	width: 100%;
+	text-align: right;
+	padding-right: 10px;
+	font-size: 16px;
+	background-color: #fbcc4b;
+}
+
+.toolbarInfo {
+	background-color: #fbcc4b;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+.right {
+	width: 320px;
+	vertical-align: top;
+	padding: 25px;
+}
+
+.contents {
+	vertical-align: top;
+	padding: 25px;
+	text-align: justify;
+	font-size: 14px;
+}
+
+.foot {
+	height: 22px;
+	text-align: center;
+	width: 100%;
+	padding-right: 10px;
+	font-size: 12px;
+	background-color: #fbcc4b;
+}
+
+.listMessages {
+	border-left: 4px solid #fbcc4b;
+}
+
+.listMessages td.title {
+	background-color: #fbcc4b;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.listMessages td.area {
+	
+}
+
+.preferences {
+	border-left: 4px solid #38afe2;
+	border-right: 4px solid #38afe2;
+}
+
+.preferences td.title {
+	background-color: #38afe2;
+	padding-top: 5px;
+	color: white;
+}
+
+.preferences td.active {
+	background-color: #b8dbe2;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.preferences td.inactive {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	color: white;
+}
+
+.preferences td.title a {
+	color: white;
+}
+
+.preferences td.area {
+	background-color: #b8dbe2;
+}
+
+.readMessage {
+	border-left: 4px solid #fbcc4b;
+}
+
+.readMessage td.title {
+	background-color: #fbcc4b;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.readMessage td.area {
+	padding: 10px;
+}
+
+.formCompose {
+	border-left: 4px solid #fbcc4b;
+	border-right: 4px solid #fbcc4b;
+}
+
+.formCompose td.title {
+	background-color: #fbcc4b;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.formCompose td.area {
+	font-size: 12px;
+	padding: 10px;
+}
+
+.composeArea {
+	background-color: #eeeeee;
+}
+
+.tableListMessage {
+	table-layout: fixed;
+	cursor: pointer;
+	width: 100%;
+}
+
+.message {
+	background-color: #f1f1f1;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-bottom: 1px solid #cccccc;
+}
+
+.messageNew {
+	background-color: #ffffcc;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-bottom: 1px solid #cccccc;
+	font-weight: bold;
+}
+
+.messageImportant {
+	background-color: #c6e4ff;
+	padding-left: 5px;
+	padding-right: 5px;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	border-bottom: 1px solid #cccccc;
+	font-weight: bold;
+}
+
+.msg {
+	
+}
+
+.msg td.msgTitle {
+	background-color: #eeeeee;
+	padding: 5px;
+	font-size: 15px;
+	font-weight: bold;
+	vertical-align: middle;
+}
+
+.msg td.msgFrom {
+	background-color: #eeeeee;
+	padding: 5px;
+	font-size: 13px;
+	font-weight: bold;
+	color: blue;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.msg td.msgOption {
+	background-color: #eeeeee;
+	color: blue;
+	padding: 5px;
+	font-size: 12px;
+	cursor: pointer;
+}
+
+.msg td.msgDate {
+	background-color: #eeeeee;
+	padding: 5px;
+	font-size: 12px;
+}
+
+.msg td.msgHasAttach {
+	background-color: #eeeeee;
+	padding: 5px;
+	font-size: 12px;
+}
+
+.msg td.showMsgOptions {
+	background-color: #fbf9c1;
+	font-size: 13px;
+	padding: 5px;
+	visibility: visible;
+	border: 1px solid #cccccc;
+}
+
+.msg td.formReply {
+	background-color: #eeeeee;
+	font-size: 13px;
+	padding: 5px;
+	visibility: visible;
+	border: 1px solid #cccccc;
+}
+
+.msg td.msgBody {
+	border: 1px solid #cccccc;
+	padding: 4px;
+	font-size: 13px;
+}
+
+.msg BLOCKQUOTE {
+	border-width: 2px;
+}
+
+.errorMessage {
+	color: red;
+	font-weight: bold;
+}
+
+.compose {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.folder {
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 5px;
+	padding-right: 5px;
+	width: 100px;
+}
+
+.folderSelected { /*c7dfaa2*/
+	background-color: #fbcc4b;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	padding-left: 5px;
+	padding-right: 5px;
+	font-weight: bold;
+	width: 100px;
+}
+
+.buttonReply {
+	background-color: #fbcc4b;
+}
+
+#loading {
+	width: 100px;
+	margin: 0px;
+	padding: 5px 5px 5px 5px;
+	font: 11px/ 1.2em "lucida console", "courier new", monospace;
+	text-align: left;
+	color: white;
+	background-color: red;
+	border: 1px solid black;
+	display: none;
+}
+
+/* star html hack - IE only */
+* html #loading {
+	position: absolute;
+}
+
+/* a bet on future IEs */
+#loading [id] {
+	position: fixed;
+}
+
+.quotaExceded {
+	color: red;
+	font-size: 14px;
+	font-weight: bold;
+	width: 100%;
+	background-color: #efebe7;
+}
+
+.quotaLayer {
+	color: green;
+	font-size: 14px;
+}

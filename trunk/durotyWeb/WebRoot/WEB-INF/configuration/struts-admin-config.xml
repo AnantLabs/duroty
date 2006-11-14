@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+	<data-sources />
+	
+	<form-beans>
+		<form-bean name="formUser" dynamic="true" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="idint" type="java.lang.Integer"/>
+			<form-property name="name" type="java.lang.String"/>
+			<form-property name="email" type="java.lang.String"/>
+			<form-property name="emailIdentity" type="java.lang.String"/>
+			<form-property name="language" type="java.lang.String"/>
+			<form-property name="signature" type="java.lang.String"/>
+			<form-property name="vacationActive" type="java.lang.Boolean"/>
+			<form-property name="vacationSubject" type="java.lang.String"/>
+			<form-property name="vacationBody" type="java.lang.String"/>
+			<form-property name="htmlMessages" type="java.lang.Boolean"/>
+			<form-property name="byPage" type="java.lang.Integer"/>
+			<form-property name="quotaSize" type="java.lang.Integer"/>
+			<form-property name="roles" type="java.lang.Integer[]"/>
+			<form-property name="spamTolerance" type="java.lang.Boolean" />
+			<form-property name="active" type="java.lang.Boolean" />
+			<form-property name="username" type="java.lang.String" />
+			<form-property name="password" type="java.lang.String" />
+			<form-property name="confirmPassword" type="java.lang.String" />
+		</form-bean>
+		
+		<form-bean name="formDeleteUsers" dynamic="true" type="org.apache.struts.validator.DynaValidatorForm">
+			<form-property name="idints" type="java.lang.Integer[]"/>
+		</form-bean>
+	</form-beans>
+	
+	<global-exceptions />
+	
+	<global-forwards />
+	
+	<action-mappings>	
+		<action path="/admin/admin"
+			type="com.duroty.application.admin.actions.IndexAction"
+			scope="request" validate="false">
+			<forward name="success" path="/admin/admin.jsp" />
+			<forward name="failure" path="/admin/admin.jsp" />
+		</action>	
+		
+		<action path="/admin/control"
+			type="com.duroty.application.admin.actions.ControlAction"
+			scope="request" validate="false">
+			<forward name="success" path="/admin/control.jsp" />
+			<forward name="failure" path="/admin/control.jsp" />
+		</action>
+		
+		<action path="/admin/util"
+			type="com.duroty.application.admin.actions.UtilAction" scope="request"
+			validate="false">
+			<forward name="success" path="/admin/util.jsp" />
+			<forward name="failure" path="/admin/util.jsp" />
+		</action>
+		
+		<action path="/admin/refresh"
+			type="com.duroty.application.admin.actions.RefreshAction" scope="request"
+			validate="false">
+			<forward name="success" path="/admin/refresh.jsp" />
+			<forward name="failure" path="/admin/refresh.jsp" />
+		</action>
+		
+		<action path="/admin/searchUsers"
+			type="com.duroty.application.admin.actions.SearchUsersAction" scope="request"
+			validate="false">
+			<forward name="success" path="/admin/searchUsers.jsp" />
+			<forward name="failure" path="/admin/searchUsers.jsp" />
+		</action>
+		
+		<action path="/admin/formUser"
+			type="com.duroty.application.admin.actions.FormUserAction" scope="request"
+			validate="false"
+			name="formUser">
+			<forward name="success" path="/admin/formUser.jsp" />
+			<forward name="failure" path="/admin/formUser.jsp" />
+		</action>
+		
+		<action path="/admin/insertUser"
+			type="com.duroty.application.admin.actions.InsertUserAction" scope="request"
+			validate="false"
+			name="formUser">
+			<forward name="success" path="/admin/insertUser.jsp" />
+			<forward name="failure" path="/admin/insertUser.jsp" />
+		</action>
+		
+		<action path="/admin/getUser"
+			type="com.duroty.application.admin.actions.GetUserAction" scope="request"
+			validate="false"
+			name="formUser">
+			<forward name="success" path="/admin/getUser.jsp" />
+			<forward name="failure" path="/admin/getUser.jsp" />
+		</action>
+		
+		<action path="/admin/updateUser"
+			type="com.duroty.application.admin.actions.UpdateUserAction" scope="request"
+			validate="false"
+			name="formUser">
+			<forward name="success" path="/admin/updateUser.jsp" />
+			<forward name="failure" path="/admin/updateUser.jsp" />
+		</action>
+		
+		<action path="/admin/deleteUsers"
+			type="com.duroty.application.admin.actions.DeleteUsersAction" scope="request"
+			validate="false"
+			name="formDeleteUsers">
+			<forward name="success" path="/admin/deleteUsers.jsp" />
+			<forward name="failure" path="/admin/deleteUsers.jsp" />
+		</action>
+	</action-mappings>	
+</struts-config>
+
