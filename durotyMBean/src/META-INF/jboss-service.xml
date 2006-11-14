@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE server>
+
+<server>
+	<mbean code="com.duroty.jmx.mbean.DurotyMailFactory" name="duroty.com:service=DurotyMailFactory">
+		<depends>jboss.system:type=Log4jService,service=Logging</depends>
+		<depends>jboss:service=Naming</depends>
+
+		<attribute name="JNDIName">java:/duroty/mail/durotyMailFactory</attribute>
+		<attribute name="Username">postmaster</attribute>
+		<attribute name="Password">password</attribute>
+		<attribute name="Configuration">
+			<!-- Test -->
+			<configuration>
+				<!-- Change your mail server prototocol -->
+				<property name="mail.transport.protocol" value="smtp" />
+
+				<!-- Change the mail server  -->
+				<property name="mail.imap.host" value="localhost" />
+				<property name="mail.pop3.host" value="localhost" />
+				<!-- Change the SMTP gateway server -->
+				<property name="mail.smtp.host" value="localhost" />
+				
+				<!-- Change imap port -->
+				<!-- 				
+				<property name="mail.imap.port" value="443" />
+				-->
+				
+				<!-- Change pop3 port -->
+				<!-- 
+				<property name="mail.pop3.port" value="110" />
+				-->
+
+				<!-- Enable debugging output from the javamail classes -->
+				<property name="mail.debug" value="false" />
+			</configuration>
+		</attribute>
+	</mbean>
+
+	<!-- you do not modify this mbean -->
+	<mbean code="com.duroty.jmx.mbean.ApplicationConstants" name="duroty.com:service=DurotyApplicationConstants">
+		<depends>jboss.system:type=Log4jService,service=Logging</depends>
+		<depends>jboss:service=Naming</depends>
+		<!-- 
+			Aquests atributes seran insertats en un Java Map public static per tal de poder accedir 
+			a les constants de cada mbean per jndi. Els atributs contenen el nom jndi d'acces als map
+			de configuració de cada mbean
+		-->
+		<attribute name="Configuration">
+			<configuration>
+				<property name="constantsConfig" value="java:/duroty/constants/ConstantsConfig" />
+				<property name="mailConfig" value="java:/duroty/constants/MailConfig" />
+				<property name="bookmarkConfig" value="java:/duroty/constants/BookmarkConfig" />
+				<property name="chatConfig" value="java:/duroty/constants/ChatConfig" />
+			</configuration>
+		</attribute>
+	</mbean>
+	
+	<mbean code="com.duroty.jmx.mbean.MailConfig" name="duroty.com:service=DurotyMailConfig">
+		<depends>duroty.com:service=DurotyApplicationConstants</depends>
+		<depends>duroty.com:service=DurotyMailFactory</depends>
+		<attribute name="Configuration">
+			<configuration>
+				<!-- The jndi name for datasource (view $JBOSS_HOME/server/default/duroty-ds.xml) -->
+				<property name="dataSource" value="java:/duroty/jdbc/DataSource" />
+				
+				<!-- The jndi name for hibernate session factory view $JBOSS_HOME/server/default/deploy/duroty.ear/durotyHAR.har/META-INF/jboss-service.xml -->
+				<property name="hibernateSessionFactory" value="java:/duroty/hibernate/SessionFactory" />
+				
+				<!-- The jndi name for SMTP Factory -->
+				<property name="durotyMailFactory" value="java:/duroty/mail/durotyMailFactory" />			
+			
+				<!-- these are the default folders in duroty, you don't modify this -->
+				<property name="folderAll" value="ALL" />
+				<property name="folderImportant" value="IMPORTANT" />
+				<property name="folderInbox" value="INBOX" />
+				<property name="folderSent" value="SENT" />
+				<property name="folderDraft" value="DRAFT" />
+				<property name="folderSpam" value="SPAM" />
+				<property name="folderTrash" value="TRASH" />
+				<property name="folderBlog" value="BLOG" />
+				<property name="folderHidden" value="HIDDEN" />
+				<property name="folderChat" value="CHAT" />
+
+				<!-- The lucene analyzer for the email messages -->
+				<property name="luceneAnalyzer" value="com.duroty.lucene.analysis.AnalyzerISOLatin1" />
+				
+				<!-- This is the path where lucene index will be stored, by default -->
+				<property name="lucenePath" value="/opt/duroty/lucene" />
+				
+				<!-- This is the path where email messages will be stored, IF YOU USE POP3 SERVER 
+				(view install duroty section in http://www.duroty.com)-->
+				<property name="messagesPath" value="/opt/duroty/mail" />
+
+				<!-- percentage quota size alert <= 100 -->
+				<property name="quoteSizeAlert" value="10" />
+				
+				<!-- 
+					value="-1" the server will not index attachments
+					value="0" the server does not have limit in the attachments size (requires much RAM)
+					value="10k" the server index attachments <= 10*1024 bytes
+					value="10k" or value="10m" the server index attachments <= 10*1024*1024 bytes
+				-->
+				<property name="attachmentSize" value="1m" />
+				
+				<!-- If the server uses POP3 this it will be the messages factory -->
+				<property name="messagesFactory" value="com.duroty.service.POP3MessageFactory" />	
+				
+				<!-- If the server uses IMAP this it will be the messages factory -->
+				<!-- 
+				<property name="messagesFactory" value="com.duroty.service.IMAPMessageFactory" />
+				-->
+				
+				<!-- The default email domain for a new subscribtors -->
+				<property name="defaultEmailDomain" value="iigov.org" />
+				
+				<!-- You use this folders if the server is IMAP,
+				The folders will be created and/or subscribed is if they do not exist in the server.
+				
+				If you use POP3, you can comment this code				
+				-->				
+				<!-- The INBOX folder for IMAP/POP3 Server -->
+				<property name="serverInbox" value="INBOX" />
+				<!-- The SENT folder for IMAP Server -->
+				<property name="serverSent" value="Enviados" />
+				<!-- The DRAFT folder for IMAP Server -->
+				<property name="serverDraft" value="Borrador" />
+			</configuration>
+		</attribute>
+	</mbean>
+	
+	<mbean code="com.duroty.jmx.mbean.BookmarkConfig" name="duroty.com:service=DurotyBookmarkConfig">
+		<depends>duroty.com:service=DurotyApplicationConstants</depends>
+		<attribute name="Configuration">
+			<configuration>
+				<!-- The jndi name for hibernate session factory view $JBOSS_HOME/server/default/deploy/duroty.ear/durotyHAR.har/META-INF/jboss-service.xml -->
+				<property name="hibernateSessionFactory" value="java:/duroty/hibernate/SessionFactory" />
+			
+				<!-- The lucene analyzer for the email messages -->
+				<property name="luceneAnalyzer" value="com.duroty.lucene.analysis.AnalyzerISOLatin1" />
+				<!-- This is the path where lucene index will be stored, by default -->
+				<property name="lucenePath" value="/opt/duroty/lucene" />
+			</configuration>
+		</attribute>
+	</mbean>
+	
+	<mbean code="com.duroty.jmx.mbean.ChatConfig" name="duroty.com:service=DurotyChatConfig">
+		<depends>duroty.com:service=DurotyApplicationConstants</depends>
+		<attribute name="Configuration">
+			<configuration>
+				<!-- The jndi name for hibernate session factory view $JBOSS_HOME/server/default/deploy/duroty.ear/durotyHAR.har/META-INF/jboss-service.xml -->
+				<property name="hibernateSessionFactory" value="java:/duroty/hibernate/SessionFactory" />
+				
+				<!-- The jndi name for SMTP Factory -->
+				<property name="durotyMailFactory" value="java:/duroty/mail/durotyMailFactory" />
+			</configuration>
+		</attribute>
+	</mbean>		
+	
+	<mbean code="org.jboss.varia.scheduler.Scheduler" name="duroty.com:service=DurotyInitServerTask">
+		<depends>jboss.system:type=Log4jService,service=Logging</depends>
+		<depends>jboss.har:service=DurotyHibernate</depends>
+
+		<!-- The jndi name for hibernate session factory view $JBOSS_HOME/server/default/deploy/duroty.ear/durotyHAR.har/META-INF/jboss-service.xml -->
+		<attribute name="SchedulableArguments">java:/duroty/hibernate/SessionFactory</attribute>
+		<attribute name="SchedulableArgumentTypes">java.lang.String</attribute>
+		<attribute name="StartAtStartup">true</attribute>
+		<attribute name="SchedulableClass">com.duroty.task.InitServerTask</attribute>
+		<attribute name="InitialStartDate">NOW</attribute>
+		<attribute name="SchedulePeriod">1</attribute>
+		<attribute name="InitialRepetitions">1</attribute>
+	</mbean>		
+
+	<mbean code="org.jboss.varia.scheduler.Scheduler" name="duroty.com:service=DurotyMailTask">
+		<depends>jboss.system:type=Log4jService,service=Logging</depends>
+		<depends>jboss.har:service=DurotyHibernate</depends>
+		<depends>duroty.com:service=DurotyMailConfig</depends>
+
+		<attribute name="SchedulableArguments">10</attribute>
+		<attribute name="SchedulableArgumentTypes">int</attribute>
+		<attribute name="StartAtStartup">true</attribute>
+		
+		<!-- If the server uses POP3 this it will be the Service Task -->
+		<attribute name="SchedulableClass">com.duroty.task.POP3ServiceTask</attribute>
+		
+		<!-- If the server uses IMAP this it will be the Service Task -->
+		<!-- 
+		<attribute name="SchedulableClass">com.duroty.task.IMAPServiceTask</attribute>
+		-->
+		
+		<attribute name="InitialStartDate">10000</attribute>
+		<attribute name="SchedulePeriod">10000</attribute>
+		<attribute name="InitialRepetitions">-1</attribute>
+	</mbean>	
+	
+	<mbean code="org.jboss.varia.scheduler.Scheduler" name="duroty.com:service=DurotyMailOptimizerTask">
+		<depends>jboss.system:type=Log4jService,service=Logging</depends>
+		<depends>jboss.har:service=DurotyHibernate</depends>
+		<depends>duroty.com:service=DurotyMailConfig</depends>
+
+		<attribute name="SchedulableArguments">10</attribute>
+		<attribute name="SchedulableArgumentTypes">int</attribute>
+		<attribute name="StartAtStartup">true</attribute>
+		<attribute name="SchedulableClass">com.duroty.task.MailOptimizerTask</attribute>
+		<attribute name="InitialStartDate">22000</attribute>
+		<attribute name="SchedulePeriod">10000</attribute>
+		<attribute name="InitialRepetitions">-1</attribute>
+	</mbean>
+	
+	<mbean code="org.jboss.varia.scheduler.Scheduler" name="duroty.com:service=DurotyPurgeTask">
+		<depends>jboss.system:type=Log4jService,service=Logging</depends>
+		<depends>jboss.har:service=DurotyHibernate</depends>
+		<depends>duroty.com:service=DurotyMailConfig</depends>
+
+		<attribute name="SchedulableArguments"></attribute>
+		<attribute name="SchedulableArgumentTypes"></attribute>
+		<attribute name="StartAtStartup">true</attribute>
+		<attribute name="SchedulableClass">com.duroty.task.PurgeTrashAndSpam</attribute>
+		<attribute name="InitialStartDate">33000</attribute>
+		<attribute name="SchedulePeriod">10000</attribute>
+		<attribute name="InitialRepetitions">-1</attribute>
+	</mbean>
+	
+	<mbean code="org.jboss.varia.scheduler.Scheduler" name="duroty.com:service=DurotyDeleteMessagesTask">
+		<depends>jboss.system:type=Log4jService,service=Logging</depends>
+		<depends>jboss.har:service=DurotyHibernate</depends>
+		<depends>duroty.com:service=DurotyMailConfig</depends>
+
+		<attribute name="SchedulableArguments"></attribute>
+		<attribute name="SchedulableArgumentTypes"></attribute>
+		<attribute name="StartAtStartup">true</attribute>
+		<attribute name="SchedulableClass">com.duroty.task.DeleteMessagesTask</attribute>
+		<attribute name="InitialStartDate">44000</attribute>
+		<attribute name="SchedulePeriod">10000</attribute>
+		<attribute name="InitialRepetitions">-1</attribute>
+	</mbean>
+	
+	<mbean code="org.jboss.varia.scheduler.Scheduler" name="duroty.com:service=DurotyBookmarkTask">
+		<depends>jboss.system:type=Log4jService,service=Logging</depends>
+		<depends>jboss.har:service=DurotyHibernate</depends>
+		<depends>duroty.com:service=DurotyBookmarkConfig</depends>
+
+		<attribute name="SchedulableArguments">10</attribute>
+		<attribute name="SchedulableArgumentTypes">int</attribute>
+		<attribute name="StartAtStartup">true</attribute>
+		<attribute name="SchedulableClass">com.duroty.task.BookmarkServiceTask</attribute>
+		<attribute name="InitialStartDate">55000</attribute>
+		<attribute name="SchedulePeriod">10000</attribute>
+		<attribute name="InitialRepetitions">-1</attribute>
+	</mbean>
+	
+	<mbean code="org.jboss.varia.scheduler.Scheduler" name="duroty.com:service=DurotyBookmarkOptimizerTask">
+		<depends>jboss.system:type=Log4jService,service=Logging</depends>
+		<depends>jboss.har:service=DurotyHibernate</depends>
+		<depends>duroty.com:service=DurotyBookmarkConfig</depends>
+
+		<attribute name="SchedulableArguments">10</attribute>
+		<attribute name="SchedulableArgumentTypes">int</attribute>
+		<attribute name="StartAtStartup">true</attribute>
+		<attribute name="SchedulableClass">com.duroty.task.BookmarkOptimizerTask</attribute>
+		<attribute name="InitialStartDate">66000</attribute>
+		<attribute name="SchedulePeriod">10000</attribute>
+		<attribute name="InitialRepetitions">-1</attribute>
+	</mbean>
+	
+	<mbean code="org.jboss.varia.scheduler.Scheduler" name="duroty.com:service=DurotyChatTask">
+		<depends>jboss.system:type=Log4jService,service=Logging</depends>
+		<depends>jboss.har:service=DurotyHibernate</depends>
+		<depends>duroty.com:service=DurotyChatConfig</depends>
+
+		<attribute name="SchedulableArguments"></attribute>
+		<attribute name="SchedulableArgumentTypes"></attribute>
+		<attribute name="StartAtStartup">true</attribute>
+		<attribute name="SchedulableClass">com.duroty.task.ChatTask</attribute>
+		<attribute name="InitialStartDate">77000</attribute>
+		<attribute name="SchedulePeriod">300000</attribute>
+		<attribute name="InitialRepetitions">-1</attribute>
+	</mbean>
+</server>
