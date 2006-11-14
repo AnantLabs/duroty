@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-oct-2006 10:24:26 by Hibernate Tools 3.1.0.beta5 -->
+<hibernate-mapping>
+	<class name="com.duroty.hibernate.Conversations" table="conversations">
+		<id name="convIdint" type="int">
+			<column name="conv_idint" />
+			<generator class="sequence">
+				<param name="sequence">seq_chat</param>
+			</generator>
+		</id>
+		<many-to-one name="usersByConvSenderIdint" class="com.duroty.hibernate.Users" fetch="select">
+			<column name="conv_sender_idint" not-null="true" />
+		</many-to-one>
+		<many-to-one name="usersByConvRecipientIdint" class="com.duroty.hibernate.Users" fetch="select">
+			<column name="conv_recipient_idint" not-null="true" />
+		</many-to-one>
+		<property name="convMessage" type="string">
+			<column name="conv_message" not-null="true" />
+		</property>
+		<property name="convStamp" type="timestamp">
+			<column name="conv_stamp" not-null="true" />
+		</property>
+	</class>
+	
+	<query name="delete-conversations-by-from">
+    	DELETE FROM Conversations a WHERE a.usersByConvRecipientIdint = (from Users i where i.useUsername = :from)
+	</query>
+</hibernate-mapping>

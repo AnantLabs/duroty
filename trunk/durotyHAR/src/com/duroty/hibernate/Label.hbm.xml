@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 02-ago-2006 17:07:31 by Hibernate Tools 3.1.0.beta5 -->
+<hibernate-mapping>
+	<class name="com.duroty.hibernate.Label" table="label">
+		<id name="labIdint" type="int">
+			<column name="lab_idint" />
+			<generator class="sequence">
+				<param name="sequence">seq_duroty</param>
+			</generator>
+		</id>
+		<many-to-one name="users" class="com.duroty.hibernate.Users" fetch="select">
+			<column name="lab_use_idint" not-null="true" />
+		</many-to-one>
+		<property name="labName" type="string">
+			<column name="lab_name" length="50" not-null="true" />
+		</property>
+		<set name="labMeses" inverse="true" cascade="all">
+			<key>
+				<column name="lab_idint" not-null="true" />
+			</key>
+			<one-to-many class="com.duroty.hibernate.LabMes" />
+		</set>
+		<set name="filters" inverse="true" cascade="all">
+			<key>
+				<column name="fil_lab_idint" not-null="true" />
+			</key>
+			<one-to-many class="com.duroty.hibernate.Filter" />
+		</set>
+	</class>
+</hibernate-mapping>

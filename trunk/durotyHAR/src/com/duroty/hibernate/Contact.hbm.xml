@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 14-sep-2006 11:28:33 by Hibernate Tools 3.1.0.beta5 -->
+<hibernate-mapping>
+	<class name="com.duroty.hibernate.Contact" table="contact">
+		<id name="conIdint" type="int">
+			<column name="con_idint" />
+			<generator class="sequence">
+				<param name="sequence">seq_duroty</param>
+			</generator>
+		</id>
+		<many-to-one name="users" class="com.duroty.hibernate.Users" fetch="select">
+			<column name="con_use_idint" not-null="true" />
+		</many-to-one>
+		<property name="conName" type="string">
+			<column name="con_name" length="50" />
+		</property>
+		<property name="conEmail" type="string">
+			<column name="con_email" not-null="true" />
+		</property>
+		<property name="conSentDate" type="timestamp">
+			<column name="con_sent_date" length="8" />
+		</property>
+		<property name="conReceivedDate" type="timestamp">
+			<column name="con_received_date" length="8" />
+		</property>
+		<property name="conCount" type="int">
+			<column name="con_count" not-null="true" />
+		</property>
+		<property name="conDescription" type="string">
+			<column name="con_description" />
+		</property>
+		<set name="conColis" inverse="true" cascade="all">
+			<key>
+				<column name="con_idint" not-null="true" />
+			</key>
+			<one-to-many class="com.duroty.hibernate.ConColi" />
+		</set>
+	</class>
+</hibernate-mapping>

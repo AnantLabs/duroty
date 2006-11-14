@@ -1,0 +1,261 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 31-jul-2006 11:12:15 by Hibernate Tools 3.1.0.beta5 -->
+<hibernate-mapping>
+	<class name="com.duroty.hibernate.Message" table="message">
+		<id name="mesIdint" type="int">
+			<column name="mes_idint" />
+			<generator class="sequence">
+				<param name="sequence">seq_duroty</param>
+			</generator>
+		</id>
+		<many-to-one name="users" class="com.duroty.hibernate.Users" fetch="select">
+			<column name="mes_use_idint" not-null="true" />
+		</many-to-one>
+		<property name="mesName" type="string">
+			<column name="mes_name" length="200" not-null="true" />
+		</property>
+		<property name="mesReferences" type="string">
+			<column name="mes_references" length="200" />
+		</property>
+		<property name="mesBox" type="string">
+			<column name="mes_box" length="15" not-null="true" />
+		</property>
+		<property name="mesFrom" type="string">
+			<column name="mes_from" not-null="true" />
+		</property>
+		<property name="mesTo" type="string">
+			<column name="mes_to" not-null="true" />
+		</property>
+		<property name="mesCc" type="string">
+			<column name="mes_cc" />
+		</property>
+		<property name="mesBcc" type="string">
+			<column name="mes_bcc" />
+		</property>
+		<property name="mesReplyTo" type="string">
+			<column name="mes_reply_to" not-null="true" />
+		</property>
+		<property name="mesSubject" type="string">
+			<column name="mes_subject" />
+		</property>
+		<property name="mesBody" type="string">
+			<column name="mes_body" />
+		</property>
+		<property name="mesDate" type="timestamp">
+			<column name="mes_date" length="8" not-null="true" />
+		</property>
+		<property name="mesFlagged" type="boolean">
+			<column name="mes_flagged" not-null="true" />
+		</property>
+		<property name="mesRecent" type="boolean">
+			<column name="mes_recent" not-null="true" />
+		</property>
+		<property name="mesSize" type="int">
+			<column name="mes_size" not-null="true" />
+		</property>
+		<property name="mesHeaders" type="string">
+			<column name="mes_headers" />
+		</property>
+		<set name="attachments" inverse="true" cascade="all" order-by="att_name asc">
+			<key>
+				<column name="att_mes_idint" not-null="true" />
+			</key>
+			<one-to-many class="com.duroty.hibernate.Attachment" />
+		</set>
+		<set name="labMeses" inverse="true" cascade="all">
+			<key>
+				<column name="mes_idint" not-null="true" />
+			</key>
+			<one-to-many class="com.duroty.hibernate.LabMes" />
+		</set>
+	</class>
+
+	<sql-query name="used-quota-size">
+		<return-scalar type="integer" column="size" />
+		SELECT SUM(MES_SIZE) AS size FROM MESSAGE WHERE MES_USE_IDINT = :user
+	</sql-query>
+
+	<sql-query name="mime-message">
+		SELECT message_body AS mime FROM MAIL_INBOX WHERE message_name = ? AND repository_name = ?
+	</sql-query>
+
+	<sql-query name="filter-by-user">
+		<return alias="i" class="com.duroty.hibernate.Filter" />
+		SELECT {i.*} FROM FILTER {i} WHERE FIL_LAB_IDINT IN (SELECT LAB_IDINT FROM LABEL WHERE LAB_USE_IDINT = :user) ORDER BY FIL_IDINT ASC
+	</sql-query>
+	
+	<sql-query name="count-all-total-messages">
+		<return-scalar column="count" type="java.lang.Integer" />
+		SELECT COUNT(*) as count FROM MESSAGE WHERE MES_BOX != :folderSpam AND MES_BOX != :folderTrash AND MES_BOX != :folderDelete AND MES_USE_IDINT = :user 
+	</sql-query>
+	
+	<sql-query name="messages-by-folder">
+		<return alias="i" class="com.duroty.hibernate.Message" />
+		SELECT {i.*} FROM MESSAGE {i} WHERE MES_BOX IN (:folder) AND MES_USE_IDINT = :user
+	</sql-query>
+	
+	<sql-query name="count-messages-by-folder">
+		<return-scalar column="count" type="java.lang.Integer" />
+		SELECT COUNT(*) AS count FROM MESSAGE WHERE MES_BOX IN (:folder) AND MES_USE_IDINT = :user
+	</sql-query>
+	
+	<sql-query name="messages-by-folder-label">
+		<return alias="i" class="com.duroty.hibernate.Message" />
+		SELECT {i.*} FROM MESSAGE {i} WHERE MES_BOX IN (:folder) AND MES_IDINT IN 
+		(SELECT MES_IDINT FROM LAB_MES WHERE LAB_IDINT = :label) 
+		AND MES_USE_IDINT = :user AND MES_BOX != :folderSpam AND MES_BOX != :folderTrash AND MES_BOX != :folderDelete
+	</sql-query>
+	
+	<sql-query name="count-messages-by-folder-label">
+		<return-scalar column="count" type="java.lang.Integer" />
+		SELECT COUNT(*) AS count FROM MESSAGE WHERE MES_BOX IN (:folder) AND MES_IDINT IN 
+		(SELECT MES_IDINT FROM LAB_MES WHERE LAB_IDINT = :label) 
+		AND MES_USE_IDINT = :user AND MES_BOX != :folderSpam AND MES_BOX != :folderTrash AND MES_BOX != :folderDelete
+	</sql-query>
+	
+	<!-- orders -->
+	
+	<sql-query name="messages-by-label">
+		<return alias="i" class="com.duroty.hibernate.Message" />
+		SELECT {i.*} FROM MESSAGE {i} WHERE MES_IDINT IN 
+		(SELECT MES_IDINT FROM LAB_MES WHERE LAB_IDINT = :label) 
+		AND MES_USE_IDINT = :user AND MES_BOX != :folderSpam AND MES_BOX != :folderTrash AND MES_BOX != :folderDelete
+	</sql-query>
+	
+	<sql-query name="messages-by-label-important-orderAsc">
+		<return alias="i" class="com.duroty.hibernate.Message" />
+		SELECT {i.*} FROM MESSAGE {i} WHERE MES_IDINT IN 
+		(SELECT MES_IDINT FROM LAB_MES WHERE LAB_IDINT = :label) 
+		AND MES_USE_IDINT = :user AND MES_BOX != :folderSpam AND MES_BOX != :folderTrash AND MES_BOX != :folderDelete ORDER BY MES_FLAGGED ASC
+	</sql-query>
+	
+	<sql-query name="messages-by-label-important-orderDesc">
+		<return alias="i" class="com.duroty.hibernate.Message" />
+		SELECT {i.*} FROM MESSAGE {i} WHERE MES_IDINT IN 
+		(SELECT MES_IDINT FROM LAB_MES WHERE LAB_IDINT = :label) 
+		AND MES_USE_IDINT = :user AND MES_BOX != :folderSpam AND MES_BOX != :folderTrash AND MES_BOX != :folderDelete ORDER BY MES_FLAGGED DESC
+	</sql-query>
+	
+	<sql-query name="messages-by-label-from-orderAsc">
+		<return alias="i" class="com.duroty.hibernate.Message" />
+		SELECT {i.*} FROM MESSAGE {i} WHERE MES_IDINT IN 
+		(SELECT MES_IDINT FROM LAB_MES WHERE LAB_IDINT = :label) 
+		AND MES_USE_IDINT = :user AND MES_BOX != :folderSpam AND MES_BOX != :folderTrash AND MES_BOX != :folderDelete ORDER BY MES_FROM ASC
+	</sql-query>
+	
+	<sql-query name="messages-by-label-from-orderDesc">
+		<return alias="i" class="com.duroty.hibernate.Message" />
+		SELECT {i.*} FROM MESSAGE {i} WHERE MES_IDINT IN 
+		(SELECT MES_IDINT FROM LAB_MES WHERE LAB_IDINT = :label) 
+		AND MES_USE_IDINT = :user AND MES_BOX != :folderSpam AND MES_BOX != :folderTrash AND MES_BOX != :folderDelete ORDER BY MES_FROM DESC
+	</sql-query>
+	
+	<sql-query name="messages-by-label-size-orderAsc">
+		<return alias="i" class="com.duroty.hibernate.Message" />
+		SELECT {i.*} FROM MESSAGE {i} WHERE MES_IDINT IN 
+		(SELECT MES_IDINT FROM LAB_MES WHERE LAB_IDINT = :label) 
+		AND MES_USE_IDINT = :user AND MES_BOX != :folderSpam AND MES_BOX != :folderTrash AND MES_BOX != :folderDelete ORDER BY MES_SIZE ASC
+	</sql-query>
+	
+	<sql-query name="messages-by-label-size-orderDesc">
+		<return alias="i" class="com.duroty.hibernate.Message" />
+		SELECT {i.*} FROM MESSAGE {i} WHERE MES_IDINT IN 
+		(SELECT MES_IDINT FROM LAB_MES WHERE LAB_IDINT = :label) 
+		AND MES_USE_IDINT = :user AND MES_BOX != :folderSpam AND MES_BOX != :folderTrash AND MES_BOX != :folderDelete ORDER BY MES_SIZE DESC
+	</sql-query>
+	
+	<sql-query name="messages-by-label-subject-orderAsc">
+		<return alias="i" class="com.duroty.hibernate.Message" />
+		SELECT {i.*} FROM MESSAGE {i} WHERE MES_IDINT IN 
+		(SELECT MES_IDINT FROM LAB_MES WHERE LAB_IDINT = :label) 
+		AND MES_USE_IDINT = :user AND MES_BOX != :folderSpam AND MES_BOX != :folderTrash AND MES_BOX != :folderDelete ORDER BY MES_SUBJECT ASC
+	</sql-query>
+	
+	<sql-query name="messages-by-label-subject-orderDesc">
+		<return alias="i" class="com.duroty.hibernate.Message" />
+		SELECT {i.*} FROM MESSAGE {i} WHERE MES_IDINT IN 
+		(SELECT MES_IDINT FROM LAB_MES WHERE LAB_IDINT = :label) 
+		AND MES_USE_IDINT = :user AND MES_BOX != :folderSpam AND MES_BOX != :folderTrash AND MES_BOX != :folderDelete ORDER BY MES_SUBJECT DESC
+	</sql-query>
+	
+	<sql-query name="messages-by-label-date-orderAsc">
+		<return alias="i" class="com.duroty.hibernate.Message" />
+		SELECT {i.*} FROM MESSAGE {i} WHERE MES_IDINT IN 
+		(SELECT MES_IDINT FROM LAB_MES WHERE LAB_IDINT = :label) 
+		AND MES_USE_IDINT = :user AND MES_BOX != :folderSpam AND MES_BOX != :folderTrash AND MES_BOX != :folderDelete ORDER BY MES_DATE ASC
+	</sql-query>
+	
+	<sql-query name="messages-by-label-date-orderDesc">
+		<return alias="i" class="com.duroty.hibernate.Message" />
+		SELECT {i.*} FROM MESSAGE {i} WHERE MES_IDINT IN 
+		(SELECT MES_IDINT FROM LAB_MES WHERE LAB_IDINT = :label) 
+		AND MES_USE_IDINT = :user AND MES_BOX != :folderSpam AND MES_BOX != :folderTrash AND MES_BOX != :folderDelete ORDER BY MES_DATE DESC
+	</sql-query>
+	
+	<!-- end orders -->
+	
+	<sql-query name="count-messages-by-label">
+		<return-scalar column="count" type="java.lang.Integer" />
+		SELECT COUNT(*) AS count FROM MESSAGE WHERE MES_IDINT IN 
+		(SELECT MES_IDINT FROM LAB_MES WHERE LAB_IDINT = :label) 
+		AND MES_USE_IDINT = :user AND MES_BOX != :folderSpam AND MES_BOX != :folderTrash AND MES_BOX != :folderDelete
+	</sql-query>
+	
+	<sql-query name="count-new-messages-by-folder">
+		<return-scalar column="count" type="java.lang.Integer" />
+		SELECT COUNT(*) AS count FROM MESSAGE WHERE MES_BOX IN 
+		(:folder) AND MES_USE_IDINT = :user AND MES_RECENT = true
+	</sql-query>
+	
+	<sql-query name="group-count-new-messages-by-label">
+		<return-scalar column="idint" type="java.lang.Integer" />
+		<return-scalar column="count" type="java.lang.Integer" />
+		SELECT B.LAB_IDINT as idint, COUNT(*) AS count FROM MESSAGE A, LABEL B, LAB_MES C 
+		WHERE A.MES_IDINT = C.MES_IDINT AND B.LAB_IDINT = C.LAB_IDINT 
+		AND A.MES_RECENT = true AND A.MES_BOX != 'SPAM' AND MES_BOX != 'TRASH' AND MES_BOX != 'DELETE' AND MES_USE_IDINT = :user GROUP BY B.LAB_IDINT
+	</sql-query>
+	
+	<sql-query name="count-new-messages-by-label">
+		<return-scalar column="count" type="java.lang.Integer" />
+		SELECT COUNT(*) AS count FROM MESSAGE WHERE MES_BOX != 'SPAM' AND MES_BOX != 'TRASH' AND MES_BOX != 'DELETE' AND MES_IDINT IN (SELECT MES_IDINT FROM LAB_MES WHERE LAB_IDINT = :label) AND MES_USE_IDINT = :user AND MES_RECENT = true
+	</sql-query>	
+	
+	<query name="delete-messages-by-mid">
+		UPDATE Message a SET a.mesBox = :trash WHERE a.mesName in (:mids) 
+		AND a.users = (from Users i where i.useUsername = :username)
+	</query>
+	
+	<query name="delete-messages-by-folder">
+		UPDATE Message a SET a.mesBox = :trash WHERE a.mesBox in (:box) 
+		AND a.users = (from Users i where i.useUsername = :username)
+	</query>
+	
+	<query name="delete-messages-by-label">
+		UPDATE Message a SET a.mesBox = :trash WHERE a in 
+		(select b.id.message from LabMes b WHERE b.id.label in (from Label c where c.labIdint = :label)) 
+		AND a.users = (from Users i where i.useUsername = :username)
+	</query>
+	
+	<query name="archive-messages-by-mid">
+		UPDATE Message a SET a.mesBox = :hidden WHERE a.mesName in (:mids) 
+		AND a.users = (from Users i where i.useUsername = :username)
+	</query>
+	
+	<query name="flagged-messages-by-mid">
+		UPDATE Message a SET a.mesFlagged = 
+			(CASE WHEN a.mesFlagged = true THEN false WHEN a.mesFlagged = false THEN true ELSE null END) WHERE 
+		a.mesName in (:mids) AND a.users = (from Users i where i.useUsername = :username)
+	</query>
+	
+	<query name="recent-messages-by-mid">
+		UPDATE Message a SET a.mesRecent = 
+			(CASE WHEN a.mesRecent = true THEN false WHEN a.mesRecent = false THEN true ELSE null END) WHERE 
+		a.mesName in (:mids) AND a.users = (from Users i where i.useUsername = :username)
+	</query>
+	
+	<query name="delete-labels-by-mid">
+    	DELETE FROM LabMes a WHERE a.id.message in (from Message b where b.mesName in (:mids) AND b.users = (from Users i where i.useUsername = :username))
+	</query>
+</hibernate-mapping>
