@@ -1,0 +1,8 @@
+<!-- Add the FormAuthValve to get access to the exception -->
+<Context cookies="true" crossContext="true">
+	<!-- Use this valve if your web server and application server are in different hosts -->
+	<!-- 	
+	<Valve className="org.jboss.web.tomcat.security.CookieFormAuthValve" includePassword="true" />
+	-->
+	<Valve className="org.jboss.web.tomcat.security.FormAuthValve" includePassword="true" />		
+</Context>

@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+	<head>
+		<title>Ajuda Cerca Avançada</title>
+		<STYLE>
+			BODY,TR,TD,DIV,P {
+				font-family: arial;
+				font-stretch: normal;
+				font-style: normal;
+				font-variant: normal;
+				font-weight: normal;
+				font-size: 13px;
+				margin: 10px;
+			}
+		</STYLE>
+	</head>
+	<body>
+		<h3>
+			Com utilitzar la cerca avançada?
+		</h3>
+		<div>
+			Els operadors avançats de la cerca són paraules de la consulta o símbols que realitzen accions especials a Duroty. Aquests operadors permeten que trobis el que estàs buscant ràpida i exactament.
+			<br />
+			<br />
+		</div>
+		<table border="1" cellpadding="2" cellspacing="0" width="100%">
+			<tr bgcolor="#DCF6DB">
+				<th align="center" valign="middle">
+					Operador
+				</th>
+				<th align="center" valign="middle">
+					Definició
+				</th>
+				<th align="center" valign="middle">
+					Exemples
+				</th>
+			</tr>
+			<tr>
+				<th align="center" valign="middle">
+					title:
+				</th>
+				<td align="center" nowrap="nowrap" valign="middle">
+					Utilitzat per especificar el títol de l'enllaç
+				</td>
+				<td valign="top">
+					Exemple - <strong>title:firefox</strong>
+					<br>
+					Significa - Enllaços que tenen la paraula "Firefox" al títol
+				</td>
+			</tr>
+			<tr>
+				<th align="center" valign="middle">
+					url:
+				</th>
+				<td align="center" nowrap="nowrap" valign="middle">
+					Utilitzat per especificar la url de l'enllaç
+				</td>
+				<td valign="top">
+					Exemple - <strong>url:duroty.com</strong>
+					<br>
+					Significa - Tots el enllaços que presenten com a url *.duroty.com
+				</td>
+			</tr>
+			<tr>
+				<th align="center" valign="middle">
+					keywords:
+				</th>
+				<td align="center" nowrap="nowrap" valign="middle">
+					Cerca per les paraules en les keywords dels enllaços
+				</td>
+				<td valign="top">
+					Exemple - <strong>keywords:java</strong>
+					<br>
+					Significa - Enllaços que tenen la paraula clau "java"
+				</td>
+			</tr>
+			<tr>
+				<th align="center" valign="middle">
+					contents:
+				</th>
+				<td align="center" nowrap="nowrap" valign="middle">
+					Cerca per les paraules del contingut de l'enllaç
+				</td>
+				<td valign="top">
+					Exemple - <strong>contents:postgresql</strong>
+					<br>
+					Significa - Enllaços que tenen la paraula "postgresql" en el contingut de l'enllaç
+				</td>
+			</tr>
+			<tr>
+				<th align="center" valign="middle">
+					comments:
+				</th>
+				<td align="center" nowrap="nowrap" valign="middle">
+					Cerca per les paraules del comentari dels enllaços
+				</td>
+				<td valign="top">
+					Exemple - <strong>comments:projecte</strong>
+					<br>
+					Significa - Enllaços que tenen la paraula "projecte" en algun comentari
+				</td>
+			</tr>
+			<tr>
+				<th align="center" valign="middle">
+					OR
+				</th>
+				<td align="center" nowrap="nowrap" valign="middle">
+					Cerca enllaços que presenten el terme A o el terme B*
+					<br>
+					*OR ha d'estar en majúscules
+				</td>
+				<td valign="top">
+					Exemple - <strong>title:jordi OR title:david</strong>
+					<br>
+					Significa - Enllaços que en el títol tenen la paraula Jordi o David
+				</td>
+			</tr>
+			<tr>
+				<th align="center" valign="middle">
+					-
+					<br>
+					(guió) 
+				</th>
+				<td align="center" nowrap="nowrap" valign="middle">
+					Utilitzat per excluir enllaços d'un cerca<br>(cal combinar amb algun altre tipus de cerca)
+				</td>
+				<td valign="top">
+					Exemple - <strong>title:java -url:google.com</strong>
+					<br>
+					Significa - Enllaços que tenen "java" al títol i que no estan al servidor de "google.com"
+				</td>
+			</tr>						
+			<tr>
+				<th align="center" valign="middle">
+					" "
+					<br>
+					<strong>(cometes)</strong><br>
+				</th>
+				<td align="center" nowrap="nowrap" valign="middle">
+					Utilitzades per cerques de frase exacta*
+					<br>
+					*Les majúscules no es tenen en compte
+				</td>
+				<td valign="top">
+					Exemple - <strong>"com instal·lar duroty"</strong>
+					<br>
+					Significa - Enllaços que contenen la frase "com instal·lar duroty" o "Com instal·lar DUROTY"
+				</td>
+			</tr>
+			<tr>
+				<th align="center" valign="middle">
+					( )
+					<br>
+				</th>
+				<td align="center" nowrap="nowrap" valign="middle">
+					Utilitzat per agrupacions/combinacions de cerques
+				</td>
+				<td valign="top">
+					Exemple - <strong> title:java url:(duroty.com OR google.com)</strong>
+					<br>
+					Significa - Enllaços que contenen la paraula "java" al títol i que pertanyen al domini "duroty.com" o "google.com"
+				</td>
+			</tr>
+		</table>
+	</body>
+</html>
