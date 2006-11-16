@@ -45,7 +45,7 @@ String path = request.getContextPath();
 </c:if>
 
 <div id="formAux" class="hide">
-	<form action="" method="post" name="formAux" target="util" enctype="multipart/form-data">
+	<form action="" method="get" name="formAux" target="util" enctype="multipart/form-data">
 		<input type="hidden" name="idint" />
 	</form>
 </div>
