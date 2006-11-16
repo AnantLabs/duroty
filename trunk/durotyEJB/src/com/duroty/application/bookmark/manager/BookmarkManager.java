@@ -227,6 +227,7 @@ public class BookmarkManager implements LuceneBookmarkContants {
             luceneBookmark.setUrlStr(bookmarkObj.getUrl());
             luceneBookmark.setTitle(bookmarkObj.getTitle());
             luceneBookmark.setKeywords(bookmarkObj.getKeywords());
+            luceneBookmark.setFlagged(bookmarkObj.isFlagged());
 
             if (doc != null) {
                 indexer.updateDocument(lucenePath, Field_idint, idint,
