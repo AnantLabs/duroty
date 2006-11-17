@@ -88,7 +88,7 @@
 	
 	<sql-query name="count-all-total-messages">
 		<return-scalar column="count" type="java.lang.Integer" />
-		SELECT COUNT(*) as count FROM MESSAGE WHERE MES_BOX != :folderSpam AND MES_BOX != :folderTrash AND MES_BOX != :folderDelete AND MES_USE_IDINT = :user 
+		SELECT COUNT(*) as count FROM MESSAGE WHERE MES_BOX != :folderSpam AND MES_BOX != :folderTrash AND MES_BOX != :folderDelete AND MES_BOX != :folderChat AND MES_USE_IDINT = :user 
 	</sql-query>
 	
 	<sql-query name="messages-by-folder">
