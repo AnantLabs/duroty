@@ -837,6 +837,7 @@ public class MailManager implements MailManagerConstants {
                 query.setString("folderSpam", this.folderSpam);
                 query.setString("folderTrash", this.folderTrash);
                 query.setString("folderDelete", FOLDER_DELETE);
+                query.setString("folderChat", this.folderChat);                
             } else {
                 query = hsession.getNamedQuery("count-messages-by-folder");
                 query.setString("folder", folderName);
