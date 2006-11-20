@@ -1,3 +1,25 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 /**
  *
  */
@@ -49,9 +71,9 @@ public class InsertLabelAction extends MailDefaultAction {
         ActionMessages errors = new ActionMessages();
 
         try {
-        	Preferences preferencesInstance = getPreferencesInstance(request);
-        	
-        	DynaActionForm _form = (DynaActionForm) form;
+            Preferences preferencesInstance = getPreferencesInstance(request);
+
+            DynaActionForm _form = (DynaActionForm) form;
 
             //label
             LabelObj label = new LabelObj(0, (String) _form.get("name"));
@@ -64,50 +86,66 @@ public class InsertLabelAction extends MailDefaultAction {
             String subject = (String) _form.get("subject");
             String hasWords = (String) _form.get("hasWords");
             String doesntHaveWords = (String) _form.get("doesntHaveWords");
-            
-            if ((from != null && !from.trim().equals("")) || (to != null && !to.trim().equals("")) || (subject != null && !subject.trim().equals("")) || (hasWords != null && !hasWords.trim().equals("")) || (doesntHaveWords != null && !doesntHaveWords.trim().equals(""))) {
-            	filter.setFrom(from);
+
+            if (((from != null) && !from.trim().equals("")) ||
+                    ((to != null) && !to.trim().equals("")) ||
+                    ((subject != null) && !subject.trim().equals("")) ||
+                    ((hasWords != null) && !hasWords.trim().equals("")) ||
+                    ((doesntHaveWords != null) &&
+                    !doesntHaveWords.trim().equals(""))) {
+                filter.setFrom(from);
                 filter.setTo(to);
                 filter.setSubject(subject);
                 filter.setHasWords(hasWords);
                 filter.setDoesntHaveWords(doesntHaveWords);
 
                 Boolean hasAttachment = (Boolean) _form.get("hasAttachment");
+
                 if (hasAttachment == null) {
-                	hasAttachment = new Boolean(false);
+                    hasAttachment = new Boolean(false);
                 }
+
                 filter.setHasAttachment(hasAttachment.booleanValue());
 
                 Boolean archive = (Boolean) _form.get("archive");
+
                 if (archive == null) {
-                	archive = new Boolean(false);
+                    archive = new Boolean(false);
                 }
+
                 filter.setArchive(archive.booleanValue());
 
                 Boolean important = (Boolean) _form.get("important");
+
                 if (important == null) {
-                	important = new Boolean(false);
+                    important = new Boolean(false);
                 }
+
                 filter.setImportant(important.booleanValue());
 
                 filter.setForward((String) _form.get("forward"));
 
                 Boolean trash = (Boolean) _form.get("trash");
+
                 if (trash == null) {
-                	trash = new Boolean(false);
+                    trash = new Boolean(false);
                 }
+
                 filter.setTrash(trash.booleanValue());
-                
+
                 Boolean orOperator = (Boolean) _form.get("operator");
+
                 if (orOperator == null) {
-                	orOperator = new Boolean(false);
+                    orOperator = new Boolean(false);
                 }
+
                 if (orOperator != null) {
-                	filter.setOperator(orOperator.booleanValue());
+                    filter.setOperator(orOperator.booleanValue());
                 }
-                
+
                 label.addFilter(filter);
-            }   
+            }
+
             preferencesInstance.createLabel(label);
         } catch (Exception ex) {
             String errorMessage = ExceptionUtilities.parseMessage(ex);

@@ -1,8 +1,25 @@
 /*
- * Pagination.java
- *
- * Created on 16 de noviembre de 2004, 10:26
- */
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 package com.duroty.utils;
 
 
@@ -34,25 +51,27 @@ public class Pagination {
      * @param uid order
      * @param extra desc
      */
-    public Pagination(String object, int actual, int total, int byPage, int group,
-        String action, String name, String uid, String extra) {
-    	text = "";
+    public Pagination(String object, int actual, int total, int byPage,
+        int group, String action, String name, String uid, String extra) {
+        text = "";
 
         int totalPages = (int) Math.ceil(((double) total / (double) byPage));
 
         if (totalPages <= 1) {
             return;
         }
-        
+
         int before = actual - 1;
         int after = actual + 1;
         int min = max(1, (actual - ((group / 2) + 1)));
         int max = min(totalPages, (actual + ((group / 2) - 1)));
 
         if (actual > 1) {
-        	text = text + "<span onclick=\"" + object + ".displayLocation('" + action + ":" + before + "*" + uid + "!" + extra + "')\" class=\"paginationLink\"><<</span>&nbsp;&nbsp;";
+            text = text + "<span onclick=\"" + object + ".displayLocation('" +
+                action + ":" + before + "*" + uid + "!" + extra +
+                "')\" class=\"paginationLink\"><<</span>&nbsp;&nbsp;";
         } else {
-        	text = text + "<span class=\"pagination\"><<&nbsp;&nbsp;</span>";
+            text = text + "<span class=\"pagination\"><<&nbsp;&nbsp;</span>";
         }
 
         if (min != 1) {
@@ -60,13 +79,18 @@ public class Pagination {
         }
 
         for (int i = min; i < actual; i++) {
-            text = text + "&nbsp;<span onclick=\"" + object + ".displayLocation('" + action + ":" + i + "*" + uid + "!" + extra + "')\" class=\"paginationLink\">" + i + "</span>&nbsp;";
+            text = text + "&nbsp;<span onclick=\"" + object +
+                ".displayLocation('" + action + ":" + i + "*" + uid + "!" +
+                extra + "')\" class=\"paginationLink\">" + i + "</span>&nbsp;";
         }
 
-        text = text + "<span class=\"paginationActual\">&nbsp;" + actual + "&nbsp;</span>";
+        text = text + "<span class=\"paginationActual\">&nbsp;" + actual +
+            "&nbsp;</span>";
 
         for (int i = (actual + 1); i <= max; i++) {
-            text = text + "&nbsp;<span onclick=\"" + object + ".displayLocation('" + action + ":" + i + "*" + uid + "!" + extra + "')\" class=\"paginationLink\">" + i + "</span>&nbsp;";
+            text = text + "&nbsp;<span onclick=\"" + object +
+                ".displayLocation('" + action + ":" + i + "*" + uid + "!" +
+                extra + "')\" class=\"paginationLink\">" + i + "</span>&nbsp;";
         }
 
         if (max != totalPages) {
@@ -74,15 +98,19 @@ public class Pagination {
         }
 
         if (actual < totalPages) {
-            text = text + "&nbsp;&nbsp;<span onclick=\"" + object + ".displayLocation('" + action + ":" + after + "*" + uid + "!" + extra + "')\" class=\"paginationLink\">>></span>";
+            text = text + "&nbsp;&nbsp;<span onclick=\"" + object +
+                ".displayLocation('" + action + ":" + after + "*" + uid + "!" +
+                extra + "')\" class=\"paginationLink\">>></span>";
         } else {
             text = text + "<span class=\"pagination\">&nbsp;&nbsp;>></span>";
         }
-        
-        if (total > byPage) {    	
-    		text = text + "&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"paginationTotal\">(" + total + ")</span>";    		
-    	} else {
-    	}
+
+        if (total > byPage) {
+            text = text +
+                "&nbsp;&nbsp;&nbsp;&nbsp;<span class=\"paginationTotal\">(" +
+                total + ")</span>";
+        } else {
+        }
     }
 
     /**

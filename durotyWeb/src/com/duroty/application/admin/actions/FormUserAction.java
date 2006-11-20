@@ -1,13 +1,26 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 package com.duroty.application.admin.actions;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
-import org.apache.struts.action.ActionMessages;
 
 import com.duroty.application.admin.interfaces.Admin;
 import com.duroty.application.admin.utils.AdminDefaultAction;
@@ -15,11 +28,22 @@ import com.duroty.application.chat.exceptions.ChatException;
 import com.duroty.application.chat.exceptions.NotAcceptChatException;
 import com.duroty.application.chat.exceptions.NotLoggedInException;
 import com.duroty.application.chat.exceptions.NotOnlineException;
+
 import com.duroty.constants.Constants;
 import com.duroty.constants.ExceptionCode;
+
 import com.duroty.utils.exceptions.ExceptionUtilities;
 import com.duroty.utils.log.DLog;
 import com.duroty.utils.log.DMessage;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -51,39 +75,38 @@ public class FormUserAction extends AdminDefaultAction {
     protected ActionForward doExecute(ActionMapping mapping, ActionForm form,
         HttpServletRequest request, HttpServletResponse response)
         throws Exception {
-    	ActionMessages errors = new ActionMessages();
+        ActionMessages errors = new ActionMessages();
 
-        try {            
-            Admin adminInstance = getAdminInstance(request); 
-            
+        try {
+            Admin adminInstance = getAdminInstance(request);
+
             request.setAttribute("userRoles", adminInstance.roles());
         } catch (Exception ex) {
-        	if (ex instanceof ChatException) {
-        		if (ex.getCause() instanceof NotOnlineException) {
-        			request.setAttribute("result", "not_online");
-        		} else if (ex.getCause() instanceof NotLoggedInException) {
-        			request.setAttribute("result", "not_logged_in");
-        		} else if (ex.getCause() instanceof NotAcceptChatException) {
-        			request.setAttribute("result", "not_accept_chat");
-        		} else {
-        			request.setAttribute("result", ex.getMessage());
-        		}
-        	} else {
-        		
-	            String errorMessage = ExceptionUtilities.parseMessage(ex);
-	
-	            if (errorMessage == null) {
-	                errorMessage = "NullPointerException";
-	            }
-	            
-	            request.setAttribute("result", errorMessage);
-	
-	            errors.add("general",
-	                new ActionMessage(ExceptionCode.ERROR_MESSAGES_PREFIX +
-	                    "general", errorMessage));
-	            request.setAttribute("exception", errorMessage);
-	            doTrace(request, DLog.ERROR, getClass(), errorMessage);
-        	}
+            if (ex instanceof ChatException) {
+                if (ex.getCause() instanceof NotOnlineException) {
+                    request.setAttribute("result", "not_online");
+                } else if (ex.getCause() instanceof NotLoggedInException) {
+                    request.setAttribute("result", "not_logged_in");
+                } else if (ex.getCause() instanceof NotAcceptChatException) {
+                    request.setAttribute("result", "not_accept_chat");
+                } else {
+                    request.setAttribute("result", ex.getMessage());
+                }
+            } else {
+                String errorMessage = ExceptionUtilities.parseMessage(ex);
+
+                if (errorMessage == null) {
+                    errorMessage = "NullPointerException";
+                }
+
+                request.setAttribute("result", errorMessage);
+
+                errors.add("general",
+                    new ActionMessage(ExceptionCode.ERROR_MESSAGES_PREFIX +
+                        "general", errorMessage));
+                request.setAttribute("exception", errorMessage);
+                doTrace(request, DLog.ERROR, getClass(), errorMessage);
+            }
         } finally {
         }
 

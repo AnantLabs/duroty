@@ -1,3 +1,25 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 /**
  *
  */
@@ -46,28 +68,29 @@ public class SettingsAction extends MailDefaultAction {
         ActionMessages errors = new ActionMessages();
 
         try {
-        	Preferences preferencesInstance = getPreferencesInstance(request);
-        	
-        	PreferencesObj preferencesObj = preferencesInstance.getPreferences();
-        	
+            Preferences preferencesInstance = getPreferencesInstance(request);
+
+            PreferencesObj preferencesObj = preferencesInstance.getPreferences();
+
             DynaActionForm _form = (DynaActionForm) form;
-            
+
             _form.set("name", preferencesObj.getName());
             _form.set("contactEmail", preferencesObj.getContactEmail());
             _form.set("language", preferencesObj.getLanguage());
             _form.set("signature", preferencesObj.getSignature());
-            _form.set("vacationResponderActive", preferencesObj.isVacationActive());
-            _form.set("vacationResponderSubject", preferencesObj.getVacationSubject());
+            _form.set("vacationResponderActive",
+                preferencesObj.isVacationActive());
+            _form.set("vacationResponderSubject",
+                preferencesObj.getVacationSubject());
             _form.set("vacationResponderBody", preferencesObj.getVacationBody());
             _form.set("htmlMessage", preferencesObj.isHtmlMessage());
             _form.set("byPage", preferencesObj.getMessagesByPage());
-            
-            if (preferencesObj.getSpamTolerance() <= -1) {            
-            	_form.set("spamTolerance", new Boolean(false));
+
+            if (preferencesObj.getSpamTolerance() <= -1) {
+                _form.set("spamTolerance", new Boolean(false));
             } else {
-            	_form.set("spamTolerance", new Boolean(true));
+                _form.set("spamTolerance", new Boolean(true));
             }
-            
         } catch (Exception ex) {
             String errorMessage = ExceptionUtilities.parseMessage(ex);
 
