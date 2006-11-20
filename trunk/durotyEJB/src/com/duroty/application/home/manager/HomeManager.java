@@ -1,28 +1,49 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
 package com.duroty.application.home.manager;
 
-import java.util.HashMap;
-import java.util.Vector;
+import com.duroty.application.home.exceptions.HomeException;
+import com.duroty.application.home.utils.FeedObj;
+
+import com.duroty.hibernate.FeedChannel;
+import com.duroty.hibernate.FeedData;
+import com.duroty.hibernate.Users;
+
+import com.duroty.utils.GeneralOperations;
 
 import org.hibernate.Criteria;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
+
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import com.duroty.application.home.exceptions.HomeException;
-import com.duroty.application.home.utils.FeedObj;
-import com.duroty.hibernate.FeedChannel;
-import com.duroty.hibernate.FeedData;
-import com.duroty.hibernate.Users;
-import com.duroty.utils.GeneralOperations;
+import java.util.HashMap;
+import java.util.Vector;
 
 
 /**
- * DOCUMENT ME!
- *
- * @author $author$
- * @version $Revision$
- */
+ * @author Jordi Marquès
+ * @version 1.0
+*/
 public class HomeManager {
     /**
      * Creates a new HomeManager object.
@@ -97,12 +118,12 @@ public class HomeManager {
                 feed.setFedaValue(value);
                 hsession.saveOrUpdate(feed);
             }
-            
+
             hsession.flush();
-            
+
             /*if (value.indexOf("=none;expires=") > -1) {
-            	hsession.delete(feed);
-            	hsession.flush();
+                    hsession.delete(feed);
+                    hsession.flush();
             }*/
         } catch (Exception e) {
             throw new HomeException(e);
@@ -220,16 +241,16 @@ public class HomeManager {
 
                 channel = (FeedChannel) criteria.uniqueResult();
             }
-            
+
             Criteria crit = hsession.createCriteria(FeedData.class);
             crit.add(Restrictions.eq("feedChannel", channel));
             crit.addOrder(Order.asc("fedaName"));
-            
+
             ScrollableResults scroll = crit.scroll();
-            
+
             while (scroll.next()) {
-            	FeedData feed = (FeedData) scroll.get(0);
-            	feeds.addElement(feed.getFedaValue());
+                FeedData feed = (FeedData) scroll.get(0);
+                feeds.addElement(feed.getFedaValue());
             }
 
             return feeds;

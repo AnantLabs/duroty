@@ -19,11 +19,8 @@ public class OpenSession extends com.duroty.application.open.ejb.OpenBean
     private static final long serialVersionUID = 5168777739572962413L;
 
     /**
-     * DOCUMENT ME!
-     *
-     * @throws javax.ejb.EJBException DOCUMENT ME!
-     * @throws java.rmi.RemoteException DOCUMENT ME!
-     */
+             *
+             */
     public void ejbActivate()
         throws javax.ejb.EJBException, java.rmi.RemoteException {
         super.ejbActivate();

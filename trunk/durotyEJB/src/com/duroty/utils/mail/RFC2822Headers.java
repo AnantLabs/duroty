@@ -67,7 +67,7 @@ public class RFC2822Headers {
      * that to which this email is a reply.
      */
     public final static String IN_REPLY_TO = "In-Reply-To";
-    
+
     /**
      * The name of the RFC 2822 header that stores the message id of the message
      * that to which this email is a reply.

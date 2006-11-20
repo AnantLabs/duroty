@@ -1,10 +1,56 @@
-/**
- *
- */
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
 package com.duroty.application.mail.manager;
 
+import com.duroty.application.mail.exceptions.MailException;
+
+import com.duroty.hibernate.Identity;
+import com.duroty.hibernate.MailPreferences;
+import com.duroty.hibernate.Message;
+import com.duroty.hibernate.Users;
+
+import com.duroty.jmx.mbean.Constants;
+
+import com.duroty.service.Messageable;
+
+import com.duroty.utils.GeneralOperations;
+import com.duroty.utils.NumberUtils;
+import com.duroty.utils.mail.MessageUtilities;
+import com.duroty.utils.mail.RFC2822Headers;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.mail.Email;
+import org.apache.commons.mail.EmailAttachment;
+import org.apache.commons.mail.HtmlEmail;
+import org.apache.commons.mail.MultiPartEmail;
+
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+
+import org.hibernate.criterion.Restrictions;
+
 import java.io.File;
+
 import java.nio.charset.Charset;
+
 import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
@@ -19,32 +65,11 @@ import javax.mail.internet.InternetHeaders;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.mail.Email;
-import org.apache.commons.mail.EmailAttachment;
-import org.apache.commons.mail.HtmlEmail;
-import org.apache.commons.mail.MultiPartEmail;
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.criterion.Restrictions;
-
-import com.duroty.application.mail.exceptions.MailException;
-import com.duroty.hibernate.Identity;
-import com.duroty.hibernate.MailPreferences;
-import com.duroty.hibernate.Message;
-import com.duroty.hibernate.Users;
-import com.duroty.jmx.mbean.Constants;
-import com.duroty.service.Messageable;
-import com.duroty.utils.GeneralOperations;
-import com.duroty.utils.NumberUtils;
-import com.duroty.utils.mail.MessageUtilities;
-import com.duroty.utils.mail.RFC2822Headers;
-
 
 /**
- * @author durot
- *
- */
+ * @author Jordi Marquès
+ * @version 1.0
+*/
 public class SendManager {
     /**
      * DOCUMENT ME!
@@ -109,7 +134,8 @@ public class SendManager {
         throws MailException {
         try {
             if (charset == null) {
-                charset = MimeUtility.javaCharset(Charset.defaultCharset().displayName());
+                charset = MimeUtility.javaCharset(Charset.defaultCharset()
+                                                         .displayName());
             }
 
             if ((body == null) || body.trim().equals("")) {
@@ -129,9 +155,12 @@ public class SendManager {
             Users user = getUser(hsession, repositoryName);
             Identity identity = getIdentity(hsession, ideIdint, user);
 
-            InternetAddress _returnPath = new InternetAddress(identity.getIdeEmail(), identity.getIdeName());
-            InternetAddress _from = new InternetAddress(identity.getIdeEmail(), identity.getIdeName());
-            InternetAddress _replyTo = new InternetAddress(identity.getIdeReplyTo(), identity.getIdeName());
+            InternetAddress _returnPath = new InternetAddress(identity.getIdeEmail(),
+                    identity.getIdeName());
+            InternetAddress _from = new InternetAddress(identity.getIdeEmail(),
+                    identity.getIdeName());
+            InternetAddress _replyTo = new InternetAddress(identity.getIdeReplyTo(),
+                    identity.getIdeName());
             InternetAddress[] _to = MessageUtilities.encodeAddresses(to, null);
             InternetAddress[] _cc = MessageUtilities.encodeAddresses(cc, null);
             InternetAddress[] _bcc = MessageUtilities.encodeAddresses(bcc, null);

@@ -3,6 +3,7 @@
  */
 package com.duroty.application.chat.interfaces;
 
+
 /**
  * Home interface for Chat.
  * @xdoclet-generated at ${TODAY}
@@ -10,13 +11,25 @@ package com.duroty.application.chat.interfaces;
  * @author XDoclet
  * @version ${version}
  */
-public interface ChatHome
-   extends javax.ejb.EJBHome
-{
-   public static final String COMP_NAME="duroty/ejb/Chat";
-   public static final String JNDI_NAME="duroty/ejb/Chat";
+public interface ChatHome extends javax.ejb.EJBHome {
+    /**
+     * DOCUMENT ME!
+     */
+    public static final String COMP_NAME = "java:comp/env/ejb/Chat";
 
-   public com.duroty.application.chat.interfaces.Chat create()
-      throws javax.ejb.CreateException,java.rmi.RemoteException;
+    /**
+     * DOCUMENT ME!
+     */
+    public static final String JNDI_NAME = "duroty/ejb/Chat";
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws javax.ejb.CreateException DOCUMENT ME!
+     * @throws java.rmi.RemoteException DOCUMENT ME!
+     */
+    public com.duroty.application.chat.interfaces.Chat create()
+        throws javax.ejb.CreateException, java.rmi.RemoteException;
 }

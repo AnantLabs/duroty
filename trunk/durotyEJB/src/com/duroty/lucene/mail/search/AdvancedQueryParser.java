@@ -1,10 +1,33 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 package com.duroty.lucene.mail.search;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Hashtable;
+import com.duroty.application.mail.utils.AdvancedObj;
+
+import com.duroty.lucene.analysis.KeywordAnalyzer;
+import com.duroty.lucene.mail.LuceneMessageConstants;
+
+import com.duroty.utils.NumberUtils;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.WhitespaceAnalyzer;
@@ -18,10 +41,12 @@ import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.RangeQuery;
 
-import com.duroty.application.mail.utils.AdvancedObj;
-import com.duroty.lucene.analysis.KeywordAnalyzer;
-import com.duroty.lucene.mail.LuceneMessageConstants;
-import com.duroty.utils.NumberUtils;
+import java.text.SimpleDateFormat;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Hashtable;
 
 
 /**
@@ -91,7 +116,7 @@ public class AdvancedQueryParser extends QueryParser
      */
     public static Query parseMessages(AdvancedObj advancedObj, Analyzer analyzer)
         throws ParseException {
-    	if (advancedObj == null) {
+        if (advancedObj == null) {
             return null;
         }
 
@@ -100,7 +125,7 @@ public class AdvancedQueryParser extends QueryParser
         if (!advancedObj.isOperator()) {
             petador = "OR";
         }
-        
+
         StringBuffer buffer = new StringBuffer();
 
         String from = advancedObj.getFrom();
@@ -153,82 +178,88 @@ public class AdvancedQueryParser extends QueryParser
 
             buffer.append("(" + aux.toString() + ") ");
         }
-        
+
         String hasWords = advancedObj.getHasWords();
 
         if ((hasWords != null) && !hasWords.trim().equals("")) {
-        	Query auxBody = null;
-        	Query auxAttach = null;
-        	if (advancedObj.isHasWordsInBody()) {
-        		QueryParser parserBody = new QueryParser(Field_body, analyzer);
-        		parserBody.setDefaultOperator(Operator.AND);
-        		auxBody = parserBody.parse(hasWords);
-        	}
-        	
-        	if (advancedObj.isHasWordsInAttachment()) {
-        		QueryParser parserAttach = new QueryParser(Field_attachments, analyzer);
-        		parserAttach.setDefaultOperator(Operator.AND);
-        		auxAttach = parserAttach.parse(hasWords);
-        	}
+            Query auxBody = null;
+            Query auxAttach = null;
 
-            if (auxBody != null && auxAttach != null) {
-            	if (buffer.length() > 0) {
+            if (advancedObj.isHasWordsInBody()) {
+                QueryParser parserBody = new QueryParser(Field_body, analyzer);
+                parserBody.setDefaultOperator(Operator.AND);
+                auxBody = parserBody.parse(hasWords);
+            }
+
+            if (advancedObj.isHasWordsInAttachment()) {
+                QueryParser parserAttach = new QueryParser(Field_attachments,
+                        analyzer);
+                parserAttach.setDefaultOperator(Operator.AND);
+                auxAttach = parserAttach.parse(hasWords);
+            }
+
+            if ((auxBody != null) && (auxAttach != null)) {
+                if (buffer.length() > 0) {
                     buffer.append(" " + petador + " ");
                 }
-            	
-            	buffer.append("((" + auxBody.toString() + ") OR (" + auxAttach.toString() + ")) ");
-            } else if (auxBody != null && auxAttach == null) {
-            	if (buffer.length() > 0) {
+
+                buffer.append("((" + auxBody.toString() + ") OR (" +
+                    auxAttach.toString() + ")) ");
+            } else if ((auxBody != null) && (auxAttach == null)) {
+                if (buffer.length() > 0) {
                     buffer.append(" " + petador + " ");
                 }
-            	
-            	buffer.append("(" + auxBody.toString() + ") ");
-            } else if (auxBody == null && auxAttach != null) {
-            	if (buffer.length() > 0) {
+
+                buffer.append("(" + auxBody.toString() + ") ");
+            } else if ((auxBody == null) && (auxAttach != null)) {
+                if (buffer.length() > 0) {
                     buffer.append(" " + petador + " ");
                 }
-            	
-            	buffer.append("(" + auxAttach.toString() + ") ");
+
+                buffer.append("(" + auxAttach.toString() + ") ");
             }
         }
-        
-        String doesntHaveWords = advancedObj.getDoesntHaveWords();
-        
-        if ((doesntHaveWords != null) && !doesntHaveWords.trim().equals("")) {
-        	Query auxBody = null;
-        	Query auxAttach = null;
-        	if (advancedObj.isDoesntHaveWordsInBody()) {
-        		QueryParser parserBody = new QueryParser(Field_body, analyzer);
-        		parserBody.setDefaultOperator(Operator.AND);
-        		auxBody = parserBody.parse(doesntHaveWords);
-        	}
-        	
-        	if (advancedObj.isDoesntHaveWordsInAttachment()) {
-        		QueryParser parserAttach = new QueryParser(Field_attachments, analyzer);
-        		parserAttach.setDefaultOperator(Operator.AND);
-        		auxAttach = parserAttach.parse(doesntHaveWords);
-        	}
 
-            if (auxBody != null && auxAttach != null) {
-            	if (buffer.length() > 0) {
-                    buffer.append(" " + petador + " ");
-                }
-            	
-            	buffer.append("((" + auxBody.toString() + ") OR (" + auxAttach.toString() + ")) ");
-            } else if (auxBody != null && auxAttach == null) {
-            	if (buffer.length() > 0) {
-                    buffer.append(" " + petador + " ");
-                }
-            	
-            	buffer.append("(" + auxBody.toString() + ") ");
-            } else if (auxBody == null && auxAttach != null) {
-            	if (buffer.length() > 0) {
-                    buffer.append(" " + petador + " ");
-                }
-            	
-            	buffer.append("(" + auxAttach.toString() + ") ");
+        String doesntHaveWords = advancedObj.getDoesntHaveWords();
+
+        if ((doesntHaveWords != null) && !doesntHaveWords.trim().equals("")) {
+            Query auxBody = null;
+            Query auxAttach = null;
+
+            if (advancedObj.isDoesntHaveWordsInBody()) {
+                QueryParser parserBody = new QueryParser(Field_body, analyzer);
+                parserBody.setDefaultOperator(Operator.AND);
+                auxBody = parserBody.parse(doesntHaveWords);
             }
-        }        
+
+            if (advancedObj.isDoesntHaveWordsInAttachment()) {
+                QueryParser parserAttach = new QueryParser(Field_attachments,
+                        analyzer);
+                parserAttach.setDefaultOperator(Operator.AND);
+                auxAttach = parserAttach.parse(doesntHaveWords);
+            }
+
+            if ((auxBody != null) && (auxAttach != null)) {
+                if (buffer.length() > 0) {
+                    buffer.append(" " + petador + " ");
+                }
+
+                buffer.append("((" + auxBody.toString() + ") OR (" +
+                    auxAttach.toString() + ")) ");
+            } else if ((auxBody != null) && (auxAttach == null)) {
+                if (buffer.length() > 0) {
+                    buffer.append(" " + petador + " ");
+                }
+
+                buffer.append("(" + auxBody.toString() + ") ");
+            } else if ((auxBody == null) && (auxAttach != null)) {
+                if (buffer.length() > 0) {
+                    buffer.append(" " + petador + " ");
+                }
+
+                buffer.append("(" + auxAttach.toString() + ") ");
+            }
+        }
 
         String filetype = advancedObj.getContentType();
 
@@ -332,8 +363,10 @@ public class AdvancedQueryParser extends QueryParser
         }
 
         if ((startDate != null) && (endDate != null)) {
-            Term tBeginDate = new Term(Field_lastDate, NumberUtils.pad(startDate.getTime()));
-            Term tEndDate = new Term(Field_lastDate, NumberUtils.pad(endDate.getTime()));
+            Term tBeginDate = new Term(Field_lastDate,
+                    NumberUtils.pad(startDate.getTime()));
+            Term tEndDate = new Term(Field_lastDate,
+                    NumberUtils.pad(endDate.getTime()));
 
             RangeQuery aux = new RangeQuery(tBeginDate, tEndDate, true);
 
@@ -343,9 +376,11 @@ public class AdvancedQueryParser extends QueryParser
 
             buffer.append("(" + aux.toString() + ") ");
         } else if ((startDate != null) && (endDate == null)) {
-            Term tBeginDate = new Term(Field_lastDate, NumberUtils.pad(startDate.getTime()));
+            Term tBeginDate = new Term(Field_lastDate,
+                    NumberUtils.pad(startDate.getTime()));
             Date now = new Date();
-            Term tEndDate = new Term(Field_lastDate, NumberUtils.pad(now.getTime()));
+            Term tEndDate = new Term(Field_lastDate,
+                    NumberUtils.pad(now.getTime()));
 
             RangeQuery aux = new RangeQuery(tBeginDate, tEndDate, true);
 
@@ -356,7 +391,8 @@ public class AdvancedQueryParser extends QueryParser
             buffer.append("(" + aux.toString() + ") ");
         } else if ((startDate == null) && (endDate != null)) {
             Term tBeginDate = new Term(Field_lastDate, "0");
-            Term tEndDate = new Term(Field_lastDate, NumberUtils.pad(endDate.getTime()));
+            Term tEndDate = new Term(Field_lastDate,
+                    NumberUtils.pad(endDate.getTime()));
 
             RangeQuery aux = new RangeQuery(tBeginDate, tEndDate, true);
 
@@ -371,7 +407,8 @@ public class AdvancedQueryParser extends QueryParser
         boolean hasAttachment = advancedObj.isHasAttachment();
 
         if (hasAttachment) {
-            QueryParser parser = new QueryParser(Field_has_attachments, new KeywordAnalyzer());
+            QueryParser parser = new QueryParser(Field_has_attachments,
+                    new KeywordAnalyzer());
             parser.setDefaultOperator(Operator.AND);
 
             Query aux = parser.parse(String.valueOf(hasAttachment));

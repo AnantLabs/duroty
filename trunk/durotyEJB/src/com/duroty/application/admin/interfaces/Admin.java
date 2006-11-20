@@ -3,6 +3,7 @@
  */
 package com.duroty.application.admin.interfaces;
 
+
 /**
  * Remote interface for Admin.
  * @xdoclet-generated at ${TODAY}
@@ -10,61 +11,71 @@ package com.duroty.application.admin.interfaces;
  * @author XDoclet
  * @version ${version}
  */
-public interface Admin
-   extends javax.ejb.EJBObject
-{
-   /**
-    * Add User
-    * @throws AdminException Thrown if method fails due to system-level error.    */
-   public void addUser( com.duroty.application.admin.utils.UserObj obj )
-      throws com.duroty.application.admin.exceptions.AdminException, java.rmi.RemoteException;
+public interface Admin extends javax.ejb.EJBObject {
+    /**
+     * Add User
+     * @throws AdminException Thrown if method fails due to system-level error.    */
+    public void addUser(com.duroty.application.admin.utils.UserObj obj)
+        throws com.duroty.application.admin.exceptions.AdminException, 
+            java.rmi.RemoteException;
 
-   /**
-    * Update User
-    * @throws AdminException Thrown if method fails due to system-level error.    */
-   public void updateUser( com.duroty.application.admin.utils.UserObj obj )
-      throws com.duroty.application.admin.exceptions.AdminException, java.rmi.RemoteException;
+    /**
+     * Update User
+     * @throws AdminException Thrown if method fails due to system-level error.    */
+    public void updateUser(com.duroty.application.admin.utils.UserObj obj)
+        throws com.duroty.application.admin.exceptions.AdminException, 
+            java.rmi.RemoteException;
 
-   /**
-    * Delete User
-    * @throws AdminException Thrown if method fails due to system-level error.    */
-   public void deleteUsers( java.lang.Integer[] idints )
-      throws com.duroty.application.admin.exceptions.AdminException, java.rmi.RemoteException;
+    /**
+     * Delete User
+     * @throws AdminException Thrown if method fails due to system-level error.    */
+    public void deleteUsers(java.lang.Integer[] idints)
+        throws com.duroty.application.admin.exceptions.AdminException, 
+            java.rmi.RemoteException;
 
-   /**
-    * Get User
-    * @throws AdminException Thrown if method fails due to system-level error.    */
-   public com.duroty.application.admin.utils.UserObj getUser( java.lang.Integer idint )
-      throws com.duroty.application.admin.exceptions.AdminException, java.rmi.RemoteException;
+    /**
+     * Get User
+     * @throws AdminException Thrown if method fails due to system-level error.    */
+    public com.duroty.application.admin.utils.UserObj getUser(
+        java.lang.Integer idint)
+        throws com.duroty.application.admin.exceptions.AdminException, 
+            java.rmi.RemoteException;
 
-   /**
-    * Get All Users
-    * @throws AdminException Thrown if method fails due to system-level error.    */
-   public com.duroty.application.admin.utils.SearchUsersObj allUsers( int page,int byPage )
-      throws com.duroty.application.admin.exceptions.AdminException, java.rmi.RemoteException;
+    /**
+     * Get All Users
+     * @throws AdminException Thrown if method fails due to system-level error.    */
+    public com.duroty.application.admin.utils.SearchUsersObj allUsers(
+        int page, int byPage)
+        throws com.duroty.application.admin.exceptions.AdminException, 
+            java.rmi.RemoteException;
 
-   /**
-    * Suggest Users
-    * @throws AdminException Thrown if method fails due to system-level error.    */
-   public com.duroty.application.admin.utils.SearchUsersObj suggestUsers( java.lang.String token,int page,int byPage )
-      throws com.duroty.application.admin.exceptions.AdminException, java.rmi.RemoteException;
+    /**
+     * Suggest Users
+     * @throws AdminException Thrown if method fails due to system-level error.    */
+    public com.duroty.application.admin.utils.SearchUsersObj suggestUsers(
+        java.lang.String token, int page, int byPage)
+        throws com.duroty.application.admin.exceptions.AdminException, 
+            java.rmi.RemoteException;
 
-   /**
-    * Get Roles
-    * @throws AdminException Thrown if method fails due to system-level error.    */
-   public java.util.Vector roles(  )
-      throws com.duroty.application.admin.exceptions.AdminException, java.rmi.RemoteException;
+    /**
+     * Get Roles
+     * @throws AdminException Thrown if method fails due to system-level error.    */
+    public java.util.Vector roles()
+        throws com.duroty.application.admin.exceptions.AdminException, 
+            java.rmi.RemoteException;
 
-   /**
-    * checkUser
-    * @throws AdminException Thrown if method fails due to system-level error.    */
-   public boolean checkUser( java.lang.String username )
-      throws com.duroty.application.admin.exceptions.AdminException, java.rmi.RemoteException;
+    /**
+     * checkUser
+     * @throws AdminException Thrown if method fails due to system-level error.    */
+    public boolean checkUser(java.lang.String username)
+        throws com.duroty.application.admin.exceptions.AdminException, 
+            java.rmi.RemoteException;
 
-   /**
-    * confirmPassword
-    * @throws AdminException Thrown if method fails due to system-level error.    */
-   public boolean confirmPassword( java.lang.String password,java.lang.String confirmPassword )
-      throws com.duroty.application.admin.exceptions.AdminException, java.rmi.RemoteException;
-
+    /**
+     * confirmPassword
+     * @throws AdminException Thrown if method fails due to system-level error.    */
+    public boolean confirmPassword(java.lang.String password,
+        java.lang.String confirmPassword)
+        throws com.duroty.application.admin.exceptions.AdminException, 
+            java.rmi.RemoteException;
 }

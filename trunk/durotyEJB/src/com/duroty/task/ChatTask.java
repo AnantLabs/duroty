@@ -1,3 +1,25 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 package com.duroty.task;
 
 import com.duroty.hibernate.Conversations;
@@ -137,7 +159,8 @@ public class ChatTask implements Schedulable {
 
             Criteria crit = hsession.createCriteria(Users.class);
             crit.add(Restrictions.le("useLastPing", date));
-            crit.add(Restrictions.not(Restrictions.eq("useIsOnline", new Integer(0))));
+            crit.add(Restrictions.not(Restrictions.eq("useIsOnline",
+                        new Integer(0))));
             crit.add(Restrictions.isNotNull("useIsOnline"));
 
             ScrollableResults scroll = crit.scroll();
@@ -148,20 +171,20 @@ public class ChatTask implements Schedulable {
                 hsession.update(user);
                 hsession.flush();
             }
-            
+
             /*cal1 = new GregorianCalendar(cal.get(Calendar.YEAR),
                     cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH),
                     cal.get(Calendar.HOUR_OF_DAY),
                     cal.get(Calendar.MINUTE) - 1, cal.get(Calendar.SECOND));
             date = new Date(cal1.getTimeInMillis());
-            
+
             crit = hsession.createCriteria(Conversations.class);
             crit.add(Restrictions.le("convStamp", date));
 
             scroll = crit.scroll();
 
             while (scroll.next()) {
-            	Conversations conv = (Conversations) scroll.get(0);
+                    Conversations conv = (Conversations) scroll.get(0);
                 hsession.update(conv);
                 hsession.flush();
             }*/

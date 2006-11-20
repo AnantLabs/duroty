@@ -1,9 +1,33 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 package com.duroty.lucene.mail.indexer;
 
-import java.io.File;
-import java.io.IOException;
+import com.duroty.lucene.analysis.DictionaryAnalyzer;
+import com.duroty.lucene.didyoumean.DidYouMeanIndexer;
+import com.duroty.lucene.utils.FileUtilities;
 
 import org.apache.commons.io.FileUtils;
+
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexReader;
@@ -17,9 +41,8 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 import org.apache.lucene.store.RAMDirectory;
 
-import com.duroty.lucene.analysis.DictionaryAnalyzer;
-import com.duroty.lucene.didyoumean.DidYouMeanIndexer;
-import com.duroty.lucene.utils.FileUtilities;
+import java.io.File;
+import java.io.IOException;
 
 
 /**
@@ -301,7 +324,7 @@ public class MailIndexer implements MailIndexerConstants {
             }
         }
     }
-    
+
     /**
      * DOCUMENT ME!
      *

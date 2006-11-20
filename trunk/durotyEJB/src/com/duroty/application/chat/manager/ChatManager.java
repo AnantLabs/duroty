@@ -1,7 +1,63 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
 package com.duroty.application.chat.manager;
 
+import com.duroty.application.bookmark.exceptions.BookmarkException;
+import com.duroty.application.chat.exceptions.ChatException;
+import com.duroty.application.chat.exceptions.NotAcceptChatException;
+import com.duroty.application.chat.exceptions.NotLoggedInException;
+import com.duroty.application.chat.exceptions.NotOnlineException;
+import com.duroty.application.chat.utils.BuddyObj;
+import com.duroty.application.chat.utils.ConversationsObj;
+import com.duroty.application.mail.exceptions.MailException;
+import com.duroty.application.mail.manager.SendMessageThread;
+
+import com.duroty.hibernate.BuddyList;
+import com.duroty.hibernate.Conversations;
+import com.duroty.hibernate.Identity;
+import com.duroty.hibernate.MailPreferences;
+import com.duroty.hibernate.Users;
+
+import com.duroty.utils.GeneralOperations;
+import com.duroty.utils.mail.MessageUtilities;
+import com.duroty.utils.mail.RFC2822Headers;
+
+import net.sf.json.JSONObject;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.HtmlEmail;
+
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.ScrollableResults;
+import org.hibernate.Session;
+
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+
 import java.io.UnsupportedEncodingException;
+
 import java.nio.charset.Charset;
+
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
@@ -14,43 +70,11 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
 
-import net.sf.json.JSONObject;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.mail.EmailException;
-import org.apache.commons.mail.HtmlEmail;
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.ScrollableResults;
-import org.hibernate.Session;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
-
-import com.duroty.application.bookmark.exceptions.BookmarkException;
-import com.duroty.application.chat.exceptions.ChatException;
-import com.duroty.application.chat.exceptions.NotAcceptChatException;
-import com.duroty.application.chat.exceptions.NotLoggedInException;
-import com.duroty.application.chat.exceptions.NotOnlineException;
-import com.duroty.application.chat.utils.BuddyObj;
-import com.duroty.application.chat.utils.ConversationsObj;
-import com.duroty.application.mail.exceptions.MailException;
-import com.duroty.application.mail.manager.SendMessageThread;
-import com.duroty.hibernate.BuddyList;
-import com.duroty.hibernate.Conversations;
-import com.duroty.hibernate.Identity;
-import com.duroty.hibernate.MailPreferences;
-import com.duroty.hibernate.Users;
-import com.duroty.utils.GeneralOperations;
-import com.duroty.utils.mail.MessageUtilities;
-import com.duroty.utils.mail.RFC2822Headers;
-
 
 /**
- * DOCUMENT ME!
- *
- * @author $author$
- * @version $Revision$
- */
+ * @author Jordi Marquès
+ * @version 1.0
+*/
 public class ChatManager {
     /**
      * DOCUMENT ME!
@@ -246,7 +270,7 @@ public class ChatManager {
      */
     public String ping(Session hsession, String username, int away)
         throws ChatException {
-        try {        	        	
+        try {
             Vector buddiesOnline = new Vector();
             Vector buddiesOffline = new Vector();
             Vector buddies = new Vector();

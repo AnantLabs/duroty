@@ -3,6 +3,7 @@ package com.duroty.utils.misc;
 
 import java.math.*;
 
+
 /**
 * Tiny Encryption Algorithm.
 * <P>
@@ -22,7 +23,7 @@ import java.math.*;
 * diffusion (where a one bit difference in the plaintext will cause
 * approximately 32 bit differences in the ciphertext) after only six
 * rounds. Performance on a modern desktop computer or workstation is
-* very impressive. 
+* very impressive.
 * <P>
 * TEA takes 64 bits of data in v[0] and v[1], and 128 bits of key in
 * k[0] - k[3]. The result is returned in w[0] and w[1]. Returning the
@@ -45,14 +46,14 @@ import java.math.*;
 * multiplied by 232. On entry to decipher(), sum is set to be delta *
 * n. Which way round you call the functions is arbitrary: DK(EK(P)) =
 * EK(DK(P)) where EK and DK are encryption and decryption under key K
-* respectively. 
+* respectively.
 * <P>
 * Translator's notes:
 * <UL>
 * <LI> Although the <I>this algorithm is optimised for
 * 32-bit CPUs with fast shift capabilities</I> Java manages to throw
 * it all away by not providing unsigned values resulting in the excessive
-* use of AND's to prevent sign extension on promotion of a byte 
+* use of AND's to prevent sign extension on promotion of a byte
 * to an integer.
 * </LI>
 * <P>
@@ -100,359 +101,365 @@ import java.math.*;
 * @version 1.0 Sep 8, 1998
 * @since JDK1.1
 */
+public class TEA {
+    /**
+     * DOCUMENT ME!
+     */
+    private int[] _key; // The 128 bit key.
 
-public class TEA
-{
-   private int _key[];  // The 128 bit key.
-   private byte _keyBytes[];  // original key as found
-   private int _padding;      // amount of padding added in byte --> integer conversion.
+    /**
+     * DOCUMENT ME!
+     */
+    private byte[] _keyBytes; // original key as found
 
-   /**
-   * Encodes and decodes "Hello world!" for your personal pleasure.
-   */
-   public static void main(String args[])
-   {
-      // A simple test of TEA.
+    /**
+     * DOCUMENT ME!
+     */
+    private int _padding; // amount of padding added in byte --> integer conversion.
 
-      byte key[] = new BigInteger("39e858f86df9b909a8c87cb8d9ad599", 16).toByteArray();
-      TEA t = new TEA(key);
+    /**
+    * Accepts key for enciphering/deciphering.
+    *
+    * @throws ArrayIndexOutOfBoundsException if the key isn't the correct length.
+    *
+    * @param key 128 bit (16 byte) key.
+    */
+    public TEA(byte[] key) {
+        int klen = key.length;
+        _key = new int[4];
 
-      String src = "hello world!";
-      System.out.println("input = " + src);
-      byte plainSource[] = src.getBytes();
-      int enc[] = t.encode(plainSource, plainSource.length);
-      System.out.println(t.padding() + " bytes added as padding.");
-      byte dec[] = t.decode(enc);
-      System.out.println("output = " + new String(dec));
-   }
+        // Incorrect key length throws exception.
+        if (klen != 16) {
+            throw new ArrayIndexOutOfBoundsException(this.getClass().getName() +
+                ": Key is not 16 bytes");
+        }
 
-   /**
-   * Accepts key for enciphering/deciphering.
-   *
-   * @throws ArrayIndexOutOfBoundsException if the key isn't the correct length.
-   *
-   * @param key 128 bit (16 byte) key.
-   */
-   public TEA(byte key[])
-   {
-      int klen = key.length;
-      _key = new int[4];
-      
-      // Incorrect key length throws exception.
-      if (klen != 16)
-         throw new ArrayIndexOutOfBoundsException(this.getClass().getName() + ": Key is not 16 bytes");
+        int j;
+        int i;
 
-      int j, i;
-      for (i = 0, j = 0; j < klen; j += 4, i++)
-         _key[i] = (key[j] << 24 ) | (((key[j+1])&0xff) << 16) | (((key[j+2])&0xff) << 8) | ((key[j+3])&0xff);
+        for (i = 0, j = 0; j < klen; j += 4, i++)
+            _key[i] = (key[j] << 24) | (((key[j + 1]) & 0xff) << 16) |
+                (((key[j + 2]) & 0xff) << 8) | ((key[j + 3]) & 0xff);
 
-      _keyBytes = key;  // save for toString.
-   }
+        _keyBytes = key; // save for toString.
+    }
 
-   /**
-   * Representation of TEA class
-   */
-   public String toString()
-   {
-      String tea = this.getClass().getName();
-      tea +=  ": Tiny Encryption Algorithm (TEA)  key: " + dumpBytes(_keyBytes);
-      return tea;
-   }
+    /**
+    * Encodes and decodes "Hello world!" for your personal pleasure.
+    */
+    public static void main(String[] args) {
+        // A simple test of TEA.
+        byte[] key = new BigInteger("39e858f86df9b909a8c87cb8d9ad599", 16).toByteArray();
+        TEA t = new TEA(key);
 
-   /**
-   * Encipher two <code>int</code>s.
-   * Replaces the original contents of the parameters with the results.
-   * The integers are usually created from 8 bytes.
-   * The usual way to collect bytes to the int array is:
-   * <PRE>
-   * byte ba[] = { .... };
-   * int v[] = new int[2];
-   * v[0] = (ba[j] << 24 ) | (((ba[j+1])&0xff) << 16) | (((ba[j+2])&0xff) << 8) | ((ba[j+3])&0xff);
-   * v[1] = (ba[j+4] << 24 ) | (((ba[j+5])&0xff) << 16) | (((ba[j+6])&0xff) << 8) | ((ba[j+7])&0xff);
-   * v = encipher(v);
-   * </PRE>
-   *
-   * @param v two <code>int</code> array as input. 
-   *
-   * @return array of two <code>int</code>s, enciphered.
-   */
-   public int [] encipher(int v[])
-   {
-      int y=v[0];
-      int z=v[1];
-      int sum=0;
-      int delta=0x9E3779B9;
-      int a=_key[0];
-      int b=_key[1];
-      int c=_key[2];
-      int d=_key[3];
-      int n=32;
+        String src = "hello world!";
+        System.out.println("input = " + src);
 
-      while(n-->0)
-      {
-         sum += delta;
-         y += (z << 4)+a ^ z+sum ^ (z >> 5)+b;
-         z += (y << 4)+c ^ y+sum ^ (y >> 5)+d;
-      }
+        byte[] plainSource = src.getBytes();
+        int[] enc = t.encode(plainSource, plainSource.length);
+        System.out.println(t.padding() + " bytes added as padding.");
 
-      v[0] = y;
-      v[1] = z;
+        byte[] dec = t.decode(enc);
+        System.out.println("output = " + new String(dec));
+    }
 
-      return v;
-   }
+    /**
+    * Representation of TEA class
+    */
+    public String toString() {
+        String tea = this.getClass().getName();
+        tea += (": Tiny Encryption Algorithm (TEA)  key: " +
+        dumpBytes(_keyBytes));
 
-   /**
-   * Decipher two <code>int</code>s.
-   * Replaces the original contents of the parameters with the results.
-   * The integers are usually decocted to 8 bytes.
-   * The decoction of the <code>int</code>s to bytes can be done
-   * this way.
-   * <PRE>
-   * int x[] = decipher(ins);
-   * outb[j]   = (byte)(x[0] >>> 24);
-   * outb[j+1] = (byte)(x[0] >>> 16);
-   * outb[j+2] = (byte)(x[0] >>> 8);
-   * outb[j+3] = (byte)(x[0]);
-   * outb[j+4] = (byte)(x[1] >>> 24);
-   * outb[j+5] = (byte)(x[1] >>> 16);
-   * outb[j+6] = (byte)(x[1] >>> 8);
-   * outb[j+7] = (byte)(x[1]);
-   * </PRE>
-   *
-   * @param v <code>int</code> array of 2
-   *
-   * @return deciphered <code>int</code> array of 2
-   */
-   public int [] decipher(int v[])
-   {
-      int y=v[0];
-      int z=v[1];
-      int sum=0xC6EF3720;
-      int delta=0x9E3779B9;
-      int a=_key[0];
-      int b=_key[1];
-      int c=_key[2];
-      int d=_key[3];
-      int n=32;
+        return tea;
+    }
 
-      // sum = delta<<5, in general sum = delta * n 
+    /**
+    * Encipher two <code>int</code>s.
+    * Replaces the original contents of the parameters with the results.
+    * The integers are usually created from 8 bytes.
+    * The usual way to collect bytes to the int array is:
+    * <PRE>
+    * byte ba[] = { .... };
+    * int v[] = new int[2];
+    * v[0] = (ba[j] << 24 ) | (((ba[j+1])&0xff) << 16) | (((ba[j+2])&0xff) << 8) | ((ba[j+3])&0xff);
+    * v[1] = (ba[j+4] << 24 ) | (((ba[j+5])&0xff) << 16) | (((ba[j+6])&0xff) << 8) | ((ba[j+7])&0xff);
+    * v = encipher(v);
+    * </PRE>
+    *
+    * @param v two <code>int</code> array as input.
+    *
+    * @return array of two <code>int</code>s, enciphered.
+    */
+    public int[] encipher(int[] v) {
+        int y = v[0];
+        int z = v[1];
+        int sum = 0;
+        int delta = 0x9E3779B9;
+        int a = _key[0];
+        int b = _key[1];
+        int c = _key[2];
+        int d = _key[3];
+        int n = 32;
 
-      while(n-->0)
-      {
-         z -= (y << 4)+c ^ y+sum ^ (y >> 5) + d;
-         y -= (z << 4)+a ^ z+sum ^ (z >> 5) + b;
-         sum -= delta;
-      }
+        while (n-- > 0) {
+            sum += delta;
+            y += (((z << 4) + a) ^ (z + sum) ^ ((z >> 5) + b));
+            z += (((y << 4) + c) ^ (y + sum) ^ ((y >> 5) + d));
+        }
 
-      v[0] = y;
-      v[1] = z;
+        v[0] = y;
+        v[1] = z;
 
-      return v;
-   }
+        return v;
+    }
 
-   /**
-   * Encipher two <code>bytes</code>s.
-   *
-   * @param v <code>byte</code> array of 2
-   *
-   * @return enciphered <code>byte</code> array of 2
-   */
-   public byte [] encipher(byte v[])
-   {
-      byte y=v[0];
-      byte z=v[1];
-      int sum=0;
-      int delta=0x9E3779B9;
-      int a=_key[0];
-      int b=_key[1];
-      int c=_key[2];
-      int d=_key[3];
-      int n=32;
+    /**
+    * Decipher two <code>int</code>s.
+    * Replaces the original contents of the parameters with the results.
+    * The integers are usually decocted to 8 bytes.
+    * The decoction of the <code>int</code>s to bytes can be done
+    * this way.
+    * <PRE>
+    * int x[] = decipher(ins);
+    * outb[j]   = (byte)(x[0] >>> 24);
+    * outb[j+1] = (byte)(x[0] >>> 16);
+    * outb[j+2] = (byte)(x[0] >>> 8);
+    * outb[j+3] = (byte)(x[0]);
+    * outb[j+4] = (byte)(x[1] >>> 24);
+    * outb[j+5] = (byte)(x[1] >>> 16);
+    * outb[j+6] = (byte)(x[1] >>> 8);
+    * outb[j+7] = (byte)(x[1]);
+    * </PRE>
+    *
+    * @param v <code>int</code> array of 2
+    *
+    * @return deciphered <code>int</code> array of 2
+    */
+    public int[] decipher(int[] v) {
+        int y = v[0];
+        int z = v[1];
+        int sum = 0xC6EF3720;
+        int delta = 0x9E3779B9;
+        int a = _key[0];
+        int b = _key[1];
+        int c = _key[2];
+        int d = _key[3];
+        int n = 32;
 
-      while(n-->0)
-      {
-         sum += delta;
-         y += (z << 4)+a ^ z+sum ^ (z >> 5)+b;
-         z += (y << 4)+c ^ y+sum ^ (y >> 5)+d;
-      }
+        // sum = delta<<5, in general sum = delta * n 
+        while (n-- > 0) {
+            z -= (((y << 4) + c) ^ (y + sum) ^ ((y >> 5) + d));
+            y -= (((z << 4) + a) ^ (z + sum) ^ ((z >> 5) + b));
+            sum -= delta;
+        }
 
-      v[0] = y;
-      v[1] = z;
+        v[0] = y;
+        v[1] = z;
 
-      return v;
-   }
+        return v;
+    }
 
-   /**
-   * Decipher two <code>bytes</code>s.
-   *
-   * @param v <code>byte</code> array of 2
-   *
-   * @return decipherd <code>byte</code> array of 2
-   */
-   public byte [] decipher(byte v[])
-   {
-      byte y=v[0];
-      byte z=v[1];
-      int sum=0xC6EF3720;
-      int delta=0x9E3779B9;
-      int a=_key[0];
-      int b=_key[1];
-      int c=_key[2];
-      int d=_key[3];
-      int n=32;
+    /**
+    * Encipher two <code>bytes</code>s.
+    *
+    * @param v <code>byte</code> array of 2
+    *
+    * @return enciphered <code>byte</code> array of 2
+    */
+    public byte[] encipher(byte[] v) {
+        byte y = v[0];
+        byte z = v[1];
+        int sum = 0;
+        int delta = 0x9E3779B9;
+        int a = _key[0];
+        int b = _key[1];
+        int c = _key[2];
+        int d = _key[3];
+        int n = 32;
 
-      // sum = delta<<5, in general sum = delta * n 
+        while (n-- > 0) {
+            sum += delta;
+            y += (((z << 4) + a) ^ (z + sum) ^ ((z >> 5) + b));
+            z += (((y << 4) + c) ^ (y + sum) ^ ((y >> 5) + d));
+        }
 
-      while(n-->0)
-      {
-         z -= (y << 4)+c ^ y+sum ^ (y >> 5)+d;
-         y -= (z << 4)+a ^ z+sum ^ (z >> 5)+b;
-         sum -= delta;
-      }
+        v[0] = y;
+        v[1] = z;
 
-      v[0] = y;
-      v[1] = z;
+        return v;
+    }
 
-      return v;
-   }
+    /**
+    * Decipher two <code>bytes</code>s.
+    *
+    * @param v <code>byte</code> array of 2
+    *
+    * @return decipherd <code>byte</code> array of 2
+    */
+    public byte[] decipher(byte[] v) {
+        byte y = v[0];
+        byte z = v[1];
+        int sum = 0xC6EF3720;
+        int delta = 0x9E3779B9;
+        int a = _key[0];
+        int b = _key[1];
+        int c = _key[2];
+        int d = _key[3];
+        int n = 32;
 
-   /**
-   * Byte wrapper for encoding.
-   * Converts bytes to ints.
-   * Padding will be added if required.
-   *
-   * @param b incoming <code>byte</code> array
-   *
-   * @param byte count
-   *
-   * @return integer conversion array, possibly with padding.
-   *
-   * @see #padding
-   */
-   int [] encode(byte b[], int count)
-   {
-      int j ,i;
-      int bLen = count;
-      byte bp[] = b;
+        // sum = delta<<5, in general sum = delta * n 
+        while (n-- > 0) {
+            z -= (((y << 4) + c) ^ (y + sum) ^ ((y >> 5) + d));
+            y -= (((z << 4) + a) ^ (z + sum) ^ ((z >> 5) + b));
+            sum -= delta;
+        }
 
-      _padding = bLen % 8;
-      if (_padding != 0)   // Add some padding, if necessary.
-      {
-         _padding = 8 - (bLen % 8);
-         bp = new byte[bLen + _padding];
-         System.arraycopy(b, 0, bp, 0, bLen);
-         bLen = bp.length;
-      }
+        v[0] = y;
+        v[1] = z;
 
-      int intCount = bLen / 4;
-      int r[] = new int[2];
-      int out[] = new int[intCount];
+        return v;
+    }
 
-      for (i = 0, j = 0; j < bLen; j += 8, i += 2)
-      {
-         // Java's unforgivable lack of unsigneds causes more bit
-         // twiddling than this language really needs.
-         r[0] = (bp[j] << 24 ) | (((bp[j+1])&0xff) << 16) | (((bp[j+2])&0xff) << 8) | ((bp[j+3])&0xff);
-         r[1] = (bp[j+4] << 24 ) | (((bp[j+5])&0xff) << 16) | (((bp[j+6])&0xff) << 8) | ((bp[j+7])&0xff);
-         encipher(r);
-         out[i] = r[0];
-         out[i+1] = r[1];
-      }
+    /**
+    * Byte wrapper for encoding.
+    * Converts bytes to ints.
+    * Padding will be added if required.
+    *
+    * @param b incoming <code>byte</code> array
+    *
+    * @param byte count
+    *
+    * @return integer conversion array, possibly with padding.
+    *
+    * @see #padding
+    */
+    int[] encode(byte[] b, int count) {
+        int j;
+        int i;
+        int bLen = count;
+        byte[] bp = b;
 
-      return out;
-   }
+        _padding = bLen % 8;
 
-   /**
-   * Report how much padding was done in the last encode.
-   *
-   * @return bytes of padding added
-   *
-   * @see #encode
-   */
-   public int padding()
-   {
-      return _padding;
-   }
+        if (_padding != 0) // Add some padding, if necessary.
+         {
+            _padding = 8 - (bLen % 8);
+            bp = new byte[bLen + _padding];
+            System.arraycopy(b, 0, bp, 0, bLen);
+            bLen = bp.length;
+        }
 
-   /**
-   * Convert a byte array to ints and then decode.
-   * There may be some padding at the end of the byte array from
-   * the previous encode operation.
-   *
-   * @param b bytes to decode
-   * @param count number of bytes in the array to decode
-   *
-   * @return <code>byte</code> array of decoded bytes.
-   */
-   public byte [] decode(byte b[], int count)
-   {
-      int i, j;
+        int intCount = bLen / 4;
+        int[] r = new int[2];
+        int[] out = new int[intCount];
 
-      int intCount = count / 4;
-      int ini[] = new int[intCount];
-      for (i = 0, j = 0; i < intCount; i += 2, j += 8)
-      {
-         ini[i] = (b[j] << 24 ) | (((b[j+1])&0xff) << 16) | (((b[j+2])&0xff) << 8) | ((b[j+3])&0xff);
-         ini[i+1] = (b[j+4] << 24 ) | (((b[j+5])&0xff) << 16) | (((b[j+6])&0xff) << 8) | ((b[j+7])&0xff);
-      }
-      return decode(ini);
-   }
+        for (i = 0, j = 0; j < bLen; j += 8, i += 2) {
+            // Java's unforgivable lack of unsigneds causes more bit
+            // twiddling than this language really needs.
+            r[0] = (bp[j] << 24) | (((bp[j + 1]) & 0xff) << 16) |
+                (((bp[j + 2]) & 0xff) << 8) | ((bp[j + 3]) & 0xff);
+            r[1] = (bp[j + 4] << 24) | (((bp[j + 5]) & 0xff) << 16) |
+                (((bp[j + 6]) & 0xff) << 8) | ((bp[j + 7]) & 0xff);
+            encipher(r);
+            out[i] = r[0];
+            out[i + 1] = r[1];
+        }
 
-   /**
-   * Decode an integer array.
-   * There may be some padding at the end of the byte array from
-   * the previous encode operation.
-   *
-   * @param b bytes to decode
-   * @param count number of bytes in the array to decode
-   *
-   * @return <code>byte</code> array of decoded bytes.
-   */
-   public byte [] decode(int b[])
-   {
-      // create the large number and start stripping ints out, two at a time.
-      int intCount = b.length;
+        return out;
+    }
 
-      byte outb[] = new byte[intCount * 4];
-      int tmp[] = new int[2];
+    /**
+    * Report how much padding was done in the last encode.
+    *
+    * @return bytes of padding added
+    *
+    * @see #encode
+    */
+    public int padding() {
+        return _padding;
+    }
 
-      // decipher all the ints.
-      int i, j;
-      for (j = 0, i = 0; i < intCount; i += 2, j += 8)
-      {
-         tmp[0] = b[i];
-         tmp[1] = b[i+1];
-         decipher(tmp);
-         outb[j]   = (byte)(tmp[0] >>> 24);
-         outb[j+1] = (byte)(tmp[0] >>> 16);
-         outb[j+2] = (byte)(tmp[0] >>> 8);
-         outb[j+3] = (byte)(tmp[0]);
-         outb[j+4] = (byte)(tmp[1] >>> 24);
-         outb[j+5] = (byte)(tmp[1] >>> 16);
-         outb[j+6] = (byte)(tmp[1] >>> 8);
-         outb[j+7] = (byte)(tmp[1]);
-      }
+    /**
+    * Convert a byte array to ints and then decode.
+    * There may be some padding at the end of the byte array from
+    * the previous encode operation.
+    *
+    * @param b bytes to decode
+    * @param count number of bytes in the array to decode
+    *
+    * @return <code>byte</code> array of decoded bytes.
+    */
+    public byte[] decode(byte[] b, int count) {
+        int i;
+        int j;
 
-      return outb;
-   }
+        int intCount = count / 4;
+        int[] ini = new int[intCount];
 
+        for (i = 0, j = 0; i < intCount; i += 2, j += 8) {
+            ini[i] = (b[j] << 24) | (((b[j + 1]) & 0xff) << 16) |
+                (((b[j + 2]) & 0xff) << 8) | ((b[j + 3]) & 0xff);
+            ini[i + 1] = (b[j + 4] << 24) | (((b[j + 5]) & 0xff) << 16) |
+                (((b[j + 6]) & 0xff) << 8) | ((b[j + 7]) & 0xff);
+        }
 
-   // Display some bytes in HEX.
-   //
-   private String dumpBytes(byte b[])
-   {
-      StringBuffer r = new StringBuffer();
-      final String hex = "0123456789ABCDEF";
+        return decode(ini);
+    }
 
-      for (int i = 0; i < b.length; i++)
-      {
-         int c = ((b[i]) >>> 4) & 0xf;
-         r.append(hex.charAt(c));
-         c = ((int)b[i] & 0xf);
-         r.append(hex.charAt(c));
-      }
+    /**
+    * Decode an integer array.
+    * There may be some padding at the end of the byte array from
+    * the previous encode operation.
+    *
+    * @param b bytes to decode
+    * @param count number of bytes in the array to decode
+    *
+    * @return <code>byte</code> array of decoded bytes.
+    */
+    public byte[] decode(int[] b) {
+        // create the large number and start stripping ints out, two at a time.
+        int intCount = b.length;
 
-      return r.toString();
-   }
+        byte[] outb = new byte[intCount * 4];
+        int[] tmp = new int[2];
 
+        // decipher all the ints.
+        int i;
+
+        // decipher all the ints.
+        int j;
+
+        for (j = 0, i = 0; i < intCount; i += 2, j += 8) {
+            tmp[0] = b[i];
+            tmp[1] = b[i + 1];
+            decipher(tmp);
+            outb[j] = (byte) (tmp[0] >>> 24);
+            outb[j + 1] = (byte) (tmp[0] >>> 16);
+            outb[j + 2] = (byte) (tmp[0] >>> 8);
+            outb[j + 3] = (byte) (tmp[0]);
+            outb[j + 4] = (byte) (tmp[1] >>> 24);
+            outb[j + 5] = (byte) (tmp[1] >>> 16);
+            outb[j + 6] = (byte) (tmp[1] >>> 8);
+            outb[j + 7] = (byte) (tmp[1]);
+        }
+
+        return outb;
+    }
+
+    // Display some bytes in HEX.
+    //
+    private String dumpBytes(byte[] b) {
+        StringBuffer r = new StringBuffer();
+        final String hex = "0123456789ABCDEF";
+
+        for (int i = 0; i < b.length; i++) {
+            int c = ((b[i]) >>> 4) & 0xf;
+            r.append(hex.charAt(c));
+            c = ((int) b[i] & 0xf);
+            r.append(hex.charAt(c));
+        }
+
+        return r.toString();
+    }
 }

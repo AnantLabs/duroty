@@ -5,12 +5,6 @@ import org.apache.lucene.queryParser.QueryParser.Operator;
 import org.apache.lucene.search.Query;
 
 
-/**
- * DOCUMENT ME!
- *
- * @author $author$
- * @version $Revision$
- */
 public interface DidYouMeanParser {
     /**
      * DOCUMENT ME!

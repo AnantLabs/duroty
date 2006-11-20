@@ -14,16 +14,16 @@ package com.duroty.application.home.ejb;
 public class HomeSession extends com.duroty.application.home.ejb.HomeBean
     implements javax.ejb.SessionBean {
     /**
-          *
-          */
+         *
+         */
     private static final long serialVersionUID = 6295030096796166467L;
 
     /**
-     * DOCUMENT ME!
-     *
-     * @throws javax.ejb.EJBException DOCUMENT ME!
-     * @throws java.rmi.RemoteException DOCUMENT ME!
-     */
+    * DOCUMENT ME!
+    *
+    * @throws javax.ejb.EJBException DOCUMENT ME!
+    * @throws java.rmi.RemoteException DOCUMENT ME!
+    */
     public void ejbActivate()
         throws javax.ejb.EJBException, java.rmi.RemoteException {
         super.ejbActivate();

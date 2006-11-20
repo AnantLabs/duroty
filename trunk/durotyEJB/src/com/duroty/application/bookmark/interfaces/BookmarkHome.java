@@ -3,6 +3,7 @@
  */
 package com.duroty.application.bookmark.interfaces;
 
+
 /**
  * Home interface for Bookmark.
  * @xdoclet-generated at ${TODAY}
@@ -10,13 +11,25 @@ package com.duroty.application.bookmark.interfaces;
  * @author XDoclet
  * @version ${version}
  */
-public interface BookmarkHome
-   extends javax.ejb.EJBHome
-{
-   public static final String COMP_NAME="duroty/ejb/Bookmark";
-   public static final String JNDI_NAME="duroty/ejb/Bookmark";
+public interface BookmarkHome extends javax.ejb.EJBHome {
+    /**
+     * DOCUMENT ME!
+     */
+    public static final String COMP_NAME = "java:comp/env/ejb/Bookmark";
 
-   public com.duroty.application.bookmark.interfaces.Bookmark create()
-      throws javax.ejb.CreateException,java.rmi.RemoteException;
+    /**
+     * DOCUMENT ME!
+     */
+    public static final String JNDI_NAME = "duroty/ejb/Bookmark";
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws javax.ejb.CreateException DOCUMENT ME!
+     * @throws java.rmi.RemoteException DOCUMENT ME!
+     */
+    public com.duroty.application.bookmark.interfaces.Bookmark create()
+        throws javax.ejb.CreateException, java.rmi.RemoteException;
 }

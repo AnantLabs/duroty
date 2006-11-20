@@ -395,7 +395,7 @@ public class HttpContent {
         method = (GetMethod) establishConnection(GET);
         contents = method.getResponseBodyAsString();
         this.charset = method.getRequestCharSet();
-        
+
         if (contents == null) {
             throw new IOException("Unable to obtain inputstream from " +
                 httpUri);

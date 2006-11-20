@@ -1,12 +1,75 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 /**
  *
  */
 package com.duroty.service;
 
+import com.duroty.application.mail.manager.SendMessageThread;
+
+import com.duroty.hibernate.Attachment;
+import com.duroty.hibernate.BuddyList;
+import com.duroty.hibernate.Contact;
+import com.duroty.hibernate.Identity;
+import com.duroty.hibernate.MailPreferences;
+import com.duroty.hibernate.Message;
+import com.duroty.hibernate.Users;
+
+import com.duroty.jmx.mbean.ApplicationConstants;
+import com.duroty.jmx.mbean.Constants;
+
+import com.duroty.lucene.mail.LuceneMessage;
+import com.duroty.lucene.mail.MimeMessageToLuceneMessage;
+import com.duroty.lucene.mail.indexer.MailIndexer;
+import com.duroty.lucene.mail.indexer.MailIndexerConstants;
+
+import com.duroty.service.analyzer.BayesianAnalysis;
+import com.duroty.service.analyzer.LuceneFiltersAnalysis;
+
+import com.duroty.utils.GeneralOperations;
+import com.duroty.utils.log.DLog;
+import com.duroty.utils.mail.MailPart;
+import com.duroty.utils.mail.MessageUtilities;
+import com.duroty.utils.mail.RFC2822Headers;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.mail.HtmlEmail;
+
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+import org.hibernate.criterion.Restrictions;
+
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+
 import java.nio.charset.Charset;
+
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -21,39 +84,9 @@ import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.InternetHeaders;
 import javax.mail.internet.MimeMessage;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.mail.HtmlEmail;
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
-
-import com.duroty.application.mail.manager.SendMessageThread;
-import com.duroty.hibernate.Attachment;
-import com.duroty.hibernate.BuddyList;
-import com.duroty.hibernate.Contact;
-import com.duroty.hibernate.Identity;
-import com.duroty.hibernate.MailPreferences;
-import com.duroty.hibernate.Message;
-import com.duroty.hibernate.Users;
-import com.duroty.jmx.mbean.ApplicationConstants;
-import com.duroty.jmx.mbean.Constants;
-import com.duroty.lucene.mail.LuceneMessage;
-import com.duroty.lucene.mail.MimeMessageToLuceneMessage;
-import com.duroty.lucene.mail.indexer.MailIndexer;
-import com.duroty.lucene.mail.indexer.MailIndexerConstants;
-import com.duroty.service.analyzer.BayesianAnalysis;
-import com.duroty.service.analyzer.LuceneFiltersAnalysis;
-import com.duroty.utils.GeneralOperations;
-import com.duroty.utils.log.DLog;
-import com.duroty.utils.mail.MailPart;
-import com.duroty.utils.mail.MessageUtilities;
-import com.duroty.utils.mail.RFC2822Headers;
 
 
 /**
@@ -815,16 +848,17 @@ public class Mailet implements Runnable, MailIndexerConstants {
             Identity identity = (Identity) crit.uniqueResult();
 
             if (identity != null) {
-            	InternetAddress _from = new InternetAddress(identity.getIdeEmail(), identity.getIdeName());            	
-            	InternetAddress _to = InternetAddress.parse(to)[0];
-            	
-            	if (_from.getAddress().equals(_to.getAddress())) {
-            		return;
-            	}
-            	
+                InternetAddress _from = new InternetAddress(identity.getIdeEmail(),
+                        identity.getIdeName());
+                InternetAddress _to = InternetAddress.parse(to)[0];
+
+                if (_from.getAddress().equals(_to.getAddress())) {
+                    return;
+                }
+
                 HtmlEmail email = new HtmlEmail();
                 email.setMailSession(msession);
-                
+
                 email.setFrom(_from.getAddress(), _from.getPersonal());
                 email.addTo(_to.getAddress(), _to.getPersonal());
 
@@ -832,8 +866,9 @@ public class Mailet implements Runnable, MailIndexerConstants {
                 MailPreferences mailPreferences = (MailPreferences) it.next();
 
                 email.setSubject(mailPreferences.getMaprVacationSubject());
-                email.setHtmlMsg("<p>" + mailPreferences.getMaprVacationBody() + "</p><p>" + mailPreferences.getMaprSignature() + "</p>");
-                
+                email.setHtmlMsg("<p>" + mailPreferences.getMaprVacationBody() +
+                    "</p><p>" + mailPreferences.getMaprSignature() + "</p>");
+
                 email.setCharset(Charset.defaultCharset().displayName());
 
                 email.send();

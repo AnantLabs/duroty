@@ -23,7 +23,8 @@ import javax.mail.internet.MimeMessage;
  *
  *
  */
-public class MimeMessageInputStreamSource extends MimeMessageSource implements Disposable {
+public class MimeMessageInputStreamSource extends MimeMessageSource
+    implements Disposable {
     /**
      * A temporary file used to hold the message stream
      */
@@ -33,8 +34,11 @@ public class MimeMessageInputStreamSource extends MimeMessageSource implements D
      * The full path of the temporary file
      */
     String sourceId = null;
-    
-    boolean tempFile = false;    
+
+    /**
+     * DOCUMENT ME!
+     */
+    boolean tempFile = false;
 
     /**
      * Construct a new MimeMessageInputStreamSource from an
@@ -47,27 +51,29 @@ public class MimeMessageInputStreamSource extends MimeMessageSource implements D
      * @throws MessagingException if an error occurs while trying to store
      *                            the stream
      */
-    public MimeMessageInputStreamSource(String path, String key, InputStream in, boolean tempFile)
-        throws MessagingException {
+    public MimeMessageInputStreamSource(String path, String key,
+        InputStream in, boolean tempFile) throws MessagingException {
         //We want to immediately read this into a temporary file
         //Create a temp file and channel the input stream into it
         OutputStream fout = null;
 
         try {
-        	if (!path.endsWith(File.separator)) {
-        		path = path + File.separator;
-        	}
-        	
-        	File dir = new File(path);
-        	if (!dir.exists()) {
-        		dir.mkdirs();
-        	}
-        	
-        	if (tempFile) {
-        		file = File.createTempFile(key, ".m64");
-        	} else {        	
-        		file = new File(dir, key + ".m64");
-        	}
+            if (!path.endsWith(File.separator)) {
+                path = path + File.separator;
+            }
+
+            File dir = new File(path);
+
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            if (tempFile) {
+                file = File.createTempFile(key, ".m64");
+            } else {
+                file = new File(dir, key + ".m64");
+            }
+
             fout = new BufferedOutputStream(new FileOutputStream(file));
 
             int b = -1;
@@ -100,7 +106,7 @@ public class MimeMessageInputStreamSource extends MimeMessageSource implements D
             }
         }
     }
-    
+
     /**
      * Construct a new MimeMessageInputStreamSource from an
      * <code>InputStream</code> that contains the bytes of a
@@ -112,32 +118,33 @@ public class MimeMessageInputStreamSource extends MimeMessageSource implements D
      * @throws MessagingException if an error occurs while trying to store
      *                            the stream
      */
-    public MimeMessageInputStreamSource(String path, String key, MimeMessage mime, boolean tempFile)
-        throws MessagingException {
+    public MimeMessageInputStreamSource(String path, String key,
+        MimeMessage mime, boolean tempFile) throws MessagingException {
         //We want to immediately read this into a temporary file
         //Create a temp file and channel the input stream into it
         OutputStream fout = null;
 
         try {
-        	if (!path.endsWith(File.separator)) {
-        		path = path + File.separator;
-        	}
-        	
-        	File dir = new File(path);
-        	if (!dir.exists()) {
-        		dir.mkdirs();
-        	}
-        	
-        	if (tempFile) {
-        		file = File.createTempFile(key, ".m64");
-        	} else {        	
-        		file = new File(dir, key + ".m64");
-        	}
-        	
+            if (!path.endsWith(File.separator)) {
+                path = path + File.separator;
+            }
+
+            File dir = new File(path);
+
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+
+            if (tempFile) {
+                file = File.createTempFile(key, ".m64");
+            } else {
+                file = new File(dir, key + ".m64");
+            }
+
             fout = new BufferedOutputStream(new FileOutputStream(file));
 
             mime.writeTo(fout);
-            
+
             fout.flush();
 
             sourceId = file.getCanonicalPath();
@@ -188,15 +195,15 @@ public class MimeMessageInputStreamSource extends MimeMessageSource implements D
      * DOCUMENT ME!
      */
     public void dispose() {
-    	if (tempFile) {
-    		try {
-    			if ((file != null) && file.exists()) {
-    				file.delete();
-    			}
-    		} catch (Exception e) {
-    			//ignore
-    		}
-    	}
+        if (tempFile) {
+            try {
+                if ((file != null) && file.exists()) {
+                    file.delete();
+                }
+            } catch (Exception e) {
+                //ignore
+            }
+        }
 
         file = null;
     }

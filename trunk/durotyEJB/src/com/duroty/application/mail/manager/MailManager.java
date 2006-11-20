@@ -1,9 +1,77 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
 package com.duroty.application.mail.manager;
+
+import com.duroty.application.mail.exceptions.MailException;
+import com.duroty.application.mail.utils.AttachmentObj;
+import com.duroty.application.mail.utils.ContactListObj;
+import com.duroty.application.mail.utils.Counters;
+import com.duroty.application.mail.utils.FolderObj;
+import com.duroty.application.mail.utils.LabelObj;
+import com.duroty.application.mail.utils.MessageObj;
+
+import com.duroty.hibernate.Attachment;
+import com.duroty.hibernate.ContactList;
+import com.duroty.hibernate.LabMes;
+import com.duroty.hibernate.LabMesId;
+import com.duroty.hibernate.Label;
+import com.duroty.hibernate.MailPreferences;
+import com.duroty.hibernate.Message;
+import com.duroty.hibernate.Users;
+
+import com.duroty.jmx.mbean.Constants;
+
+import com.duroty.service.Messageable;
+import com.duroty.service.analyzer.BayesianAnalysisFeeder;
+
+import com.duroty.utils.GeneralOperations;
+import com.duroty.utils.io.NullWriter;
+import com.duroty.utils.log.DLog;
+import com.duroty.utils.mail.MailPart;
+import com.duroty.utils.mail.MessageUtilities;
+import com.duroty.utils.misc.JavaScriptCleaner;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
+import org.hibernate.ScrollableResults;
+import org.hibernate.Session;
+
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+
+import org.w3c.dom.Document;
+
+import org.w3c.tidy.Tidy;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
+
 import java.nio.charset.Charset;
+
 import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,7 +82,9 @@ import java.util.TimeZone;
 import java.util.Vector;
 
 import javax.mail.internet.MimeMessage;
+
 import javax.sql.DataSource;
+
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -22,53 +92,17 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.SQLQuery;
-import org.hibernate.ScrollableResults;
-import org.hibernate.Session;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
-import org.w3c.dom.Document;
-import org.w3c.tidy.Tidy;
-
-import com.duroty.application.mail.exceptions.MailException;
-import com.duroty.application.mail.utils.AttachmentObj;
-import com.duroty.application.mail.utils.ContactListObj;
-import com.duroty.application.mail.utils.Counters;
-import com.duroty.application.mail.utils.FolderObj;
-import com.duroty.application.mail.utils.LabelObj;
-import com.duroty.application.mail.utils.MessageObj;
-import com.duroty.hibernate.Attachment;
-import com.duroty.hibernate.ContactList;
-import com.duroty.hibernate.LabMes;
-import com.duroty.hibernate.LabMesId;
-import com.duroty.hibernate.Label;
-import com.duroty.hibernate.MailPreferences;
-import com.duroty.hibernate.Message;
-import com.duroty.hibernate.Users;
-import com.duroty.jmx.mbean.Constants;
-import com.duroty.service.Messageable;
-import com.duroty.service.analyzer.BayesianAnalysisFeeder;
-import com.duroty.utils.GeneralOperations;
-import com.duroty.utils.io.NullWriter;
-import com.duroty.utils.log.DLog;
-import com.duroty.utils.mail.MailPart;
-import com.duroty.utils.mail.MessageUtilities;
-import com.duroty.utils.misc.JavaScriptCleaner;
-
 
 /**
- * DOCUMENT ME!
- *
- * @author $author$
- * @version $Revision$
- */
+ * @author Jordi Marquès
+ * @version 1.0
+*/
 public class MailManager implements MailManagerConstants {
-	private static final String FOLDER_DELETE = "DELETE";
-	
+    /**
+     * DOCUMENT ME!
+     */
+    private static final String FOLDER_DELETE = "DELETE";
+
     /** DOCUMENT ME */
     private String folderAll;
 
@@ -150,7 +184,8 @@ public class MailManager implements MailManagerConstants {
         this.folderImportant = (String) mail.get(Constants.MAIL_FOLDER_IMPORTANT);
         this.folderHidden = (String) mail.get(Constants.MAIL_FOLDER_HIDDEN);
         this.folderChat = (String) mail.get(Constants.MAIL_FOLDER_CHAT);
-        this.quoteSizeAlert = Integer.valueOf((String) mail.get(Constants.MAIL_QUOTE_SIZE_ALERT)).intValue();
+        this.quoteSizeAlert = Integer.valueOf((String) mail.get(
+                    Constants.MAIL_QUOTE_SIZE_ALERT)).intValue();
 
         tidy.setUpperCaseTags(true);
         tidy.setInputEncoding(Charset.defaultCharset().displayName());
@@ -163,6 +198,7 @@ public class MailManager implements MailManagerConstants {
         tidy.setDropProprietaryAttributes(true);
         tidy.setFixBackslash(true);
         tidy.setXHTML(true);
+
         //tidy.setXmlOut(true);
         tidy.setWrapSection(true);
         tidy.setWrapScriptlets(true);
@@ -400,26 +436,32 @@ public class MailManager implements MailManagerConstants {
      */
     public void deleteMessagesInFolder(Session hsession, String repositoryName,
         String folderName) throws MailException {
-    	try {
+        try {
             folderName = parseFolder(folderName);
         } catch (Exception ex) {
             return;
         }
-        
+
         String newFolder = this.folderTrash;
 
-        if ((folderName != null) && (folderName.equals(this.folderTrash) || folderName.equals(this.folderSpam))) {
+        if ((folderName != null) &&
+                (folderName.equals(this.folderTrash) ||
+                folderName.equals(this.folderSpam))) {
             newFolder = FOLDER_DELETE;
         }
-        
+
         try {
-        	String[] boxes = null;
-        	if (folderName.equals(this.folderHidden)) {
-        		boxes = new String[] {this.folderBlog, this.folderChat, this.folderHidden, this.folderInbox, this.folderSent, this.folderDraft};
-        	} else {
-        		boxes = new String[] {folderName};
-        	}
-        	
+            String[] boxes = null;
+
+            if (folderName.equals(this.folderHidden)) {
+                boxes = new String[] {
+                        this.folderBlog, this.folderChat, this.folderHidden,
+                        this.folderInbox, this.folderSent, this.folderDraft
+                    };
+            } else {
+                boxes = new String[] { folderName };
+            }
+
             Query query = hsession.getNamedQuery("delete-messages-by-folder");
             query.setString("trash", newFolder);
             query.setParameterList("box", boxes);
@@ -481,10 +523,12 @@ public class MailManager implements MailManagerConstants {
             folderName = parseFolder(folderName);
         } catch (Exception ex) {
         }
-        
+
         String newFolder = this.folderTrash;
 
-        if ((folderName != null) && (folderName.equals(this.folderTrash) || folderName.equals(this.folderSpam))) {
+        if ((folderName != null) &&
+                (folderName.equals(this.folderTrash) ||
+                folderName.equals(this.folderSpam))) {
             newFolder = FOLDER_DELETE;
         }
 
@@ -837,7 +881,7 @@ public class MailManager implements MailManagerConstants {
                 query.setString("folderSpam", this.folderSpam);
                 query.setString("folderTrash", this.folderTrash);
                 query.setString("folderDelete", FOLDER_DELETE);
-                query.setString("folderChat", this.folderChat);                
+                query.setString("folderChat", this.folderChat);
             } else {
                 query = hsession.getNamedQuery("count-messages-by-folder");
                 query.setString("folder", folderName);
@@ -1977,9 +2021,9 @@ public class MailManager implements MailManagerConstants {
             query.setInteger("user", new Integer(user.getUseIdint()));
 
             Integer value = (Integer) query.uniqueResult();
-            
+
             int uqs = value.intValue();
-            int pc = ((uqs * 25)/100);            
+            int pc = ((uqs * 25) / 100);
 
             return uqs + pc;
         } catch (Exception ex) {
@@ -2017,47 +2061,46 @@ public class MailManager implements MailManagerConstants {
             xformer.transform(source, result);
 
             body = baos.toString(Charset.defaultCharset().displayName());
-            
-            IOUtils.closeQuietly(baos);            
+
+            IOUtils.closeQuietly(baos);
             baos = null;
             baos = new ByteArrayOutputStream();
-            
+
             tidy.parse(IOUtils.toInputStream(body), baos);
-            
-            body = baos.toString();            
+
+            body = baos.toString();
 
             /*if (!StringUtils.isBlank(body)) {
-            	Pattern pattern = Pattern.compile("(^<a)([\\s\\n]*)(\\w+:\\/\\/[^\\s\\n]+)", Pattern.CASE_INSENSITIVE);
-            	//Pattern pattern = Pattern.compile("((\\s|>)+(http://|https://|www.|ftp://|file:/|mailto:)[^ ]*(.*[^<]))", Pattern.CASE_INSENSITIVE);
-            	
-            	
-            	Matcher matcher = pattern.matcher(body);
-            	
-            	StringBuffer sb = new StringBuffer();
-            	
-            	while (matcher.find()) {
-            		int count = matcher.groupCount();
-        			String m1 = matcher.group(0).trim();
-        			String m2 = matcher.group(1);
-        			matcher.appendReplacement(sb, m2 + "<a href=\"" + m1 + "\" target=\"_new\">" + m1 + "</a>");
-            	}
-            	
-            	if (sb.length() > 0) {
-            		return sb.toString();
-            	} else {            	
-            		return body;
-            	}
+                    Pattern pattern = Pattern.compile("(^<a)([\\s\\n]*)(\\w+:\\/\\/[^\\s\\n]+)", Pattern.CASE_INSENSITIVE);
+                    //Pattern pattern = Pattern.compile("((\\s|>)+(http://|https://|www.|ftp://|file:/|mailto:)[^ ]*(.*[^<]))", Pattern.CASE_INSENSITIVE);
+
+
+                    Matcher matcher = pattern.matcher(body);
+
+                    StringBuffer sb = new StringBuffer();
+
+                    while (matcher.find()) {
+                            int count = matcher.groupCount();
+                                String m1 = matcher.group(0).trim();
+                                String m2 = matcher.group(1);
+                                matcher.appendReplacement(sb, m2 + "<a href=\"" + m1 + "\" target=\"_new\">" + m1 + "</a>");
+                    }
+
+                    if (sb.length() > 0) {
+                            return sb.toString();
+                    } else {
+                            return body;
+                    }
             } else {
                 return "";
             }*/
-            
             return body;
         } catch (Exception ex) {
             return "";
         } finally {
             IOUtils.closeQuietly(baos);
         }
-    }    
+    }
 
     /**
      * DOCUMENT ME!

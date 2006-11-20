@@ -3,6 +3,7 @@
  */
 package com.duroty.application.mail.interfaces;
 
+
 /**
  * Home interface for Send.
  * @xdoclet-generated at ${TODAY}
@@ -10,13 +11,25 @@ package com.duroty.application.mail.interfaces;
  * @author XDoclet
  * @version ${version}
  */
-public interface SendHome
-   extends javax.ejb.EJBHome
-{
-   public static final String COMP_NAME="duroty/ejb/Send";
-   public static final String JNDI_NAME="duroty/ejb/Send";
+public interface SendHome extends javax.ejb.EJBHome {
+    /**
+     * DOCUMENT ME!
+     */
+    public static final String COMP_NAME = "java:comp/env/ejb/Send";
 
-   public com.duroty.application.mail.interfaces.Send create()
-      throws javax.ejb.CreateException,java.rmi.RemoteException;
+    /**
+     * DOCUMENT ME!
+     */
+    public static final String JNDI_NAME = "duroty/ejb/Send";
 
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws javax.ejb.CreateException DOCUMENT ME!
+     * @throws java.rmi.RemoteException DOCUMENT ME!
+     */
+    public com.duroty.application.mail.interfaces.Send create()
+        throws javax.ejb.CreateException, java.rmi.RemoteException;
 }

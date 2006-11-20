@@ -178,7 +178,7 @@ public class FileUtilities {
     /**
      * Determines if a filename matches a 'globbing' pattern. The pattern can
      * contain the following special symbols:
-     * 
+     *
      * <ul>
      * <li>
      * - Matches zero or more of any character
@@ -190,7 +190,7 @@ public class FileUtilities {
      * [...] - Matches one of any character in the list or range
      * </li>
      * </ul>
-     * 
+     *
      *
      * @param pattern The name of the file to check.
      *

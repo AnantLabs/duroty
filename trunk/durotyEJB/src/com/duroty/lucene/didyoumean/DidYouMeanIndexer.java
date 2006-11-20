@@ -11,12 +11,6 @@ import java.io.File;
 import java.io.IOException;
 
 
-/**
- * DOCUMENT ME!
- *
- * @author $author$
- * @version $Revision$
- */
 public class DidYouMeanIndexer {
     /**
      * Creates a new DidYouMeanIndexer object.
@@ -41,7 +35,7 @@ public class DidYouMeanIndexer {
         if (IndexReader.isLocked(originalPath)) {
             return;
         }
-        
+
         boolean create = false;
 
         if (!IndexReader.indexExists(spellPath)) {

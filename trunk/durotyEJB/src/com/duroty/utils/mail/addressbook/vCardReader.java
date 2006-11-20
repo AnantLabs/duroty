@@ -372,6 +372,7 @@ public class vCardReader {
     }
 
     // BNF: V3.0
+
     /**
      * DOCUMENT ME!
      *

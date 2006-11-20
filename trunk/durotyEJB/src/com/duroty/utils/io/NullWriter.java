@@ -1,5 +1,6 @@
 package com.duroty.utils.io;
 
+
 /**
  * Copyright (c) 2001 by Daniel Matuschek
  */

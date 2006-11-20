@@ -125,11 +125,10 @@ public class vCardUtilities {
 
         if (xproperties == null) {
             // assume it's a person as per vCard standards
-            xentry.getAttributeSet()
-                  .add(new LDAPAttribute("objectclass", "person"));
+            xentry.getAttributeSet().add(new LDAPAttribute("objectclass",
+                    "person"));
         } else {
-            xentry.getAttributeSet()
-                  .add(new LDAPAttribute("objectclass",
+            xentry.getAttributeSet().add(new LDAPAttribute("objectclass",
                     (String) xproperties[0].getValue()));
         }
 
@@ -158,14 +157,12 @@ public class vCardUtilities {
                 int xindex = xpart.lastIndexOf(' ');
 
                 if (xindex < 0) {
-                    xentry.getAttributeSet()
-                          .add(new LDAPAttribute("givenName", xpart));
+                    xentry.getAttributeSet().add(new LDAPAttribute(
+                            "givenName", xpart));
                 } else {
-                    xentry.getAttributeSet()
-                          .add(new LDAPAttribute("givenName",
-                            xpart.substring(0, xindex - 1)));
-                    xentry.getAttributeSet()
-                          .add(new LDAPAttribute("surname",
+                    xentry.getAttributeSet().add(new LDAPAttribute(
+                            "givenName", xpart.substring(0, xindex - 1)));
+                    xentry.getAttributeSet().add(new LDAPAttribute("surname",
                             xpart.substring(xindex + 1)));
                 }
             }
@@ -176,8 +173,8 @@ public class vCardUtilities {
             String[] xcomponents = decomposeComposite((String) xproperty1.getValue());
 
             if (xcomponents.length > 0) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("surname", xcomponents[0]));
+                xentry.getAttributeSet().add(new LDAPAttribute("surname",
+                        xcomponents[0]));
             }
 
             xpart = null;
@@ -195,8 +192,8 @@ public class vCardUtilities {
             }
 
             if (xpart != null) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("givenName", xpart));
+                xentry.getAttributeSet().add(new LDAPAttribute("givenName",
+                        xpart));
             }
         }
 
@@ -234,16 +231,14 @@ public class vCardUtilities {
 
             // set home email if necessary
             if (xproperty1 != null) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("emailAddress",
+                xentry.getAttributeSet().add(new LDAPAttribute("emailAddress",
                         (String) xproperty1.getValue()));
             }
 
             // set work email if necessary
             if (xproperty2 != null) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("busEmailAddress",
-                        (String) xproperty2.getValue()));
+                xentry.getAttributeSet().add(new LDAPAttribute(
+                        "busEmailAddress", (String) xproperty2.getValue()));
             }
         }
 
@@ -346,71 +341,61 @@ public class vCardUtilities {
 
             // set home phone if necessary
             if (xproperty0 != null) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("phone",
+                xentry.getAttributeSet().add(new LDAPAttribute("phone",
                         (String) xproperty0.getValue()));
             }
 
             // set home fax if necessary
             if (xproperty1 != null) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("fax",
+                xentry.getAttributeSet().add(new LDAPAttribute("fax",
                         (String) xproperty1.getValue()));
             }
 
             // set home mobile phone if necessary
             if (xproperty2 != null) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("mobile",
+                xentry.getAttributeSet().add(new LDAPAttribute("mobile",
                         (String) xproperty2.getValue()));
             }
 
             // set home car phone if necessary
             if (xproperty3 != null) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("car",
+                xentry.getAttributeSet().add(new LDAPAttribute("car",
                         (String) xproperty3.getValue()));
             }
 
             // set home pager if necessary
             if (xproperty4 != null) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("pager",
+                xentry.getAttributeSet().add(new LDAPAttribute("pager",
                         (String) xproperty4.getValue()));
             }
 
             // set business phone if necessary
             if (xproperty5 != null) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("busPhone",
+                xentry.getAttributeSet().add(new LDAPAttribute("busPhone",
                         (String) xproperty5.getValue()));
             }
 
             // set business fax if necessary
             if (xproperty6 != null) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("busFax",
+                xentry.getAttributeSet().add(new LDAPAttribute("busFax",
                         (String) xproperty6.getValue()));
             }
 
             // set business mobile phone if necessary
             if (xproperty7 != null) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("busMobile",
+                xentry.getAttributeSet().add(new LDAPAttribute("busMobile",
                         (String) xproperty7.getValue()));
             }
 
             // set business car phone if necessary
             if (xproperty8 != null) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("busCar",
+                xentry.getAttributeSet().add(new LDAPAttribute("busCar",
                         (String) xproperty8.getValue()));
             }
 
             // set business pager if necessary
             if (xproperty9 != null) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("busPager",
+                xentry.getAttributeSet().add(new LDAPAttribute("busPager",
                         (String) xproperty9.getValue()));
             }
         }
@@ -472,23 +457,23 @@ public class vCardUtilities {
             xentry.getAttributeSet().add(new LDAPAttribute("street", xpart));
 
             if (xcomponents.length > 3) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("city", xcomponents[3]));
+                xentry.getAttributeSet().add(new LDAPAttribute("city",
+                        xcomponents[3]));
             }
 
             if (xcomponents.length > 4) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("state", xcomponents[4]));
+                xentry.getAttributeSet().add(new LDAPAttribute("state",
+                        xcomponents[4]));
             }
 
             if (xcomponents.length > 5) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("postalCode", xcomponents[5]));
+                xentry.getAttributeSet().add(new LDAPAttribute("postalCode",
+                        xcomponents[5]));
             }
 
             if (xcomponents.length > 6) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("country", xcomponents[6]));
+                xentry.getAttributeSet().add(new LDAPAttribute("country",
+                        xcomponents[6]));
             }
         }
 
@@ -512,23 +497,23 @@ public class vCardUtilities {
             xentry.getAttributeSet().add(new LDAPAttribute("busStreet", xpart));
 
             if (xcomponents.length > 3) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("busCity", xcomponents[3]));
+                xentry.getAttributeSet().add(new LDAPAttribute("busCity",
+                        xcomponents[3]));
             }
 
             if (xcomponents.length > 4) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("busState", xcomponents[4]));
+                xentry.getAttributeSet().add(new LDAPAttribute("busState",
+                        xcomponents[4]));
             }
 
             if (xcomponents.length > 5) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("busPostalCode", xcomponents[5]));
+                xentry.getAttributeSet().add(new LDAPAttribute(
+                        "busPostalCode", xcomponents[5]));
             }
 
             if (xcomponents.length > 6) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("busCountry", xcomponents[6]));
+                xentry.getAttributeSet().add(new LDAPAttribute("busCountry",
+                        xcomponents[6]));
             }
         }
 
@@ -546,13 +531,13 @@ public class vCardUtilities {
             String[] xcomponents = decomposeComposite((String) xproperty1.getValue());
 
             if (xcomponents.length > 0) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("busName", xcomponents[0]));
+                xentry.getAttributeSet().add(new LDAPAttribute("busName",
+                        xcomponents[0]));
             }
 
             if (xcomponents.length > 1) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("busSection", xcomponents[1]));
+                xentry.getAttributeSet().add(new LDAPAttribute("busSection",
+                        xcomponents[1]));
             }
         }
 
@@ -588,15 +573,13 @@ public class vCardUtilities {
 
             // set home alias if necessary
             if (xproperty1 != null) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("alias",
+                xentry.getAttributeSet().add(new LDAPAttribute("alias",
                         (String) xproperty1.getValue()));
             }
 
             // set work alias if necessary
             if (xproperty2 != null) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("busAlias",
+                xentry.getAttributeSet().add(new LDAPAttribute("busAlias",
                         (String) xproperty2.getValue()));
             }
         }
@@ -633,15 +616,13 @@ public class vCardUtilities {
 
             // set home url if necessary
             if (xproperty1 != null) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("homeUrl",
+                xentry.getAttributeSet().add(new LDAPAttribute("homeUrl",
                         (String) xproperty1.getValue()));
             }
 
             // set work url if necessary
             if (xproperty2 != null) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("busUrl",
+                xentry.getAttributeSet().add(new LDAPAttribute("busUrl",
                         (String) xproperty2.getValue()));
             }
         }
@@ -678,15 +659,13 @@ public class vCardUtilities {
 
             // set home url if necessary
             if (xproperty1 != null) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("category",
+                xentry.getAttributeSet().add(new LDAPAttribute("category",
                         (String) xproperty1.getValue()));
             }
 
             // set work url if necessary
             if (xproperty2 != null) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("busCategory",
+                xentry.getAttributeSet().add(new LDAPAttribute("busCategory",
                         (String) xproperty2.getValue()));
             } else {
                 // try translate role to business category
@@ -726,15 +705,13 @@ public class vCardUtilities {
 
             // set home other if necessary
             if (xproperty1 != null) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("other",
+                xentry.getAttributeSet().add(new LDAPAttribute("other",
                         (String) xproperty1.getValue()));
             }
 
             // set work other if necessary
             if (xproperty2 != null) {
-                xentry.getAttributeSet()
-                      .add(new LDAPAttribute("busOther",
+                xentry.getAttributeSet().add(new LDAPAttribute("busOther",
                         (String) xproperty2.getValue()));
             }
         }
@@ -753,6 +730,7 @@ public class vCardUtilities {
     }
 
     //............................................................
+
     /**
      * DOCUMENT ME!
      *
@@ -772,6 +750,7 @@ public class vCardUtilities {
     }
 
     //............................................................
+
     /**
      * DOCUMENT ME!
      *
@@ -917,6 +896,7 @@ public class vCardUtilities {
     }
 
     //............................................................
+
     /**
      * DOCUMENT ME!
      *
@@ -1016,8 +996,8 @@ public class vCardUtilities {
 
         if (xproperties != null) {
             vCardProperty xproperty = selectLanguage(xproperties);
-            entry.getAttributeSet()
-                 .add(new LDAPAttribute(lname, (String) xproperty.getValue()));
+            entry.getAttributeSet().add(new LDAPAttribute(lname,
+                    (String) xproperty.getValue()));
         }
     }
 
@@ -1029,8 +1009,7 @@ public class vCardUtilities {
         vCardProperty[] xproperties = card.getProperty(vname);
 
         if (xproperties != null) {
-            entry.getAttributeSet()
-                 .add(new LDAPAttribute(lname,
+            entry.getAttributeSet().add(new LDAPAttribute(lname,
                     (String) xproperties[0].getValue()));
         }
     }

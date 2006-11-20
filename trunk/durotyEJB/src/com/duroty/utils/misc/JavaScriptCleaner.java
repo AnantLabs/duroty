@@ -85,7 +85,7 @@ public class JavaScriptCleaner {
 
             node.getParentNode().replaceChild(n, node);
         }
-        
+
         if (node instanceof Element &&
                 ((Element) node).getTagName().toUpperCase().equals("IFRAME")) {
             Element n = d.createElement("img");
@@ -98,7 +98,7 @@ public class JavaScriptCleaner {
 
             node.getParentNode().replaceChild(n, node);
         }
-        
+
         if (node instanceof Element &&
                 ((Element) node).getTagName().toUpperCase().equals("FRAME")) {
             Element n = d.createElement("img");
