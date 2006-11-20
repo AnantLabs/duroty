@@ -1,12 +1,26 @@
 /*
- * DefaultAnalyzer.java
- *
- * Created on 13 de noviembre de 2004, 23:25
- */
-package com.duroty.lucene.analysis;
+* Copyright (C) 2006 Jordi MarquÃ¨s FerrÃ©
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi MarquÃ¨s FerrÃ©
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
 
-import java.io.Reader;
-import java.util.Set;
+
+package com.duroty.lucene.analysis;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.LowerCaseFilter;
@@ -14,6 +28,10 @@ import org.apache.lucene.analysis.StopFilter;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardFilter;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
+
+import java.io.Reader;
+
+import java.util.Set;
 
 
 /**
@@ -24,7 +42,6 @@ import org.apache.lucene.analysis.standard.StandardTokenizer;
 public class DefaultAnalyzer extends Analyzer {
     /** DOCUMENT ME! */
     protected static Set stopTable;
-    
 
     /** DOCUMENT ME! */
     public static final String[] DEFAULT_STOP_WORDS = {
@@ -36,51 +53,51 @@ public class DefaultAnalyzer extends Analyzer {
             "one", "or", "other", "out", "over", "s", "so", "says", "she",
             "some", "such", "than", "that", "the", "their", "there", "they",
             "this", "to", "was", "we", "were", "when", "which", "who", "will",
-            "with", "would", "up", "a", "acá", "ahí", "ajena", "ajenas", "ajeno",
+            "with", "would", "up", "a", "acï¿½", "ahï¿½", "ajena", "ajenas", "ajeno",
             "ajenos", "al", "algo", "alguna", "algunas", "alguno", "algunos",
-            "algún", "allá", "allí", "aquel", "aquella", "aquellas", "aquello",
-            "aquellos", "aquí", "cada", "cierta", "ciertas", "cierto", "ciertos",
-            "como", "cómo", "con", "conmigo", "consigo", "contigo", "cualquier",
-            "cualquiera", "cualquieras", "cuan", "cuanta", "cuantas", "cuánta",
-            "cuántas", "cuanto", "cuantos", "cuán", "cuánto", "cuántos", "de",
+            "algï¿½n", "allï¿½", "allï¿½", "aquel", "aquella", "aquellas", "aquello",
+            "aquellos", "aquï¿½", "cada", "cierta", "ciertas", "cierto", "ciertos",
+            "como", "cï¿½mo", "con", "conmigo", "consigo", "contigo", "cualquier",
+            "cualquiera", "cualquieras", "cuan", "cuanta", "cuantas", "cuï¿½nta",
+            "cuï¿½ntas", "cuanto", "cuantos", "cuï¿½n", "cuï¿½nto", "cuï¿½ntos", "de",
             "dejar", "del", "demasiada", "demasiadas", "demasiado", "demasiados",
-            "demás", "el", "ella", "ellas", "ellos", "él", "esa", "esas", "ese",
+            "demï¿½s", "el", "ella", "ellas", "ellos", "ï¿½l", "esa", "esas", "ese",
             "esos", "esta", "estar", "estas", "este", "estos", "hacer", "hasta",
-            "jamás", "junto", "juntos", "la", "las", "lo", "los", "mas", "más",
-            "me", "menos", "mía", "mientras", "mío", "misma", "mismas", "mismo",
-            "mismos", "mucha", "muchas", "muchísima", "muchísimas", "muchísimo",
-            "muchísimos", "mucho", "muchos", "muy", "nada", "ni", "ninguna",
+            "jamï¿½s", "junto", "juntos", "la", "las", "lo", "los", "mas", "mï¿½s",
+            "me", "menos", "mï¿½a", "mientras", "mï¿½o", "misma", "mismas", "mismo",
+            "mismos", "mucha", "muchas", "muchï¿½sima", "muchï¿½simas", "muchï¿½simo",
+            "muchï¿½simos", "mucho", "muchos", "muy", "nada", "ni", "ninguna",
             "ningunas", "ninguno", "ningunos", "no", "nos", "nosotras",
             "nosotros", "nuestra", "nuestras", "nuestro", "nuestros", "nunca",
             "os", "otra", "otras", "otro", "otros", "para", "parecer", "poca",
-            "pocas", "poco", "pocos", "por", "porque", "que", "querer", "qué",
-            "quien", "quienes", "quienesquiera", "quienquiera", "quién", "ser",
-            "si", "siempre", "sí", "sín", "Sr", "Sra", "Sres", "Sta", "suya",
+            "pocas", "poco", "pocos", "por", "porque", "que", "querer", "quï¿½",
+            "quien", "quienes", "quienesquiera", "quienquiera", "quiï¿½n", "ser",
+            "si", "siempre", "sï¿½", "sï¿½n", "Sr", "Sra", "Sres", "Sta", "suya",
             "suyas", "suyo", "suyos", "tal", "tales", "tan", "tanta", "tantas",
             "tanto", "tantos", "te", "tener", "ti", "toda", "todas", "todo",
-            "todos", "tomar", "tuya", "tuyo", "tú", "un", "una", "unas", "unos",
+            "todos", "tomar", "tuya", "tuyo", "tï¿½", "un", "una", "unas", "unos",
             "usted", "ustedes", "varias", "varios", "vosotras", "vosotros",
-            "vuestra", "vuestras", "vuestro", "vuestros", "y", "yo", "a", "ahí",
-            "o", "al", "als", "alguna", "algunes", "alguns", "algú", "allá",
-            "allí", "quelcom", "aquella", "aquelles", "aquell", "aquells",
-            "aquí", "cada", "certa", "certes", "cert", "certs", "com", "amb",
+            "vuestra", "vuestras", "vuestro", "vuestros", "y", "yo", "a", "ahï¿½",
+            "o", "al", "als", "alguna", "algunes", "alguns", "algï¿½", "allï¿½",
+            "allï¿½", "quelcom", "aquella", "aquelles", "aquell", "aquells",
+            "aquï¿½", "cada", "certa", "certes", "cert", "certs", "com", "amb",
             "mi", "tu", "qualsevol", "qualsevols", "quantes", "quants",
-            "cuantas", "cuánta", "cuántas", "cuanto", "quant", "quants", "de",
+            "cuantas", "cuï¿½nta", "cuï¿½ntas", "cuanto", "quant", "quants", "de",
             "deixar", "del", "des", "masses", "massa", "demes", "el", "ella",
-            "elles", "ells", "él", "esa", "ese", "ese", "esos", "aquesta",
+            "elles", "ells", "ï¿½l", "esa", "ese", "ese", "esos", "aquesta",
             "estar", "aquestes", "aquest", "aquests", "fer", "fins", "mai",
-            "junt", "junts", "la", "les", "el", "els", "mes", "més", "em",
+            "junt", "junts", "la", "les", "el", "els", "mes", "mï¿½s", "em",
             "menys", "meva", "mentres", "meu", "mateixa", "mateixes", "mateix",
             "mateixos", "molta", "moltes", "moltisima", "moltisimes", "moltisim",
             "moltisims", "molts", "molt", "cap", "ni", "ninguna", "ningunes",
             "ninguno", "ningu", "no", "ens", "nosaltres", "nosotros", "nostra",
             "nostres", "mai", "os", "altre", "altres", "per", "semblar", "poc",
-            "poques", "pocs", "perque", "que", "voler", "qué", "quins", "quins",
-            "qualsevol", "qualsevol", "qui", "esser", "si", "sempre", "sí",
+            "poques", "pocs", "perque", "que", "voler", "quï¿½", "quins", "quins",
+            "qualsevol", "qualsevol", "qui", "esser", "si", "sempre", "sï¿½",
             "sense", "Sr", "Sra", "Sres", "Sta", "seva", "seves", "seu", "seus",
             "tal", "tales", "tan", "tanta", "tantes", "tant", "tants", "te",
             "tenir", "ti", "tota", "totes", "tot", "tots", "tomar", "teva",
-            "teu", "tú", "un", "una", "unes", "uns", "voste", "vostes", "varis",
+            "teu", "tï¿½", "un", "una", "unes", "uns", "voste", "vostes", "varis",
             "varies", "vosaltres", "vosotros", "vostra", "vostres", "i", "jo",
             "en"
         };

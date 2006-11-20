@@ -13,13 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package net.sf.json.util;
-
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Collection;
-import java.util.Map;
 
 import net.sf.ezmorph.MorphException;
 import net.sf.ezmorph.MorpherRegistry;
@@ -31,6 +25,14 @@ import org.apache.commons.beanutils.DynaClass;
 import org.apache.commons.beanutils.DynaProperty;
 import org.apache.commons.beanutils.PropertyUtils;
 
+import java.beans.PropertyDescriptor;
+
+import java.lang.reflect.InvocationTargetException;
+
+import java.util.Collection;
+import java.util.Map;
+
+
 /**
  * Converts a DynaBean into an specific bean.<br>
  * This Morpher will try to match every property from the target bean's class to
@@ -40,105 +42,143 @@ import org.apache.commons.beanutils.PropertyUtils;
  *
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  */
-public class DynaBeanToBeanMorpher implements ObjectMorpher
-{
-   private Class beanClass;
-   private MorpherRegistry morpherRegistry;
+public class DynaBeanToBeanMorpher implements ObjectMorpher {
+    /**
+     * DOCUMENT ME!
+     */
+    private Class beanClass;
 
-   public DynaBeanToBeanMorpher( Class beanClass, MorpherRegistry morpherRegistry )
-   {
-      validateClass( beanClass );
-      if( morpherRegistry == null ){
-         throw new IllegalArgumentException( "morpherRegistry is null" );
-      }
-      this.beanClass = beanClass;
-      this.morpherRegistry = morpherRegistry;
-   }
+    /**
+     * DOCUMENT ME!
+     */
+    private MorpherRegistry morpherRegistry;
 
-   public Object morph( Object value )
-   {
-      if( value == null ){
-         return null;
-      }
-      if( !supports( value.getClass() ) ){
-         throw new MorphException( "value is not a DynaBean" );
-      }
+    /**
+     * Creates a new DynaBeanToBeanMorpher object.
+     *
+     * @param beanClass DOCUMENT ME!
+     * @param morpherRegistry DOCUMENT ME!
+     */
+    public DynaBeanToBeanMorpher(Class beanClass,
+        MorpherRegistry morpherRegistry) {
+        validateClass(beanClass);
 
-      Object bean = null;
+        if (morpherRegistry == null) {
+            throw new IllegalArgumentException("morpherRegistry is null");
+        }
 
-      try{
-         bean = beanClass.newInstance();
+        this.beanClass = beanClass;
+        this.morpherRegistry = morpherRegistry;
+    }
 
-         DynaBean dynaBean = (DynaBean) value;
-         DynaClass dynaClass = dynaBean.getDynaClass();
-         PropertyDescriptor[] pds = PropertyUtils.getPropertyDescriptors( beanClass );
-         for( int i = 0; i < pds.length; i++ ){
-            PropertyDescriptor pd = pds[i];
-            String name = pd.getName();
-            DynaProperty dynaProperty = dynaClass.getDynaProperty( name );
-            if( dynaProperty != null ){
-               Class dynaType = dynaProperty.getType();
-               Class type = pd.getPropertyType();
-               if( type.isAssignableFrom( dynaType ) ){
-                  PropertyUtils.setProperty( bean, name, dynaBean.get( name ) );
-               }else{
-                  if( IdentityObjectMorpher.getInstance() == morpherRegistry.getMorpherFor( type ) ){
-                     throw new MorphException( "Can't find a morpher for target class " + type );
-                  }else{
-                     PropertyUtils.setProperty( bean, name, morpherRegistry.morph( type,
-                           dynaBean.get( name ) ) );
-                  }
-               }
+    /**
+     * DOCUMENT ME!
+     *
+     * @param value DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public Object morph(Object value) {
+        if (value == null) {
+            return null;
+        }
+
+        if (!supports(value.getClass())) {
+            throw new MorphException("value is not a DynaBean");
+        }
+
+        Object bean = null;
+
+        try {
+            bean = beanClass.newInstance();
+
+            DynaBean dynaBean = (DynaBean) value;
+            DynaClass dynaClass = dynaBean.getDynaClass();
+            PropertyDescriptor[] pds = PropertyUtils.getPropertyDescriptors(beanClass);
+
+            for (int i = 0; i < pds.length; i++) {
+                PropertyDescriptor pd = pds[i];
+                String name = pd.getName();
+                DynaProperty dynaProperty = dynaClass.getDynaProperty(name);
+
+                if (dynaProperty != null) {
+                    Class dynaType = dynaProperty.getType();
+                    Class type = pd.getPropertyType();
+
+                    if (type.isAssignableFrom(dynaType)) {
+                        PropertyUtils.setProperty(bean, name, dynaBean.get(name));
+                    } else {
+                        if (IdentityObjectMorpher.getInstance() == morpherRegistry.getMorpherFor(
+                                    type)) {
+                            throw new MorphException(
+                                "Can't find a morpher for target class " +
+                                type);
+                        } else {
+                            PropertyUtils.setProperty(bean, name,
+                                morpherRegistry.morph(type, dynaBean.get(name)));
+                        }
+                    }
+                }
             }
-         }
-      }
-      catch( InstantiationException e ){
-         throw new MorphException( e );
-      }
-      catch( IllegalAccessException e ){
-         throw new MorphException( e );
-      }
-      catch( InvocationTargetException e ){
-         throw new MorphException( e );
-      }
-      catch( NoSuchMethodException e ){
-         throw new MorphException( e );
-      }
+        } catch (InstantiationException e) {
+            throw new MorphException(e);
+        } catch (IllegalAccessException e) {
+            throw new MorphException(e);
+        } catch (InvocationTargetException e) {
+            throw new MorphException(e);
+        } catch (NoSuchMethodException e) {
+            throw new MorphException(e);
+        }
 
-      return bean;
-   }
+        return bean;
+    }
 
-   public Class morphsTo()
-   {
-      return beanClass;
-   }
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public Class morphsTo() {
+        return beanClass;
+    }
 
-   public boolean supports( Class clazz )
-   {
-      return DynaBean.class.isAssignableFrom( clazz );
-   }
+    /**
+     * DOCUMENT ME!
+     *
+     * @param clazz DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public boolean supports(Class clazz) {
+        return DynaBean.class.isAssignableFrom(clazz);
+    }
 
-   private void validateClass( Class clazz )
-   {
-      if( clazz == null ){
-         throw new IllegalArgumentException( "target class is null" );
-      }else if( clazz.isPrimitive() ){
-         throw new IllegalArgumentException( "target class is a primitive" );
-      }else if( clazz.isArray() ){
-         throw new IllegalArgumentException( "target class is an array" );
-      }else if( clazz.isInterface() ){
-         throw new IllegalArgumentException( "target class is an interface" );
-      }else if( DynaBean.class.isAssignableFrom( clazz ) ){
-         throw new IllegalArgumentException( "target class is a DynaBean" );
-      }else if( Number.class.isAssignableFrom( clazz ) || Boolean.class.isAssignableFrom( clazz )
-            || Character.class.isAssignableFrom( clazz ) ){
-         throw new IllegalArgumentException( "target class is a wrapper" );
-      }else if( String.class.isAssignableFrom( clazz ) ){
-         throw new IllegalArgumentException( "target class is a String" );
-      }else if( Collection.class.isAssignableFrom( clazz ) ){
-         throw new IllegalArgumentException( "target class is a Collection" );
-      }else if( Map.class.isAssignableFrom( clazz ) ){
-         throw new IllegalArgumentException( "target class is a Map" );
-      }
-   }
+    /**
+     * DOCUMENT ME!
+     *
+     * @param clazz DOCUMENT ME!
+     */
+    private void validateClass(Class clazz) {
+        if (clazz == null) {
+            throw new IllegalArgumentException("target class is null");
+        } else if (clazz.isPrimitive()) {
+            throw new IllegalArgumentException("target class is a primitive");
+        } else if (clazz.isArray()) {
+            throw new IllegalArgumentException("target class is an array");
+        } else if (clazz.isInterface()) {
+            throw new IllegalArgumentException("target class is an interface");
+        } else if (DynaBean.class.isAssignableFrom(clazz)) {
+            throw new IllegalArgumentException("target class is a DynaBean");
+        } else if (Number.class.isAssignableFrom(clazz) ||
+                Boolean.class.isAssignableFrom(clazz) ||
+                Character.class.isAssignableFrom(clazz)) {
+            throw new IllegalArgumentException("target class is a wrapper");
+        } else if (String.class.isAssignableFrom(clazz)) {
+            throw new IllegalArgumentException("target class is a String");
+        } else if (Collection.class.isAssignableFrom(clazz)) {
+            throw new IllegalArgumentException("target class is a Collection");
+        } else if (Map.class.isAssignableFrom(clazz)) {
+            throw new IllegalArgumentException("target class is a Map");
+        }
+    }
 }

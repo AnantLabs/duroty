@@ -23,6 +23,14 @@
  */
 package com.duroty.utils.mail;
 
+import com.duroty.utils.mail.addressbook.vCard;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.HtmlEmail;
+
+import org.apache.lucene.demo.html.Entities;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -33,12 +41,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+
 import java.nio.charset.Charset;
+
 import java.util.Enumeration;
 import java.util.Vector;
 
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
+
 import javax.mail.Address;
 import javax.mail.BodyPart;
 import javax.mail.Header;
@@ -57,14 +68,8 @@ import javax.mail.internet.MimePart;
 import javax.mail.internet.MimeUtility;
 import javax.mail.internet.ParseException;
 
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.mail.EmailException;
-import org.apache.commons.mail.HtmlEmail;
-import org.apache.lucene.demo.html.Entities;
 
-import com.duroty.utils.mail.addressbook.vCard;
 //import com.duroty.utils.misc.JavaScriptFilter;
-
 
 /**
  * Message parsing and generation utility routines.
@@ -322,7 +327,7 @@ public class MessageUtilities {
      *
      * @return DOCUMENT ME!
      */
-    public static String encodeString(String s) {    	
+    public static String encodeString(String s) {
         s = Entities.encode(s);
 
         StringBuffer sb = new StringBuffer();
@@ -562,31 +567,32 @@ public class MessageUtilities {
      */
     public static InternetAddress[] encodeAddresses(String string,
         String charset) throws MessagingException {
-    	if (string == null) {
-    		return null;
-    	}
-    	
+        if (string == null) {
+            return null;
+        }
+
         // parse the string into the internet addresses
         // NOTE: these will NOT be character encoded
         InternetAddress[] xaddresses = InternetAddress.parse(string);
 
         // now encode each to the given character set
         if (charset != null) {
-	        for (int xindex = 0; xindex < xaddresses.length; xindex++) {
-	            String xpersonal = xaddresses[xindex].getPersonal();
-	
-	            try {
-	                if (xpersonal != null) {
-	                	if (charset != null) {
-	                		xaddresses[xindex].setPersonal(xpersonal, charset);
-	                	} else {
-	                		xaddresses[xindex].setPersonal(xpersonal, "ISO-8859-1");
-	                	}
-	                }
-	            } catch (UnsupportedEncodingException xex) {
-	                throw new MessagingException(xex.toString());
-	            }
-	        }
+            for (int xindex = 0; xindex < xaddresses.length; xindex++) {
+                String xpersonal = xaddresses[xindex].getPersonal();
+
+                try {
+                    if (xpersonal != null) {
+                        if (charset != null) {
+                            xaddresses[xindex].setPersonal(xpersonal, charset);
+                        } else {
+                            xaddresses[xindex].setPersonal(xpersonal,
+                                "ISO-8859-1");
+                        }
+                    }
+                } catch (UnsupportedEncodingException xex) {
+                    throw new MessagingException(xex.toString());
+                }
+            }
         }
 
         return xaddresses;
@@ -917,13 +923,15 @@ public class MessageUtilities {
     public static StringBuffer decodeContent(Part part, StringBuffer buffer,
         Vector dmailParts, boolean chooseHtml, String breakLine)
         throws MessagingException, IOException {
-        MessageUtilities.subDecodeContent(part, buffer, dmailParts, chooseHtml, breakLine);
+        MessageUtilities.subDecodeContent(part, buffer, dmailParts, chooseHtml,
+            breakLine);
 
         // If we did not get any body text, scan on more time
         // for a text/plain part that is not 'inline', and use
         // that as a proxy...
         if ((buffer.length() == 0) && (dmailParts != null)) {
-            MessageUtilities.scanDmailParts(dmailParts, buffer, chooseHtml, breakLine);
+            MessageUtilities.scanDmailParts(dmailParts, buffer, chooseHtml,
+                breakLine);
         }
 
         //En el cas que no podem aconseguir un missatge html agafem el text
@@ -950,13 +958,15 @@ public class MessageUtilities {
     public static StringBuffer decodeContentWithoutAttachments(Part part,
         StringBuffer buffer, Vector dmailParts, boolean chooseHtml,
         String breakLine) throws MessagingException, IOException {
-        MessageUtilities.subDecodeContent(part, buffer, dmailParts, chooseHtml, breakLine);
+        MessageUtilities.subDecodeContent(part, buffer, dmailParts, chooseHtml,
+            breakLine);
 
         // If we did not get any body text, scan on more time
         // for a text/plain part that is not 'inline', and use
         // that as a proxy...
         if ((buffer.length() == 0) && (dmailParts != null)) {
-            MessageUtilities.scanDmailParts(dmailParts, buffer, chooseHtml, breakLine);
+            MessageUtilities.scanDmailParts(dmailParts, buffer, chooseHtml,
+                breakLine);
         }
 
         //En el cas que no podem aconseguir un missatge html agafem el text
@@ -986,8 +996,7 @@ public class MessageUtilities {
             int j = 0;
 
             for (int i = 0; i < size; i++) {
-            	//message/rfc822
-            	
+                //message/rfc822
                 MailPart dmailPart = (MailPart) dmailParts.get(j);
 
                 //ContentType xctype = MessageUtilities.getContentType(dmailPart.getContentType());
@@ -1030,7 +1039,8 @@ public class MessageUtilities {
                     //String str = JavaScriptFilter.apply(buff.toString());
                     xjcharset = MimeUtility.javaCharset(xjcharset);
 
-                    MessageUtilities.decodeTextPlain(buffer, dmailPart.getPart(), breakLine, xjcharset);
+                    MessageUtilities.decodeTextPlain(buffer,
+                        dmailPart.getPart(), breakLine, xjcharset);
 
                     dmailParts.removeElementAt(j);
 
@@ -1071,7 +1081,8 @@ public class MessageUtilities {
 
                     xjcharset = MimeUtility.javaCharset(xjcharset);
 
-                    MessageUtilities.decodeTextHtml(buffer, dmailPart.getPart(), xjcharset);
+                    MessageUtilities.decodeTextHtml(buffer,
+                        dmailPart.getPart(), xjcharset);
 
                     dmailParts.removeElementAt(j);
 
@@ -1122,10 +1133,12 @@ public class MessageUtilities {
             }
 
             for (int xindex = 0; xindex < xparts; xindex++) {
-                MessageUtilities.subDecodeContent(xmulti.getBodyPart(xindex), buffer, dmailParts, chooseHtml, breakLine);
+                MessageUtilities.subDecodeContent(xmulti.getBodyPart(xindex),
+                    buffer, dmailParts, chooseHtml, breakLine);
             }
         } else if (xctype.match("message/rfc822")) {
-        	MimeMessage newMessage = new MimeMessage((Session) null, part.getInputStream());
+            MimeMessage newMessage = new MimeMessage((Session) null,
+                    part.getInputStream());
             decodeContent(newMessage, buffer, dmailParts, chooseHtml, breakLine);
         } else if (xctype.match("text/plain") && !chooseHtml) {
             if (xcdisposition.match("inline")) {
@@ -1156,7 +1169,7 @@ public class MessageUtilities {
                             }
                         }
                     } catch (Exception ex) {
-                    	System.out.print(ex.getMessage());
+                        System.out.print(ex.getMessage());
                     }
 
                     if (xjcharset == null) {
@@ -1164,7 +1177,8 @@ public class MessageUtilities {
                     }
                 }
 
-                MessageUtilities.decodeTextPlain(buffer, part, breakLine, xjcharset);
+                MessageUtilities.decodeTextPlain(buffer, part, breakLine,
+                    xjcharset);
             }
         } else if (xctype.match("text/html") && chooseHtml) {
             if (xcdisposition.match("inline")) {
@@ -1275,9 +1289,10 @@ public class MessageUtilities {
         // pick off the individual lines of text
         // and append to the buffer
         try {
-        	StringBuffer buff = new StringBuffer();
-        	
-            BufferedReader xreader = MessageUtilities.getTextReader(part.getInputStream(), charset);
+            StringBuffer buff = new StringBuffer();
+
+            BufferedReader xreader = MessageUtilities.getTextReader(part.getInputStream(),
+                    charset);
 
             for (String xline; (xline = xreader.readLine()) != null;) {
                 buff.append(xline);
@@ -1285,9 +1300,8 @@ public class MessageUtilities {
             }
 
             xreader.close();
-            
+
             //String aux = JavaScriptFilter.apply(buff.toString());
-            
             buffer.append(buff.toString());
 
             return buffer;
@@ -1317,6 +1331,7 @@ public class MessageUtilities {
 
         try {
             aux = new String(bytes, charset).replaceAll("\n", breakLine);
+
             //aux = JavaScriptFilter.apply(aux);
         } catch (UnsupportedEncodingException e) {
             new MessagingException(e.getMessage());
@@ -1337,18 +1352,19 @@ public class MessageUtilities {
      *
      * @throws MessagingException DOCUMENT ME!
      */
-    public static StringBuffer decodeTextHtml(StringBuffer buffer, Part part, String charset) {
+    public static StringBuffer decodeTextHtml(StringBuffer buffer, Part part,
+        String charset) {
         BufferedReader xreader = null;
         ByteArrayInputStream bais = null;
         ByteArrayOutputStream baos = null;
 
         try {
-        	charset = MimeUtility.javaCharset(charset);
-        	
+            charset = MimeUtility.javaCharset(charset);
+
             xreader = MessageUtilities.getTextReader(part, charset);
 
-            String body = IOUtils.toString(xreader);  
-            
+            String body = IOUtils.toString(xreader);
+
             //buffer.append(JavaScriptFilter.apply(body));
             buffer.append(body);
 
@@ -1380,9 +1396,9 @@ public class MessageUtilities {
 
         try {
             String body = new String(bytes);
-            
+
             charset = MimeUtility.javaCharset(charset);
-            
+
             //buffer.append(JavaScriptFilter.apply(body));
             buffer.append(body);
 
@@ -1713,7 +1729,7 @@ public class MessageUtilities {
 
         return false;
     }
-    
+
     /**
      * Determin if the message is high-priority.
      *
@@ -1723,39 +1739,46 @@ public class MessageUtilities {
      *
      * @throws MessagingException DOCUMENT ME!
      */
-    public static boolean isHighPriority(String fullHeaders) throws MessagingException {
+    public static boolean isHighPriority(String fullHeaders)
+        throws MessagingException {
         if (fullHeaders != null) {
-        	fullHeaders = fullHeaders.toLowerCase();
-        	
-        	int pos1 = fullHeaders.indexOf("importance: high");
-        	if (pos1 > -1) {
-        		return true;
-        	}
-        	
-        	pos1 = fullHeaders.indexOf("importance:high");
-        	if (pos1 > -1) {
-        		return true;
-        	}
-        	
-        	pos1 = fullHeaders.indexOf("x-priority: 1");
-        	if (pos1 > -1) {
-        		return true;
-        	}
-        	
-        	pos1 = fullHeaders.indexOf("x-priority:1");
-        	if (pos1 > -1) {
-        		return true;
-        	}
-        	
-        	pos1 = fullHeaders.indexOf("x-priority: 2");
-        	if (pos1 > -1) {
-        		return true;
-        	}
-        	
-        	pos1 = fullHeaders.indexOf("x-priority:2");
-        	if (pos1 > -1) {
-        		return true;
-        	}
+            fullHeaders = fullHeaders.toLowerCase();
+
+            int pos1 = fullHeaders.indexOf("importance: high");
+
+            if (pos1 > -1) {
+                return true;
+            }
+
+            pos1 = fullHeaders.indexOf("importance:high");
+
+            if (pos1 > -1) {
+                return true;
+            }
+
+            pos1 = fullHeaders.indexOf("x-priority: 1");
+
+            if (pos1 > -1) {
+                return true;
+            }
+
+            pos1 = fullHeaders.indexOf("x-priority:1");
+
+            if (pos1 > -1) {
+                return true;
+            }
+
+            pos1 = fullHeaders.indexOf("x-priority: 2");
+
+            if (pos1 > -1) {
+                return true;
+            }
+
+            pos1 = fullHeaders.indexOf("x-priority:2");
+
+            if (pos1 > -1) {
+                return true;
+            }
         }
 
         return false;
@@ -1799,7 +1822,7 @@ public class MessageUtilities {
 
         return false;
     }
-    
+
     /**
      * Determin if the message is high-priority.
      *
@@ -1809,39 +1832,46 @@ public class MessageUtilities {
      *
      * @throws MessagingException DOCUMENT ME!
      */
-    public static boolean isLowPriority(String fullHeaders) throws MessagingException {
+    public static boolean isLowPriority(String fullHeaders)
+        throws MessagingException {
         if (fullHeaders != null) {
-        	fullHeaders = fullHeaders.toLowerCase();
-        	
-        	int pos1 = fullHeaders.indexOf("importance: low");
-        	if (pos1 > -1) {
-        		return true;
-        	}
-        	
-        	pos1 = fullHeaders.indexOf("importance:low");
-        	if (pos1 > -1) {
-        		return true;
-        	}
-        	
-        	pos1 = fullHeaders.indexOf("x-priority: 4");
-        	if (pos1 > -1) {
-        		return true;
-        	}
-        	
-        	pos1 = fullHeaders.indexOf("x-priority:4");
-        	if (pos1 > -1) {
-        		return true;
-        	}
-        	
-        	pos1 = fullHeaders.indexOf("x-priority: 5");
-        	if (pos1 > -1) {
-        		return true;
-        	}
-        	
-        	pos1 = fullHeaders.indexOf("x-priority:5");
-        	if (pos1 > -1) {
-        		return true;
-        	}
+            fullHeaders = fullHeaders.toLowerCase();
+
+            int pos1 = fullHeaders.indexOf("importance: low");
+
+            if (pos1 > -1) {
+                return true;
+            }
+
+            pos1 = fullHeaders.indexOf("importance:low");
+
+            if (pos1 > -1) {
+                return true;
+            }
+
+            pos1 = fullHeaders.indexOf("x-priority: 4");
+
+            if (pos1 > -1) {
+                return true;
+            }
+
+            pos1 = fullHeaders.indexOf("x-priority:4");
+
+            if (pos1 > -1) {
+                return true;
+            }
+
+            pos1 = fullHeaders.indexOf("x-priority: 5");
+
+            if (pos1 > -1) {
+                return true;
+            }
+
+            pos1 = fullHeaders.indexOf("x-priority:5");
+
+            if (pos1 > -1) {
+                return true;
+            }
         }
 
         return false;

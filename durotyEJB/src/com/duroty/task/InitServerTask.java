@@ -1,22 +1,26 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 package com.duroty.task;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-
-import org.apache.commons.lang.RandomStringUtils;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
-import org.jboss.varia.scheduler.Schedulable;
 
 import com.duroty.hibernate.Identity;
 import com.duroty.hibernate.MailPreferences;
@@ -24,8 +28,31 @@ import com.duroty.hibernate.Roles;
 import com.duroty.hibernate.UserRole;
 import com.duroty.hibernate.UserRoleId;
 import com.duroty.hibernate.Users;
+
 import com.duroty.utils.GeneralOperations;
 import com.duroty.utils.log.DLog;
+
+import org.apache.commons.lang.RandomStringUtils;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+import org.hibernate.criterion.Restrictions;
+
+import org.jboss.varia.scheduler.Schedulable;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 
 
 /**
@@ -117,10 +144,10 @@ public class InitServerTask implements Schedulable {
             if ((roles != null) && (roles.size() > 0)) {
                 return;
             } else {
-            	Roles guest = new Roles();
-            	guest.setRolName("guest");
+                Roles guest = new Roles();
+                guest.setRolName("guest");
                 hsession.save(guest);
-            	
+
                 Roles member = new Roles();
                 member.setRolName("member");
                 hsession.save(member);
@@ -138,11 +165,11 @@ public class InitServerTask implements Schedulable {
                 hsession.save(chat);
 
                 Roles admin = new Roles();
-                admin.setRolName("admin");                
+                admin.setRolName("admin");
                 hsession.save(admin);
-                
+
                 hsession.flush();
-                
+
                 Criteria crit2 = hsession.createCriteria(Users.class);
                 crit2.add(Restrictions.eq("useUsername", "duroty"));
 
@@ -158,22 +185,26 @@ public class InitServerTask implements Schedulable {
                     duroty.setUseRegisterDate(new Date());
                     duroty.setUseUsername("duroty");
 
-                    UserRole userRole1 = new UserRole(new UserRoleId(duroty, member));
-                    UserRole userRole2 = new UserRole(new UserRoleId(duroty, bookmark));
-                    UserRole userRole3 = new UserRole(new UserRoleId(duroty, chat));
-                    UserRole userRole4 = new UserRole(new UserRoleId(duroty, admin));
-                    
+                    UserRole userRole1 = new UserRole(new UserRoleId(duroty,
+                                member));
+                    UserRole userRole2 = new UserRole(new UserRoleId(duroty,
+                                bookmark));
+                    UserRole userRole3 = new UserRole(new UserRoleId(duroty,
+                                chat));
+                    UserRole userRole4 = new UserRole(new UserRoleId(duroty,
+                                admin));
+
                     duroty.addUserRole(userRole1);
                     duroty.addUserRole(userRole2);
                     duroty.addUserRole(userRole3);
                     duroty.addUserRole(userRole4);
-                    
+
                     MailPreferences mailPreferences = new MailPreferences();
                     mailPreferences.setMaprHtmlMessage(true);
                     mailPreferences.setMaprMessagesByPage(20);
                     mailPreferences.setMaprQuotaSize(1048576);
                     mailPreferences.setUsers(duroty);
-                    
+
                     Identity identity = new Identity();
                     identity.setIdeActive(true);
                     identity.setIdeCode(RandomStringUtils.randomAlphanumeric(25));
@@ -182,52 +213,53 @@ public class InitServerTask implements Schedulable {
                     identity.setIdeName("Duroty System");
                     identity.setIdeReplyTo("duroty@localhost");
                     identity.setUsers(duroty);
-                    
+
                     HashSet set = new HashSet();
-                    set.add(mailPreferences);                    
+                    set.add(mailPreferences);
                     duroty.setMailPreferenceses(set);
-                    
+
                     HashSet identities = new HashSet();
                     identities.add(identity);
                     duroty.setIdentities(identities);
-                    
-                    
+
                     hsession.save(duroty);
-                    
+
                     hsession.flush();
                 }
-                
+
                 Criteria crit3 = hsession.createCriteria(Users.class);
                 crit3.add(Restrictions.eq("useUsername", "guest"));
 
                 Users userGuest = (Users) crit3.uniqueResult();
 
                 if (userGuest == null) {
-                	userGuest = new Users();
-                	userGuest.setUseActive(true);
-                	userGuest.setUseEmail("guest@localhost");
-                	userGuest.setUseLanguage("en");
-                	userGuest.setUseName("Guest System");
-                	userGuest.setUsePassword("guest");
-                	userGuest.setUseRegisterDate(new Date());
-                	userGuest.setUseUsername("guest");
+                    userGuest = new Users();
+                    userGuest.setUseActive(true);
+                    userGuest.setUseEmail("guest@localhost");
+                    userGuest.setUseLanguage("en");
+                    userGuest.setUseName("Guest System");
+                    userGuest.setUsePassword("guest");
+                    userGuest.setUseRegisterDate(new Date());
+                    userGuest.setUseUsername("guest");
 
-                    UserRole userRole1 = new UserRole(new UserRoleId(userGuest, guest));;
-                    
+                    UserRole userRole1 = new UserRole(new UserRoleId(
+                                userGuest, guest));
+                    ;
+
                     userGuest.addUserRole(userRole1);
-                    
+
                     MailPreferences mailPreferences = new MailPreferences();
                     mailPreferences.setMaprHtmlMessage(true);
                     mailPreferences.setMaprMessagesByPage(20);
                     mailPreferences.setMaprQuotaSize(1048576);
                     mailPreferences.setUsers(userGuest);
-                    
+
                     HashSet set = new HashSet();
-                    set.add(mailPreferences);                    
+                    set.add(mailPreferences);
                     duroty.setMailPreferenceses(set);
-                    
+
                     hsession.save(userGuest);
-                    
+
                     hsession.flush();
                 }
             }

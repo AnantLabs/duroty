@@ -1,26 +1,45 @@
 /*
- * ParserFactory.java
- *
- * Created on 27 de octubre de 2004, 10:38
- */
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 package com.duroty.lucene.parser;
+
+import com.duroty.lucene.parser.exception.ParserException;
+
+import org.apache.commons.io.IOUtils;
+
+import org.apache.log4j.BasicConfigurator;
 
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
 import javax.mail.internet.MimeUtility;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.log4j.BasicConfigurator;
-
-import com.duroty.lucene.parser.exception.ParserException;
 
 
 /**
@@ -29,11 +48,12 @@ import com.duroty.lucene.parser.exception.ParserException;
  * @author jordi marques
  */
 public class ParserFactory {
-	/**
-     * DOCUMENT ME!
-     */
+    /**
+    * DOCUMENT ME!
+    */
+
     //private static final Log log = LogFactory.getLog(ParserFactory.class);
-    
+
     /**
      * DOCUMENT ME!
      */
@@ -42,10 +62,11 @@ public class ParserFactory {
     /**
      * Creates a new instance of ParserFactory
      */
-    public ParserFactory() {    
-    	BasicConfigurator.configure();
-    	
-        ResourceBundle bundle = ResourceBundle.getBundle("com.duroty.lucene.parser.properties.MimeType");
+    public ParserFactory() {
+        BasicConfigurator.configure();
+
+        ResourceBundle bundle = ResourceBundle.getBundle(
+                "com.duroty.lucene.parser.properties.MimeType");
 
         Enumeration keys = bundle.getKeys();
 
@@ -60,12 +81,11 @@ public class ParserFactory {
      *
      * @param propsFileName DOCUMENT ME!
      */
-    public ParserFactory(String propsFileName) {    	
-    	//BasicConfigurator.configure();
-    	
+    public ParserFactory(String propsFileName) {
+        //BasicConfigurator.configure();
         Properties props = new Properties();
 
-        try {    	        	
+        try {
             props.load(new FileInputStream(propsFileName));
 
             Enumeration keys = props.keys();
@@ -94,13 +114,12 @@ public class ParserFactory {
         }
 
         InputStream input = null;
-        
+
         String className = (String) mimeTypeSupported.get(mimetype);
-        
+
         //log.info("PARSE ATTACHMENT: " + className + " >> " + mimetype);
-        
         if (className == null) {
-        	return null;
+            return null;
         }
 
         try {
@@ -137,17 +156,16 @@ public class ParserFactory {
         if (input == null) {
             return null;
         }
-        
+
         String className = (String) mimeTypeSupported.get(mimetype);
-        
+
         //log.info("PARSE ATTACHMENT: " + className + " >> " + mimetype);
-        
         if (className == null) {
-        	return null;
+            return null;
         }
 
         try {
-        	Class clazz = Class.forName(className);
+            Class clazz = Class.forName(className);
 
             Parser parser = (Parser) clazz.newInstance();
 
@@ -180,17 +198,16 @@ public class ParserFactory {
         }
 
         InputStream input = null;
-        
+
         String className = (String) mimeTypeSupported.get(mimetype);
-        
+
         //log.info("PARSE ATTACHMENT: " + className + " >> " + mimetype);
-        
         if (className == null) {
-        	return null;
+            return null;
         }
 
         try {
-        	Class clazz = Class.forName(className);
+            Class clazz = Class.forName(className);
 
             Parser parser = (Parser) clazz.newInstance();
 

@@ -1,5 +1,6 @@
 package com.duroty.utils.io;
 
+
 /**
  * Copyright (c) 2001 by Daniel Matuschek
  */
@@ -44,7 +45,7 @@ public class ByteBuffer {
      * @param b byte to append
      */
     public void append(byte b) {
-        if(used >= size) {
+        if (used >= size) {
             doubleBuffer();
         }
 
@@ -69,7 +70,7 @@ public class ByteBuffer {
     public byte[] getContent() {
         byte[] b = new byte[used];
 
-        for(int i = 0; i < used; i++) {
+        for (int i = 0; i < used; i++) {
             b[i] = buff[i];
         }
 
@@ -91,7 +92,7 @@ public class ByteBuffer {
      */
     public void setSize(int size) {
         // if we have already used more data, ignore it !
-        if(size < used) {
+        if (size < used) {
             return;
         }
 
@@ -101,7 +102,7 @@ public class ByteBuffer {
         byte[] newBuff = new byte[size];
 
         // copy contents
-        for(int i = 0; i < used; i++) {
+        for (int i = 0; i < used; i++) {
             newBuff[i] = buff[i];
         }
 
@@ -116,7 +117,7 @@ public class ByteBuffer {
     public String toString() {
         StringBuffer sb = new StringBuffer(buff.length);
 
-        for(int i = 0; i < used; i++) {
+        for (int i = 0; i < used; i++) {
             sb.append(buff[i]);
         }
 

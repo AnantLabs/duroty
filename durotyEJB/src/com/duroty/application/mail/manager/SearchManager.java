@@ -1,17 +1,51 @@
-/**
- *
- */
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
 package com.duroty.application.mail.manager;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.TimeZone;
-import java.util.Vector;
+import com.duroty.application.mail.exceptions.MailException;
+import com.duroty.application.mail.exceptions.SearchException;
+import com.duroty.application.mail.utils.AdvancedObj;
+import com.duroty.application.mail.utils.FilterObj;
+import com.duroty.application.mail.utils.MessageObj;
+import com.duroty.application.mail.utils.SearchObj;
+
+import com.duroty.hibernate.Filter;
+import com.duroty.hibernate.LabMes;
+import com.duroty.hibernate.Message;
+import com.duroty.hibernate.Users;
+
+import com.duroty.jmx.mbean.Constants;
+
+import com.duroty.lucene.analysis.DictionaryAnalyzer;
+import com.duroty.lucene.didyoumean.CompositeDidYouMeanParser;
+import com.duroty.lucene.filter.ChainedFilter;
+import com.duroty.lucene.mail.LuceneMessage;
+import com.duroty.lucene.mail.LuceneMessageConstants;
+import com.duroty.lucene.mail.indexer.MailIndexer;
+import com.duroty.lucene.mail.search.AdvancedQueryParser;
+import com.duroty.lucene.mail.search.FilterQueryParser;
+import com.duroty.lucene.mail.search.SimpleQueryParser;
+
+import com.duroty.utils.GeneralOperations;
+import com.duroty.utils.mail.MessageUtilities;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
@@ -27,41 +61,36 @@ import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+
 import org.hibernate.Criteria;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
+
 import org.hibernate.criterion.Restrictions;
 
-import com.duroty.application.mail.exceptions.MailException;
-import com.duroty.application.mail.exceptions.SearchException;
-import com.duroty.application.mail.utils.AdvancedObj;
-import com.duroty.application.mail.utils.FilterObj;
-import com.duroty.application.mail.utils.MessageObj;
-import com.duroty.application.mail.utils.SearchObj;
-import com.duroty.hibernate.Filter;
-import com.duroty.hibernate.LabMes;
-import com.duroty.hibernate.Message;
-import com.duroty.hibernate.Users;
-import com.duroty.jmx.mbean.Constants;
-import com.duroty.lucene.analysis.DictionaryAnalyzer;
-import com.duroty.lucene.didyoumean.CompositeDidYouMeanParser;
-import com.duroty.lucene.filter.ChainedFilter;
-import com.duroty.lucene.mail.LuceneMessage;
-import com.duroty.lucene.mail.LuceneMessageConstants;
-import com.duroty.lucene.mail.indexer.MailIndexer;
-import com.duroty.lucene.mail.search.AdvancedQueryParser;
-import com.duroty.lucene.mail.search.FilterQueryParser;
-import com.duroty.lucene.mail.search.SimpleQueryParser;
-import com.duroty.utils.GeneralOperations;
-import com.duroty.utils.mail.MessageUtilities;
+import java.io.File;
+
+import java.text.SimpleDateFormat;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Locale;
+import java.util.TimeZone;
+import java.util.Vector;
 
 
 /**
- * @author durot
- *
- */
+ * @author Jordi Marquès
+ * @version 1.0
+*/
 public class SearchManager implements LuceneMessageConstants {
-	private static final String FOLDER_DELETE = "DELETE";
+    /**
+     * DOCUMENT ME!
+     */
+    private static final String FOLDER_DELETE = "DELETE";
+
     /**
         * DOCUMENT ME!
         */
@@ -129,9 +158,11 @@ public class SearchManager implements LuceneMessageConstants {
     private String folderBlog;
 
     /** DOCUMENT ME */
+
     //private String folderChat;
 
     /** DOCUMENT ME */
+
     //private String folderImportant;
 
     /** DOCUMENT ME */
@@ -162,8 +193,10 @@ public class SearchManager implements LuceneMessageConstants {
         this.folderBlog = (String) mail.get(Constants.MAIL_FOLDER_BLOG);
         this.folderDraft = (String) mail.get(Constants.MAIL_FOLDER_DRAFT);
         this.folderSpam = (String) mail.get(Constants.MAIL_FOLDER_SPAM);
+
         //this.folderImportant = (String) mail.get(Constants.MAIL_FOLDER_IMPORTANT);
         this.folderHidden = (String) mail.get(Constants.MAIL_FOLDER_HIDDEN);
+
         //this.folderChat = (String) mail.get(Constants.MAIL_FOLDER_CHAT);
     }
 
@@ -201,18 +234,19 @@ public class SearchManager implements LuceneMessageConstants {
         Sort sort = null;
 
         try {
-        	Users user = getUser(hsession, repositoryName);
-        	Locale locale = new Locale(user.getUseLanguage());
-        	TimeZone timeZone = TimeZone.getDefault();
-        	
-        	Date now = new Date();            
+            Users user = getUser(hsession, repositoryName);
+            Locale locale = new Locale(user.getUseLanguage());
+            TimeZone timeZone = TimeZone.getDefault();
+
+            Date now = new Date();
             Calendar calendar = Calendar.getInstance(timeZone, locale);
-            calendar.setTime(now);                   
-            
+            calendar.setTime(now);
+
             SimpleDateFormat formatter1 = new SimpleDateFormat("MMM dd", locale);
-            SimpleDateFormat formatter2 = new SimpleDateFormat("HH:mm:ss", locale);
+            SimpleDateFormat formatter2 = new SimpleDateFormat("HH:mm:ss",
+                    locale);
             SimpleDateFormat formatter3 = new SimpleDateFormat("MM/yy", locale);
-        	
+
             searcher = MailIndexer.getSearcher(lucenePathMessages);
 
             Query query = SimpleQueryParser.parse(token, analyzer);
@@ -261,14 +295,15 @@ public class SearchManager implements LuceneMessageConstants {
                         });
 
                 break;
-                
+
             case ORDER_BY_UNREAD:
                 sort = new Sort(new SortField[] {
                             new SortField(Field_recent, SortField.STRING,
                                 reverse), SortField.FIELD_SCORE
                         });
+
                 break;
-                
+
             case ORDER_BY_IMPORTANT:
                 sort = new Sort(new SortField[] {
                             new SortField(Field_flagged, SortField.STRING,
@@ -371,19 +406,31 @@ public class SearchManager implements LuceneMessageConstants {
 
                         Date date = message.getMesDate();
 
-                        if (date != null ) {
-                        	Calendar calendar2 = Calendar.getInstance(timeZone, locale);
-                        	calendar2.setTime(date); 
-                        	
-                        	if ((calendar.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR)) && (calendar.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH)) && (calendar.get(Calendar.DATE) == calendar2.get(Calendar.DATE))) {
-                        		obj.setDateStr(formatter2.format(calendar2.getTime()));
-                        	} else if ((calendar.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR)) && (calendar.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH))) {                		
-                        		obj.setDateStr(formatter1.format(calendar2.getTime()));
-                        	} else {
-                        		obj.setDateStr(formatter3.format(calendar2.getTime()));
-                        	}
+                        if (date != null) {
+                            Calendar calendar2 = Calendar.getInstance(timeZone,
+                                    locale);
+                            calendar2.setTime(date);
+
+                            if ((calendar.get(Calendar.YEAR) == calendar2.get(
+                                        Calendar.YEAR)) &&
+                                    (calendar.get(Calendar.MONTH) == calendar2.get(
+                                        Calendar.MONTH)) &&
+                                    (calendar.get(Calendar.DATE) == calendar2.get(
+                                        Calendar.DATE))) {
+                                obj.setDateStr(formatter2.format(
+                                        calendar2.getTime()));
+                            } else if ((calendar.get(Calendar.YEAR) == calendar2.get(
+                                        Calendar.YEAR)) &&
+                                    (calendar.get(Calendar.MONTH) == calendar2.get(
+                                        Calendar.MONTH))) {
+                                obj.setDateStr(formatter1.format(
+                                        calendar2.getTime()));
+                            } else {
+                                obj.setDateStr(formatter3.format(
+                                        calendar2.getTime()));
+                            }
                         }
-                        
+
                         obj.setDate(date);
 
                         if (message.getLabMeses() != null) {
@@ -484,21 +531,23 @@ public class SearchManager implements LuceneMessageConstants {
         Sort sort = null;
 
         try {
-        	Users user = getUser(hsession, repositoryName);
-        	Locale locale = new Locale(user.getUseLanguage());
-        	TimeZone timeZone = TimeZone.getDefault();
-        	
-        	Date now = new Date();            
+            Users user = getUser(hsession, repositoryName);
+            Locale locale = new Locale(user.getUseLanguage());
+            TimeZone timeZone = TimeZone.getDefault();
+
+            Date now = new Date();
             Calendar calendar = Calendar.getInstance(timeZone, locale);
-            calendar.setTime(now);                   
-            
+            calendar.setTime(now);
+
             SimpleDateFormat formatter1 = new SimpleDateFormat("MMM dd", locale);
-            SimpleDateFormat formatter2 = new SimpleDateFormat("HH:mm:ss", locale);
+            SimpleDateFormat formatter2 = new SimpleDateFormat("HH:mm:ss",
+                    locale);
             SimpleDateFormat formatter3 = new SimpleDateFormat("MM/yy", locale);
-        	
+
             searcher = MailIndexer.getSearcher(lucenePathMessages);
 
-            Query query = AdvancedQueryParser.parseMessages(advancedObj, analyzer);
+            Query query = AdvancedQueryParser.parseMessages(advancedObj,
+                    analyzer);
 
             Hits hits = null;
 
@@ -544,19 +593,21 @@ public class SearchManager implements LuceneMessageConstants {
                         });
 
                 break;
-                
+
             case ORDER_BY_UNREAD:
                 sort = new Sort(new SortField[] {
                             new SortField(Field_recent, SortField.STRING,
                                 reverse), SortField.FIELD_SCORE
                         });
+
                 break;
-                
+
             case ORDER_BY_IMPORTANT:
                 sort = new Sort(new SortField[] {
                             new SortField(Field_flagged, SortField.STRING,
                                 reverse), SortField.FIELD_SCORE
                         });
+
                 break;
 
             default:
@@ -567,15 +618,16 @@ public class SearchManager implements LuceneMessageConstants {
 
                 break;
             }
-            
+
             int label = 0;
+
             if (advancedObj.getLabel() != null) {
-            	label = advancedObj.getLabel().getIdint();
+                label = advancedObj.getLabel().getIdint();
             }
-            
+
             String box = advancedObj.getBox();
 
-            if (box == null || box.equals("0")) {
+            if ((box == null) || box.equals("0")) {
                 box = this.folderAll;
             }
 
@@ -583,9 +635,9 @@ public class SearchManager implements LuceneMessageConstants {
 
             if ((label > 0) || (box != null)) {
                 chained = getChainedFilter(hsession, repositoryName, label, box);
-                
+
                 if (chained == null) {
-                	return null;
+                    return null;
                 }
             }
 
@@ -677,19 +729,31 @@ public class SearchManager implements LuceneMessageConstants {
 
                         Date date = message.getMesDate();
 
-                        if (date != null ) {
-                        	Calendar calendar2 = Calendar.getInstance(timeZone, locale);
-                        	calendar2.setTime(date); 
-                        	
-                        	if ((calendar.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR)) && (calendar.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH)) && (calendar.get(Calendar.DATE) == calendar2.get(Calendar.DATE))) {
-                        		obj.setDateStr(formatter2.format(calendar2.getTime()));
-                        	} else if ((calendar.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR)) && (calendar.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH))) {                		
-                        		obj.setDateStr(formatter1.format(calendar2.getTime()));
-                        	} else {
-                        		obj.setDateStr(formatter3.format(calendar2.getTime()));
-                        	}
+                        if (date != null) {
+                            Calendar calendar2 = Calendar.getInstance(timeZone,
+                                    locale);
+                            calendar2.setTime(date);
+
+                            if ((calendar.get(Calendar.YEAR) == calendar2.get(
+                                        Calendar.YEAR)) &&
+                                    (calendar.get(Calendar.MONTH) == calendar2.get(
+                                        Calendar.MONTH)) &&
+                                    (calendar.get(Calendar.DATE) == calendar2.get(
+                                        Calendar.DATE))) {
+                                obj.setDateStr(formatter2.format(
+                                        calendar2.getTime()));
+                            } else if ((calendar.get(Calendar.YEAR) == calendar2.get(
+                                        Calendar.YEAR)) &&
+                                    (calendar.get(Calendar.MONTH) == calendar2.get(
+                                        Calendar.MONTH))) {
+                                obj.setDateStr(formatter1.format(
+                                        calendar2.getTime()));
+                            } else {
+                                obj.setDateStr(formatter3.format(
+                                        calendar2.getTime()));
+                            }
                         }
-                        
+
                         obj.setDate(date);
 
                         if (message.getLabMeses() != null) {
@@ -774,7 +838,7 @@ public class SearchManager implements LuceneMessageConstants {
     public SearchObj testFilter(Session hsession, String repositoryName,
         FilterObj filter, int page, int messagesByPage, int order,
         String orderType) throws MailException {
-    	String lucenePathMessages = null;
+        String lucenePathMessages = null;
 
         if (!defaultLucenePath.endsWith(File.separator)) {
             lucenePathMessages = defaultLucenePath + File.separator +
@@ -790,20 +854,21 @@ public class SearchManager implements LuceneMessageConstants {
         Sort sort = null;
 
         try {
-        	Users user = getUser(hsession, repositoryName);
-        	Locale locale = new Locale(user.getUseLanguage());
-        	TimeZone timeZone = TimeZone.getDefault();
-        	
-        	Date now = new Date();            
+            Users user = getUser(hsession, repositoryName);
+            Locale locale = new Locale(user.getUseLanguage());
+            TimeZone timeZone = TimeZone.getDefault();
+
+            Date now = new Date();
             Calendar calendar = Calendar.getInstance(timeZone, locale);
-            calendar.setTime(now);                   
-            
+            calendar.setTime(now);
+
             SimpleDateFormat formatter1 = new SimpleDateFormat("MMM dd", locale);
-            SimpleDateFormat formatter2 = new SimpleDateFormat("HH:mm:ss", locale);
+            SimpleDateFormat formatter2 = new SimpleDateFormat("HH:mm:ss",
+                    locale);
             SimpleDateFormat formatter3 = new SimpleDateFormat("MM/yy", locale);
-        	
+
             searcher = MailIndexer.getSearcher(lucenePathMessages);
-            
+
             Filter hfilter = new Filter();
 
             hfilter.setFilArchive(filter.isArchive());
@@ -949,19 +1014,31 @@ public class SearchManager implements LuceneMessageConstants {
 
                         Date date = message.getMesDate();
 
-                        if (date != null ) {
-                        	Calendar calendar2 = Calendar.getInstance(timeZone, locale);
-                        	calendar2.setTime(date); 
-                        	
-                        	if ((calendar.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR)) && (calendar.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH)) && (calendar.get(Calendar.DATE) == calendar2.get(Calendar.DATE))) {
-                        		obj.setDateStr(formatter2.format(calendar2.getTime()));
-                        	} else if ((calendar.get(Calendar.YEAR) == calendar2.get(Calendar.YEAR)) && (calendar.get(Calendar.MONTH) == calendar2.get(Calendar.MONTH))) {                		
-                        		obj.setDateStr(formatter1.format(calendar2.getTime()));
-                        	} else {
-                        		obj.setDateStr(formatter3.format(calendar2.getTime()));
-                        	}
+                        if (date != null) {
+                            Calendar calendar2 = Calendar.getInstance(timeZone,
+                                    locale);
+                            calendar2.setTime(date);
+
+                            if ((calendar.get(Calendar.YEAR) == calendar2.get(
+                                        Calendar.YEAR)) &&
+                                    (calendar.get(Calendar.MONTH) == calendar2.get(
+                                        Calendar.MONTH)) &&
+                                    (calendar.get(Calendar.DATE) == calendar2.get(
+                                        Calendar.DATE))) {
+                                obj.setDateStr(formatter2.format(
+                                        calendar2.getTime()));
+                            } else if ((calendar.get(Calendar.YEAR) == calendar2.get(
+                                        Calendar.YEAR)) &&
+                                    (calendar.get(Calendar.MONTH) == calendar2.get(
+                                        Calendar.MONTH))) {
+                                obj.setDateStr(formatter1.format(
+                                        calendar2.getTime()));
+                            } else {
+                                obj.setDateStr(formatter3.format(
+                                        calendar2.getTime()));
+                            }
                         }
-                        
+
                         obj.setDate(date);
 
                         if (message.getLabMeses() != null) {
@@ -1039,7 +1116,8 @@ public class SearchManager implements LuceneMessageConstants {
      *
      * @throws SearchException DOCUMENT ME!
      */
-    public String didYouMean(String username, String token) throws MailException {
+    public String didYouMean(String username, String token)
+        throws MailException {
         String luceneSpellPath = "";
 
         if (!defaultLucenePath.endsWith(File.separator)) {
@@ -1052,7 +1130,8 @@ public class SearchManager implements LuceneMessageConstants {
 
         try {
             Directory aux = FSDirectory.getDirectory(luceneSpellPath, false);
-            CompositeDidYouMeanParser c = new CompositeDidYouMeanParser("", aux, new DictionaryAnalyzer());
+            CompositeDidYouMeanParser c = new CompositeDidYouMeanParser("",
+                    aux, new DictionaryAnalyzer());
             Query qAux = c.suggest(token, Operator.OR);
 
             if (qAux == null) {
@@ -1083,19 +1162,25 @@ public class SearchManager implements LuceneMessageConstants {
         ChainedFilter filter = null;
 
         try {
-        	Users user = getUser(hsession, username); 
-        	
+            Users user = getUser(hsession, username);
+
             org.hibernate.Query query1 = null;
             org.hibernate.Query query2 = null;
 
             String[] boxes = null;
 
             if ((box != null) && box.equals("ALL")) {
-                boxes = new String[] { this.folderInbox, this.folderSent, this.folderDraft, this.folderHidden, this.folderBlog };
+                boxes = new String[] {
+                        this.folderInbox, this.folderSent, this.folderDraft,
+                        this.folderHidden, this.folderBlog
+                    };
             } else if (box != null) {
                 boxes = new String[] { box };
             } else {
-            	boxes = new String[] { this.folderInbox, this.folderSent, this.folderDraft, this.folderHidden, this.folderBlog };
+                boxes = new String[] {
+                        this.folderInbox, this.folderSent, this.folderDraft,
+                        this.folderHidden, this.folderBlog
+                    };
             }
 
             if ((boxes == null) && (label == 0)) {
@@ -1115,7 +1200,6 @@ public class SearchManager implements LuceneMessageConstants {
                 query1.setString("folderTrash", this.folderTrash);
                 query1.setString("folderSpam", this.folderSpam);
                 query1.setString("folderDelete", FOLDER_DELETE);
-                
 
                 query2 = hsession.getNamedQuery("messages-by-label");
                 query2.setInteger("label", label);
@@ -1124,7 +1208,8 @@ public class SearchManager implements LuceneMessageConstants {
                 query2.setString("folderSpam", this.folderSpam);
                 query2.setString("folderDelete", FOLDER_DELETE);
             } else {
-                query1 = hsession.getNamedQuery("count-messages-by-folder-label");
+                query1 = hsession.getNamedQuery(
+                        "count-messages-by-folder-label");
                 query1.setInteger("label", label);
                 query1.setParameterList("folder", boxes);
                 query1.setInteger("user", user.getUseIdint());
@@ -1160,8 +1245,8 @@ public class SearchManager implements LuceneMessageConstants {
 
                 filter = new ChainedFilter(qFilters);
             } else {
-            	QueryFilter[] qFilters = new QueryFilter[0];
-            	filter = new ChainedFilter(qFilters);
+                QueryFilter[] qFilters = new QueryFilter[0];
+                filter = new ChainedFilter(qFilters);
             }
 
             return filter;

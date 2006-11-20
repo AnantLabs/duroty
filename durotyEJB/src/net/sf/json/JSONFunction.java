@@ -13,13 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package net.sf.json;
-
-import java.io.Serializable;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+
+import java.io.Serializable;
+
 
 /**
  * JSONFunction represents a javaScript function's text.
@@ -27,169 +27,199 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
  * @author Andres Almiray <aalmiray@users.sourceforge.net>
  * @version 3
  */
-public class JSONFunction implements Serializable
-{
-   /** constant array for empty parameters */
-   private static final String[] EMPTY_PARAM_ARRAY = new String[0];
+public class JSONFunction implements Serializable {
+    /** constant array for empty parameters */
+    private static final String[] EMPTY_PARAM_ARRAY = new String[0];
 
-   private static final long serialVersionUID = 3669044966588851732L;
+    /**
+     * DOCUMENT ME!
+     */
+    private static final long serialVersionUID = 3669044966588851732L;
 
-   /**
-    * Constructs a JSONFunction from a text representation
-    */
-   public static JSONFunction parse( JSONTokener x )
-   {
-      Object v = x.nextValue();
-      if( !JSONUtils.isFunctionHeader( v ) ){
-         throw new JSONException( "String is not a function. " + v );
-      }else{
-         // read params if any
-         String params = JSONUtils.getFunctionParams( (String) v );
-         // read function text
-         int i = 0;
-         StringBuffer sb = new StringBuffer();
-         for( ;; ){
-            char ch = x.next();
-            if( ch == 0 ){
-               break;
+    /** the parameters of this function */
+    private String[] params;
+
+    /** the text of this function */
+    private String text;
+
+    /**
+     * Constructs a JSONFunction with no parameters.
+     *
+     * @param text The text of the function
+     */
+    public JSONFunction(String text) {
+        this(null, text);
+    }
+
+    /**
+     * Constructs a JSONFunction with parameters.
+     *
+     * @param params The parameters of the function
+     * @param text The text of the function
+     */
+    public JSONFunction(String[] params, String text) {
+        this.text = (text != null) ? text.trim() : "";
+
+        if (params != null) {
+            this.params = new String[params.length];
+            System.arraycopy(params, 0, this.params, 0, params.length);
+        } else {
+            this.params = EMPTY_PARAM_ARRAY;
+        }
+    }
+
+    /**
+     * Constructs a JSONFunction from a text representation
+     */
+    public static JSONFunction parse(JSONTokener x) {
+        Object v = x.nextValue();
+
+        if (!JSONUtils.isFunctionHeader(v)) {
+            throw new JSONException("String is not a function. " + v);
+        } else {
+            // read params if any
+            String params = JSONUtils.getFunctionParams((String) v);
+
+            // read function text
+            int i = 0;
+            StringBuffer sb = new StringBuffer();
+
+            for (;;) {
+                char ch = x.next();
+
+                if (ch == 0) {
+                    break;
+                }
+
+                if (ch == '{') {
+                    i++;
+                }
+
+                if (ch == '}') {
+                    i--;
+                }
+
+                sb.append(ch);
+
+                if (i == 0) {
+                    break;
+                }
             }
-            if( ch == '{' ){
-               i++;
+
+            if (i != 0) {
+                throw x.syntaxError("Unbalanced '{' or '}' on prop: " + v);
             }
-            if( ch == '}' ){
-               i--;
+
+            // trim '{' at start and '}' at end
+            String text = sb.toString();
+            text = text.substring(1, text.length() - 1).trim();
+
+            return new JSONFunction((params != null) ? params.split(",") : null,
+                text);
+        }
+    }
+
+    /**
+     * Constructs a JSONFunction from a text representation
+     */
+    public static JSONFunction parse(String str) {
+        return parse(new JSONTokener(str));
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param obj DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null) {
+            return false;
+        }
+
+        if (!(obj instanceof JSONFunction)) {
+            return false;
+        }
+
+        if (obj instanceof String) {
+            return toString().compareTo((String) obj) == 0;
+        }
+
+        JSONFunction other = (JSONFunction) obj;
+
+        if (params.length != other.params.length) {
+            return false;
+        }
+
+        EqualsBuilder builder = new EqualsBuilder();
+
+        for (int i = 0; i < params.length; i++) {
+            builder.append(params[i], other.params[i]);
+        }
+
+        builder.append(text, other.text);
+
+        return builder.isEquals();
+    }
+
+    /**
+     * Returns the parameters of this function.
+     */
+    public String[] getParams() {
+        return params;
+    }
+
+    /**
+     * Reeturns the text of this function.
+     */
+    public String getText() {
+        return text;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public int hashCode() {
+        HashCodeBuilder builder = new HashCodeBuilder();
+
+        for (int i = 0; i < params.length; i++) {
+            builder.append(params[i]);
+        }
+
+        builder.append(text);
+
+        return builder.toHashCode();
+    }
+
+    /**
+     * Returns the string representation of this function.
+     */
+    public String toString() {
+        StringBuffer b = new StringBuffer("function(");
+
+        if (params.length > 0) {
+            for (int i = 0; i < (params.length - 1); i++) {
+                b.append(params[i]).append(",");
             }
-            sb.append( ch );
-            if( i == 0 ){
-               break;
-            }
-         }
-         if( i != 0 ){
-            throw x.syntaxError( "Unbalanced '{' or '}' on prop: " + v );
-         }
-         // trim '{' at start and '}' at end
-         String text = sb.toString();
-         text = text.substring( 1, text.length() - 1 )
-               .trim();
-         return new JSONFunction( (params != null) ? params.split( "," ) : null, text );
-      }
-   }
 
-   /**
-    * Constructs a JSONFunction from a text representation
-    */
-   public static JSONFunction parse( String str )
-   {
-      return parse( new JSONTokener( str ) );
-   }
+            b.append(params[params.length - 1]);
+        }
 
-   /** the parameters of this function */
-   private String[] params;
+        b.append("){");
 
-   /** the text of this function */
-   private String text;
+        if (text.length() > 0) {
+            b.append(" ").append(text).append(" ");
+        }
 
-   /**
-    * Constructs a JSONFunction with no parameters.
-    *
-    * @param text The text of the function
-    */
-   public JSONFunction( String text )
-   {
-      this( null, text );
-   }
+        b.append("}");
 
-   /**
-    * Constructs a JSONFunction with parameters.
-    *
-    * @param params The parameters of the function
-    * @param text The text of the function
-    */
-   public JSONFunction( String[] params, String text )
-   {
-      this.text = (text != null) ? text.trim() : "";
-      if( params != null ){
-         this.params = new String[params.length];
-         System.arraycopy( params, 0, this.params, 0, params.length );
-      }else{
-         this.params = EMPTY_PARAM_ARRAY;
-      }
-   }
-
-   public boolean equals( Object obj )
-   {
-      if( this == obj ){
-         return true;
-      }
-      if( obj == null ){
-         return false;
-      }
-      if( !(obj instanceof JSONFunction) ){
-         return false;
-      }
-
-      if( obj instanceof String ){
-         return toString().compareTo( (String) obj ) == 0;
-      }
-
-      JSONFunction other = (JSONFunction) obj;
-      if( params.length != other.params.length ){
-         return false;
-      }
-      EqualsBuilder builder = new EqualsBuilder();
-      for( int i = 0; i < params.length; i++ ){
-         builder.append( params[i], other.params[i] );
-      }
-      builder.append( text, other.text );
-      return builder.isEquals();
-   }
-
-   /**
-    * Returns the parameters of this function.
-    */
-   public String[] getParams()
-   {
-      return params;
-   }
-
-   /**
-    * Reeturns the text of this function.
-    */
-   public String getText()
-   {
-      return text;
-   }
-
-   public int hashCode()
-   {
-      HashCodeBuilder builder = new HashCodeBuilder();
-      for( int i = 0; i < params.length; i++ ){
-         builder.append( params[i] );
-      }
-      builder.append( text );
-      return builder.toHashCode();
-   }
-
-   /**
-    * Returns the string representation of this function.
-    */
-   public String toString()
-   {
-      StringBuffer b = new StringBuffer( "function(" );
-      if( params.length > 0 ){
-         for( int i = 0; i < params.length - 1; i++ ){
-            b.append( params[i] )
-                  .append( "," );
-         }
-         b.append( params[params.length - 1] );
-      }
-      b.append( "){" );
-      if( text.length() > 0 ){
-         b.append( " " )
-               .append( text )
-               .append( " " );
-      }
-      b.append( "}" );
-      return b.toString();
-   }
+        return b.toString();
+    }
 }

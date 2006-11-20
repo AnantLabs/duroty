@@ -1,6 +1,7 @@
 package com.duroty.utils.io;
 
-/** 
+
+/**
  * Modifications done by Daniel Matuschek (daniel@matuschek.net)
  * - modified JavaDoc documentation
  * - adapted to Java 1.2, removed deprecated DataInputStream.readLine() method
@@ -8,14 +9,15 @@ package com.duroty.utils.io;
  *   DatainputStream, not idea why this was used in the original version)
  * - fixed a bug (there is an CRLF after every the data block)
  */
-
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
 import java.util.Enumeration;
 import java.util.Vector;
 
-/** 
+
+/**
  * An InputStream that implements HTTP/1.1 chunking.
  * <P>
  * This class lets a Servlet read its request data as an HTTP/1.1 chunked
@@ -44,207 +46,222 @@ import java.util.Vector;
  * @author Daniel Matuschek
  * @version $Id: ChunkedInputStream.java,v 1.1 2006/03/08 09:07:01 durot Exp $
  */
-public class ChunkedInputStream extends FilterInputStream
-{
-  
-  private int contentLength;
-  private byte[] b1 = new byte[1];
+public class ChunkedInputStream extends FilterInputStream {
+    /**
+     * DOCUMENT ME!
+     */
+    private int contentLength;
 
-  /** number of bytes available in the current chunk */
-  private int chunkCount = 0;
+    /**
+     * DOCUMENT ME!
+     */
+    private byte[] b1 = new byte[1];
 
-  private Vector footerNames = null;
-  private Vector footerValues = null;
-  
-  /**
-   * Make a ChunkedInputStream.
-   */
-  public ChunkedInputStream( InputStream in )
-  {
-    super(in);
-    contentLength = 0;
-  }
+    /** number of bytes available in the current chunk */
+    private int chunkCount = 0;
 
+    /**
+     * DOCUMENT ME!
+     */
+    private Vector footerNames = null;
 
-  /**
-   * The FilterInputStream implementation of the single-byte read()
-   * method just reads directly from the underlying stream.  We want
-   * to go through our own read-block method, so we have to override.
-   * Seems like FilterInputStream really ought to do this itself.
-   */
-  public int read() throws IOException
-  {
-    if (read(b1,0,1) == -1 ) {
-      return -1;
+    /**
+     * DOCUMENT ME!
+     */
+    private Vector footerValues = null;
+
+    /**
+     * Make a ChunkedInputStream.
+     */
+    public ChunkedInputStream(InputStream in) {
+        super(in);
+        contentLength = 0;
     }
 
-    return b1[0];
-  }
+    /**
+     * The FilterInputStream implementation of the single-byte read()
+     * method just reads directly from the underlying stream.  We want
+     * to go through our own read-block method, so we have to override.
+     * Seems like FilterInputStream really ought to do this itself.
+     */
+    public int read() throws IOException {
+        if (read(b1, 0, 1) == -1) {
+            return -1;
+        }
 
-
-  /**
-   * Reads into an array of bytes.
-   * @param b the buffer into which the data is read
-   * @param off the start offset of the data
-   * @param len the maximum number of bytes read
-   * @return the actual number of bytes read, or -1 on EOF
-   * @exception IOException if an I/O error has occurred
-   */
-  public int read( byte[] b, int off, int len ) throws IOException
-  {
-    if (chunkCount == 0) {
-      startChunk();
-      if (chunkCount == 0) {
-	return -1;
-      }
-    }
-    int toRead = Math.min( chunkCount, len );
-    int r = in.read( b, off, toRead );
-    if ( r != -1 ) {
-      chunkCount -= r;
-    }
-    return r;
-  }
-  
-
-  /**
-   * Reads the start of a chunk.
-   */
-  private void startChunk() throws IOException
-  {
-    String line = readLine();
-    if (line.equals("")) {
-      line=readLine();
+        return b1[0];
     }
 
-    try {
-      chunkCount = Integer.parseInt(line.trim(),16);
-    } catch (NumberFormatException e) {
-      throw new IOException("malformed chunk ("+line+")");
-    }
-    contentLength += chunkCount;
-    if ( chunkCount == 0 ) {
-      readFooters();
-    }
-  }
-  
+    /**
+     * Reads into an array of bytes.
+     * @param b the buffer into which the data is read
+     * @param off the start offset of the data
+     * @param len the maximum number of bytes read
+     * @return the actual number of bytes read, or -1 on EOF
+     * @exception IOException if an I/O error has occurred
+     */
+    public int read(byte[] b, int off, int len) throws IOException {
+        if (chunkCount == 0) {
+            startChunk();
 
-  /** 
-   * Reads any footers.
-   */
-  private void readFooters() throws IOException
-  {
-    footerNames = new Vector();
-    footerValues = new Vector();
-    String line;
-    while ( true ) {
-      line = readLine();
-      if ( line.length() == 0 )
-	break;
-      int colon = line.indexOf( ':' );
-      if ( colon != -1 )
-	{
-	  String name = line.substring( 0, colon ).toLowerCase();
-	  String value = line.substring( colon + 1 ).trim();
-	  footerNames.addElement( name.toLowerCase() );
-	  footerValues.addElement( value );
-	}
-    }
-  }
-  
-  
-  /**
-   * Returns the value of a footer field, or null if not known.
-   * Footers come at the end of a chunked stream, so trying to
-   * retrieve them before the stream has given an EOF will return
-   * only nulls.
-   * @param name the footer field name
-   */
-  public String getFooter( String name )
-  {
-    if ( ! isDone() )
-      return null;
-    int i = footerNames.indexOf( name.toLowerCase() );
-    if ( i == -1 )
-      return null;
-    return (String) footerValues.elementAt( i );
-  }
-  
+            if (chunkCount == 0) {
+                return -1;
+            }
+        }
 
-  /**
-   * Returns an Enumeration of the footer names.
-   */
-  public Enumeration getFooters()
-  {
-    if ( ! isDone() )
-      return null;
-    return footerNames.elements();
-  }
-  
+        int toRead = Math.min(chunkCount, len);
+        int r = in.read(b, off, toRead);
 
-  /**
-   * Returns the size of the request entity data, or -1 if not known.
-   */
-  public int getContentLength()
-  {
-    if (! isDone()) {
-      return -1;
-    }
-    return contentLength;
-  }
-  
-  
-  /** 
-   * Tells whether the stream has gotten to its end yet.  Remembering
-   * whether you've gotten an EOF works fine too, but this is a convenient
-   * predicate.  java.io.InputStream should probably have its own isEof()
-   * predicate.
-   */
-  public boolean isDone()
-  {
-    return footerNames != null;
-  }
+        if (r != -1) {
+            chunkCount -= r;
+        }
 
-
-  /**
-   * ChunkedInputStream used DataInputStream.readLine() before. This method
-   * is deprecated, therefore we will it replace by our own method.
-   * Because the chunk lines only use 7bit ASCII, we can use the 
-   * system default encoding
-   * The data lines itself will not be read using this readLine method
-   * but by a block read
-   */
-  protected String readLine() 
-    throws IOException
-  {
-    final byte CR=13;
-    final byte LF=10;
-
-    ByteBuffer buff = new ByteBuffer();
-    byte b=0;
-
-    int i=0;
-    do {
-      b = (byte)this.in.read();
-      if (b != LF) {
-	buff.append(b);
-      };
-      i++;
-    } while ((b != LF));
-
-    // according to the RFC there must be a CR before the LF, but some
-    // web servers don't do this :-(
-    byte[] byteBuff = buff.getContent();
-
-    if (byteBuff.length == 0) {
-      return "";
+        return r;
     }
 
-    if (byteBuff[byteBuff.length-1] != CR) {
-      return new String(byteBuff);
-    } else {
-      return new String(byteBuff,0,byteBuff.length-1);
+    /**
+     * Reads the start of a chunk.
+     */
+    private void startChunk() throws IOException {
+        String line = readLine();
+
+        if (line.equals("")) {
+            line = readLine();
+        }
+
+        try {
+            chunkCount = Integer.parseInt(line.trim(), 16);
+        } catch (NumberFormatException e) {
+            throw new IOException("malformed chunk (" + line + ")");
+        }
+
+        contentLength += chunkCount;
+
+        if (chunkCount == 0) {
+            readFooters();
+        }
     }
-  }
-  
+
+    /**
+     * Reads any footers.
+     */
+    private void readFooters() throws IOException {
+        footerNames = new Vector();
+        footerValues = new Vector();
+
+        String line;
+
+        while (true) {
+            line = readLine();
+
+            if (line.length() == 0) {
+                break;
+            }
+
+            int colon = line.indexOf(':');
+
+            if (colon != -1) {
+                String name = line.substring(0, colon).toLowerCase();
+                String value = line.substring(colon + 1).trim();
+                footerNames.addElement(name.toLowerCase());
+                footerValues.addElement(value);
+            }
+        }
+    }
+
+    /**
+     * Returns the value of a footer field, or null if not known.
+     * Footers come at the end of a chunked stream, so trying to
+     * retrieve them before the stream has given an EOF will return
+     * only nulls.
+     * @param name the footer field name
+     */
+    public String getFooter(String name) {
+        if (!isDone()) {
+            return null;
+        }
+
+        int i = footerNames.indexOf(name.toLowerCase());
+
+        if (i == -1) {
+            return null;
+        }
+
+        return (String) footerValues.elementAt(i);
+    }
+
+    /**
+     * Returns an Enumeration of the footer names.
+     */
+    public Enumeration getFooters() {
+        if (!isDone()) {
+            return null;
+        }
+
+        return footerNames.elements();
+    }
+
+    /**
+     * Returns the size of the request entity data, or -1 if not known.
+     */
+    public int getContentLength() {
+        if (!isDone()) {
+            return -1;
+        }
+
+        return contentLength;
+    }
+
+    /**
+     * Tells whether the stream has gotten to its end yet.  Remembering
+     * whether you've gotten an EOF works fine too, but this is a convenient
+     * predicate.  java.io.InputStream should probably have its own isEof()
+     * predicate.
+     */
+    public boolean isDone() {
+        return footerNames != null;
+    }
+
+    /**
+     * ChunkedInputStream used DataInputStream.readLine() before. This method
+     * is deprecated, therefore we will it replace by our own method.
+     * Because the chunk lines only use 7bit ASCII, we can use the
+     * system default encoding
+     * The data lines itself will not be read using this readLine method
+     * but by a block read
+     */
+    protected String readLine() throws IOException {
+        final byte CR = 13;
+        final byte LF = 10;
+
+        ByteBuffer buff = new ByteBuffer();
+        byte b = 0;
+
+        int i = 0;
+
+        do {
+            b = (byte) this.in.read();
+
+            if (b != LF) {
+                buff.append(b);
+            }
+
+            ;
+            i++;
+        } while ((b != LF));
+
+        // according to the RFC there must be a CR before the LF, but some
+        // web servers don't do this :-(
+        byte[] byteBuff = buff.getContent();
+
+        if (byteBuff.length == 0) {
+            return "";
+        }
+
+        if (byteBuff[byteBuff.length - 1] != CR) {
+            return new String(byteBuff);
+        } else {
+            return new String(byteBuff, 0, byteBuff.length - 1);
+        }
+    }
 }

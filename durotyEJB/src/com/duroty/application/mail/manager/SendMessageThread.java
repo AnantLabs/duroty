@@ -1,8 +1,28 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
 package com.duroty.application.mail.manager;
 
-import org.apache.commons.mail.Email;
-
 import com.duroty.application.mail.exceptions.MailException;
+
+import org.apache.commons.mail.Email;
 
 import java.util.Vector;
 
@@ -12,21 +32,9 @@ import javax.mail.internet.MimeMessage;
 
 
 /**
- * SendMessageThread presents a dialog which displays the progress of sending a
- * specific message.
- *
- * <p>
- * The message is checked and completed before sending. It may also be saved
- * into the configured 'sent' folder.
- * </p>
- *
- * <p>
- * After the message is sent, this thread also disposes of the parent frame,
- * i.e. composer.
- * </p>
- *
- * @see ComposeFrame
- */
+ * @author Jordi Marquès
+ * @version 1.0
+*/
 public class SendMessageThread implements Runnable {
     /** DOCUMENT ME! */
     private Email email;
@@ -88,14 +96,14 @@ public class SendMessageThread implements Runnable {
     public void start() throws Exception {
         try {
             if (email != null) {
-            	email.getMimeMessage().removeHeader("X-DBox");
+                email.getMimeMessage().removeHeader("X-DBox");
                 email.send();
 
                 return;
             }
 
             if (mime != null) {
-            	mime.removeHeader("X-DBox");
+                mime.removeHeader("X-DBox");
                 Transport.send(mime);
 
                 return;
@@ -111,7 +119,7 @@ public class SendMessageThread implements Runnable {
         } catch (Exception ex) {
             throw new MailException(ex);
         } catch (java.lang.OutOfMemoryError ex) {
-        	System.gc();
+            System.gc();
             throw new MailException(ex);
         } catch (Throwable ex) {
             throw new MailException(ex);
@@ -127,7 +135,7 @@ public class SendMessageThread implements Runnable {
         try {
             start();
         } catch (Exception e) {
-        	e.printStackTrace();
+            e.printStackTrace();
         }
     }
 }

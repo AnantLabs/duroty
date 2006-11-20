@@ -47,10 +47,10 @@ public class MailUtilities {
     // used by FolderTreePanel.java
     // used by FolderTreeNode.java
     static public void setStoreConnected(Store store) throws MessagingException {
-    	if (store == null) {
-    		return;
-    	}
-    	
+        if (store == null) {
+            return;
+        }
+
         synchronized (store) {
             if (!store.isConnected()) {
                 for (;;) {
@@ -80,10 +80,10 @@ public class MailUtilities {
     // QuickViewer.java
     static public void setFolderOpenAndReady(Folder f, int perm)
         throws MessagingException {
-    	if (f == null) {
-    		return;
-    	}
-    	
+        if (f == null) {
+            return;
+        }
+
         MailUtilities.setStoreConnected(f.getStore());
 
         synchronized (f) {
@@ -104,10 +104,10 @@ public class MailUtilities {
      */
     static public void setFolderClose(Folder f, boolean expunge)
         throws MessagingException {
-    	if (f == null) {
-    		return;
-    	}
-    	
+        if (f == null) {
+            return;
+        }
+
         synchronized (f) {
             if ((f != null) && f.isOpen()) {
                 f.close(expunge);
@@ -124,10 +124,10 @@ public class MailUtilities {
      * @throws MessagingException DOCUMENT ME!
      */
     static public void setStoreClose(Store s) throws MessagingException {
-    	if (s == null) {
-    		return;
-    	}
-    	
+        if (s == null) {
+            return;
+        }
+
         synchronized (s) {
             if ((s != null) && s.isConnected()) {
                 s.close();
@@ -146,18 +146,18 @@ public class MailUtilities {
      */
     static public void saveMessage(Store store, Message message, String path)
         throws MessagingException {
-    	if (store == null) {
-    		throw new MessagingException("The store is null");
-    	}
-    	
-    	if (message == null) {
-    		throw new MessagingException("The message is null");
-    	}
-    	
-    	if (path == null) {
-    		throw new MessagingException("The path is null");
-    	}    	
-    	
+        if (store == null) {
+            throw new MessagingException("The store is null");
+        }
+
+        if (message == null) {
+            throw new MessagingException("The message is null");
+        }
+
+        if (path == null) {
+            throw new MessagingException("The path is null");
+        }
+
         Store xstore = store;
 
         if (xstore != null) {

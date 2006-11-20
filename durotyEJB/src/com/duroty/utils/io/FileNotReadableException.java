@@ -5,6 +5,7 @@
  */
 package com.duroty.utils.io;
 
+
 /**
  * DOCUMENT ME!
  *

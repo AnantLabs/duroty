@@ -1,5 +1,14 @@
 package com.duroty.utils.mail;
 
+/**
+ * DOCUMENT ME!
+ *
+ * @author $author$
+ * @version $Revision$
+ */
 public interface Disposable {
-	void dispose();
+    /**
+     * DOCUMENT ME!
+     */
+    void dispose();
 }

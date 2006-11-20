@@ -13,7 +13,7 @@ package com.duroty.application.open.interfaces;
 public interface OpenHome
    extends javax.ejb.EJBHome
 {
-   public static final String COMP_NAME="duroty/ejb/Open";
+   public static final String COMP_NAME="java:comp/env/ejb/Open";
    public static final String JNDI_NAME="duroty/ejb/Open";
 
    public com.duroty.application.open.interfaces.Open create()

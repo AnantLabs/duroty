@@ -1,14 +1,38 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 /**
  *
  */
 package com.duroty.task;
 
 import com.duroty.application.bookmark.utils.BookmarkObj;
+
 import com.duroty.hibernate.Bookmark;
 import com.duroty.hibernate.Users;
 
 import com.duroty.jmx.mbean.ApplicationConstants;
 import com.duroty.jmx.mbean.Constants;
+
 import com.duroty.lucene.utils.FileUtilities;
 
 import com.duroty.service.Bookmarklet;
@@ -27,6 +51,7 @@ import org.jboss.varia.scheduler.Schedulable;
 
 import java.io.File;
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -70,10 +95,11 @@ public class BookmarkServiceTask implements Schedulable, Servible {
 
     /**
      * @throws NamingException
-     * @throws IOException 
+     * @throws IOException
      *
      */
-    public BookmarkServiceTask(int poolSize) throws NamingException, IOException {
+    public BookmarkServiceTask(int poolSize)
+        throws NamingException, IOException {
         super();
 
         this.poolSize = poolSize;
@@ -86,15 +112,15 @@ public class BookmarkServiceTask implements Schedulable, Servible {
             HashMap bookmark = (HashMap) ctx.lookup((String) options.get(
                         Constants.BOOKMARK_CONFIG));
             this.hibernateSessionFactory = (String) bookmark.get(Constants.HIBERNATE_SESSION_FACTORY);
-            
+
             String tempDir = System.getProperty("java.io.tmpdir");
 
             if (!tempDir.endsWith(File.separator)) {
                 tempDir = tempDir + File.separator;
             }
-            
+
             FileUtilities.deleteMotLocks(new File(tempDir));
-            FileUtilities.deleteLuceneLocks(new File(tempDir));     
+            FileUtilities.deleteLuceneLocks(new File(tempDir));
         } finally {
         }
     }
@@ -146,7 +172,7 @@ public class BookmarkServiceTask implements Schedulable, Servible {
 
                 if (!poolContains(key)) {
                     addPool(key);
-                    
+
                     BookmarkObj bookmarkObj = new BookmarkObj();
                     bookmarkObj.setIdint(idint);
                     bookmarkObj.setUrl(bookmark.getBooUrl());
@@ -155,7 +181,7 @@ public class BookmarkServiceTask implements Schedulable, Servible {
                             user.getUseUsername(), bookmarkObj);
                     Thread thread = new Thread(bookmarklet, key);
                     thread.start();
-                    
+
                     hsession.delete(bookmark);
                     hsession.flush();
                 }
@@ -163,12 +189,12 @@ public class BookmarkServiceTask implements Schedulable, Servible {
                 Thread.sleep(100);
             }
         } catch (Exception e) {
-        	pool.clear();
-        	DLog.log(DLog.ERROR, this.getClass(), e.getMessage());
+            pool.clear();
+            DLog.log(DLog.ERROR, this.getClass(), e.getMessage());
             System.gc();
         } catch (OutOfMemoryError e) {
-        	pool.clear();
-        	DLog.log(DLog.ERROR, this.getClass(), e.getMessage());
+            pool.clear();
+            DLog.log(DLog.ERROR, this.getClass(), e.getMessage());
             System.gc();
         } catch (Throwable e) {
             pool.clear();
@@ -194,7 +220,7 @@ public class BookmarkServiceTask implements Schedulable, Servible {
      *
      * @param key DOCUMENT ME!
      */
-    public void removePool(String key) {    	
+    public void removePool(String key) {
         pool.remove(key);
     }
 

@@ -3,6 +3,7 @@
  */
 package com.duroty.application.mail.interfaces;
 
+
 /**
  * Remote interface for Send.
  * @xdoclet-generated at ${TODAY}
@@ -10,25 +11,33 @@ package com.duroty.application.mail.interfaces;
  * @author XDoclet
  * @version ${version}
  */
-public interface Send
-   extends javax.ejb.EJBObject
-{
-   /**
-    * Send message
-    * @throws EJBException Thrown if method fails due to system-level error.    */
-   public void send( java.lang.String mid,int identity,java.lang.String to,java.lang.String cc,java.lang.String bcc,java.lang.String subject,java.lang.String body,java.util.Vector attachments,boolean isHtml,java.lang.String charset,java.lang.String priority )
-      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
+public interface Send extends javax.ejb.EJBObject {
+    /**
+     * Send message
+     * @throws EJBException Thrown if method fails due to system-level error.    */
+    public void send(java.lang.String mid, int identity, java.lang.String to,
+        java.lang.String cc, java.lang.String bcc, java.lang.String subject,
+        java.lang.String body, java.util.Vector attachments, boolean isHtml,
+        java.lang.String charset, java.lang.String priority)
+        throws com.duroty.application.mail.exceptions.MailException, 
+            java.rmi.RemoteException;
 
-   /**
-    * Save draft message
-    * @throws EJBException Thrown if method fails due to system-level error.    */
-   public void saveDraft( java.lang.String mid,int identity,java.lang.String to,java.lang.String cc,java.lang.String bcc,java.lang.String subject,java.lang.String body,java.util.Vector attachments,boolean isHtml,java.lang.String charset,java.lang.String priority )
-      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
+    /**
+     * Save draft message
+     * @throws EJBException Thrown if method fails due to system-level error.    */
+    public void saveDraft(java.lang.String mid, int identity,
+        java.lang.String to, java.lang.String cc, java.lang.String bcc,
+        java.lang.String subject, java.lang.String body,
+        java.util.Vector attachments, boolean isHtml, java.lang.String charset,
+        java.lang.String priority)
+        throws com.duroty.application.mail.exceptions.MailException, 
+            java.rmi.RemoteException;
 
-   /**
-    * Send identity confirmation
-    * @throws EJBException Thrown if method fails due to system-level error.    */
-   public void sendIdentity( java.lang.String from,java.lang.String to,java.lang.String subject,java.lang.String body )
-      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
-
+    /**
+     * Send identity confirmation
+     * @throws EJBException Thrown if method fails due to system-level error.    */
+    public void sendIdentity(java.lang.String from, java.lang.String to,
+        java.lang.String subject, java.lang.String body)
+        throws com.duroty.application.mail.exceptions.MailException, 
+            java.rmi.RemoteException;
 }

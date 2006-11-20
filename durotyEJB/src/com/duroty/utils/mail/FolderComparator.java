@@ -33,19 +33,19 @@ public class FolderComparator implements Comparator {
         String s0;
         String s1;
 
-        s0 = ((Folder) o1).getFullName();                       
+        s0 = ((Folder) o1).getFullName();
         s1 = ((Folder) o2).getFullName();
-        
+
         if (s1.equalsIgnoreCase("INBOX")) {
-        	return 1;
+            return 1;
         }
-        
+
         if (s1.equalsIgnoreCase("Borrador")) {
-        	return -1;
+            return -1;
         }
-        
+
         if (s0.equalsIgnoreCase("junkmail")) {
-        	return 2;
+            return 2;
         }
 
         return (s0.compareToIgnoreCase(s1));

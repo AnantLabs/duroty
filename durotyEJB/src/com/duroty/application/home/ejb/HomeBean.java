@@ -1,6 +1,36 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
 package com.duroty.application.home.ejb;
 
+import com.duroty.application.home.exceptions.HomeException;
+import com.duroty.application.home.manager.HomeManager;
+import com.duroty.application.home.utils.FeedObj;
+
+import com.duroty.jmx.mbean.ApplicationConstants;
+import com.duroty.jmx.mbean.Constants;
+
+import org.hibernate.SessionFactory;
+
 import java.rmi.RemoteException;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -9,17 +39,10 @@ import javax.ejb.CreateException;
 import javax.ejb.EJBException;
 import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-
-import org.hibernate.SessionFactory;
-
-import com.duroty.application.home.exceptions.HomeException;
-import com.duroty.application.home.manager.HomeManager;
-import com.duroty.application.home.utils.FeedObj;
-import com.duroty.jmx.mbean.ApplicationConstants;
-import com.duroty.jmx.mbean.Constants;
 
 
 /**
@@ -220,7 +243,7 @@ public class HomeBean implements SessionBean {
         } finally {
         }
     }
-    
+
     /**
      * Get cookies database
      *
@@ -238,7 +261,8 @@ public class HomeBean implements SessionBean {
 
             String repositoryName = context.getCallerPrincipal().getName();
 
-            return manager.getAllFeed(hfactory.openSession(), repositoryName, channel);
+            return manager.getAllFeed(hfactory.openSession(), repositoryName,
+                channel);
         } catch (NamingException e) {
             throw new HomeException(e);
         } catch (Exception e) {

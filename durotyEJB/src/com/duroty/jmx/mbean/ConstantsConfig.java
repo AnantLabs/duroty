@@ -1,7 +1,37 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 /**
  *
  */
 package com.duroty.jmx.mbean;
+
+import org.jboss.system.ServiceMBeanSupport;
+
+import org.jboss.util.naming.NonSerializableFactory;
+
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,18 +44,13 @@ import javax.naming.NamingException;
 import javax.naming.Reference;
 import javax.naming.StringRefAddr;
 
-import org.jboss.system.ServiceMBeanSupport;
-import org.jboss.util.naming.NonSerializableFactory;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 
 /**
- * @author durot
- *
- */
-public class ConstantsConfig extends ServiceMBeanSupport implements ConstantsConfigMBean {
+ * @author Jordi Marquès
+ * @version 1.0
+*/
+public class ConstantsConfig extends ServiceMBeanSupport
+    implements ConstantsConfigMBean {
     /**
      * DOCUMENT ME!
      */
@@ -53,7 +78,8 @@ public class ConstantsConfig extends ServiceMBeanSupport implements ConstantsCon
 
         HashMap properties = getProperties();
 
-        bind((String) ApplicationConstants.options.get(Constants.CONSTANTS_CONFIG), properties);
+        bind((String) ApplicationConstants.options.get(
+                Constants.CONSTANTS_CONFIG), properties);
     }
 
     /* (non-Javadoc)
@@ -62,7 +88,8 @@ public class ConstantsConfig extends ServiceMBeanSupport implements ConstantsCon
     protected void stopService() throws Exception {
         super.stopService();
 
-        unbind((String) ApplicationConstants.options.get(Constants.CONSTANTS_CONFIG));
+        unbind((String) ApplicationConstants.options.get(
+                Constants.CONSTANTS_CONFIG));
     }
 
     /**
@@ -83,7 +110,8 @@ public class ConstantsConfig extends ServiceMBeanSupport implements ConstantsCon
             }
 
             NonSerializableFactory.unbind(name);
-            log.info("ConstantsConfig service '" + name + "' removed from JNDI");
+            log.info("ConstantsConfig service '" + name +
+                "' removed from JNDI");
         }
     }
 
@@ -114,8 +142,10 @@ public class ConstantsConfig extends ServiceMBeanSupport implements ConstantsCon
 
                 n = n.getSuffix(1);
             }
+
             StringRefAddr addr = new StringRefAddr("nns", name);
-            Reference ref = new Reference(object.getClass().getName(), addr, NonSerializableFactory.class.getName(), null);
+            Reference ref = new Reference(object.getClass().getName(), addr,
+                    NonSerializableFactory.class.getName(), null);
             ctx.bind(n.get(0), ref);
         } finally {
             ctx.close();
@@ -203,7 +233,7 @@ public class ConstantsConfig extends ServiceMBeanSupport implements ConstantsCon
 
         return props;
     }
-    
+
     /**
      * DOCUMENT ME!
      *

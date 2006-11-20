@@ -1,3 +1,23 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
 package com.duroty.application.admin.manager;
 
 import com.duroty.application.admin.exceptions.AdminException;
@@ -36,11 +56,9 @@ import java.util.Vector;
 
 
 /**
- * DOCUMENT ME!
- *
- * @author $author$
- * @version $Revision$
- */
+ * @author Jordi Marquès
+ * @version 1.0
+*/
 public class AdminManager {
     /**
      * Creates a new AdminManager object.
@@ -71,17 +89,18 @@ public class AdminManager {
             users.setUseRegisterDate(userObj.getRegisterDate());
             users.setUseUsername(userObj.getUsername());
 
-            if (userObj.getRoles() != null && userObj.getRoles().length > 0) {
-	            Criteria crit = hsession.createCriteria(Roles.class);
-	            crit.add(Restrictions.in("rolIdint", userObj.getRoles()));
-	
-	            ScrollableResults scroll = crit.scroll();
-	
-	            while (scroll.next()) {
-	                UserRole userRole = new UserRole(new UserRoleId(users,
-	                            (Roles) scroll.get(0)));
-	                users.addUserRole(userRole);
-	            }
+            if ((userObj.getRoles() != null) &&
+                    (userObj.getRoles().length > 0)) {
+                Criteria crit = hsession.createCriteria(Roles.class);
+                crit.add(Restrictions.in("rolIdint", userObj.getRoles()));
+
+                ScrollableResults scroll = crit.scroll();
+
+                while (scroll.next()) {
+                    UserRole userRole = new UserRole(new UserRoleId(users,
+                                (Roles) scroll.get(0)));
+                    users.addUserRole(userRole);
+                }
             }
 
             hsession.save(users);
@@ -92,8 +111,10 @@ public class AdminManager {
             mailPreferences.setMaprHtmlMessage(userObj.isHtmlMessages());
             mailPreferences.setMaprMessagesByPage(userObj.getMessagesByPage());
             mailPreferences.setMaprQuotaSize(userObj.getQuotaSize());
+
             if (userObj.getSignature() != null) {
-            	mailPreferences.setMaprSignature("\n" + userObj.getSignature().replaceAll("'", "\\\\'"));
+                mailPreferences.setMaprSignature("\n" +
+                    userObj.getSignature().replaceAll("'", "\\\\'"));
             }
 
             if (userObj.isSpamTolerance()) {
@@ -192,14 +213,16 @@ public class AdminManager {
             obj.setVacationBody(mailPreferences.getMaprVacationBody());
             obj.setVacationSubject(mailPreferences.getMaprVacationSubject());
             obj.setVactionActive(mailPreferences.isMaprVacationActive());
-            
-            int usedQuotaSize = getUsedQuotaSize(hsession, user);            
+
+            int usedQuotaSize = getUsedQuotaSize(hsession, user);
             usedQuotaSize /= 1024;
+
             if (usedQuotaSize > 1024) {
                 usedQuotaSize /= 1024;
                 obj.setUsedQuota(usedQuotaSize + " MB");
             } else {
-            	obj.setUsedQuota(((usedQuotaSize > 0) ? (usedQuotaSize + "") : "<1") + " kB");
+                obj.setUsedQuota(((usedQuotaSize > 0) ? (usedQuotaSize + "")
+                                                      : "<1") + " kB");
             }
 
             return obj;
@@ -284,14 +307,16 @@ public class AdminManager {
                 obj.setVacationBody(mailPreferences.getMaprVacationBody());
                 obj.setVacationSubject(mailPreferences.getMaprVacationSubject());
                 obj.setVactionActive(mailPreferences.isMaprVacationActive());
-                
-                int usedQuotaSize = getUsedQuotaSize(hsession, user);            
+
+                int usedQuotaSize = getUsedQuotaSize(hsession, user);
                 usedQuotaSize /= 1024;
+
                 if (usedQuotaSize > 1024) {
                     usedQuotaSize /= 1024;
                     obj.setUsedQuota(usedQuotaSize + " MB");
                 } else {
-                	obj.setUsedQuota(((usedQuotaSize > 0) ? (usedQuotaSize + "") : "<1") + " kB");
+                    obj.setUsedQuota(((usedQuotaSize > 0) ? (usedQuotaSize +
+                        "") : "<1") + " kB");
                 }
 
                 users.addElement(obj);
@@ -387,14 +412,16 @@ public class AdminManager {
                 obj.setVacationBody(mailPreferences.getMaprVacationBody());
                 obj.setVacationSubject(mailPreferences.getMaprVacationSubject());
                 obj.setVactionActive(mailPreferences.isMaprVacationActive());
-                
-                int usedQuotaSize = getUsedQuotaSize(hsession, user);            
+
+                int usedQuotaSize = getUsedQuotaSize(hsession, user);
                 usedQuotaSize /= 1024;
+
                 if (usedQuotaSize > 1024) {
                     usedQuotaSize /= 1024;
                     obj.setUsedQuota(usedQuotaSize + " MB");
                 } else {
-                	obj.setUsedQuota(((usedQuotaSize > 0) ? (usedQuotaSize + "") : "<1") + " kB");
+                    obj.setUsedQuota(((usedQuotaSize > 0) ? (usedQuotaSize +
+                        "") : "<1") + " kB");
                 }
 
                 users.addElement(obj);
@@ -420,7 +447,8 @@ public class AdminManager {
         throws AdminException {
         try {
             Criteria crit1 = hsession.createCriteria(Users.class);
-            crit1.add(Restrictions.eq("useIdint", new Integer(userObj.getIdint())));
+            crit1.add(Restrictions.eq("useIdint",
+                    new Integer(userObj.getIdint())));
 
             Users users = (Users) crit1.uniqueResult();
 
@@ -451,23 +479,24 @@ public class AdminManager {
                 users.setUsePassword(userObj.getPassword());
             }
 
-            if (userObj.getRoles() != null && userObj.getRoles().length > 0) {
-	            Criteria crit2 = hsession.createCriteria(Roles.class);
-	            crit2.add(Restrictions.in("rolIdint", userObj.getRoles()));
-	
-	            Set set = new HashSet();
-	            ScrollableResults scroll = crit2.scroll();
-	
-	            while (scroll.next()) {
-	                UserRole userRole = new UserRole(new UserRoleId(users,
-	                            (Roles) scroll.get(0)));
-	                set.add(userRole);
-	            }
-	
-	            users.setUserRoles(set);
-	
-	            hsession.update(users);
-	            hsession.flush();
+            if ((userObj.getRoles() != null) &&
+                    (userObj.getRoles().length > 0)) {
+                Criteria crit2 = hsession.createCriteria(Roles.class);
+                crit2.add(Restrictions.in("rolIdint", userObj.getRoles()));
+
+                Set set = new HashSet();
+                ScrollableResults scroll = crit2.scroll();
+
+                while (scroll.next()) {
+                    UserRole userRole = new UserRole(new UserRoleId(users,
+                                (Roles) scroll.get(0)));
+                    set.add(userRole);
+                }
+
+                users.setUserRoles(set);
+
+                hsession.update(users);
+                hsession.flush();
             }
 
             it = users.getMailPreferenceses().iterator();
@@ -477,8 +506,10 @@ public class AdminManager {
             mailPreferences.setMaprHtmlMessage(userObj.isHtmlMessages());
             mailPreferences.setMaprMessagesByPage(userObj.getMessagesByPage());
             mailPreferences.setMaprQuotaSize(userObj.getQuotaSize());
+
             if (userObj.getSignature() != null) {
-            	mailPreferences.setMaprSignature("\n" + userObj.getSignature().replaceAll("'", "\\\\'"));
+                mailPreferences.setMaprSignature("\n" +
+                    userObj.getSignature().replaceAll("'", "\\\\'"));
             }
 
             if (userObj.isSpamTolerance()) {

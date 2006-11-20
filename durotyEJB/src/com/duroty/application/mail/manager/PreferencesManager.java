@@ -1,30 +1,24 @@
-/**
- *
- */
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
 package com.duroty.application.mail.manager;
-
-import java.io.File;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.Vector;
-
-import javax.mail.internet.InternetAddress;
-
-import org.apache.commons.lang.RandomStringUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.search.Hits;
-import org.apache.lucene.search.Searcher;
-import org.hibernate.Criteria;
-import org.hibernate.HibernateException;
-import org.hibernate.Query;
-import org.hibernate.ScrollableResults;
-import org.hibernate.Session;
-import org.hibernate.criterion.MatchMode;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
 
 import com.duroty.application.mail.exceptions.MailException;
 import com.duroty.application.mail.utils.ContactListObj;
@@ -35,6 +29,7 @@ import com.duroty.application.mail.utils.LabelObj;
 import com.duroty.application.mail.utils.PreferencesObj;
 import com.duroty.application.mail.utils.SearchContactsObj;
 import com.duroty.application.mail.utils.SearchGroupsObj;
+
 import com.duroty.hibernate.BuddyList;
 import com.duroty.hibernate.ConColi;
 import com.duroty.hibernate.ConColiId;
@@ -48,18 +43,48 @@ import com.duroty.hibernate.Label;
 import com.duroty.hibernate.MailPreferences;
 import com.duroty.hibernate.Message;
 import com.duroty.hibernate.Users;
+
 import com.duroty.jmx.mbean.Constants;
+
 import com.duroty.lucene.mail.LuceneMessageConstants;
 import com.duroty.lucene.mail.indexer.MailIndexer;
 import com.duroty.lucene.mail.search.FilterQueryParser;
+
 import com.duroty.utils.GeneralOperations;
 import com.duroty.utils.mail.MessageUtilities;
 
+import org.apache.commons.lang.RandomStringUtils;
+import org.apache.commons.lang.StringUtils;
+
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.search.Hits;
+import org.apache.lucene.search.Searcher;
+
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
+import org.hibernate.ScrollableResults;
+import org.hibernate.Session;
+
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+
+import java.io.File;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.Vector;
+
+import javax.mail.internet.InternetAddress;
+
 
 /**
- * @author durot
- *
- */
+ * @author Jordi Marquès
+ * @version 1.0
+*/
 public class PreferencesManager implements LuceneMessageConstants {
     /**
     * DOCUMENT ME!
@@ -180,9 +205,13 @@ public class PreferencesManager implements LuceneMessageConstants {
 
             preferences.setMaprHtmlMessage(preferencesObj.isHtmlMessage());
             preferences.setMaprMessagesByPage(preferencesObj.getMessagesByPage());
+
             if (preferencesObj.getSignature() != null) {
-            	preferences.setMaprSignature(preferencesObj.getSignature().replaceAll("'", "\\\\'"));
+                preferences.setMaprSignature(preferencesObj.getSignature()
+                                                           .replaceAll("'",
+                        "\\\\'"));
             }
+
             preferences.setMaprSpamTolerance(preferencesObj.getSpamTolerance());
             preferences.setMaprVacationActive(preferencesObj.isVacationActive());
             preferences.setMaprVacationBody(preferencesObj.getVacationBody());
@@ -280,7 +309,9 @@ public class PreferencesManager implements LuceneMessageConstants {
 
         try {
             Criteria crit = hsession.createCriteria(Contact.class);
-            crit.add(Restrictions.or(Restrictions.ilike("conName", token, MatchMode.ANYWHERE), Restrictions.ilike("conEmail", token, MatchMode.ANYWHERE)));
+            crit.add(Restrictions.or(Restrictions.ilike("conName", token,
+                        MatchMode.ANYWHERE),
+                    Restrictions.ilike("conEmail", token, MatchMode.ANYWHERE)));
             crit.add(Restrictions.eq("users", getUser(hsession, repositoryName)));
             crit.add(Restrictions.isNotNull("conSentDate"));
             crit.add(Restrictions.isNotNull("conReceivedDate"));
@@ -290,7 +321,9 @@ public class PreferencesManager implements LuceneMessageConstants {
             sobj.setHits(hits);
 
             crit = hsession.createCriteria(Contact.class);
-            crit.add(Restrictions.or(Restrictions.ilike("conName", token, MatchMode.ANYWHERE), Restrictions.ilike("conEmail", token, MatchMode.ANYWHERE)));
+            crit.add(Restrictions.or(Restrictions.ilike("conName", token,
+                        MatchMode.ANYWHERE),
+                    Restrictions.ilike("conEmail", token, MatchMode.ANYWHERE)));
             crit.add(Restrictions.eq("users", getUser(hsession, repositoryName)));
             crit.add(Restrictions.isNotNull("conSentDate"));
             crit.add(Restrictions.isNotNull("conReceivedDate"));
@@ -472,11 +505,13 @@ public class PreferencesManager implements LuceneMessageConstants {
             }
 
             crit = hsession.createCriteria(Contact.class);
-            crit.add(Restrictions.or(Restrictions.ilike("conName", token, MatchMode.ANYWHERE), Restrictions.ilike("conEmail", token, MatchMode.ANYWHERE)));            
+            crit.add(Restrictions.or(Restrictions.ilike("conName", token,
+                        MatchMode.ANYWHERE),
+                    Restrictions.ilike("conEmail", token, MatchMode.ANYWHERE)));
             crit.add(Restrictions.isNotNull("conSentDate"));
             crit.add(Restrictions.isNotNull("conReceivedDate"));
             crit.add(Restrictions.eq("users", getUser(hsession, repositoryName)));
-            
+
             crit.add(Restrictions.eq("users", getUser(hsession, repositoryName)));
             crit.addOrder(Order.desc("conCount"));
 
@@ -520,7 +555,7 @@ public class PreferencesManager implements LuceneMessageConstants {
             Criteria crit = hsession.createCriteria(Contact.class);
             crit.add(Restrictions.isNotNull("conSentDate"));
             crit.add(Restrictions.isNotNull("conReceivedDate"));
-            crit.add(Restrictions.eq("users", getUser(hsession, repositoryName)));            
+            crit.add(Restrictions.eq("users", getUser(hsession, repositoryName)));
 
             int hits = crit.list().size();
 
@@ -648,7 +683,8 @@ public class PreferencesManager implements LuceneMessageConstants {
                         String name = "";
 
                         if (!StringUtils.isBlank(contact.getConName())) {
-                            name = contact.getConName().replaceAll("'", "\\\\'") + " ";
+                            name = contact.getConName().replaceAll("'", "\\\\'") +
+                                " ";
                         }
 
                         emails.append(name + "<" + contact.getConEmail() + ">");
@@ -873,16 +909,16 @@ public class PreferencesManager implements LuceneMessageConstants {
                                 Message message = (Message) crit.uniqueResult();
 
                                 if (message != null) {
-                                	try {
-        								LabMesId id = new LabMesId();
-        								id.setLabel(hlabel);
-        								id.setMessage(message);
+                                    try {
+                                        LabMesId id = new LabMesId();
+                                        id.setLabel(hlabel);
+                                        id.setMessage(message);
 
-        								LabMes lm = new LabMes(id);
-        								hsession.saveOrUpdate(lm);
-        								hsession.flush();
-        							} catch (HibernateException e) {
-        							}
+                                        LabMes lm = new LabMes(id);
+                                        hsession.saveOrUpdate(lm);
+                                        hsession.flush();
+                                    } catch (HibernateException e) {
+                                    }
                                 }
                             }
                         }
@@ -983,10 +1019,11 @@ public class PreferencesManager implements LuceneMessageConstants {
             Users user = getUser(hsession, repositoryName);
 
             if (user != null) {
-            	Criteria critLabel = hsession.createCriteria(Label.class);
-            	critLabel.add(Restrictions.eq("users", user));
-            	critLabel.add(Restrictions.eq("labIdint", new Integer(filter.getLabel().getIdint())));
-            	
+                Criteria critLabel = hsession.createCriteria(Label.class);
+                critLabel.add(Restrictions.eq("users", user));
+                critLabel.add(Restrictions.eq("labIdint",
+                        new Integer(filter.getLabel().getIdint())));
+
                 Label hlabel = (Label) critLabel.uniqueResult();
 
                 if (hlabel == null) {
@@ -1036,15 +1073,15 @@ public class PreferencesManager implements LuceneMessageConstants {
 
                         if (message != null) {
                             try {
-								LabMesId id = new LabMesId();
-								id.setLabel(hlabel);
-								id.setMessage(message);
+                                LabMesId id = new LabMesId();
+                                id.setLabel(hlabel);
+                                id.setMessage(message);
 
-								LabMes lm = new LabMes(id);
-								hsession.saveOrUpdate(lm);
-								hsession.flush();
-							} catch (HibernateException e) {
-							}
+                                LabMes lm = new LabMes(id);
+                                hsession.saveOrUpdate(lm);
+                                hsession.flush();
+                            } catch (HibernateException e) {
+                            }
                         }
                     }
                 }
@@ -1088,12 +1125,14 @@ public class PreferencesManager implements LuceneMessageConstants {
 
             if (user != null) {
                 Criteria crit1 = hsession.createCriteria(Label.class);
-                crit1.add(Restrictions.eq("labIdint", filter.getLabel().getIdint()));
+                crit1.add(Restrictions.eq("labIdint",
+                        filter.getLabel().getIdint()));
                 crit1.add(Restrictions.eq("users", user));
 
                 Label hlabel = (Label) crit1.uniqueResult();
-                
-                Filter hfilter = (Filter) hsession.load(Filter.class, filter.getIdint());
+
+                Filter hfilter = (Filter) hsession.load(Filter.class,
+                        filter.getIdint());
 
                 hfilter.setFilArchive(filter.isArchive());
                 hfilter.setFilDoesntHaveWords(filter.getDoesntHaveWords());
@@ -1132,15 +1171,15 @@ public class PreferencesManager implements LuceneMessageConstants {
 
                         if (message != null) {
                             try {
-								LabMesId id = new LabMesId();
-								id.setLabel(hlabel);
-								id.setMessage(message);
+                                LabMesId id = new LabMesId();
+                                id.setLabel(hlabel);
+                                id.setMessage(message);
 
-								LabMes lm = new LabMes(id);
-								hsession.saveOrUpdate(lm);
-								hsession.flush();
-							} catch (HibernateException e) {
-							}
+                                LabMes lm = new LabMes(id);
+                                hsession.saveOrUpdate(lm);
+                                hsession.flush();
+                            } catch (HibernateException e) {
+                            }
                         }
                     }
                 }

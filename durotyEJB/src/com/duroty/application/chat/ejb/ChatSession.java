@@ -14,16 +14,16 @@ package com.duroty.application.chat.ejb;
 public class ChatSession extends com.duroty.application.chat.ejb.ChatBean
     implements javax.ejb.SessionBean {
     /**
-          *
-          */
+         *
+         */
     private static final long serialVersionUID = 3344034747977818040L;
 
     /**
-     * DOCUMENT ME!
-     *
-     * @throws javax.ejb.EJBException DOCUMENT ME!
-     * @throws java.rmi.RemoteException DOCUMENT ME!
-     */
+    * DOCUMENT ME!
+    *
+    * @throws javax.ejb.EJBException DOCUMENT ME!
+    * @throws java.rmi.RemoteException DOCUMENT ME!
+    */
     public void ejbActivate()
         throws javax.ejb.EJBException, java.rmi.RemoteException {
         super.ejbActivate();

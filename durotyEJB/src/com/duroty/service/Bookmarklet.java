@@ -1,28 +1,56 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 /**
  *
  */
 package com.duroty.service;
 
+import com.duroty.application.bookmark.utils.BookmarkObj;
+
+import com.duroty.hibernate.Users;
+
+import com.duroty.jmx.mbean.ApplicationConstants;
+import com.duroty.jmx.mbean.Constants;
+
+import com.duroty.lucene.bookmark.BookmarkToLuceneBookmark;
+import com.duroty.lucene.bookmark.LuceneBookmark;
+import com.duroty.lucene.bookmark.indexer.BookmarkIndexer;
+import com.duroty.lucene.bookmark.indexer.BookmarkIndexerConstants;
+
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+
+import org.hibernate.Criteria;
+
+import org.hibernate.criterion.Restrictions;
+
 import java.io.File;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
-
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
-
-import com.duroty.application.bookmark.utils.BookmarkObj;
-import com.duroty.hibernate.Users;
-import com.duroty.jmx.mbean.ApplicationConstants;
-import com.duroty.jmx.mbean.Constants;
-import com.duroty.lucene.bookmark.BookmarkToLuceneBookmark;
-import com.duroty.lucene.bookmark.LuceneBookmark;
-import com.duroty.lucene.bookmark.indexer.BookmarkIndexer;
-import com.duroty.lucene.bookmark.indexer.BookmarkIndexerConstants;
 
 
 /**

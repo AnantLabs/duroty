@@ -15,6 +15,7 @@
  */
 package net.sf.json;
 
+
 /*
 Copyright (c) 2002 JSON.org
 
@@ -39,7 +40,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-
 /**
  * JSONNull is equivalent to the value that JavaScript calls null, whilst
  * Java's null is equivalent to the value that JavaScript calls undefined.
@@ -47,52 +47,53 @@ SOFTWARE.
  * @author JSON.org
  * @version 1
  */
-public final class JSONNull
-{
-   /** singleton instance */
-   private static JSONNull instance;
+public final class JSONNull {
+    /** singleton instance */
+    private static JSONNull instance;
 
-   static{
-      instance = new JSONNull();
-   }
+    static {
+        instance = new JSONNull();
+    }
 
-   /**
-    * Returns the singleton instance of JSONNull
-    */
-   public static JSONNull getInstance()
-   {
-      return instance;
-   }
+    /**
+     * Creates a new JSONNull object.
+     */
+    private JSONNull() {
+    }
 
-   private JSONNull()
-   {
+    /**
+     * Returns the singleton instance of JSONNull
+     */
+    public static JSONNull getInstance() {
+        return instance;
+    }
 
-   }
+    /**
+     * A Null object is equal to the null value and to itself.
+     *
+     * @param object An object to test for nullness.
+     * @return true if the object parameter is the JSONObject.NULL object or
+     *         null.
+     */
+    public boolean equals(Object object) {
+        return (object == null) || (object == this) || (object == instance);
+    }
 
-   /**
-    * A Null object is equal to the null value and to itself.
-    *
-    * @param object An object to test for nullness.
-    * @return true if the object parameter is the JSONObject.NULL object or
-    *         null.
-    */
-   public boolean equals( Object object )
-   {
-      return object == null || object == this || object == instance;
-   }
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public int hashCode() {
+        return 42 + "null".hashCode();
+    }
 
-   public int hashCode()
-   {
-      return 42 + "null".hashCode();
-   }
-
-   /**
-    * Get the "null" string value.
-    *
-    * @return The string "null".
-    */
-   public String toString()
-   {
-      return "null";
-   }
+    /**
+     * Get the "null" string value.
+     *
+     * @return The string "null".
+     */
+    public String toString() {
+        return "null";
+    }
 }

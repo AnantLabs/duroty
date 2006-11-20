@@ -1,18 +1,35 @@
 /*
- * AnalyzerISOLatin1.java
- *
- * Created on 13 de noviembre de 2004, 23:08
- */
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 package com.duroty.lucene.analysis;
 
-import java.io.Reader;
+import com.duroty.lucene.analysis.filter.ISOLatin1AccentFilter;
+import com.duroty.lucene.analysis.filter.RdLowerCaseTokenizer;
 
 import org.apache.lucene.analysis.StopFilter;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.snowball.SnowballFilter;
 
-import com.duroty.lucene.analysis.filter.ISOLatin1AccentFilter;
-import com.duroty.lucene.analysis.filter.RdLowerCaseTokenizer;
+import java.io.Reader;
 
 
 /**
@@ -50,23 +67,23 @@ public class AnalyzerISOLatin1 extends DefaultAnalyzer {
         TokenStream result;
 
         // Builds the chain...
-        /*result = new StandardTokenizer(reader);        
+        /*result = new StandardTokenizer(reader);
         result = new StandardFilter(result);
         result = new LowerCaseFilter(result);*/
         result = new RdLowerCaseTokenizer(reader);
-        
+
         if (stopTable != null) {
-        	result = new StopFilter(result, stopTable);
+            result = new StopFilter(result, stopTable);
         } else {
         }
-        
+
         result = new ISOLatin1AccentFilter(result);
-        
+
         result = new SnowballFilter(result, "English");
         result = new SnowballFilter(result, "Spanish");
+
         //result = new SnowballFilter(result, "French");
         //result = new SnowballFilter(result, "Italian");
-
-        return result;        
+        return result;
     }
 }

@@ -1,9 +1,35 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 /**
  *
  */
 package com.duroty.service;
 
-import java.io.File;
+import com.duroty.lucene.mail.LuceneMessageConstants;
+import com.duroty.lucene.mail.indexer.MailIndexer;
+import com.duroty.lucene.mail.indexer.MailIndexerConstants;
+
+import com.duroty.utils.log.DLog;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.document.Document;
@@ -13,10 +39,7 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
-import com.duroty.lucene.mail.LuceneMessageConstants;
-import com.duroty.lucene.mail.indexer.MailIndexer;
-import com.duroty.lucene.mail.indexer.MailIndexerConstants;
-import com.duroty.utils.log.DLog;
+import java.io.File;
 
 
 /**
@@ -87,7 +110,7 @@ public class MailOptimizerThread implements Runnable, MailIndexerConstants,
         } catch (Exception e2) {
             System.gc();
         } catch (OutOfMemoryError e) {
-        	System.gc();
+            System.gc();
         } catch (Throwable e2) {
             System.gc();
         } finally {
@@ -112,10 +135,10 @@ public class MailOptimizerThread implements Runnable, MailIndexerConstants,
      * @throws Exception DOCUMENT ME!
      */
     private void flush(File[] childs) throws Exception {
-    	if (childs == null || childs.length == 0) {
-    		return;
-    	}
-    	
+        if ((childs == null) || (childs.length == 0)) {
+            return;
+        }
+
         try {
             Thread.sleep(500);
         } catch (Exception e) {

@@ -1,7 +1,47 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 package com.duroty.task;
+
+import com.duroty.jmx.mbean.ApplicationConstants;
+import com.duroty.jmx.mbean.Constants;
+
+import com.duroty.lucene.bookmark.LuceneBookmarkContants;
+import com.duroty.lucene.bookmark.indexer.BookmarkIndexerConstants;
+import com.duroty.lucene.utils.FileUtilities;
+
+import com.duroty.service.BookmarkOptimizerThread;
+import com.duroty.service.Servible;
+
+import com.duroty.utils.log.DLog;
+
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+
+import org.jboss.varia.scheduler.Schedulable;
 
 import java.io.File;
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,19 +52,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.jboss.varia.scheduler.Schedulable;
-
-import com.duroty.jmx.mbean.ApplicationConstants;
-import com.duroty.jmx.mbean.Constants;
-import com.duroty.lucene.bookmark.LuceneBookmarkContants;
-import com.duroty.lucene.bookmark.indexer.BookmarkIndexerConstants;
-import com.duroty.lucene.utils.FileUtilities;
-import com.duroty.service.BookmarkOptimizerThread;
-import com.duroty.service.Servible;
-import com.duroty.utils.log.DLog;
-
 
 /**
  * DOCUMENT ME!
@@ -32,8 +59,8 @@ import com.duroty.utils.log.DLog;
  * @author $author$
  * @version $Revision$
  */
-public class BookmarkOptimizerTask implements Schedulable, LuceneBookmarkContants,
-    Servible, BookmarkIndexerConstants {
+public class BookmarkOptimizerTask implements Schedulable,
+    LuceneBookmarkContants, Servible, BookmarkIndexerConstants {
     /**
     * DOCUMENT ME!
     */
@@ -75,7 +102,7 @@ public class BookmarkOptimizerTask implements Schedulable, LuceneBookmarkContant
      * @throws NamingException
      * @throws IllegalAccessException
      * @throws InstantiationException
-     * @throws IOException 
+     * @throws IOException
      */
     public BookmarkOptimizerTask(int poolSize)
         throws ClassNotFoundException, NamingException, InstantiationException, 
@@ -89,7 +116,8 @@ public class BookmarkOptimizerTask implements Schedulable, LuceneBookmarkContant
         try {
             ctx = new InitialContext();
 
-            HashMap bookmark = (HashMap) ctx.lookup((String) options.get(Constants.BOOKMARK_CONFIG));
+            HashMap bookmark = (HashMap) ctx.lookup((String) options.get(
+                        Constants.BOOKMARK_CONFIG));
 
             this.defaultLucenePath = (String) bookmark.get(Constants.BOOKMARK_LUCENE_PATH);
 
@@ -98,12 +126,11 @@ public class BookmarkOptimizerTask implements Schedulable, LuceneBookmarkContant
             if (!this.tempDir.endsWith(File.separator)) {
                 this.tempDir = this.tempDir + File.separator;
             }
-            
-            FileUtilities.deleteMotLocks(new File(this.tempDir));
-            FileUtilities.deleteLuceneLocks(new File(this.tempDir));            
-            
-            //cal borrar tot el que tenim al java.io.tmpdir que presenta lucene o altres temes
 
+            FileUtilities.deleteMotLocks(new File(this.tempDir));
+            FileUtilities.deleteLuceneLocks(new File(this.tempDir));
+
+            //cal borrar tot el que tenim al java.io.tmpdir que presenta lucene o altres temes
             String clazzAnalyzerName = (String) bookmark.get(Constants.BOOKMARK_LUCENE_ANALYZER);
 
             if ((clazzAnalyzerName != null) &&
@@ -176,8 +203,8 @@ public class BookmarkOptimizerTask implements Schedulable, LuceneBookmarkContant
             String userPath = dirUser.getPath();
             String simplePath = userPath + File.separator + BOOKMARKS +
                 File.separator + SIMPLE_PATH_NAME;
-            String key = userPath + File.separator + BOOKMARKS + File.separator +
-                OPTIMIZED_PATH_NAME;
+            String key = userPath + File.separator + BOOKMARKS +
+                File.separator + OPTIMIZED_PATH_NAME;
 
             File lock = new File(this.tempDir +
                     userPath.substring(userPath.lastIndexOf(File.separator) +

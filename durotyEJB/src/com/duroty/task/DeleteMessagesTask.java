@@ -1,10 +1,55 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 /**
  *
  */
 package com.duroty.task;
 
+import com.duroty.hibernate.Message;
+import com.duroty.hibernate.Users;
+
+import com.duroty.jmx.mbean.ApplicationConstants;
+import com.duroty.jmx.mbean.Constants;
+
+import com.duroty.lucene.utils.FileUtilities;
+
+import com.duroty.service.Messageable;
+
+import com.duroty.utils.GeneralOperations;
+import com.duroty.utils.log.DLog;
+
+import org.hibernate.Criteria;
+import org.hibernate.ScrollableResults;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+import org.hibernate.criterion.Restrictions;
+
+import org.jboss.varia.scheduler.Schedulable;
+
 import java.io.File;
 import java.io.IOException;
+
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,30 +58,17 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import org.hibernate.Criteria;
-import org.hibernate.ScrollableResults;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
-import org.jboss.varia.scheduler.Schedulable;
-
-import com.duroty.hibernate.Message;
-import com.duroty.hibernate.Users;
-import com.duroty.jmx.mbean.ApplicationConstants;
-import com.duroty.jmx.mbean.Constants;
-import com.duroty.lucene.utils.FileUtilities;
-import com.duroty.service.Messageable;
-import com.duroty.utils.GeneralOperations;
-import com.duroty.utils.log.DLog;
-
 
 /**
  * @author durot
  *
  */
 public class DeleteMessagesTask implements Schedulable {
-	private static final String folderDelete = "DELETE";
-	
+    /**
+     * DOCUMENT ME!
+     */
+    private static final String folderDelete = "DELETE";
+
     /**
     * DOCUMENT ME!
     */
@@ -131,26 +163,25 @@ public class DeleteMessagesTask implements Schedulable {
             ScrollableResults scroll = crit.scroll();
 
             while (scroll.next()) {
-            	Message message = (Message) scroll.get(0);
-            	
-            	Users user = message.getUsers();
-				String mid = message.getMesName();
+                Message message = (Message) scroll.get(0);
 
-				hsession.delete(message);
-				hsession.flush();
-				
-				this.messageable.deleteMimeMessage(mid, user);
+                Users user = message.getUsers();
+                String mid = message.getMesName();
 
-				/*try {
-					
-				} catch (HibernateException e) {
-				} catch (OutOfMemoryError e) {
-					System.gc();
-				} catch (Exception e) {
-				} catch (Throwable e) {
-				}*/
-				
-				Thread.sleep(100);
+                hsession.delete(message);
+                hsession.flush();
+
+                this.messageable.deleteMimeMessage(mid, user);
+
+                /*try {
+
+                } catch (HibernateException e) {
+                } catch (OutOfMemoryError e) {
+                        System.gc();
+                } catch (Exception e) {
+                } catch (Throwable e) {
+                }*/
+                Thread.sleep(100);
             }
         } catch (Exception e) {
             System.gc();
