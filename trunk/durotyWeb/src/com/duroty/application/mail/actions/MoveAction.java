@@ -1,10 +1,39 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 /**
  *
  */
 package com.duroty.application.mail.actions;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.duroty.application.mail.interfaces.Mail;
+import com.duroty.application.mail.utils.MailDefaultAction;
+
+import com.duroty.constants.Constants;
+import com.duroty.constants.ExceptionCode;
+
+import com.duroty.utils.exceptions.ExceptionUtilities;
+import com.duroty.utils.log.DLog;
+import com.duroty.utils.log.DMessage;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -13,13 +42,8 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
-import com.duroty.application.mail.interfaces.Mail;
-import com.duroty.application.mail.utils.MailDefaultAction;
-import com.duroty.constants.Constants;
-import com.duroty.constants.ExceptionCode;
-import com.duroty.utils.exceptions.ExceptionUtilities;
-import com.duroty.utils.log.DLog;
-import com.duroty.utils.log.DMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -44,28 +68,30 @@ public class MoveAction extends MailDefaultAction {
         throws Exception {
         ActionMessages errors = new ActionMessages();
 
-        try {        	
-        	Mail mailInstance = getMailInstance(request);
-        	
-        	DynaActionForm _form = (DynaActionForm) form;
-        	
-        	String[] mids = (String[]) _form.get("mid");
-        	String folder = (String) _form.get("folder");
-        	
-        	int pos = folder.indexOf("folder:");
-        	
-        	if (pos > -1) {
-        		folder = folder.substring(pos + 7, folder.length());
-        		mailInstance.moveMessages(mids, folder);
-        	} else {
-        		pos = folder.indexOf("label:");
-        		if (pos > -1) {
-        			folder = folder.substring(folder.indexOf("*") + 1, folder.length());
-        			mailInstance.applyLabel(new Integer(folder), mids);
-        		} else {
-        			//borrar desde search
-        		}
-        	}        	
+        try {
+            Mail mailInstance = getMailInstance(request);
+
+            DynaActionForm _form = (DynaActionForm) form;
+
+            String[] mids = (String[]) _form.get("mid");
+            String folder = (String) _form.get("folder");
+
+            int pos = folder.indexOf("folder:");
+
+            if (pos > -1) {
+                folder = folder.substring(pos + 7, folder.length());
+                mailInstance.moveMessages(mids, folder);
+            } else {
+                pos = folder.indexOf("label:");
+
+                if (pos > -1) {
+                    folder = folder.substring(folder.indexOf("*") + 1,
+                            folder.length());
+                    mailInstance.applyLabel(new Integer(folder), mids);
+                } else {
+                    //borrar desde search
+                }
+            }
         } catch (Exception ex) {
             String errorMessage = ExceptionUtilities.parseMessage(ex);
 

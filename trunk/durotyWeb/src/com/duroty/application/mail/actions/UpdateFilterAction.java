@@ -1,7 +1,38 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 package com.duroty.application.mail.actions;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.duroty.application.mail.interfaces.Preferences;
+import com.duroty.application.mail.utils.FilterObj;
+import com.duroty.application.mail.utils.LabelObj;
+import com.duroty.application.mail.utils.MailDefaultAction;
+
+import com.duroty.constants.Constants;
+import com.duroty.constants.ExceptionCode;
+
+import com.duroty.utils.exceptions.ExceptionUtilities;
+import com.duroty.utils.log.DLog;
+import com.duroty.utils.log.DMessage;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -10,15 +41,8 @@ import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 import org.apache.struts.action.DynaActionForm;
 
-import com.duroty.application.mail.interfaces.Preferences;
-import com.duroty.application.mail.utils.FilterObj;
-import com.duroty.application.mail.utils.LabelObj;
-import com.duroty.application.mail.utils.MailDefaultAction;
-import com.duroty.constants.Constants;
-import com.duroty.constants.ExceptionCode;
-import com.duroty.utils.exceptions.ExceptionUtilities;
-import com.duroty.utils.log.DLog;
-import com.duroty.utils.log.DMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -58,51 +82,62 @@ public class UpdateFilterAction extends MailDefaultAction {
             Preferences preferencesInstance = getPreferencesInstance(request);
 
             DynaActionForm _form = (DynaActionForm) form;
-            
+
             FilterObj filter = new FilterObj();
-            
+
             Boolean archive = (Boolean) _form.get("archive");
+
             if (archive == null) {
-            	archive = new Boolean(false);
+                archive = new Boolean(false);
             }
+
             filter.setArchive(archive.booleanValue());
-            
+
             filter.setDoesntHaveWords((String) _form.get("doesntHaveWords"));
             filter.setForward((String) _form.get("forward"));
             filter.setFrom((String) _form.get("from"));
-            
+
             Boolean hasAttachment = (Boolean) _form.get("hasAttachment");
+
             if (hasAttachment == null) {
-            	hasAttachment = new Boolean(false);
+                hasAttachment = new Boolean(false);
             }
+
             filter.setHasAttachment(hasAttachment.booleanValue());
-            
+
             filter.setHasWords((String) _form.get("hasWords"));
             filter.setIdint((Integer) _form.get("idint"));
-            
+
             Boolean important = (Boolean) _form.get("important");
+
             if (important == null) {
-            	important = new Boolean(false);
+                important = new Boolean(false);
             }
-            filter.setImportant(important.booleanValue());            
-            
-            filter.setLabel(new LabelObj(((Integer) _form.get("label")).intValue(), null));
-            
+
+            filter.setImportant(important.booleanValue());
+
+            filter.setLabel(new LabelObj(
+                    ((Integer) _form.get("label")).intValue(), null));
+
             Boolean operator = (Boolean) _form.get("operator");
+
             if (operator == null) {
-            	operator = new Boolean(false);
+                operator = new Boolean(false);
             }
+
             filter.setOperator(operator.booleanValue());
-            
-            filter.setSubject((String) _form.get("subject"));            
+
+            filter.setSubject((String) _form.get("subject"));
             filter.setTo((String) _form.get("to"));
-            
+
             Boolean trash = (Boolean) _form.get("trash");
+
             if (trash == null) {
-            	trash = new Boolean(false);
+                trash = new Boolean(false);
             }
+
             filter.setTrash(trash.booleanValue());
-            
+
             preferencesInstance.updateFilter(filter);
         } catch (Exception ex) {
             String errorMessage = ExceptionUtilities.parseMessage(ex);

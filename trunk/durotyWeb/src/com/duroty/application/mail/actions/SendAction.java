@@ -1,12 +1,60 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 /**
  *
  */
 package com.duroty.application.mail.actions;
 
+import com.duroty.application.mail.interfaces.Mail;
+import com.duroty.application.mail.interfaces.Preferences;
+import com.duroty.application.mail.interfaces.Send;
+import com.duroty.application.mail.utils.MailDefaultAction;
+
+import com.duroty.constants.Constants;
+import com.duroty.constants.ExceptionCode;
+
+import com.duroty.utils.exceptions.ExceptionUtilities;
+import com.duroty.utils.log.DLog;
+import com.duroty.utils.log.DMessage;
+import com.duroty.utils.mail.MailPart;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUpload;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+
 import java.nio.charset.Charset;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -15,27 +63,6 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUpload;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
-import org.apache.struts.action.ActionMessages;
-
-import com.duroty.application.mail.interfaces.Mail;
-import com.duroty.application.mail.interfaces.Preferences;
-import com.duroty.application.mail.interfaces.Send;
-import com.duroty.application.mail.utils.MailDefaultAction;
-import com.duroty.constants.Constants;
-import com.duroty.constants.ExceptionCode;
-import com.duroty.utils.exceptions.ExceptionUtilities;
-import com.duroty.utils.log.DLog;
-import com.duroty.utils.log.DMessage;
-import com.duroty.utils.mail.MailPart;
 
 
 /**
@@ -59,10 +86,10 @@ public class SendAction extends MailDefaultAction {
         ActionMessages errors = new ActionMessages();
         InputStream inputStream = null;
         FileOutputStream outputStream = null;
-        
+
         try {
             boolean isMultipart = FileUpload.isMultipartContent(request);
-            
+
             Mail mailInstance = getMailInstance(request);
 
             if (isMultipart) {
@@ -79,42 +106,45 @@ public class SendAction extends MailDefaultAction {
                     FileItem item = (FileItem) iter.next();
 
                     if (item.isFormField()) {
-                    	if (item.getFieldName().equals("forwardAttachments")) {
-				    		String[] aux = item.getString().split(":");
-				    		MailPart part = mailInstance.getAttachment(aux[0], aux[1]);
-				    		inputStream = part.getPart().getInputStream();
-				    		
-				    		File dir = new File(System.getProperty("user.home") + File.separator + "tmp");
-					    	if (!dir.exists()) {
-					    		dir.mkdir();
-					    	}
-					    	
-					    	File out = new File(dir, part.getName());
-					    	outputStream = new FileOutputStream(out);
-					    	
-					    	IOUtils.copy(inputStream, outputStream);		
-					    	
-					    	IOUtils.closeQuietly(inputStream);
-					    	IOUtils.closeQuietly(outputStream);
-					    	
-					    	attachments.addElement(out); 
-				    	} else {
-				    		fields.put(item.getFieldName(), item.getString());
-				    	}
+                        if (item.getFieldName().equals("forwardAttachments")) {
+                            String[] aux = item.getString().split(":");
+                            MailPart part = mailInstance.getAttachment(aux[0],
+                                    aux[1]);
+                            inputStream = part.getPart().getInputStream();
+
+                            File dir = new File(System.getProperty("user.home") +
+                                    File.separator + "tmp");
+
+                            if (!dir.exists()) {
+                                dir.mkdir();
+                            }
+
+                            File out = new File(dir, part.getName());
+                            outputStream = new FileOutputStream(out);
+
+                            IOUtils.copy(inputStream, outputStream);
+
+                            IOUtils.closeQuietly(inputStream);
+                            IOUtils.closeQuietly(outputStream);
+
+                            attachments.addElement(out);
+                        } else {
+                            fields.put(item.getFieldName(), item.getString());
+                        }
                     } else {
-                    	if (!StringUtils.isBlank(item.getName())) {
-	                        File dir = new File(System.getProperty("user.home") +
-	                                File.separator + "tmp");
-	
-	                        if (!dir.exists()) {
-	                            dir.mkdir();
-	                        }
-	
-	                        File out = new File(dir, item.getName());
-	                        item.write(out);
-	
-	                        attachments.addElement(out);
-                    	}
+                        if (!StringUtils.isBlank(item.getName())) {
+                            File dir = new File(System.getProperty("user.home") +
+                                    File.separator + "tmp");
+
+                            if (!dir.exists()) {
+                                dir.mkdir();
+                            }
+
+                            File out = new File(dir, item.getName());
+                            item.write(out);
+
+                            attachments.addElement(out);
+                        }
                     }
                 }
 
@@ -131,11 +161,11 @@ public class SendAction extends MailDefaultAction {
                 Send sendInstance = getSendInstance(request);
 
                 String mid = (String) fields.get("mid");
-                
+
                 if (StringUtils.isBlank(mid)) {
-                	request.setAttribute("action", "compose");
+                    request.setAttribute("action", "compose");
                 } else {
-                	request.setAttribute("action", "reply");
+                    request.setAttribute("action", "reply");
                 }
 
                 Boolean isHtml = null;
@@ -175,8 +205,8 @@ public class SendAction extends MailDefaultAction {
             request.setAttribute("exception", errorMessage);
             doTrace(request, DLog.ERROR, getClass(), errorMessage);
         } finally {
-        	IOUtils.closeQuietly(inputStream);
-	    	IOUtils.closeQuietly(outputStream);
+            IOUtils.closeQuietly(inputStream);
+            IOUtils.closeQuietly(outputStream);
         }
 
         if (errors.isEmpty()) {

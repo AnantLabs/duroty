@@ -1,16 +1,29 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 /**
  *
  */
 package com.duroty.application.mail.actions;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
-import org.apache.struts.action.ActionMessages;
 
 import com.duroty.application.mail.interfaces.Preferences;
 import com.duroty.application.mail.interfaces.Search;
@@ -18,11 +31,22 @@ import com.duroty.application.mail.utils.FilterObj;
 import com.duroty.application.mail.utils.MailDefaultAction;
 import com.duroty.application.mail.utils.PreferencesObj;
 import com.duroty.application.mail.utils.SearchObj;
+
 import com.duroty.constants.Constants;
 import com.duroty.constants.ExceptionCode;
+
 import com.duroty.utils.exceptions.ExceptionUtilities;
 import com.duroty.utils.log.DLog;
 import com.duroty.utils.log.DMessage;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -99,30 +123,31 @@ public class TestFilterAction extends MailDefaultAction {
 
             if (page > 0) {
                 page = page - 1;
-            }            
-            
+            }
+
             FilterObj filterObj = new FilterObj();
-            
+
             filterObj.setDoesntHaveWords(request.getParameter("doesntHaveWords"));
             filterObj.setFrom(request.getParameter("from"));
-            
-            Boolean hasAttachment = Boolean.parseBoolean(request.getParameter("hasAttachment"));
+
+            Boolean hasAttachment = Boolean.parseBoolean(request.getParameter(
+                        "hasAttachment"));
             filterObj.setHasAttachment(hasAttachment.booleanValue());
-            
+
             filterObj.setHasWords(request.getParameter("hasWords"));
-            
-            
+
             filterObj.setSubject(request.getParameter("subject"));
             filterObj.setTo(request.getParameter("to"));
-            
-            Boolean operator = Boolean.parseBoolean(request.getParameter("operator"));
+
+            Boolean operator = Boolean.parseBoolean(request.getParameter(
+                        "operator"));
             filterObj.setOperator(operator);
-            
+
             SearchObj searchObj = searchInstance.testFilter(filterObj, page,
                     messagesByPage.intValue(), order.intValue(), extra);
 
             if (searchObj == null) {
-            	request.setAttribute("action", "testFilter");
+                request.setAttribute("action", "testFilter");
                 errors.add("general",
                     new ActionMessage(ExceptionCode.ERROR_MESSAGES_PREFIX +
                         "general", "Data not found"));
@@ -130,7 +155,7 @@ public class TestFilterAction extends MailDefaultAction {
                     ExceptionCode.ERROR_MESSAGES_PREFIX +
                     "general.datanotfound");
             } else {
-            	request.setAttribute("action", "testFilter");
+                request.setAttribute("action", "testFilter");
                 request.setAttribute(MESSAGES, searchObj.getMessages());
                 request.setAttribute(HITS, new Integer(searchObj.getHits()));
                 request.setAttribute(PAGINATION,

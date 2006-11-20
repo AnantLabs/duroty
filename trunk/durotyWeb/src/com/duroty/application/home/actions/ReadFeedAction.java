@@ -1,12 +1,40 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 /**
  *
  */
 package com.duroty.application.home.actions;
 
-import java.net.URL;
+import com.duroty.application.home.utils.HomeDefaultAction;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.duroty.constants.Constants;
+import com.duroty.constants.ExceptionCode;
+
+import com.duroty.utils.exceptions.ExceptionUtilities;
+import com.duroty.utils.log.DLog;
+import com.duroty.utils.log.DMessage;
+
+import com.myjavatools.xml.Rss;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -14,13 +42,10 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
-import com.duroty.application.home.utils.HomeDefaultAction;
-import com.duroty.constants.Constants;
-import com.duroty.constants.ExceptionCode;
-import com.duroty.utils.exceptions.ExceptionUtilities;
-import com.duroty.utils.log.DLog;
-import com.duroty.utils.log.DMessage;
-import com.myjavatools.xml.Rss;
+import java.net.URL;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -51,37 +76,43 @@ public class ReadFeedAction extends HomeDefaultAction {
         ActionMessages errors = new ActionMessages();
 
         String url = request.getParameter("url");
-        
+
         int maxRssItems = 10;
-        
+
         try {
-        	maxRssItems = Integer.valueOf(request.getParameter("maxRssItems"));        	
-        } catch (Exception ex) {        	
+            maxRssItems = Integer.valueOf(request.getParameter("maxRssItems"));
+        } catch (Exception ex) {
         }
 
         try {
             Rss rss = new Rss(new URL(url));
-            
+
             StringBuffer buffer = new StringBuffer();
 
             if ((rss != null) && (rss.getItemCount() > 0)) {
-            	buffer.append(rss.getTitle() + "\n");
-            	buffer.append(request.getParameter("maxRssItems"));
-            	int j = 1;
-            	for (java.util.Iterator i = rss.getItems().iterator(); i.hasNext();) {
-            		if (j > maxRssItems) {
-            			break;
-            		}
-            		buffer.append("\n\n");
-            		Rss.Item item = (Rss.Item) i.next();
-            		buffer.append(item.getTitle() + "##0-0-0 0:0:0##" + item.getDescription() + "##" + item.getLink());
-            		
-            		j++;
-            	}
-            	
+                buffer.append(rss.getTitle() + "\n");
+                buffer.append(request.getParameter("maxRssItems"));
+
+                int j = 1;
+
+                for (java.util.Iterator i = rss.getItems().iterator();
+                        i.hasNext();) {
+                    if (j > maxRssItems) {
+                        break;
+                    }
+
+                    buffer.append("\n\n");
+
+                    Rss.Item item = (Rss.Item) i.next();
+                    buffer.append(item.getTitle() + "##0-0-0 0:0:0##" +
+                        item.getDescription() + "##" + item.getLink());
+
+                    j++;
+                }
+
                 request.setAttribute(FEED, buffer.toString());
             } else {
-            	request.setAttribute(FEED, "No Data");
+                request.setAttribute(FEED, "No Data");
             }
         } catch (Exception ex) {
             String errorMessage = ExceptionUtilities.parseMessage(ex);

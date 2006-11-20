@@ -1,3 +1,25 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 /**
  *
  */
@@ -20,6 +42,7 @@ import com.duroty.application.mail.interfaces.SendUtil;
 import com.duroty.config.Configuration;
 
 import com.duroty.controller.actions.DefaultAction;
+
 import com.duroty.cookie.CookieManager;
 
 import com.duroty.exceptions.LanguageControlException;
@@ -190,8 +213,8 @@ public abstract class MailDefaultAction extends DefaultAction {
      *
      * @return DOCUMENT ME!
      */
-    protected String getPagination(HttpServletRequest request, String action, int hits,
-        int messagesByPage) {
+    protected String getPagination(HttpServletRequest request, String action,
+        int hits, int messagesByPage) {
         String page = request.getParameter("page");
         String order = request.getParameter("order");
         String extra = request.getParameter("extra");
@@ -221,8 +244,8 @@ public abstract class MailDefaultAction extends DefaultAction {
             extra = "0";
         }
 
-        Pagination pagination = new Pagination("Mail", pag, hits, messagesByPage, 10,
-                action, page, order, extra);
+        Pagination pagination = new Pagination("Mail", pag, hits,
+                messagesByPage, 10, action, page, order, extra);
 
         return pagination.getText();
     }
@@ -242,17 +265,17 @@ public abstract class MailDefaultAction extends DefaultAction {
         Preferences preferences = null;
         String language = null;
         String name = Configuration.properties.getProperty(Configuration.COOKIE_LANGUAGE);
-    	int maxAge = Integer.parseInt(Configuration.properties.getProperty(Configuration.COOKIE_MAX_AGE));
-        
+        int maxAge = Integer.parseInt(Configuration.properties.getProperty(
+                    Configuration.COOKIE_MAX_AGE));
+
         Cookie cookie = CookieManager.getCookie(name, request);
-    	
-    	if (cookie != null) {
-    		language = cookie.getValue();
-    		cookie.setMaxAge(maxAge);
-    		CookieManager.setCookie("/", cookie, response);
-    	} else {
-    		
-    	}
+
+        if (cookie != null) {
+            language = cookie.getValue();
+            cookie.setMaxAge(maxAge);
+            CookieManager.setCookie("/", cookie, response);
+        } else {
+        }
 
         try {
             preferences = getPreferencesInstance(request);
@@ -263,21 +286,23 @@ public abstract class MailDefaultAction extends DefaultAction {
         } catch (MailException e) {
         }
 
-        Boolean b = new Boolean(Configuration.properties.getProperty(Configuration.AUTO_LOCALE));
+        Boolean b = new Boolean(Configuration.properties.getProperty(
+                    Configuration.AUTO_LOCALE));
         boolean autoLocale = b.booleanValue();
 
         if (language == null) {
             if (!autoLocale) {
-                throw new LanguageControlException("Choose Language. The language is empty", null);
+                throw new LanguageControlException("Choose Language. The language is empty",
+                    null);
             } else {
-            	language = Configuration.properties.getProperty(Configuration.DEFAULT_LANGUAGE);
+                language = Configuration.properties.getProperty(Configuration.DEFAULT_LANGUAGE);
             }
         }
-        
+
         cookie = new Cookie(name, language);
-		cookie.setMaxAge(maxAge);
-		CookieManager.setCookie("/", cookie, response);
-        
+        cookie.setMaxAge(maxAge);
+        CookieManager.setCookie("/", cookie, response);
+
         return new Locale(language);
     }
 }

@@ -1,16 +1,29 @@
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 /**
  *
  */
 package com.duroty.application.mail.actions;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
-import org.apache.struts.action.ActionMessages;
 
 import com.duroty.application.mail.interfaces.Preferences;
 import com.duroty.application.mail.interfaces.Search;
@@ -19,11 +32,22 @@ import com.duroty.application.mail.utils.LabelObj;
 import com.duroty.application.mail.utils.MailDefaultAction;
 import com.duroty.application.mail.utils.PreferencesObj;
 import com.duroty.application.mail.utils.SearchObj;
+
 import com.duroty.constants.Constants;
 import com.duroty.constants.ExceptionCode;
+
 import com.duroty.utils.exceptions.ExceptionUtilities;
 import com.duroty.utils.log.DLog;
 import com.duroty.utils.log.DMessage;
+
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -101,51 +125,57 @@ public class AdvancedSearchAction extends MailDefaultAction {
             if (page > 0) {
                 page = page - 1;
             }
-            
+
             request.setAttribute("action", "advancedSearch");
-            
+
             AdvancedObj advancedObj = new AdvancedObj();
-            
+
             advancedObj.setBox(request.getParameter("box"));
             advancedObj.setContentType(request.getParameter("filetype"));
-            
-            advancedObj.setDoesntHaveWords(request.getParameter("doesntHaveWords"));            
-            
-            Boolean doesntHaveWordsInAttachment = Boolean.parseBoolean(request.getParameter("doesntHaveWordsInAttachment"));
+
+            advancedObj.setDoesntHaveWords(request.getParameter(
+                    "doesntHaveWords"));
+
+            Boolean doesntHaveWordsInAttachment = Boolean.parseBoolean(request.getParameter(
+                        "doesntHaveWordsInAttachment"));
             advancedObj.setDoesntHaveWordsInAttachment(doesntHaveWordsInAttachment.booleanValue());
-            
-            Boolean doesntHaveWordsInBody = Boolean.parseBoolean(request.getParameter("doesntHaveWordsInBody"));
+
+            Boolean doesntHaveWordsInBody = Boolean.parseBoolean(request.getParameter(
+                        "doesntHaveWordsInBody"));
             advancedObj.setDoesntHaveWordsInBody(doesntHaveWordsInBody.booleanValue());
-            
+
             advancedObj.setEndDate(request.getParameter("endDate"));
             advancedObj.setFixDate(request.getParameter("fixDate"));
             advancedObj.setFrom(request.getParameter("from"));
-            
-            Boolean hasAttachment = Boolean.parseBoolean(request.getParameter("hasAttachment"));
+
+            Boolean hasAttachment = Boolean.parseBoolean(request.getParameter(
+                        "hasAttachment"));
             advancedObj.setHasAttachment(hasAttachment.booleanValue());
-            
+
             advancedObj.setHasWords(request.getParameter("hasWords"));
-            
-            Boolean hasWordsInAttachment = Boolean.parseBoolean(request.getParameter("hasWordsInAttachment"));
+
+            Boolean hasWordsInAttachment = Boolean.parseBoolean(request.getParameter(
+                        "hasWordsInAttachment"));
             advancedObj.setHasWordsInAttachment(hasWordsInAttachment.booleanValue());
-            
-            Boolean hasWordsInBody = Boolean.parseBoolean(request.getParameter("hasWordsInBody"));
+
+            Boolean hasWordsInBody = Boolean.parseBoolean(request.getParameter(
+                        "hasWordsInBody"));
             advancedObj.setHasWordsInBody(hasWordsInBody.booleanValue());
-            
+
             int label = 0;
+
             try {
-            	label = Integer.parseInt(request.getParameter("label"));
-            	advancedObj.setLabel(new LabelObj(label, null));
+                label = Integer.parseInt(request.getParameter("label"));
+                advancedObj.setLabel(new LabelObj(label, null));
             } catch (Exception ex) {
-            	
             }
-            
+
             advancedObj.setStartDate(request.getParameter("startDate"));
             advancedObj.setSubject(request.getParameter("subject"));
             advancedObj.setTo(request.getParameter("to"));
-            
+
             advancedObj.setOperator(true);
-            
+
             SearchObj searchObj = searchInstance.advanced(advancedObj, page,
                     messagesByPage.intValue(), order.intValue(), extra);
 
@@ -156,12 +186,12 @@ public class AdvancedSearchAction extends MailDefaultAction {
                 request.setAttribute("exception",
                     ExceptionCode.ERROR_MESSAGES_PREFIX +
                     "general.datanotfound");
-            } else {            	
+            } else {
                 request.setAttribute(MESSAGES, searchObj.getMessages());
                 request.setAttribute(HITS, new Integer(searchObj.getHits()));
                 request.setAttribute(PAGINATION,
-                    getPagination(request, ADVANCED_SEARCH, searchObj.getHits(),
-                        messagesByPage.intValue()));
+                    getPagination(request, ADVANCED_SEARCH,
+                        searchObj.getHits(), messagesByPage.intValue()));
             }
         } catch (Exception ex) {
             String errorMessage = ExceptionUtilities.parseMessage(ex);
