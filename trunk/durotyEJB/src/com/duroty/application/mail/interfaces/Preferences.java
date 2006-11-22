@@ -3,7 +3,6 @@
  */
 package com.duroty.application.mail.interfaces;
 
-
 /**
  * Remote interface for Preferences.
  * @xdoclet-generated at ${TODAY}
@@ -11,206 +10,163 @@ package com.duroty.application.mail.interfaces;
  * @author XDoclet
  * @version ${version}
  */
-public interface Preferences extends javax.ejb.EJBObject {
-    /**
-     * Get user mail preferences
-     * @throws EJBException Thrown if method fails due to system-level error.    */
-    public com.duroty.application.mail.utils.PreferencesObj getPreferences()
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+public interface Preferences
+   extends javax.ejb.EJBObject
+{
+   /**
+    * Get user mail preferences
+    * @throws EJBException Thrown if method fails due to system-level error.    */
+   public com.duroty.application.mail.utils.PreferencesObj getPreferences(  )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Update user mail preferences
-     * @throws EJBException Thrown if method fails due to system-level error.    */
-    public void setPreferences(
-        com.duroty.application.mail.utils.PreferencesObj preferencesObj)
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Update user mail preferences
+    * @throws EJBException Thrown if method fails due to system-level error.    */
+   public void setPreferences( com.duroty.application.mail.utils.PreferencesObj preferencesObj )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Get user mail identities
-     * @throws EJBException Thrown if method fails due to system-level error.    */
-    public java.util.Vector getIdentities()
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Get user mail identities
+    * @throws EJBException Thrown if method fails due to system-level error.    */
+   public java.util.Vector getIdentities(  )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Suggest contacts for token
-     * @throws EJBException Thrown if method fails due to system-level error.    */
-    public java.util.Vector suggestContacts(java.lang.String token)
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Suggest contacts for token
+    * @throws EJBException Thrown if method fails due to system-level error.    */
+   public java.util.Vector suggestContacts( java.lang.String token )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Search contacts for token
-     * @throws EJBException Thrown if method fails due to system-level error.    */
-    public com.duroty.application.mail.utils.SearchContactsObj searchContacts(
-        java.lang.String token, int page, int byPage, int order,
-        java.lang.String extra)
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Search contacts for token
+    * @throws EJBException Thrown if method fails due to system-level error.    */
+   public com.duroty.application.mail.utils.SearchContactsObj searchContacts( java.lang.String token,int page,int byPage,int order,java.lang.String extra )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Search groups for token
-     * @throws EJBException Thrown if method fails due to system-level error.    */
-    public com.duroty.application.mail.utils.SearchGroupsObj searchGroups(
-        java.lang.String token, int page, int byPage, int order,
-        java.lang.String extra)
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Search groups for token
+    * @throws EJBException Thrown if method fails due to system-level error.    */
+   public com.duroty.application.mail.utils.SearchGroupsObj searchGroups( java.lang.String token,int page,int byPage,int order,java.lang.String extra )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Get all contacts
-     * @throws EJBException Thrown if method fails due to system-level error.    */
-    public com.duroty.application.mail.utils.SearchContactsObj getContacts(
-        int page, int byPage, int order, java.lang.String extra)
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Get all contacts
+    * @throws EJBException Thrown if method fails due to system-level error.    */
+   public com.duroty.application.mail.utils.SearchContactsObj getContacts( int page,int byPage,int order,java.lang.String extra )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Get all groups
-     * @throws EJBException Thrown if method fails due to system-level error.    */
-    public com.duroty.application.mail.utils.SearchGroupsObj getGroups(
-        int page, int byPage, int order, java.lang.String extra)
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Get all groups
+    * @throws EJBException Thrown if method fails due to system-level error.    */
+   public com.duroty.application.mail.utils.SearchGroupsObj getGroups( int page,int byPage,int order,java.lang.String extra )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Delete contacts by idint
-     * @throws EJBException Thrown if method fails due to system-level error.    */
-    public void deleteContacts(java.lang.Integer[] idints)
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Delete contacts by idint
+    * @throws EJBException Thrown if method fails due to system-level error.    */
+   public void deleteContacts( java.lang.Integer[] idints )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Delete group by idint
-     * @throws EJBException Thrown if method fails due to system-level error.    */
-    public void deleteGroups(java.lang.Integer[] idints)
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Delete group by idint
+    * @throws EJBException Thrown if method fails due to system-level error.    */
+   public void deleteGroups( java.lang.Integer[] idints )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Update contact
-     * @throws EJBException Thrown if method fails due to system-level error.    */
-    public void updateContact(
-        com.duroty.application.mail.utils.ContactObj contactObj)
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Create label and assign messages filter to it
+    * @throws EJBException Thrown if method fails due to system-level error.    */
+   public void createLabel( com.duroty.application.mail.utils.LabelObj label )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Create label and assign messages filter to it
-     * @throws EJBException Thrown if method fails due to system-level error.    */
-    public void createLabel(com.duroty.application.mail.utils.LabelObj label)
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Update label and assign messages filter to it
+    * @throws EJBException Thrown if method fails due to system-level error.    */
+   public void updateLabel( com.duroty.application.mail.utils.LabelObj label )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Update label and assign messages filter to it
-     * @throws EJBException Thrown if method fails due to system-level error.    */
-    public void updateLabel(com.duroty.application.mail.utils.LabelObj label)
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Delete label
+    * @throws EJBException Thrown if method fails due to system-level error.    */
+   public void deleteLabel( java.lang.Integer idint )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Delete label
-     * @throws EJBException Thrown if method fails due to system-level error.    */
-    public void deleteLabel(java.lang.Integer idint)
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Create filter for label and assign messages filter to it
+    * @throws EJBException Thrown if method fails due to system-level error.    */
+   public void createFilter( com.duroty.application.mail.utils.FilterObj filter )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Create filter for label and assign messages filter to it
-     * @throws EJBException Thrown if method fails due to system-level error.    */
-    public void createFilter(com.duroty.application.mail.utils.FilterObj filter)
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Create filter for label and assign messages filter to it
+    * @throws EJBException Thrown if method fails due to system-level error.    */
+   public void updateFilter( com.duroty.application.mail.utils.FilterObj filter )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Create filter for label and assign messages filter to it
-     * @throws EJBException Thrown if method fails due to system-level error.    */
-    public void updateFilter(com.duroty.application.mail.utils.FilterObj filter)
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Delete filter
+    * @throws EJBException Thrown if method fails due to system-level error.    */
+   public void deleteFilter( java.lang.Integer idint )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Delete filter
-     * @throws EJBException Thrown if method fails due to system-level error.    */
-    public void deleteFilter(java.lang.Integer idint)
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Get user labels
+    * @throws MailException Thrown if method fails due to system-level error.    */
+   public java.util.Vector getLabels(  )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Get user labels
-     * @throws MailException Thrown if method fails due to system-level error.    */
-    public java.util.Vector getLabels()
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Get user filters
+    * @throws MailException Thrown if method fails due to system-level error.    */
+   public java.util.Vector getFilters(  )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Get user filters
-     * @throws MailException Thrown if method fails due to system-level error.    */
-    public java.util.Vector getFilters()
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Get user filter by idint
+    * @throws MailException Thrown if method fails due to system-level error.    */
+   public com.duroty.application.mail.utils.FilterObj getFilter( java.lang.Integer idint )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Get user filter by idint
-     * @throws MailException Thrown if method fails due to system-level error.    */
-    public com.duroty.application.mail.utils.FilterObj getFilter(
-        java.lang.Integer idint)
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Add Contact
+    * @throws MailException Thrown if method fails due to system-level error.    */
+   public void addContact( java.lang.String action,com.duroty.application.mail.utils.ContactObj contactObj )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Add Contact
-     * @throws MailException Thrown if method fails due to system-level error.    */
-    public void addContact(java.lang.String action,
-        com.duroty.application.mail.utils.ContactObj contactObj)
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Add Group
+    * @throws MailException Thrown if method fails due to system-level error.    */
+   public void addGroup( java.lang.String action,java.lang.String name,java.lang.String emails )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Add Group
-     * @throws MailException Thrown if method fails due to system-level error.    */
-    public void addGroup(java.lang.String action, java.lang.String name,
-        java.lang.String emails)
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Create identity
+    * @throws MailException Thrown if method fails due to system-level error.    */
+   public java.lang.String createIdentity( com.duroty.application.mail.utils.IdentityObj identityObj )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Create identity
-     * @throws MailException Thrown if method fails due to system-level error.    */
-    public java.lang.String createIdentity(
-        com.duroty.application.mail.utils.IdentityObj identityObj)
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Set identity to default
+    * @throws MailException Thrown if method fails due to system-level error.    */
+   public void setIdentityDefault( int idint )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Set identity to default
-     * @throws MailException Thrown if method fails due to system-level error.    */
-    public void setIdentityDefault(int idint)
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Get default identity
+    * @throws MailException Thrown if method fails due to system-level error.    */
+   public com.duroty.application.mail.utils.IdentityObj getIdentityDefault(  )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Get default identity
-     * @throws MailException Thrown if method fails due to system-level error.    */
-    public com.duroty.application.mail.utils.IdentityObj getIdentityDefault()
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Validate identity
+    * @throws MailException Thrown if method fails due to system-level error.    */
+   public void validateIdentity( java.lang.String repositoryName,java.lang.String code )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Validate identity
-     * @throws MailException Thrown if method fails due to system-level error.    */
-    public void validateIdentity(java.lang.String repositoryName,
-        java.lang.String code)
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
+   /**
+    * Delete identity
+    * @throws MailException Thrown if method fails due to system-level error.    */
+   public void deleteIdentity( int idint )
+      throws com.duroty.application.mail.exceptions.MailException, java.rmi.RemoteException;
 
-    /**
-     * Delete identity
-     * @throws MailException Thrown if method fails due to system-level error.    */
-    public void deleteIdentity(int idint)
-        throws com.duroty.application.mail.exceptions.MailException, 
-            java.rmi.RemoteException;
 }

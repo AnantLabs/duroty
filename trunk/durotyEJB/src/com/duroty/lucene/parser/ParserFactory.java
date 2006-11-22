@@ -18,86 +18,60 @@
 * c/Mallorca 295 principal B 08037 Barcelona Spain
 * Phone: +34 625397324
 */
-
-
 package com.duroty.lucene.parser;
+
+import com.duroty.jmx.mbean.ApplicationConstants;
+import com.duroty.jmx.mbean.Constants;
 
 import com.duroty.lucene.parser.exception.ParserException;
 
 import org.apache.commons.io.IOUtils;
 
-import org.apache.log4j.BasicConfigurator;
-
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
 
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.Properties;
-import java.util.ResourceBundle;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.mail.internet.MimeUtility;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+
 
 /**
- * DOCUMENT ME!
- *
- * @author jordi marques
- */
+ * @author Jordi Marquès
+ * @version 1.0
+*/
 public class ParserFactory {
-    /**
-    * DOCUMENT ME!
-    */
-
-    //private static final Log log = LogFactory.getLog(ParserFactory.class);
-
     /**
      * DOCUMENT ME!
      */
-    private Hashtable mimeTypeSupported = new Hashtable();
+    private HashMap parseFactoryConfig = new HashMap();
 
     /**
      * Creates a new instance of ParserFactory
      */
     public ParserFactory() {
-        BasicConfigurator.configure();
+        Map options = ApplicationConstants.options;
 
-        ResourceBundle bundle = ResourceBundle.getBundle(
-                "com.duroty.lucene.parser.properties.MimeType");
+        try {
+            Context ctx = new InitialContext();
 
-        Enumeration keys = bundle.getKeys();
-
-        while (keys.hasMoreElements()) {
-            String mimetype = (String) keys.nextElement();
-            mimeTypeSupported.put(mimetype, bundle.getString(mimetype));
+            this.parseFactoryConfig = (HashMap) ctx.lookup((String) options.get(
+                        Constants.PARSE_FACTORY_CONFIG));
+        } catch (Exception e) {
+            this.parseFactoryConfig = new HashMap();
         }
     }
 
     /**
      * Creates a new ParserFactory object.
      *
-     * @param propsFileName DOCUMENT ME!
+     * @param properties DOCUMENT ME!
      */
-    public ParserFactory(String propsFileName) {
-        //BasicConfigurator.configure();
-        Properties props = new Properties();
-
-        try {
-            props.load(new FileInputStream(propsFileName));
-
-            Enumeration keys = props.keys();
-
-            while (keys.hasMoreElements()) {
-                String mimetype = (String) keys.nextElement();
-                String value = props.getProperty(mimetype);
-                mimeTypeSupported.put(mimetype, value);
-            }
-        } catch (FileNotFoundException e) {
-        } catch (IOException e) {
-        }
+    public ParserFactory(String properties) {
+        this();
     }
 
     /**
@@ -115,7 +89,7 @@ public class ParserFactory {
 
         InputStream input = null;
 
-        String className = (String) mimeTypeSupported.get(mimetype);
+        String className = (String) parseFactoryConfig.get(mimetype);
 
         //log.info("PARSE ATTACHMENT: " + className + " >> " + mimetype);
         if (className == null) {
@@ -157,7 +131,7 @@ public class ParserFactory {
             return null;
         }
 
-        String className = (String) mimeTypeSupported.get(mimetype);
+        String className = (String) parseFactoryConfig.get(mimetype);
 
         //log.info("PARSE ATTACHMENT: " + className + " >> " + mimetype);
         if (className == null) {
@@ -199,7 +173,7 @@ public class ParserFactory {
 
         InputStream input = null;
 
-        String className = (String) mimeTypeSupported.get(mimetype);
+        String className = (String) parseFactoryConfig.get(mimetype);
 
         //log.info("PARSE ATTACHMENT: " + className + " >> " + mimetype);
         if (className == null) {

@@ -15,7 +15,7 @@ public interface HomeHome extends javax.ejb.EJBHome {
     /**
      * DOCUMENT ME!
      */
-    public static final String COMP_NAME = "java:comp/env/ejb/Home";
+    public static final String COMP_NAME = "duroty/ejb/Home";
 
     /**
      * DOCUMENT ME!

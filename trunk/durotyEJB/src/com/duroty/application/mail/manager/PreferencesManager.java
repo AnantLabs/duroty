@@ -73,6 +73,7 @@ import org.hibernate.criterion.Restrictions;
 
 import java.io.File;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
@@ -806,33 +807,6 @@ public class PreferencesManager implements LuceneMessageConstants {
      * DOCUMENT ME!
      *
      * @param hsession DOCUMENT ME!
-     * @param repositoryName DOCUMENT ME!
-     * @param contactObj DOCUMENT ME!
-     *
-     * @throws Exception DOCUMENT ME!
-     */
-    public void updateContact(Session hsession, String repositoryName,
-        ContactObj contactObj) throws Exception {
-        try {
-            Contact contact = (Contact) hsession.load(Contact.class,
-                    contactObj.getIdint());
-
-            contact.setConDescription(contactObj.getDescription());
-            contact.setConEmail(contactObj.getEmail());
-            contact.setConName(contactObj.getName());
-
-            hsession.saveOrUpdate(contact);
-
-            hsession.flush();
-        } finally {
-            GeneralOperations.closeHibernateSession(hsession);
-        }
-    }
-
-    /**
-     * DOCUMENT ME!
-     *
-     * @param hsession DOCUMENT ME!
      * @param token DOCUMENT ME!
      *
      * @return DOCUMENT ME!
@@ -1367,13 +1341,13 @@ public class PreferencesManager implements LuceneMessageConstants {
         try {
             Users user = getUser(hsession, repositoryName);
 
-            if ((action != null) && action.equals("update")) {
+            //if ((action != null) && action.equals("update")) {
                 Criteria crit = hsession.createCriteria(Contact.class);
                 crit.add(Restrictions.eq("users", user));
                 crit.add(Restrictions.eq("conEmail", contactObj.getEmail()));
 
                 contact = (Contact) crit.uniqueResult();
-            }
+            //}
 
             if (contact == null) {
                 contact = new Contact();
@@ -1382,6 +1356,9 @@ public class PreferencesManager implements LuceneMessageConstants {
             contact.setConDescription(contactObj.getDescription());
             contact.setConEmail(contactObj.getEmail());
             contact.setConName(contactObj.getName());
+            contact.setConReceivedDate(new Date());
+            contact.setConSentDate(new Date());
+            contact.setConCount(contact.getConCount() + 1);
             contact.setUsers(user);
 
             hsession.saveOrUpdate(contact);

@@ -15,7 +15,7 @@ public interface SendHome extends javax.ejb.EJBHome {
     /**
      * DOCUMENT ME!
      */
-    public static final String COMP_NAME = "java:comp/env/ejb/Send";
+    public static final String COMP_NAME = "duroty/ejb/Send";
 
     /**
      * DOCUMENT ME!

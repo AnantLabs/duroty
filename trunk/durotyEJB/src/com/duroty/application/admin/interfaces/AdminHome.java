@@ -15,7 +15,7 @@ public interface AdminHome extends javax.ejb.EJBHome {
     /**
      * DOCUMENT ME!
      */
-    public static final String COMP_NAME = "java:comp/env/ejb/Admin";
+    public static final String COMP_NAME = "duroty/ejb/Admin";
 
     /**
      * DOCUMENT ME!

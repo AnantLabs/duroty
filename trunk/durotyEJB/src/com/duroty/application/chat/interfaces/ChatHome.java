@@ -15,7 +15,7 @@ public interface ChatHome extends javax.ejb.EJBHome {
     /**
      * DOCUMENT ME!
      */
-    public static final String COMP_NAME = "java:comp/env/ejb/Chat";
+    public static final String COMP_NAME = "duroty/ejb/Chat";
 
     /**
      * DOCUMENT ME!

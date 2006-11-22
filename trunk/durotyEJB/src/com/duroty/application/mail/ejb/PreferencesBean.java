@@ -504,37 +504,6 @@ public class PreferencesBean implements SessionBean {
     }
 
     /**
-     * Update contact
-     *
-     * @ejb.interface-method view-type = "remote"
-     *
-     * @ejb.permission
-     *         role-name = "mail"
-     *
-     * @throws EJBException Thrown if method fails due to system-level error.
-     */
-    public void updateContact(ContactObj contactObj) throws MailException {
-        SessionFactory hfactory = null;
-
-        try {
-            hfactory = (SessionFactory) ctx.lookup(hibernateSessionFactory);
-
-            String username = context.getCallerPrincipal().getName();
-
-            manager.updateContact(hfactory.openSession(), username, contactObj);
-        } catch (NamingException e) {
-            throw new MailException(e.getMessage(), e);
-        } catch (Exception e) {
-            if (e instanceof MailException) {
-                throw (MailException) e;
-            }
-
-            throw new MailException(e.getMessage(), e);
-        } finally {
-        }
-    }
-
-    /**
      * Create label and assign messages filter to it
      *
      * @ejb.interface-method view-type = "remote"
