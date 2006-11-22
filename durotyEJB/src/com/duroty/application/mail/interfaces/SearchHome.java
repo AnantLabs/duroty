@@ -15,7 +15,7 @@ public interface SearchHome extends javax.ejb.EJBHome {
     /**
      * DOCUMENT ME!
      */
-    public static final String COMP_NAME = "java:comp/env/ejb/Search";
+    public static final String COMP_NAME = "duroty/ejb/Search";
 
     /**
      * DOCUMENT ME!

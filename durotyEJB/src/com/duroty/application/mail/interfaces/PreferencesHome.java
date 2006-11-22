@@ -3,7 +3,6 @@
  */
 package com.duroty.application.mail.interfaces;
 
-
 /**
  * Home interface for Preferences.
  * @xdoclet-generated at ${TODAY}
@@ -11,25 +10,13 @@ package com.duroty.application.mail.interfaces;
  * @author XDoclet
  * @version ${version}
  */
-public interface PreferencesHome extends javax.ejb.EJBHome {
-    /**
-     * DOCUMENT ME!
-     */
-    public static final String COMP_NAME = "java:comp/env/ejb/Preferences";
+public interface PreferencesHome
+   extends javax.ejb.EJBHome
+{
+   public static final String COMP_NAME="duroty/ejb/Preferences";
+   public static final String JNDI_NAME="duroty/ejb/Preferences";
 
-    /**
-     * DOCUMENT ME!
-     */
-    public static final String JNDI_NAME = "duroty/ejb/Preferences";
+   public com.duroty.application.mail.interfaces.Preferences create()
+      throws javax.ejb.CreateException,java.rmi.RemoteException;
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @return DOCUMENT ME!
-     *
-     * @throws javax.ejb.CreateException DOCUMENT ME!
-     * @throws java.rmi.RemoteException DOCUMENT ME!
-     */
-    public com.duroty.application.mail.interfaces.Preferences create()
-        throws javax.ejb.CreateException, java.rmi.RemoteException;
 }

@@ -15,7 +15,7 @@ public interface BookmarkHome extends javax.ejb.EJBHome {
     /**
      * DOCUMENT ME!
      */
-    public static final String COMP_NAME = "java:comp/env/ejb/Bookmark";
+    public static final String COMP_NAME = "duroty/ejb/Bookmark";
 
     /**
      * DOCUMENT ME!

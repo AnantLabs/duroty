@@ -48,6 +48,11 @@ public interface Constants {
      * DOCUMENT ME!
      */
     public static final String CHAT_CONFIG = "chatConfig";
+    
+    /**
+     * DOCUMENT ME!
+     */
+    public static final String PARSE_FACTORY_CONFIG = "parseFactoryConfig";
 
     /**
      * DOCUMENT ME!

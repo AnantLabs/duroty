@@ -15,7 +15,7 @@ public interface MailHome extends javax.ejb.EJBHome {
     /**
      * DOCUMENT ME!
      */
-    public static final String COMP_NAME = "java:comp/env/ejb/Mail";
+    public static final String COMP_NAME = "duroty/ejb/Mail";
 
     /**
      * DOCUMENT ME!
