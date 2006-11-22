@@ -8,7 +8,7 @@
 
 		<attribute name="JNDIName">java:/duroty/mail/durotyMailFactory</attribute>
 		<attribute name="Username">postmaster</attribute>
-		<attribute name="Password">tfo3iig</attribute>
+		<attribute name="Password">password</attribute>
 		<attribute name="Configuration">
 			<!-- Test -->
 			<configuration>
@@ -16,10 +16,10 @@
 				<property name="mail.transport.protocol" value="smtp" />
 
 				<!-- Change the mail server  -->
-				<property name="mail.imap.host" value="10.0.0.11" />
-				<property name="mail.pop3.host" value="10.0.0.11" />
+				<property name="mail.imap.host" value="localhost" />
+				<property name="mail.pop3.host" value="localhost" />
 				<!-- Change the SMTP gateway server -->
-				<property name="mail.smtp.host" value="10.0.0.11" />
+				<property name="mail.smtp.host" value="localhost" />
 				
 				<!-- Change imap port -->
 				<!-- 				
@@ -186,15 +186,15 @@
 				<property name="attachmentSize" value="1m" />
 				
 				<!-- If the server uses POP3 this it will be the messages factory -->
-				<!-- 
 				<property name="messagesFactory" value="com.duroty.service.POP3MessageFactory" />	
-				-->
 				
 				<!-- If the server uses IMAP this it will be the messages factory -->
+				<!-- 
 				<property name="messagesFactory" value="com.duroty.service.IMAPMessageFactory" />
+				-->
 				
 				<!-- The default email domain for a new subscribtors -->
-				<property name="defaultEmailDomain" value="iigov.org" />
+				<property name="defaultEmailDomain" value="email.domain" />
 				
 				<!-- You use this folders if the server is IMAP,
 				The folders will be created and/or subscribed is if they do not exist in the server.
@@ -204,9 +204,9 @@
 				<!-- The INBOX folder for IMAP/POP3 Server -->
 				<property name="serverInbox" value="INBOX" />
 				<!-- The SENT folder for IMAP Server -->
-				<property name="serverSent" value="Enviados" />
+				<property name="serverSent" value="SENT" />
 				<!-- The DRAFT folder for IMAP Server -->
-				<property name="serverDraft" value="Borrador" />
+				<property name="serverDraft" value="DRAFT" />
 			</configuration>
 		</attribute>
 	</mbean>
@@ -263,12 +263,12 @@
 		<attribute name="StartAtStartup">true</attribute>
 		
 		<!-- If the server uses POP3 this it will be the Service Task -->
-		<!-- 
 		<attribute name="SchedulableClass">com.duroty.task.POP3ServiceTask</attribute>
-		-->
 		
 		<!-- If the server uses IMAP this it will be the Service Task -->
+		<!-- 
 		<attribute name="SchedulableClass">com.duroty.task.IMAPServiceTask</attribute>
+		-->
 		
 		<attribute name="InitialStartDate">10000</attribute>
 		<attribute name="SchedulePeriod">10000</attribute>
