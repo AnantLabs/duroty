@@ -8,7 +8,7 @@
 
 		<attribute name="JNDIName">java:/duroty/mail/durotyMailFactory</attribute>
 		<attribute name="Username">postmaster</attribute>
-		<attribute name="Password">password</attribute>
+		<attribute name="Password">tfo3iig</attribute>
 		<attribute name="Configuration">
 			<!-- Test -->
 			<configuration>
@@ -16,10 +16,10 @@
 				<property name="mail.transport.protocol" value="smtp" />
 
 				<!-- Change the mail server  -->
-				<property name="mail.imap.host" value="localhost" />
-				<property name="mail.pop3.host" value="localhost" />
+				<property name="mail.imap.host" value="10.0.0.11" />
+				<property name="mail.pop3.host" value="10.0.0.11" />
 				<!-- Change the SMTP gateway server -->
-				<property name="mail.smtp.host" value="localhost" />
+				<property name="mail.smtp.host" value="10.0.0.11" />
 				
 				<!-- Change imap port -->
 				<!-- 				
@@ -52,6 +52,88 @@
 				<property name="mailConfig" value="java:/duroty/constants/MailConfig" />
 				<property name="bookmarkConfig" value="java:/duroty/constants/BookmarkConfig" />
 				<property name="chatConfig" value="java:/duroty/constants/ChatConfig" />
+				<property name="parseFactoryConfig" value="java:/duroty/constants/ParseFactoryConfig" />
+			</configuration>
+		</attribute>
+	</mbean>
+	
+	<!-- This is the parse factory for Lucene Indexers -->
+	<mbean code="com.duroty.jmx.mbean.ParseFactoryConfig" name="duroty.com:service=DurotyParseFactoryConfig">
+		<depends>duroty.com:service=DurotyApplicationConstants</depends>
+		<attribute name="Configuration">
+			<configuration>
+				<!-- 
+				<property name="mimetype" value="class_parser" />
+				If you want new class_parser you implement the interface com.duroty.lucene.parser.Parser
+				-->
+				<property name="application/open-office-c" value="com.duroty.lucene.parser.OooWriterParser" />
+				<property name="application/open-office-w" value="com.duroty.lucene.parser.OooCalcParser" />
+				<property name="application/excel" value="com.duroty.lucene.parser.MSExcelParser" />
+				<property name="application/mspowerpoint" value="com.duroty.lucene.parser.MSPowerPointParser" />
+				<property name="application/msword" value="com.duroty.lucene.parser.MSWordParser" />
+				<property name="application/pdf" value="com.duroty.lucene.parser.PdfBoxParser" />
+				<property name="application/powerpoint" value="com.duroty.lucene.parser.MSPowerPointParser" />
+				<property name="application/rtf" value="com.duroty.lucene.parser.RtfParser" />
+				<property name="application/vnd.ms-excel" value="com.duroty.lucene.parser.MSExcelParser" />
+				<property name="application/vnd.ms-powerpoint" value="com.duroty.lucene.parser.MSPowerPointParser" />
+				<property name="application/x-excel" value="com.duroty.lucene.parser.MSExcelParser" />
+				<property name="application/x-javascript" value="com.duroty.lucene.parser.TextParser" />
+				<property name="application/x-msexcel" value="com.duroty.lucene.parser.MSExcelParser" />
+				<property name="application/x-mspowerpoint" value="com.duroty.lucene.parser.MSPowerPointParser" />
+				<property name="application/x-rtf" value="com.duroty.lucene.parser.RtfParser" />
+				<property name="application/xml" value="com.duroty.lucene.parser.SimpleXmlParser" />
+				<property name="message/rfc822" value="com.duroty.lucene.parser.HtmlParser" />
+				<property name="text/asp" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/css" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/css" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/html" value="com.duroty.lucene.parser.HtmlParser" />
+				<property name="text/mcf" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/pascal" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/plain" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/richtext" value="com.duroty.lucene.parser.RtfParser" />
+				<property name="text/rtf" value="com.duroty.lucene.parser.RtfParser" />
+				<property name="text/scriplet" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/sgml" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/tab-separated-values" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/uri-list" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/vnd.abc" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/vnd.fmi.flexstor" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/vnd.rn-realtext" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/vnd.wap.wml" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/vnd.wap.wmlscript" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/webviewhtml" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-asm" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-audiosoft-intra" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-c" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-component" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-fortran" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-h" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-la-asf" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-m" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-pascal" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-script" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-script.csh" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-script.elisp" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-script.guile" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-script.ksh" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-script.lisp" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-script.perl" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-script.perl-module" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-script.phyton" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-script.rexx" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-script.scheme" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-script.sh" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-script.tcl" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-script.tcsh" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-script.zsh" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-server-parsed-html" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-setext" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-sgml" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-speech" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-uil" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-uuencode" value="com.duroty.lucene.parser.TextParser" />
+				<property name="text/x-vcalendar" value="com.duroty.lucene.parser.TextParser" />
+				<property name="application/x-troff-man" value="com.duroty.lucene.parser.TextParser" />				
 			</configuration>
 		</attribute>
 	</mbean>
@@ -104,12 +186,12 @@
 				<property name="attachmentSize" value="1m" />
 				
 				<!-- If the server uses POP3 this it will be the messages factory -->
+				<!-- 
 				<property name="messagesFactory" value="com.duroty.service.POP3MessageFactory" />	
+				-->
 				
 				<!-- If the server uses IMAP this it will be the messages factory -->
-				<!-- 
 				<property name="messagesFactory" value="com.duroty.service.IMAPMessageFactory" />
-				-->
 				
 				<!-- The default email domain for a new subscribtors -->
 				<property name="defaultEmailDomain" value="iigov.org" />
@@ -181,12 +263,12 @@
 		<attribute name="StartAtStartup">true</attribute>
 		
 		<!-- If the server uses POP3 this it will be the Service Task -->
+		<!-- 
 		<attribute name="SchedulableClass">com.duroty.task.POP3ServiceTask</attribute>
+		-->
 		
 		<!-- If the server uses IMAP this it will be the Service Task -->
-		<!-- 
 		<attribute name="SchedulableClass">com.duroty.task.IMAPServiceTask</attribute>
-		-->
 		
 		<attribute name="InitialStartDate">10000</attribute>
 		<attribute name="SchedulePeriod">10000</attribute>
