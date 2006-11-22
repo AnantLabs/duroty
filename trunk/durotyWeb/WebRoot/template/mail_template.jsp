@@ -159,7 +159,7 @@ String path = request.getContextPath();
 												<td nowrap="nowrap" align="left" style="padding-left: 3px;">
 													<input type="button" name="btnSearch" class="BUTTON" value="<fmt:message key="general.search" />" onclick="javascript:Mail.displayLocation('simpleSearch:0*0!0', null);" />
 													<br/>
-													<input type="checkbox" value="true" checked="checked" id="excludeTrash"/>
+													<input type="checkbox" value="true" id="excludeTrash"/>
 												</td>
 												<td nowrap="nowrap" style="font-size: 10px; padding-left: 3px;">
 													<a href="javascript:openwin('<%=basePath%>mail/help_<c:out value='${sessionScope["org.apache.struts.action.LOCALE"]}' />.html', 'Help', 700, 600);">- <fmt:message key="general.help" /></a>

@@ -183,6 +183,8 @@ function Bookmark() {
     };
     
     this.flag = function(action) {
+    	alert('merda');
+    
     	showLoading();
     
     	if (action) {

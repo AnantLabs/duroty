@@ -49,6 +49,8 @@ String path = request.getContextPath();
 	}
 	
 	function flag(idint) {
+		alert(idint);
+	
 		document.formAux.idint.value = idint;		
 		document.formAux.action = "<%=basePath%>bookmark/flagBookmark.drt";
 		document.formAux.submit();
