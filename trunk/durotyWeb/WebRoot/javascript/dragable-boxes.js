@@ -445,7 +445,7 @@ function closeDragableBox(e, inputObj) {
     }
     var numericId = inputObj.id.replace(/[^0-9]/g, "");
     document.getElementById("dragableBox" + numericId).style.display = "none";
-    Set_Cookie(nameOfCookie + cookieRSSSources[dragableBoxesArray[numericId]["rssUrl"]], "none", 60000);
+    Set_Cookie(nameOfCookie + (cookieRSSSources[dragableBoxesArray[numericId]["rssUrl"]] - 1), "none", 60000);
     setTimeout("dragDropCounter=-5", 5);
 }
 function editRSSContent() {
