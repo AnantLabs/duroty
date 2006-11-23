@@ -115,6 +115,8 @@ public class ReadFeedAction extends HomeDefaultAction {
                 request.setAttribute(FEED, "No Data");
             }
         } catch (Exception ex) {
+        	request.setAttribute(FEED, "Feed Error - Refresh URL or Delete Feed");
+        	
             String errorMessage = ExceptionUtilities.parseMessage(ex);
 
             if (errorMessage == null) {

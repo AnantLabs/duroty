@@ -443,10 +443,17 @@ function closeDragableBox(e, inputObj) {
     if (!inputObj) {
         inputObj = this;
     }
+    
     var numericId = inputObj.id.replace(/[^0-9]/g, "");
     document.getElementById("dragableBox" + numericId).style.display = "none";
+    /*if (document.getElementById("dragableBox" + numericId).parentNode) {
+    	document.getElementById("dragableBox" + numericId).parentNode.removeChild(document.getElementById("dragableBox" + numericId));
+    } */   
+        
     Set_Cookie(nameOfCookie + (cookieRSSSources[dragableBoxesArray[numericId]["rssUrl"]] - 1), "none", 60000);
-    setTimeout("dragDropCounter=-5", 5);
+    
+    setTimeout("dragDropCounter=-5", 6);
+    
 }
 function editRSSContent() {
     var numericId = this.id.replace(/[^0-9]/g, "");
@@ -769,10 +776,11 @@ function createRSSBoxesFromCookie() {
     }
 }
 function getAllRss() {
+	var rana = 0;
     var ajaxgetfeed = new sack();
     ajaxgetfeed.requestFile = "home/getFeed.drt";
     ajaxgetfeed.onCompletion = function () {
-        var rssContent = ajaxgetfeed.response;
+        var rssContent = ajaxgetfeed.response;        
         if (rssContent) {
             tokens = rssContent.split(/\n/g);
             var headerTokens = tokens[0].split(/\n/g);
@@ -782,17 +790,27 @@ function getAllRss() {
                 for (var no = 0; no < tokens.length; no++) {
                     var tmpArray = new Array();
                     var cookieValue = getValue(nameOfCookie + no, tokens[no]);
-                    var items = cookieValue.split("#;#");
-                    var index = items[0];
-                    if (!items[0]) {
-                        index = items[5];
-                    }
-                    if (items.length > 1 && !tmpArray[index]) {
-                        tmpArray[index] = true;
-                        createARSSBox(items[0], items[1], items[3], items[2], items[4], items[5]);
-                        cookieRSSSources[items[0]] = cookieCounter;
-                    } else {
-                        cookieCounter++;
+                    if (cookieValue) {
+	                    var items = cookieValue.split("#;#");
+	                    var index = items[0];
+	                    if (index) {
+		                    if (!items[0]) {
+		                        index = items[5];
+		                    }
+		                    if (items.length > 1 && !tmpArray[index]) {
+		                        tmpArray[index] = true;
+		                        createARSSBox(items[0], items[1], items[3], items[2], items[4], items[5]);
+		                        cookieRSSSources[items[0]] = cookieCounter;
+		                    } else {
+		                        cookieCounter++;
+		                    }
+	                    } else {
+	                    	if (rana <= 0) {
+		                    	rana = cookieCounter;
+		                    }
+	                    	Set_Cookie(nameOfCookie + rana, "none", 60000);
+	                    	rana++;
+	                    }
                     }
                 }
             }
@@ -861,6 +879,8 @@ function hideHeaderOptionsForStaticBoxes(boxIndex) {
 }
 /* You customize this function */
 function createDefaultBoxes() {
+	return;
+
     if (cookieCounter == 0) {
         createARSSBox("http://rss.cnn.com/rss/cnn_topstories.rss", 2, false, 5, 1);
         createARSSBox("http://feeds.feedburner.com/reuters/topNews/", 3, false, 5);
