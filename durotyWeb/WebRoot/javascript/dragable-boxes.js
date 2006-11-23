@@ -450,7 +450,12 @@ function closeDragableBox(e, inputObj) {
     	document.getElementById("dragableBox" + numericId).parentNode.removeChild(document.getElementById("dragableBox" + numericId));
     } */   
         
-    Set_Cookie(nameOfCookie + (cookieRSSSources[dragableBoxesArray[numericId]["rssUrl"]] - 1), "none", 60000);
+   	var truco = cookieRSSSources[dragableBoxesArray[numericId]["rssUrl"]];
+   	if (truco > 1) {
+   		truco = truco - 1;
+   	} else {
+   	}
+    Set_Cookie(nameOfCookie + truco, "none", 60000);
     
     setTimeout("dragDropCounter=-5", 6);
     
@@ -755,8 +760,9 @@ function createFeed(formObj) {
     createARSSBox(url, 1, height, items, reloadInterval);
 }
 function createRSSBoxesFromCookie() {
-    getAllRss();
+	getAllRss();
     return;
+
     var tmpArray = new Array();
     var cookieValue = Get_Cookie(nameOfCookie + "0");
     while (cookieValue && cookieValue != "") {
