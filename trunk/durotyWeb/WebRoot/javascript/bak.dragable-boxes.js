@@ -67,55 +67,11 @@ var opera = navigator.userAgent.toLowerCase().indexOf("opera") >= 0 ? true : fal
 var cookieCounter = 0;
 var cookieRSSSources = new Array();
 var staticObjectArray = new Array();
-var init = false;
 /*
 	These cookie functions are downloaded from 
 	http://www.mach5.com/support/analyzer/manual/html/General/CookiesJavaScript.htm
 	*/
 function Get_Cookie(name) {
-    var ajaxgetfeed = new sack();
-    ajaxgetfeed.requestFile = "home/getFeed.drt?name=" + name;
-    ajaxgetfeed.onCompletion = function () {
-        var rssContent = ajaxgetfeed.response;
-        if (rssContent) {
-            tokens = rssContent.split(/\n/g);
-            var headerTokens = tokens[0].split(/\n/g);
-            if (headerTokens[0] == "0") {
-                return;
-            } else {
-                for (var no = 0; no < tokens.length; no++) {
-                    var tmpArray = new Array();
-                    var cookieValue = getValue(name, tokens[no]);
-                    if (cookieValue) {
-                        var items = cookieValue.split("#;#");
-                        var index = items[0];
-                        if (index) {
-                            if (!items[0]) {
-                                index = items[5];
-                            }
-                            if (items.length > 1 && !tmpArray[index]) {
-                                tmpArray[index] = true;
-                                createARSSBox(items[0], items[1], items[3], items[2], items[4], items[5]);
-                                cookieRSSSources[items[0]] = cookieCounter;
-                            } else {
-                                cookieCounter++;
-                            }
-                        } else {
-                            if (rana <= 0) {
-                                rana = cookieCounter;
-                            }
-                            Set_Cookie(nameOfCookie + rana, "none", 60000);
-                            rana++;
-                        }
-                    }
-                }
-            }
-        }
-    };
-    ajaxgetfeed.runAJAX();
-} 
-
-function Get_CookieBak(name) {
     var start = document.cookie.indexOf(name + "=");
     var len = start + name.length + 1;
     if ((!start) && (name != document.cookie.substring(0, name.length))) {
@@ -132,10 +88,11 @@ function Get_CookieBak(name) {
 } 
 	// This function has been slightly modified
 function Set_Cookie(name, value, expires, path, domain, secure) {
-    expires = expires * 60 * 60 * 24 * 1000;
+    var expires = expires * 60 * 60 * 24 * 1000;
     var today = new Date();
     var expires_date = new Date(today.getTime() + (expires));
     var cookieString = name + "=" + escape(value) + ((expires) ? ";expires=" + expires_date.toGMTString() : "") + ((path) ? ";path=" + path : "") + ((domain) ? ";domain=" + domain : "") + ((secure) ? ";secure" : "");
+    //document.cookie = cookieString;
     var ajaxgetfeed = new sack();
     ajaxgetfeed.requestFile = "home/saveFeed.drt?name=" + name + "&value=" + escape(cookieString);
     ajaxgetfeed.runAJAX();		// Execute AJAX function	
@@ -221,7 +178,7 @@ function moveDragableElement(e) {
     if (dragDropCounter < 10) {
         return;
     }
-    if (document.all && e.button != 1 && !opera) {
+    if (document.all && e.button != 1) {
         stop_dragDropElement();
         return;
     }
@@ -386,10 +343,9 @@ function saveCookies() {
             var maxRssItems = dragableBoxesArray[boxIndex]["maxRssItems"];
             var minutesBeforeReload = dragableBoxesArray[boxIndex]["minutesBeforeReload"];
             var uniqueIdentifier = dragableBoxesArray[boxIndex]["uniqueIdentifier"];
-            var state = dragableBoxesArray[boxIndex]["boxState"];
             if (!tmpUrlArray[url]) {
                 tmpUrlArray[url] = true;
-                Set_Cookie(nameOfCookie + cookieCounter, url + "#;#" + columnIndex + "#;#" + maxRssItems + "#;#" + heightOfBox + "#;#" + minutesBeforeReload + "#;#" + uniqueIdentifier + "#;#" + state, 60000);
+                Set_Cookie(nameOfCookie + cookieCounter, url + "#;#" + columnIndex + "#;#" + maxRssItems + "#;#" + heightOfBox + "#;#" + minutesBeforeReload + "#;#" + uniqueIdentifier, 60000);
                 cookieRSSSources[url] = cookieCounter;
                 cookieCounter++;
             } else {
@@ -476,19 +432,11 @@ function refreshRSS() {
     reloadRSSData(this.id.replace(/[^0-9]/g, ""));
     setTimeout("dragDropCounter=-5", 5);
 }
-function showHideBoxContent(e, inputObj) {
-    if (document.all) {
-        e = event;
-    }
-    if (!inputObj) {
-        inputObj = this;
-    }
-    var numericId = inputObj.id.replace(/[^0-9]/g, "");
+function showHideBoxContent() {
+    var numericId = this.id.replace(/[^0-9]/g, "");
     var obj = document.getElementById("dragableBoxContent" + numericId);
-    obj.style.display = inputObj.src.indexOf(src_rightImage) >= 0 ? "none" : "block";
-    inputObj.src = inputObj.src.indexOf(src_rightImage) >= 0 ? src_downImage : src_rightImage;
-    dragableBoxesArray[numericId]["boxState"] = obj.style.display == "block" ? 1 : 0;
-    saveCookies();
+    obj.style.display = this.src.indexOf(src_rightImage) >= 0 ? "none" : "block";
+    this.src = this.src.indexOf(src_rightImage) >= 0 ? src_downImage : src_rightImage;
     setTimeout("dragDropCounter=-5", 5);
 }
 function mouseover_CloseButton() {
@@ -507,21 +455,16 @@ function closeDragableBox(e, inputObj) {
     }
     var numericId = inputObj.id.replace(/[^0-9]/g, "");
     document.getElementById("dragableBox" + numericId).style.display = "none";
-    
-    try {
-    	var parent = document.getElementById("dragableBox" + numericId).parentNode;
-    	if (parent) {
-    		parent.removeChild(document.getElementById("dragableBox" + numericId));
-    	}
-    } catch (e) {alert(e);}
-    
-    var idx = cookieRSSSources[dragableBoxesArray[numericId]["rssUrl"]];
-    if (idx > 0) {
-    	idx = idx - 1;
+    /*if (document.getElementById("dragableBox" + numericId).parentNode) {
+    	document.getElementById("dragableBox" + numericId).parentNode.removeChild(document.getElementById("dragableBox" + numericId));
+    } */
+    var truco = cookieRSSSources[dragableBoxesArray[numericId]["rssUrl"]];
+    if (truco > 1) {
+        truco = truco - 1;
+    } else {
     }
-    
-    Set_Cookie(nameOfCookie + idx, "none", 60000);
-    setTimeout("dragDropCounter=-5", 5);
+    Set_Cookie(nameOfCookie + truco, "none", 60000);
+    setTimeout("dragDropCounter=-5", 6);
 }
 function editRSSContent() {
     var numericId = this.id.replace(/[^0-9]/g, "");
@@ -540,16 +483,14 @@ function editRSSContent() {
 function showStatusBarMessage(numericId, message) {
     document.getElementById("dragableBoxStatusBar" + numericId).innerHTML = message;
 }
-function addBoxHeader(parentObj, externalUrl, notDrabable) {
+function addBoxHeader(parentObj, externalUrl) {
     var div = document.createElement("DIV");
     div.className = "dragableBoxHeader";
+    div.style.cursor = "move";
     div.id = "dragableBoxHeader" + boxIndex;
     div.onmouseover = mouseoverBoxHeader;
     div.onmouseout = mouseoutBoxHeader;
-    if (!notDrabable) {
-        div.onmousedown = initDragDropBox;
-        div.style.cursor = "move";
-    }
+    div.onmousedown = initDragDropBox;
     var image = document.createElement("IMG");
     image.id = "dragableBoxExpand" + boxIndex;
     image.src = src_rightImage;
@@ -669,7 +610,7 @@ function addBoxStatusBar(parentObj) {
     div.id = "dragableBoxStatusBar" + boxIndex;
     parentObj.appendChild(div);
 }
-function createABox(columnIndex, heightOfBox, externalUrl, uniqueIdentifier, notDragable) {
+function createABox(columnIndex, heightOfBox, externalUrl, uniqueIdentifier) {
     boxIndex++;
     var maindiv = document.createElement("DIV");
     maindiv.className = "dragableBox";
@@ -677,7 +618,7 @@ function createABox(columnIndex, heightOfBox, externalUrl, uniqueIdentifier, not
     var div = document.createElement("DIV");
     div.className = "dragableBoxInner";
     maindiv.appendChild(div);
-    addBoxHeader(div, externalUrl, notDragable);
+    addBoxHeader(div, externalUrl);
     addBoxContentContainer(div, heightOfBox);
     addBoxStatusBar(div);
     var obj = document.getElementById("dragableBoxesColumn" + columnIndex);
@@ -692,7 +633,6 @@ function createABox(columnIndex, heightOfBox, externalUrl, uniqueIdentifier, not
     dragableBoxesArray[boxIndex]["parentObj"] = maindiv.parentNode;
     dragableBoxesArray[boxIndex]["uniqueIdentifier"] = uniqueIdentifier;
     dragableBoxesArray[boxIndex]["heightOfBox"] = heightOfBox;
-    dragableBoxesArray[boxIndex]["boxState"] = 1;	// Expanded
     staticObjectArray[uniqueIdentifier] = boxIndex;
     return boxIndex;
 }
@@ -727,7 +667,7 @@ function reloadRSSData(numericId) {
     };	// Specify function that will be executed after file has been found
     ajaxObjects[ajaxIndex].runAJAX();		// Execute AJAX function			
 }
-function createARSSBox(url, columnIndex, heightOfBox, maxRssItems, minutesBeforeReload, uniqueIdentifier, state) {
+function createARSSBox(url, columnIndex, heightOfBox, maxRssItems, minutesBeforeReload, uniqueIdentifier) {
     if (!heightOfBox) {
         heightOfBox = "0";
     }
@@ -738,7 +678,7 @@ function createARSSBox(url, columnIndex, heightOfBox, maxRssItems, minutesBefore
     if (useCookiesToRememberRSSSources) {
         if (!cookieRSSSources[url]) {
             cookieRSSSources[url] = cookieCounter;
-            Set_Cookie(nameOfCookie + cookieCounter, url + "#;#" + columnIndex + "#;#" + maxRssItems + "#;#" + heightOfBox + "#;#" + minutesBeforeReload + "#;#" + uniqueIdentifier + "#;#" + state, 60000);
+            Set_Cookie(nameOfCookie + cookieCounter, url + "#;#" + columnIndex + "#;#" + maxRssItems + "#;#" + heightOfBox + "#;#" + minutesBeforeReload + "#;#" + uniqueIdentifier, 60000);
             cookieCounter++;
         }
     }
@@ -747,10 +687,6 @@ function createARSSBox(url, columnIndex, heightOfBox, maxRssItems, minutesBefore
     dragableBoxesArray[tmpIndex]["minutesBeforeReload"] = minutesBeforeReload;
     dragableBoxesArray[tmpIndex]["heightOfBox"] = heightOfBox;
     dragableBoxesArray[tmpIndex]["uniqueIdentifier"] = uniqueIdentifier;
-    dragableBoxesArray[tmpIndex]["state"] = state;
-    if (state == 0) {
-        showHideBoxContent(false, document.getElementById("dragableBoxExpand" + tmpIndex));
-    }
     staticObjectArray[uniqueIdentifier] = tmpIndex;
     var tmpInterval = false;
     if (minutesBeforeReload && minutesBeforeReload > 0) {
@@ -829,45 +765,90 @@ function createFeed(formObj) {
     }
     createARSSBox(url, 1, height, items, reloadInterval);
 }
-function createRSSBoxesFromCookie(no) {
-    var tmpArray = new Array();    
-    var name = nameOfCookie + no;
-    var cookieValue = null;
-    
-    /******/
+function createRSSBoxesFromCookie() {
+    getAllRss();
+    return;
+    var tmpArray = new Array();
+    var cookieValue = Get_Cookie(nameOfCookie + "0");
+    while (cookieValue && cookieValue != "") {
+        var items = cookieValue.split("#;#");
+        var index = items[0];
+        if (!items[0]) {
+            index = items[5];
+        }
+        if (items.length > 1 && !tmpArray[index]) {
+            tmpArray[index] = true;
+            createARSSBox(items[0], items[1], items[3], items[2], items[4], items[5]);
+            cookieRSSSources[items[0]] = cookieCounter;
+        } else {
+            cookieCounter++;
+        }
+        var cookieValue = Get_Cookie(nameOfCookie + cookieCounter);
+    }
+}
+function getAllRss() {
+    var rana = 0;
     var ajaxgetfeed = new sack();
-    ajaxgetfeed.requestFile = "home/getFeed.drt?name=" + name;
+    ajaxgetfeed.requestFile = "home/getFeed.drt";
     ajaxgetfeed.onCompletion = function () {
         var rssContent = ajaxgetfeed.response;
-        
-        var cookieValue = getValue(name, rssContent);
-        
-        if (cookieValue && cookieValue != "") {
-            var items = cookieValue.split("#;#");
-	        var index = items[0];
-	        
-	        if (!items[0]) {
-	            index = items[5];
-	        }
-	        if (items.length > 1 && !tmpArray[index]) {
-	            tmpArray[index] = true;
-	            createARSSBox(items[0], items[1], items[3], items[2], items[4], items[5], items[6]);
-	            cookieRSSSources[items[0]] = cookieCounter;
-	        } else {
-	            cookieCounter++;
-	        }
-	        
-	        init = true;
-	        
-	        createRSSBoxesFromCookie(no + 1);
-        } else {        
-        	if (!init) {
-			    createDefaultBoxes();	// Create default boxes.
-        	}
+        if (rssContent) {
+            tokens = rssContent.split(/\n/g);
+            var headerTokens = tokens[0].split(/\n/g);
+            if (headerTokens[0] == "0") {
+                return;
+            } else {
+                for (var no = 0; no < tokens.length; no++) {
+                    var tmpArray = new Array();
+                    var cookieValue = getValue(nameOfCookie + no, tokens[no]);
+                    if (cookieValue) {
+                        var items = cookieValue.split("#;#");
+                        var index = items[0];
+                        if (index) {
+                            if (!items[0]) {
+                                index = items[5];
+                            }
+                            if (items.length > 1 && !tmpArray[index]) {
+                                tmpArray[index] = true;
+                                createARSSBox(items[0], items[1], items[3], items[2], items[4], items[5]);
+                                cookieRSSSources[items[0]] = cookieCounter;
+                            } else {
+                                cookieCounter++;
+                            }
+                        } else {
+                            if (rana <= 0) {
+                                rana = cookieCounter;
+                            }
+                            Set_Cookie(nameOfCookie + rana, "none", 60000);
+                            rana++;
+                        }
+                    }
+                }
+            }
+        }
+        if (cookieCounter == 0) {
+        	//url, columnIndex, heightOfBox, maxRssItems, minutesBeforeReload, uniqueIdentifier
+            createARSSBox("http://www.lavanguardia.es/rss/index.rss", 1, false, 10, 10);
+            createARSSBox("http://www.elpais.es/rss.html", 2, false, 10, 10);
+            createARSSBox("http://feeds.feedburner.com/meneame/published?format=USM", 3, false, 10, 10);
         }
     };
     ajaxgetfeed.runAJAX();
-    /******/
+}
+function getValue(name, _value) {
+    var start = _value.indexOf(name + "=");
+    var len = start + name.length + 1;
+    if ((!start) && (name != _value.substring(0, name.length))) {
+        return null;
+    }
+    if (start == -1) {
+        return null;
+    }
+    var end = _value.indexOf(";", len);
+    if (end == -1) {
+        end = _value.length;
+    }
+    return unescape(_value.substring(len, end));
 }
 /* Clear cookies */
 function clearCookiesForDragableBoxes() {
@@ -909,12 +890,7 @@ function hideHeaderOptionsForStaticBoxes(boxIndex) {
 }
 /* You customize this function */
 function createDefaultBoxes() {
-	createARSSBox("http://www.lavanguardia.es/rss/index.rss", 1, false, 10, 10);
-	createARSSBox("http://www.elpais.es/rss.html", 2, false, 10, 10);
-	createARSSBox("http://feeds.feedburner.com/meneame/published?format=USM", 3, false, 10, 10);
-
-	return;
-
+    return;
     if (cookieCounter == 0) {
         createARSSBox("http://rss.cnn.com/rss/cnn_topstories.rss", 2, false, 5, 1);
         createARSSBox("http://feeds.feedburner.com/reuters/topNews/", 3, false, 5);
@@ -922,7 +898,7 @@ function createDefaultBoxes() {
         createARSSBox("http://rss.pcworld.com/rss/latestnews.rss", 1, false, 5);
     }
     /* Create static boxes */
-    var htmlContentOfNewBox = "<DIV>This is a static box created from the function createDefaultBoxes().</div>";	// HTML content of new box
+    /*var htmlContentOfNewBox = "<DIV>This is a static box created from the function createDefaultBoxes().</div>";	// HTML content of new box
     var titleOfNewBox = "This is a static box";
     if (!staticObjectArray["staticObject1"]) {	// The box is not stored in cookie - we need to create it.
         var newIndex = createABox(1, 100, false, "staticObject1");
@@ -933,46 +909,25 @@ function createDefaultBoxes() {
         document.getElementById("dragableBoxHeader_txt" + staticObjectArray["staticObject1"]).innerHTML = titleOfNewBox;
     }
     hideHeaderOptionsForStaticBoxes(staticObjectArray["staticObject1"]);
-    var htmlContentOfNewBox = "<DIV>Another static box. This box is not dragable</div>";	// HTML content of new box
+    var htmlContentOfNewBox = "<DIV>Another static box.</div>";	// HTML content of new box
     var titleOfNewBox = "This is a static box";
     if (!staticObjectArray["staticObject2"]) {	// The box is not stored in cookie - we need to create it.
-        var newIndex = createABox(1, 100, false, "staticObject2", true);	// true as last argument indicates that this box is not dragable
+        var newIndex = createABox(1, 100, false, "staticObject2");
         document.getElementById("dragableBoxContent" + newIndex).innerHTML = htmlContentOfNewBox;
         document.getElementById("dragableBoxHeader_txt" + newIndex).innerHTML = titleOfNewBox;
     } else {	// Box is stored in cookie - all we have to do is to move content into it.
         document.getElementById("dragableBoxContent" + staticObjectArray["staticObject2"]).innerHTML = htmlContentOfNewBox;
         document.getElementById("dragableBoxHeader_txt" + staticObjectArray["staticObject2"]).innerHTML = titleOfNewBox;
-        disableBoxDrag(staticObjectArray["staticObject2"]);	// Not dragable
     }
-    hideHeaderOptionsForStaticBoxes(staticObjectArray["staticObject2"]);
-}
-/* Disable drag for a box */
-function disableBoxDrag(boxIndex) {
-    document.getElementById("dragableBoxHeader" + boxIndex).onmousedown = "";
-    document.getElementById("dragableBoxHeader" + boxIndex).style.cursor = "default";
+    hideHeaderOptionsForStaticBoxes(staticObjectArray["staticObject2"]);*/
 }
 function initDragableBoxesScript() {
     createColumns();	// Always the first line of this function
     createHelpObjects();	// Always the second line of this function
     initEvents();	// Always the third line of this function
     if (useCookiesToRememberRSSSources) {
-        createRSSBoxesFromCookie(0);
-    }	// Create RSS boxes from cookies    
+        createRSSBoxesFromCookie();
+    }	// Create RSS boxes from cookies
+//    createDefaultBoxes();	// Create default boxes.
 }
-function getValue(name, _value) {
-    var start = _value.indexOf(name + "=");
-    var len = start + name.length + 1;
-    if ((!start) && (name != _value.substring(0, name.length))) {
-        return null;
-    }
-    if (start == -1) {
-        return null;
-    }
-    var end = _value.indexOf(";", len);
-    if (end == -1) {
-        end = _value.length;
-    }
-    return unescape(_value.substring(len, end));
-}
-//window.onload = initDragableBoxesScript;
 

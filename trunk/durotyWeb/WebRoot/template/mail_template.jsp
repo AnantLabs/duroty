@@ -84,11 +84,14 @@ String path = request.getContextPath();
 			tinyMCE.init({
 				mode : "exact",
 				theme : "advanced",
+				plugins : "spellchecker",
+				spellchecker_languages : "+English=en,Spanish=es,Catalan=ca",
 				language : "<c:out value='${sessionScope["org.apache.struts.action.LOCALE"]}' />",
 				content_css : "<%=basePath%>style/mail_htmlarea_full.css",
 				theme_advanced_toolbar_location : "top",
 				theme_advanced_toolbar_align : "left",
 				theme_advanced_path_location : "bottom",
+				theme_advanced_buttons3_add : "spellchecker",
 				add_form_submit_trigger : false,
 				submit_patch : false,
 				debug : false
@@ -122,7 +125,9 @@ String path = request.getContextPath();
 		<link href="<%=basePath%>style/ajax_im.css" rel="stylesheet" type="text/css" />
 		<link href="<%=basePath%>style/windows.css" rel="stylesheet" type="text/css" />
 		
-		
+		<script type="text/javascript" src="<%=basePath%>javascript/googiespell/AJS.js"></script>
+		<script type="text/javascript" src="<%=basePath%>javascript/googiespell/googiespell.js"></script>
+		<script type="text/javascript" src="<%=basePath%>javascript/googiespell/cookiesupport.js"></script>
 	</head>
 	<body>						
 		<script language="JavaScript">			

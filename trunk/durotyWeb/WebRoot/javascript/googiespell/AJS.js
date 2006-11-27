@@ -159,7 +159,7 @@ getRequest: function(url, data, type) {
 //Extend the privlege so we can make cross host reqs
 try { 
 netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead"); 
-} catch (e) {alert(e);}
+} catch (e) { }
 if(!type)
 type = "POST";
 var req = AJS.getXMLHttpRequest();
@@ -300,13 +300,13 @@ isString: function(obj) {
 return (typeof obj == 'string');
 },
 getXMLHttpRequest: function() {
-	var try_these = [
-		function () { return new XMLHttpRequest(); },
-		function () { return new ActiveXObject('Msxml2.XMLHTTP'); },
-		function () { return new ActiveXObject('Microsoft.XMLHTTP'); },
-		function () { return new ActiveXObject('Msxml2.XMLHTTP.4.0'); },
-		function () { throw "Browser does not support XMLHttpRequest"; }
-	];
+var try_these = [
+function () { return new XMLHttpRequest(); },
+function () { return new ActiveXObject('Msxml2.XMLHTTP'); },
+function () { return new ActiveXObject('Microsoft.XMLHTTP'); },
+function () { return new ActiveXObject('Msxml2.XMLHTTP.4.0'); },
+function () { throw "Browser does not support XMLHttpRequest"; }
+];
 for (var i = 0; i < try_these.length; i++) {
 var func = try_these[i];
 try {

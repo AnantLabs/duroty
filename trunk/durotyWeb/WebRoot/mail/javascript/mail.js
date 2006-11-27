@@ -808,15 +808,15 @@ function Mail() {
 			var selectedElement = document.getElementById("folder" + action);
 			if (selectedElement != null) {		
 				// cause the new selected menu item to appear differently in the UI
-				var clazz = "";
 				if (action == this.FOLDER_SPAM) {
-		    		clazz = "spam";
+		    		selectedElement.className = "folderSelectedspam";
 		    	} else if (action == this.FOLDER_TRASH) {
-		    		clazz = "spam";
+		    		selectedElement.className = "folderSelectedspam";
+		    	} else {
+		    		selectedElement.className = "folderSelected";
 		    	}
-				selectedElement.className = "folderSelected" + clazz;	
 			}
-		} else {			
+		} else {
 			idint = action.substring(5, action.length);
 			var selectedElement = document.getElementById('lab' + idint);
 			if (selectedElement != null) {		
