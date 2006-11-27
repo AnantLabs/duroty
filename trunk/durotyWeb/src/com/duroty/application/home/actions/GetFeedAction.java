@@ -25,7 +25,10 @@
  */
 package com.duroty.application.home.actions;
 
+import java.util.Vector;
+
 import com.duroty.application.home.interfaces.Home;
+import com.duroty.application.home.utils.FeedObj;
 import com.duroty.application.home.utils.HomeDefaultAction;
 
 import com.duroty.constants.Constants;
@@ -35,6 +38,7 @@ import com.duroty.utils.exceptions.ExceptionUtilities;
 import com.duroty.utils.log.DLog;
 import com.duroty.utils.log.DMessage;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
@@ -74,6 +78,7 @@ public class GetFeedAction extends HomeDefaultAction {
 
         //String name = request.getParameter("name");
         int channel = 0;
+        String name = request.getParameter("name");
 
         try {
             channel = Integer.valueOf(request.getParameter("channel"));
@@ -81,9 +86,15 @@ public class GetFeedAction extends HomeDefaultAction {
         }
 
         try {
-            Home homeInstance = getHomeInstance(request);
-
-            request.setAttribute(FEEDS, homeInstance.getAllFeed(channel));
+            if (!StringUtils.isBlank(name)) {
+            	Home homeInstance = getHomeInstance(request);
+            	Vector aux = new Vector();
+            	FeedObj obj = homeInstance.getFeed(channel, name);
+            	if (obj != null) {
+            		aux.addElement(obj.getValue());
+            	}
+            	request.setAttribute(FEEDS, aux);
+            }
         } catch (Exception ex) {
             String errorMessage = ExceptionUtilities.parseMessage(ex);
 
