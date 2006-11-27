@@ -1208,8 +1208,7 @@ public class SearchManager implements LuceneMessageConstants {
                 query2.setString("folderSpam", this.folderSpam);
                 query2.setString("folderDelete", FOLDER_DELETE);
             } else {
-                query1 = hsession.getNamedQuery(
-                        "count-messages-by-folder-label");
+                query1 = hsession.getNamedQuery("count-messages-by-folder-label");
                 query1.setInteger("label", label);
                 query1.setParameterList("folder", boxes);
                 query1.setInteger("user", user.getUseIdint());
