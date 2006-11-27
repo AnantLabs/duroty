@@ -122,8 +122,8 @@ public class HomeManager {
             hsession.flush();
 
             /*if (value.indexOf("=none;expires=") > -1) {
-                    hsession.delete(feed);
-                    hsession.flush();
+            	hsession.delete(feed);
+            	hsession.flush();
             }*/
         } catch (Exception e) {
             throw new HomeException(e);
