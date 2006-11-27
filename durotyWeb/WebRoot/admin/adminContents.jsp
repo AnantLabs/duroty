@@ -41,9 +41,7 @@
 										&nbsp;&nbsp;
 									</td>
 									<td width="110">
-										<div id="cornerLoading">
-											<fmt:message key="general.loading" />
-										</div>
+										<div id="cornerLoading"><fmt:message key="general.loading" /></div>
 									</td>
 								</tr>
 							</table>

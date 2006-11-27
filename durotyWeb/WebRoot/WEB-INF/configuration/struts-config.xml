@@ -81,6 +81,13 @@
 			<forward name="success" path="/index.jsp" redirect="true" />
 			<forward name="failure" path="/index.jsp" redirect="true" />
 		</action>
+		
+		<action path="/utils/googieSpell"
+			type="com.duroty.controller.actions.GoogieSpellAction"
+			scope="request" validate="false">
+			<forward name="success" path="/utils/googieSpell.jsp" />
+			<forward name="failure" path="/utils/googieSpell.jsp" />
+		</action>
 	</action-mappings>
 	
 	<message-resources parameter="com.duroty.messages.Messages" />

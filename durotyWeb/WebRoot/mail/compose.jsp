@@ -129,7 +129,7 @@ String path = request.getContextPath();
 										</tr>
 										<tr>											
 											<td width="100%" nowrap="nowrap">											
-												<textarea id="taBody" name="taBody" style="width:93%; height: 400px;" rows="15"></textarea>												
+												<textarea id="taBody" name="taBody" style="width:93%; height: 400px;" rows="15"></textarea>
 											</td>
 										</tr>
 									</table>
