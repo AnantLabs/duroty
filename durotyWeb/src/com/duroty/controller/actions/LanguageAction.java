@@ -1,17 +1,44 @@
 /*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
+/*
  * LanguageAction.java
  *
  * Created on 3 de agosto de 2004, 9:49
  */
 package com.duroty.controller.actions;
 
-import java.net.URLDecoder;
-import java.nio.charset.Charset;
-import java.util.Locale;
+import com.duroty.config.Configuration;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.duroty.constants.Constants;
+import com.duroty.constants.ExceptionCode;
+
+import com.duroty.cookie.CookieManager;
+
+import com.duroty.exceptions.IllegalConcurrentAccessException;
+import com.duroty.exceptions.LanguageControlException;
+
+import com.duroty.utils.log.DLog;
+import com.duroty.utils.log.DMessage;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -20,15 +47,15 @@ import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionMessage;
 import org.apache.struts.action.ActionMessages;
 
-import com.duroty.config.Configuration;
-import com.duroty.constants.Constants;
-import com.duroty.constants.ExceptionCode;
-import com.duroty.cookie.CookieManager;
-import com.duroty.exceptions.IllegalConcurrentAccessException;
-import com.duroty.exceptions.LanguageControlException;
-import com.duroty.utils.log.DLog;
-import com.duroty.utils.log.DMessage;
+import java.net.URLDecoder;
 
+import java.nio.charset.Charset;
+
+import java.util.Locale;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -83,16 +110,18 @@ public class LanguageAction extends Action {
         HttpServletRequest request, HttpServletResponse response)
         throws Exception {
         ActionMessages errors = new ActionMessages();
-        
+
         String name = Configuration.properties.getProperty(Configuration.COOKIE_LANGUAGE);
-    	int maxAge = Integer.parseInt(Configuration.properties.getProperty(Configuration.COOKIE_MAX_AGE));
+        int maxAge = Integer.parseInt(Configuration.properties.getProperty(
+                    Configuration.COOKIE_MAX_AGE));
 
         String language = request.getParameter("language");
 
         if (language != null) {
             boolean control = false;
 
-            String[] avlang = Configuration.properties.getProperty(Configuration.AVAILABLE_LANGUAGE).split(",");
+            String[] avlang = Configuration.properties.getProperty(Configuration.AVAILABLE_LANGUAGE)
+                                                      .split(",");
 
             for (int i = 0; i < avlang.length; i++) {
                 if (language.equals(avlang[i])) {
@@ -109,33 +138,36 @@ public class LanguageAction extends Action {
                 errors.add(Constants.LANGUAGE_ERROR_PARAMETER,
                     new ActionMessage(ExceptionCode.ERROR_MESSAGES_PREFIX +
                         "Language"));
-            } else {            	
-            	Cookie cookie = new Cookie(name, language);
-        		cookie.setMaxAge(maxAge);
-        		CookieManager.setCookie("/", cookie, response);
-            	
+            } else {
+                Cookie cookie = new Cookie(name, language);
+                cookie.setMaxAge(maxAge);
+                CookieManager.setCookie("/", cookie, response);
+
                 Locale currentLocale = new Locale(language);
                 setLocale(request, currentLocale);
             }
         } else {
-        	Cookie cookie = CookieManager.getCookie(name, request);
-        	if (cookie != null) {
-        		language = cookie.getValue();
-        		cookie.setMaxAge(maxAge);
-        		CookieManager.setCookie("/", cookie, response);
-        	}
-        	
-        	Boolean b = new Boolean(Configuration.properties.getProperty(Configuration.AUTO_LOCALE));
+            Cookie cookie = CookieManager.getCookie(name, request);
+
+            if (cookie != null) {
+                language = cookie.getValue();
+                cookie.setMaxAge(maxAge);
+                CookieManager.setCookie("/", cookie, response);
+            }
+
+            Boolean b = new Boolean(Configuration.properties.getProperty(
+                        Configuration.AUTO_LOCALE));
             boolean autoLocale = b.booleanValue();
 
             if (language == null) {
                 if (!autoLocale) {
-                    throw new LanguageControlException("Choose Language. The language is empty", null);
+                    throw new LanguageControlException("Choose Language. The language is empty",
+                        null);
                 } else {
-                	language = Configuration.properties.getProperty(Configuration.DEFAULT_LANGUAGE);
+                    language = Configuration.properties.getProperty(Configuration.DEFAULT_LANGUAGE);
                 }
             }
-            
+
             Locale currentLocale = new Locale(language);
             setLocale(request, currentLocale);
         }
@@ -143,7 +175,8 @@ public class LanguageAction extends Action {
         String langReferer = request.getParameter("referer");
 
         if ((langReferer != null) && !langReferer.equals("")) {
-            langReferer = URLDecoder.decode(langReferer, Charset.defaultCharset().displayName());
+            langReferer = URLDecoder.decode(langReferer,
+                    Charset.defaultCharset().displayName());
         } else {
             langReferer = "/login/login.jsp";
         }

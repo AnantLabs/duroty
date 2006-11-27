@@ -1,39 +1,66 @@
 /*
- * DefaultAction.java
- *
- * Created on 13 de mayo de 2004, 10:45
- */
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
+
+
 package com.duroty.controller.actions;
 
-import java.rmi.RemoteException;
-import java.security.Principal;
-import java.util.Hashtable;
-import java.util.Locale;
+import com.duroty.application.chat.interfaces.Chat;
+import com.duroty.application.chat.interfaces.ChatHome;
+import com.duroty.application.chat.interfaces.ChatUtil;
 
-import javax.ejb.CreateException;
-import javax.naming.AuthenticationException;
-import javax.naming.Context;
-import javax.naming.NamingException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.duroty.config.Configuration;
+
+import com.duroty.constants.Constants;
+
+import com.duroty.cookie.CookieManager;
+
+import com.duroty.exceptions.IllegalConcurrentAccessException;
+import com.duroty.exceptions.InternalErrorException;
+import com.duroty.exceptions.LanguageControlException;
+
+import com.duroty.session.SessionManager;
+
+import com.duroty.utils.log.DLog;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import com.duroty.application.chat.interfaces.Chat;
-import com.duroty.application.chat.interfaces.ChatHome;
-import com.duroty.application.chat.interfaces.ChatUtil;
-import com.duroty.config.Configuration;
-import com.duroty.constants.Constants;
-import com.duroty.cookie.CookieManager;
-import com.duroty.exceptions.IllegalConcurrentAccessException;
-import com.duroty.exceptions.InternalErrorException;
-import com.duroty.exceptions.LanguageControlException;
-import com.duroty.session.SessionManager;
-import com.duroty.utils.log.DLog;
+import java.rmi.RemoteException;
+
+import java.security.Principal;
+
+import java.util.Hashtable;
+import java.util.Locale;
+
+import javax.ejb.CreateException;
+
+import javax.naming.AuthenticationException;
+import javax.naming.Context;
+import javax.naming.NamingException;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -65,14 +92,13 @@ public abstract class DefaultAction extends Action {
         ActionForward actionForward = null;
 
         try {
-        	//request.setCharacterEncoding(charset);
-        	//response.setCharacterEncoding(charset);
-        	
+            //request.setCharacterEncoding(charset);
+            //response.setCharacterEncoding(charset);
             Locale locale = languageControl(request, response);
             setLocale(request, locale);
             doInit(mapping, form, request, response);
             actionForward = doExecute(mapping, form, request, response);
-            
+
             //Chat chat = getChatInstance(request);
             //chat.login();
         } catch (Exception e) {
@@ -248,17 +274,27 @@ public abstract class DefaultAction extends Action {
         if (props == null) {
             props = new Hashtable();
 
-            props.put(Context.INITIAL_CONTEXT_FACTORY, Configuration.properties.getProperty(Configuration.JNDI_INITIAL_CONTEXT_FACTORY));
-            props.put(Context.URL_PKG_PREFIXES, Configuration.properties.getProperty(Configuration.JNDI_URL_PKG_PREFIXES));
-            props.put(Context.PROVIDER_URL, Configuration.properties.getProperty(Configuration.JNDI_PROVIDER_URL));
+            props.put(Context.INITIAL_CONTEXT_FACTORY,
+                Configuration.properties.getProperty(
+                    Configuration.JNDI_INITIAL_CONTEXT_FACTORY));
+            props.put(Context.URL_PKG_PREFIXES,
+                Configuration.properties.getProperty(
+                    Configuration.JNDI_URL_PKG_PREFIXES));
+            props.put(Context.PROVIDER_URL,
+                Configuration.properties.getProperty(
+                    Configuration.JNDI_PROVIDER_URL));
 
             Principal principal = request.getUserPrincipal();
             props.put(Context.SECURITY_PRINCIPAL, principal.getName());
-            props.put(Context.SECURITY_CREDENTIALS, SessionManager.getObject(Constants.JAAS_PASSWORD, request));
-            
-            props.put(Context.SECURITY_PROTOCOL, Configuration.properties.getProperty(Configuration.SECURITY_PROTOCOL));
+            props.put(Context.SECURITY_CREDENTIALS,
+                SessionManager.getObject(Constants.JAAS_PASSWORD, request));
 
-            SessionManager.setObject(Constants.CONTEXT_PROPERTIES, props, request);
+            props.put(Context.SECURITY_PROTOCOL,
+                Configuration.properties.getProperty(
+                    Configuration.SECURITY_PROTOCOL));
+
+            SessionManager.setObject(Constants.CONTEXT_PROPERTIES, props,
+                request);
         }
 
         return props;
