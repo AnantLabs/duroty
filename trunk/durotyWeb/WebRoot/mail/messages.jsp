@@ -230,7 +230,7 @@ String path = request.getContextPath();
 						</div>
 					</c:when>
 				</c:choose>
-				<html:form action="mail/spam.drt" method="post" target="util" style="margin: 0pt; width: 100%;" enctype="multipart/form-data">
+				<html:form action="mail/spam.drt" method="post" target="util" style="" enctype="multipart/form-data">
 					<html:hidden property="folder" />
 					<c:choose>
 						<c:when test="${!empty messages}">

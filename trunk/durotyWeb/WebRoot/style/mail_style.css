@@ -231,6 +231,11 @@ A:HOVER {
 	font-weight: bold;
 }
 
+#buttonCompose {
+	padding-right: 5px;
+	padding-bottom: 5px;
+}
+
 .buttonEditDraft {
 	border: 1px solid black;
 	background-color: #38afe2;

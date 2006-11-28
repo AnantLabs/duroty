@@ -10,7 +10,6 @@ String path = request.getContextPath();
 			String basePath = request.getScheme() + "://"
 					+ request.getServerName() + ":" + request.getServerPort()
 					+ path + "/";
-
 			%>
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -84,14 +83,14 @@ String path = request.getContextPath();
 			tinyMCE.init({
 				mode : "exact",
 				theme : "advanced",
-				plugins : "spellchecker",
-				spellchecker_languages : "+English=en,Spanish=es,Catalan=ca",
+				/*plugins : "spellchecker",*/
+				/*spellchecker_languages : "+English=en,Spanish=es,Catalan=ca",*/
 				language : "<c:out value='${sessionScope["org.apache.struts.action.LOCALE"]}' />",
 				content_css : "<%=basePath%>style/mail_htmlarea_full.css",
 				theme_advanced_toolbar_location : "top",
 				theme_advanced_toolbar_align : "left",
 				theme_advanced_path_location : "bottom",
-				theme_advanced_buttons3_add : "spellchecker",
+				/*theme_advanced_buttons3_add : "spellchecker",*/
 				add_form_submit_trigger : false,
 				submit_patch : false,
 				debug : false
@@ -129,7 +128,7 @@ String path = request.getContextPath();
 		<script type="text/javascript" src="<%=basePath%>javascript/googiespell/googiespell.js"></script>
 		<script type="text/javascript" src="<%=basePath%>javascript/googiespell/cookiesupport.js"></script>
 	</head>
-	<body>						
+	<body id="twocolumn-left">						
 		<script language="JavaScript">			
 			if (window == top) {			
 				alert('It is not allowed to see the frame individually');

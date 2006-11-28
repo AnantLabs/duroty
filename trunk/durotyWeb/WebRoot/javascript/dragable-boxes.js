@@ -818,6 +818,16 @@ function initEvents() {
 }
 function createFeed(formObj) {
     var url = formObj.rssUrl.value;
+    if (!url) {
+    	alert('Error URL');
+    	return;
+    } else {
+    	var idx = url.toLowerCase().indexOf("http://");
+    	if (idx <= -1 && url.length < 10) {
+    		alert('Error URL');
+    		return;
+    	}
+    }
     var items = formObj.items.value;
     var height = formObj.height.value;
     var reloadInterval = formObj.reloadInterval.value;
@@ -828,6 +838,8 @@ function createFeed(formObj) {
         reloadInterval = false;
     }
     createARSSBox(url, 1, height, items, reloadInterval);
+    
+    showHideElement('addNewFeed');
 }
 function createRSSBoxesFromCookie(no) {
     var tmpArray = new Array();    

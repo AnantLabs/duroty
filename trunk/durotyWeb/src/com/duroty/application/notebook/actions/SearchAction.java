@@ -20,6 +20,26 @@
 */
 
 
+/*
+* Copyright (C) 2006 Jordi Marquès Ferré
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation; either version 2 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this software; see the file DUROTY.txt.
+*
+* Author: Jordi Marquès Ferré
+* c/Mallorca 295 principal B 08037 Barcelona Spain
+* Phone: +34 625397324
+*/
 /**
  *
  */
@@ -32,6 +52,7 @@ import com.duroty.application.bookmark.utils.SearchObj;
 import com.duroty.constants.Constants;
 import com.duroty.constants.ExceptionCode;
 
+import com.duroty.utils.Pagination;
 import com.duroty.utils.exceptions.ExceptionUtilities;
 import com.duroty.utils.log.DLog;
 import com.duroty.utils.log.DMessage;
@@ -187,5 +208,52 @@ public class SearchAction extends BookmarkDefaultAction {
     protected void doTrace(HttpServletRequest request, int level, Class classe,
         String message) throws Exception {
         DLog.log(level, classe, DMessage.toString(request, message));
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param request DOCUMENT ME!
+     * @param action DOCUMENT ME!
+     * @param hits DOCUMENT ME!
+     * @param messagesByPage DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    protected String getPagination(HttpServletRequest request, String action,
+        int hits, int messagesByPage) {
+        String page = request.getParameter("page");
+        String order = request.getParameter("order");
+        String extra = request.getParameter("extra");
+        int pag = 1;
+
+        if (action == null) {
+            action = "INBOX";
+        }
+
+        if (request.getParameter("page") != null) {
+            try {
+                pag = Integer.parseInt(request.getParameter("page"));
+
+                if (pag <= 0) {
+                    pag = 1;
+                }
+            } catch (NumberFormatException nfe) {
+                pag = 1;
+            }
+        }
+
+        if (order == null) {
+            order = "0";
+        }
+
+        if (extra == null) {
+            extra = "0";
+        }
+
+        Pagination pagination = new Pagination("Notebook", pag, hits,
+                messagesByPage, 10, action, page, order, extra);
+
+        return pagination.getText();
     }
 }
