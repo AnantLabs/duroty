@@ -90,7 +90,7 @@ public abstract class MailDefaultAction extends DefaultAction {
         throws Exception {
         if (diskFileUpload == null) {
             diskFileUpload = new DiskFileUpload();
-            diskFileUpload.setSizeMax(1073741824);
+            diskFileUpload.setSizeMax(10485760);
         }
     }
 
