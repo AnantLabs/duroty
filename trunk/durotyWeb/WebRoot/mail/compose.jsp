@@ -104,7 +104,7 @@ String path = request.getContextPath();
 							<tr>
 								<td nowrap="nowrap" align="right" valign="top">
 									<span style="color: blue; text-decoration: underline; cursor: pointer;" onclick="javascript:Mail.attachFile('attachFile');"><fmt:message key="mail.addAttachment" /></span>&nbsp;
-									<img src="<%=basePath%>images/attachment.gif" border="0" style="cursor: pointer;" onclick="javascript:Mail.attachFile('attachFile');" />
+									<img src="<%=basePath%>images/attachment.gif" border="0" style="cursor: pointer; padding-right: 3px;" onclick="javascript:Mail.attachFile('attachFile');" />
 								</td>
 								<td width="100%" id="attachFile">
 								</td>

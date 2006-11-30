@@ -17,7 +17,7 @@
 
 <table border="0" cellspacing="2" cellpadding="2" align="right">
 	<tr>
-		<td style="white-space: nowrap;">	
+		<td style="white-space: nowrap; font-size: 11px;">	
 			<%
 				if (request.isUserInRole("member")) {
 					%>					
@@ -55,9 +55,9 @@
 				}
 			%>
 		</td>
-		<td style="white-space: nowrap;">
+		<td style="white-space: nowrap; font-size: 11px;">
 		</td>
-		<td class="toolbarInfo" style="white-space: nowrap;">
+		<td class="toolbarInfo" style="white-space: nowrap; padding-right: 5px; font-size: 11px;">
 			&nbsp;
 			<b><c:out value="${user}" /></b>
 			&nbsp;

@@ -51,11 +51,11 @@ String path = request.getContextPath();
 
 <div id="idFormBookmark" class="hide">
 	<br>
-	<table style="border: 1px solid rgb(0, 128, 0);" align="center" border="0" cellpadding="3" cellspacing="0" width="100%">
+	<table style="border: 1px solid rgb(0, 128, 0);" align="center" border="0" cellpadding="3" cellspacing="3" width="100%">
 		<tbody>
 			<tr>
 				<td width="100%">
-					<table style="background-color: rgb(239, 239, 239);" border="0" cellpadding="4" cellspacing="0" width="100%">
+					<table style="background-color: rgb(239, 239, 239);" border="0" cellpadding="4" cellspacing="3" width="100%">
 						<tbody>
 							<tr>
 
@@ -85,12 +85,12 @@ String path = request.getContextPath();
 		</tbody>
 	</table>
 	<br>
-	<table style="border: 1px solid rgb(0, 128, 0);" align="center" border="0" cellpadding="3" cellspacing="0" width="100%">
+	<table style="border: 1px solid rgb(0, 128, 0);" align="center" border="0" cellpadding="3" cellspacing="3" width="100%">
 		<tbody>
 			<tr>
 
 				<td width="100%">
-					<table style="background-color: rgb(239, 239, 239);" border="0" cellpadding="4" cellspacing="0" width="100%">
+					<table style="background-color: rgb(239, 239, 239);" border="0" cellpadding="4" cellspacing="3" width="100%">
 						<tbody>
 							<tr>
 								<td width="100%">

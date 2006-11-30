@@ -8,20 +8,6 @@ String path = request.getContextPath();
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<table border="0" cellspacing="0" cellpadding="0" style="z-index: 1;">
-	<tr>
-		<td nowrap="nowrap">
-			<img src="<%=basePath%>images/duroty.gif" border="0" align="middle" />
-			&nbsp;&nbsp;
-		</td>					
-		<td nowrap="nowrap" style="font-size: 10px; padding-left: 3px;">
-			<input type="button" name="btnFeed" class="BUTTON_ADD_FEED" value="<fmt:message key="mail.home.addFeed" />" onclick="showHideElement('addNewFeed');" />
-		</td>
-		<td width="100%" align="right" style="z-index: 1;">
-			<c:import url="/toolbar.jsp"/>
-		</td>
-	</tr>
-</table>
 <div id="mainContainer">
 	<div id="header">	
 		<div id="addNewFeed" class="hide">

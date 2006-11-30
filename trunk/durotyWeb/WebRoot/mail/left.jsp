@@ -11,8 +11,8 @@ String path = request.getContextPath();
 <%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<div id="buttonCompose">
-	<input type="button" name="compose" class="buttonCompose" value="<fmt:message key="general.compose" />" onclick="javascript:Mail.displayLocation('compose:0*0!0', null);" /><br/>
+<div class="divButtonCompose">
+	<div class="buttonCompose" onclick="javascript:Mail.displayLocation('compose:0*0!0', null);" /><fmt:message key="general.compose" /></div>
 </div>
 
 <div id="folders" class="folders">

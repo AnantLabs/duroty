@@ -40,6 +40,6 @@
     
     <tiles:put name="contents" content="/admin/adminContents.jsp" />
 
-    <tiles:put name="foot" content="/foot.jsp" />
+    <tiles:put name="foot" content="/admin/foot.jsp" />
 
 </tiles:insert>

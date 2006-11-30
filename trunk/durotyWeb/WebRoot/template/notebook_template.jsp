@@ -54,7 +54,7 @@ String path = request.getContextPath();
 
 		<link href="<%=basePath%>style/notebook_style.css" rel="stylesheet" type="text/css" />
 	</head>
-	<body>
+	<body id="twocolumn-left">
 		<script language="JavaScript">
 			if (window == top) {
 				alert('It is not allowed to see the frame individually');
@@ -62,19 +62,24 @@ String path = request.getContextPath();
 			}
 		</script>
 		<div id="cornerLoading"><fmt:message key="general.loading" /></div>
-		<div id="mesh" class="show">
-			<table width="0" border="0" cellspacing="0" cellpadding="0" class="mesh">
-				<tr>
-					<td>
-						<table width="100%" border="0" cellspacing="0" cellpadding="0">
-							<tr>
-								<td class="headLeft">
+		
+		<div id="container">
+			<div class="wrapper">
+				<div id="header">
+					<div class="wrapper">
+						<div id="page-title">
+							<div id="g_title">
+								<div id="navigation_right" style="float: right; width: 50%; height: auto; margin-left: 0%; margin-right: 0%;">
+									<!-- toolbar -->
+									<tiles:insert name="toolbar" />
+									<!-- fi toolbar-->
+								</div>
+								<div id="navigation_left" style="margin: 0pt 50% 0pt 0pt;">		
 									<form action="" method="post" onsubmit="javascript:Notebook.displayLocation('search:0*0!0', null);return false;" enctype="multipart/form-data">
 										<table border="0" cellspacing="0" cellpadding="0">
 											<tr>
-												<td nowrap="nowrap">
+												<td nowrap="nowrap" style="padding-left: 5px; padding-top: 5px;">
 													<img src="<%=basePath%>images/duroty.gif" border="0" align="middle" />
-													&nbsp;&nbsp;
 												</td>
 												<td nowrap="nowrap" align="right">
 													<input type="text" size="25" name="token" id="token" class="BUTTON" />&nbsp;
@@ -82,70 +87,92 @@ String path = request.getContextPath();
 												<td nowrap="nowrap" align="left" style="padding-left: 3px;">
 													<input type="button" name="btnSearch" class="BUTTON" value="<fmt:message key="general.search" />" onclick="javascript:Notebook.displayLocation('search:0*0!0', null);" />
 												</td>
-												<td nowrap="nowrap" style="font-size: 10px; padding-left: 3px;">
-													<a href="javascript:openwin('<%=basePath%>notebook/help_<c:out value='${sessionScope["org.apache.struts.action.LOCALE"]}' />.html', 'Help', 700, 600);">- <fmt:message key="general.help" /></a>
+												<td nowrap="nowrap" style="font-size: 10px; padding-left: 5px;">
+													<a href="javascript:openwin('<%=basePath%>bookmark/help_<c:out value='${sessionScope["org.apache.struts.action.LOCALE"]}' />.html', 'Help', 700, 600);">- <fmt:message key="general.help" /></a>
 													<br/>
 													<a href="javascript:(function(){var a=window,b=document,c=encodeURIComponent,d=a.open(%22<%=basePath%>bookmark/bookmarklet.drt?&url=%22+c(b.location)+%22&title=%22+c(b.title),%22bkmk_popup%22,%22left=%22+((a.screenX||a.screenLeft)+10)+%22,top=%22+((a.screenY||a.screenTop)+10)+%22,height=500px,width=700px,resizable=1,alwaysRaised=1%22);a.setTimeout(function(){d.focus()},300)})();" onclick="alert('<fmt:message key="bookmarklet.instructions" />');return false;">- Bookmarklet</a>
 												</td>
 											</tr>
 										</table>										
 									</form>
-								</td>
-								<td class="headCenter">
-									<!-- toolbar -->
-									<tiles:insert name="toolbar" />
-									<!-- fi toolbar-->
-								</td>
-							</tr>							
-						</table>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<table width="100%" border="0" cellspacing="0" cellpadding="0">
-							<tr>
-								<td class="navLeft" align="right">
-									<div id="divInfo" class="hide"></div>
-								</td>
-								<td class="navCenter" nowrap="nowrap">
-									<!-- NOW -->
-									<tiles:insert name="date" />
-									<!-- FI NOW -->
-								</td>
-							</tr>
-						</table>
-						<table width="100%" border="0" cellspacing="0" cellpadding="0">
-							<tr>
-								<td class="left" nowrap="nowrap" width="0">
+								</div>								
+							</div>
+						</div>
+						<div style="clear: both;"></div>
+						<div id="g_description">
+							<div id="navigation_right" style="float: right; height: auto; margin-left: 0%; margin-right: 15px;">
+								<!-- NOW -->
+								<tiles:insert name="date" />
+								<!-- FI NOW -->
+							</div>
+							<div id="navigation_left" style="margin: 0pt 0% 0pt 0pt;">		
+								<div id="divInfo" class="hide"></div>
+							</div>	
+							
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+				</div>
+				<!-- /wrapper -->
+				<!-- /header -->
+				<div id="sidebar">
+					<div class="wrapper">
+						<div class="links">
+							<div class="wrapper">
+								<div id="g_sidebar">
 									<!-- LEFT -->
 									<tiles:insert name="left" />
 									<!-- FI LEFT -->
-								</td>
-								<td class="contents" width="100%">
-									<!-- BODY -->
-									<tiles:insert name="contents" />
-									<!-- FI BODY -->
-									<br />
-									<table width="100%" border="0" cellspacing="0" cellpadding="0">
-										<tr>
-											<td width="100%" style="text-align: center;">
-												<!-- FOOT -->
-												<tiles:insert name="foot" />
-												<!-- FI FOOT -->
-											</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="2" class="foot">
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table>
+								</div>
+							</div>
+							<div style="clear: both;"></div>
+						</div>
+						<!-- /wrapper -->
+						<!-- /links -->
+					</div>
+				</div>
+				<!-- /wrapper -->
+				<!-- /sidebar -->
+				<div id="main-content">
+					<div class="wrapper">
+						<div class="content-item">
+							<div id="g_body">
+								<!-- BODY -->
+								<tiles:insert name="contents" />
+								<!-- FI BODY -->
+								<!-- FOOT -->
+								<div class="foot">
+								<tiles:insert name="foot" />
+								</div>
+								<!-- FI FOOT -->
+							</div>
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+				</div>
+				<!-- /wrapper -->
+				<!-- /main-content -->				
+				<div id="footer">
+					<div class="wrapper">
+						<div id="g_footer">							
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+				</div>
+				<!-- /wrapper -->
+				<!-- /footer -->
+			</div>
 		</div>
+		<!-- /wrapper -->
+		<!-- /container -->
+
+		<div id="extraDiv1"><span></span></div>
+		<div id="extraDiv2"><span></span></div>
+		<div id="extraDiv3"><span></span></div>
+		<div id="extraDiv4"><span></span></div>
+		<div id="extraDiv5"><span></span></div>
+		<div id="extraDiv6"><span></span></div>
+		
 		<iframe src="" id="util" name="util" width="0" frameborder="0"></iframe>
 		<iframe src="<%=basePath%>notebook/session.jsp" id="session" name="session" width="0" frameborder="0"></iframe>
 	</body>
