@@ -9,11 +9,7 @@ response.setHeader("Cache-Control", "max-age=315360000");
 String path = request.getContextPath();
 			String basePath = request.getScheme() + "://"
 					+ request.getServerName() + ":" + request.getServerPort()
-					+ path + "/";
-			String basePath1 = request.getScheme() + "://"
-					+ request.getServerName() + ":" + request.getServerPort()
 					+ path + "/";		
-basePath = path + "/";					
 			%>
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -29,7 +25,7 @@ basePath = path + "/";
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<c:out value="${sessionScope['org.apache.struts.action.LOCALE']}" />" lang="<c:out value="${sessionScope['org.apache.struts.action.LOCALE']}" />">
 
 	<head>
-		<base href="<%=basePath1%>" />
+		<base href="<%=basePath%>" />
 		<title><tiles:insert name="title" /></title>
 		<meta http-equiv="keywords" content="jordi marquès, duroty, gmail, lucene, jboss, mail, james, tomcat, pop3, imap, java, email, webmail, network" />
 		<meta http-equiv="description" content="Duroty is a service of personal feeds, email management, link management and briefly it will also include electronic calendar and server file indexation. Duroty is addressed to SMEs which need information and knowledge management systems in order to diminish the barrier to the access to information." />
