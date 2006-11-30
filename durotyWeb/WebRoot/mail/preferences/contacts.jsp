@@ -40,6 +40,6 @@
     
     <tiles:put name="contents" content="/mail/preferences/contactsContents.jsp" />
 
-    <tiles:put name="foot" content="/foot.jsp" />
+    <tiles:put name="foot" content="/mail/foot.jsp" />
 
 </tiles:insert>

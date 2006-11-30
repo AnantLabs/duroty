@@ -78,69 +78,84 @@ String path = request.getContextPath();
 				</tr>
 			</table>
 		</div>
-		<div id="mesh" class="show">
-			<table width="0" border="0" cellspacing="0" cellpadding="0" class="mesh">
-				<tr>
-					<td>
-						<table width="100%" border="0" cellspacing="0" cellpadding="0">
-							<tr>
-								<td class="headLeft">
-									<table border="0" cellspacing="0" cellpadding="0">
-										<tr>
-											<td nowrap="nowrap">
-												<img src="<%=basePath%>images/duroty.gif" border="0" align="middle" />
-												&nbsp;&nbsp;
-											</td>												
-										</tr>
-									</table>
-								</td>
-								<td class="headCenter">
+		<div id="container">
+			<div class="wrapper">
+				<div id="header">
+					<div class="wrapper">
+						<div id="page-title">
+							<div id="g_title">
+								<div id="navigation_right" style="float: right; width: 50%; height: auto; margin-left: 0%; margin-right: 0%;">
 									<!-- toolbar -->
 									<tiles:insert name="toolbar" />
 									<!-- fi toolbar-->
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<table width="100%" border="0" cellspacing="0" cellpadding="0">
-							<tr>
-								<td class="navCenter" nowrap="nowrap">
-									<!-- NOW -->
-									<tiles:insert name="date" />
-									<!-- FI NOW -->
-								</td>
-							</tr>
-						</table>
-						<table width="100%" border="0" cellspacing="0" cellpadding="0">
-							<tr>
-								<td class="contents" width="100%">
-									<!-- BODY -->
-									<tiles:insert name="contents" />
-									<!-- FI BODY -->
-									<br />
-									<table width="100%" border="0" cellspacing="0" cellpadding="0">
+								</div>
+								<div id="navigation_left" style="margin: 0pt 50% 0pt 0pt;">
+									<table border="0" cellspacing="0" cellpadding="0">
 										<tr>
-											<td width="100%" style="text-align: center;">
-												<!-- FOOT -->
-												<tiles:insert name="foot" />
-												<!-- FI FOOT -->
+											<td nowrap="nowrap" style="padding-left: 5px; padding-top: 5px;">
+												<img src="<%=basePath%>images/duroty.gif" border="0" align="middle" />
 											</td>
 										</tr>
 									</table>
-								</td>
-							</tr>
-							<tr>
-								<td class="foot">
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table>
+								</div>								
+							</div>
+						</div>
+						<div style="clear: both;"></div>
+						<div id="g_description">
+							<div id="navigation_right" style="float: right; height: auto; margin-left: 0%; margin-right: 15px;">
+								<!-- NOW -->
+								<tiles:insert name="date" />
+								<!-- FI NOW -->
+							</div>
+							<div id="navigation_left" style="margin: 0pt 10px 5pt 0pt; float: right;">		
+								<div id="divInfo" class="hide"></div>
+							</div>	
+							
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+				</div>
+				<!-- /wrapper -->
+				<!-- /sidebar -->
+				<div id="main-content">
+					<div class="wrapper">
+						<div class="content-item">
+							<div id="g_body">
+								<!-- BODY -->
+								<tiles:insert name="contents" />
+								<!-- FI BODY -->
+								<!-- FOOT -->
+								<div class="foot">
+								<tiles:insert name="foot" />
+								</div>
+								<!-- FI FOOT -->
+							</div>
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+				</div>
+				<!-- /wrapper -->
+				<!-- /main-content -->				
+				<div id="footer">
+					<div class="wrapper">
+						<div id="g_footer">							
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+				</div>
+				<!-- /wrapper -->
+				<!-- /footer -->
+			</div>
 		</div>
+		<!-- /wrapper -->
+		<!-- /container -->
+
+		<div id="extraDiv1"><span></span></div>
+		<div id="extraDiv2"><span></span></div>
+		<div id="extraDiv3"><span></span></div>
+		<div id="extraDiv4"><span></span></div>
+		<div id="extraDiv5"><span></span></div>
+		<div id="extraDiv6"><span></span></div>
 		<iframe src="" id="util" name="util" width="0" frameborder="0"></iframe>
 	</body>
 </html>

@@ -13,9 +13,6 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!-- CONTENTS -->
-<div id="divInfo">
-</div>
-<br/>
 <div id="idFormSettings">
 	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="formSettings">
 		<tr>

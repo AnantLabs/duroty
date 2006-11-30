@@ -10,6 +10,10 @@ String path = request.getContextPath();
 			String basePath = request.getScheme() + "://"
 					+ request.getServerName() + ":" + request.getServerPort()
 					+ path + "/";
+			String basePath1 = request.getScheme() + "://"
+					+ request.getServerName() + ":" + request.getServerPort()
+					+ path + "/";		
+basePath = path + "/";					
 			%>
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -25,7 +29,7 @@ String path = request.getContextPath();
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<c:out value="${sessionScope['org.apache.struts.action.LOCALE']}" />" lang="<c:out value="${sessionScope['org.apache.struts.action.LOCALE']}" />">
 
 	<head>
-		<base href="<%=basePath%>" />
+		<base href="<%=basePath1%>" />
 		<title><tiles:insert name="title" /></title>
 		<meta http-equiv="keywords" content="jordi marquès, duroty, gmail, lucene, jboss, mail, james, tomcat, pop3, imap, java, email, webmail, network" />
 		<meta http-equiv="description" content="Duroty is a service of personal feeds, email management, link management and briefly it will also include electronic calendar and server file indexation. Duroty is addressed to SMEs which need information and knowledge management systems in order to diminish the barrier to the access to information." />
@@ -117,12 +121,12 @@ String path = request.getContextPath();
 		
 		<!-- The Mail Library -->
 		<script type="text/javascript" src="<%=basePath%>mail/javascript/mail.js"></script>				
-
-		<link href="<%=basePath%>style/mail_style.css" rel="stylesheet" type="text/css" />
+		
 		<link href="<%=basePath%>style/default.css" rel="stylesheet" type="text/css" />
 		<link href="<%=basePath%>style/alphacube.css" rel="stylesheet" type="text/css" />
 		<link href="<%=basePath%>style/ajax_im.css" rel="stylesheet" type="text/css" />
 		<link href="<%=basePath%>style/windows.css" rel="stylesheet" type="text/css" />
+		<link href="<%=basePath%>style/mail_style.css" rel="stylesheet" type="text/css" />
 		
 		<script type="text/javascript" src="<%=basePath%>javascript/googiespell/AJS.js"></script>
 		<script type="text/javascript" src="<%=basePath%>javascript/googiespell/googiespell.js"></script>
@@ -140,28 +144,32 @@ String path = request.getContextPath();
 			<form action="<%=basePath%>mail/help_ca.html" name="formAux" method="post" target="util" enctype="multipart/form-data">
 				<input type="hidden" name="aux" value="" />
 			</form>
-		</div>
-		<div id="mesh" class="show">			
-			<table width="0" border="0" cellspacing="0" cellpadding="0" class="mesh">
-				<tr>
-					<td>
-						<table width="100%" border="0" cellspacing="0" cellpadding="0">
-							<tr>
-								<td class="headLeft">
+		</div>				
+		<div id="container">
+			<div class="wrapper">
+				<div id="header">
+					<div class="wrapper">
+						<div id="page-title">
+							<div id="g_title">
+								<div id="navigation_right" style="float: right; width: 50%; height: auto; margin-left: 0%; margin-right: 0%;">
+									<!-- toolbar -->
+									<tiles:insert name="toolbar" />
+									<!-- fi toolbar-->
+								</div>
+								<div id="navigation_left" style="margin: 0pt 50% 0pt 0pt;">		
 									<form action="" method="post" onsubmit="javascript:Mail.displayLocation('simpleSearch:0*0!0', null);return false;" style="margin: 0px; padding: 0px;" enctype="multipart/form-data">
 										<table border="0" cellspacing="0" cellpadding="0">
 											<tr>
-												<td nowrap="nowrap">
+												<td nowrap="nowrap" style="padding-left: 5px; padding-top: 5px;">
 													<img src="<%=basePath%>images/duroty.gif" border="0" align="middle" />
-													&nbsp;&nbsp;
 												</td>
-												<td nowrap="nowrap" align="right">
+												<td nowrap="nowrap" align="right" style="font-size: 12px;">
 													<input type="text" size="25" name="token" id="token" class="BUTTON" />
 													<br/>
-													<fmt:message key="mail.search.excludeTrash" />
+													<fmt:message key="mail.search.excludeTrash" />&nbsp;
 												</td>
 												<td nowrap="nowrap" align="left" style="padding-left: 3px;">
-													<input type="button" name="btnSearch" class="BUTTON" value="<fmt:message key="general.search" />" onclick="javascript:Mail.displayLocation('simpleSearch:0*0!0', null);" />
+													<input type="button" name="btnSearch" class="BUTTON" value="<fmt:message key="general.search" />" onclick="javascript:Mail.displayLocation('simpleSearch:0*0!0', null);" style="margin-bottom: 3px;"/>
 													<br/>
 													<input type="checkbox" value="true" id="excludeTrash"/>
 												</td>
@@ -175,61 +183,89 @@ String path = request.getContextPath();
 											</tr>
 										</table>										
 									</form>
-								</td>
-								<td class="headCenter">
-									<!-- toolbar -->
-									<tiles:insert name="toolbar" />
-									<!-- fi toolbar-->
-								</td>
-							</tr>
-							<tr>
-								<td width="100%" colspan="2" style="padding-left: 10px; padding-right: 10px;">
-									<!-- advancedSearch -->
-									<tiles:insert name="advancedSearch" />
-									<tiles:insert name="createFilter" />
-									<!-- fi advancedSearch -->
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<table border="0" cellspacing="0" cellpadding="0">
-							<tr>
-								<td class="navLeft" align="right">
-									<div id="divInfo" class="hide"></div>
-								</td>
-								<td class="navCenter" nowrap="nowrap">
-									<!-- NOW -->
-									<tiles:insert name="date" />
-									<!-- FI NOW -->
-								</td>
-							</tr>
-						</table>
-						<table border="0" cellspacing="0" cellpadding="0">
-							<tr>
-								<td class="left" nowrap="nowrap" width="0">
+								</div>								
+							</div>
+							<!-- advancedSearch -->
+							<tiles:insert name="advancedSearch" />
+							<tiles:insert name="createFilter" />
+							<!-- fi advancedSearch -->
+						</div>
+						<div style="clear: both;"></div>
+						<div id="g_description">
+							<div id="navigation_right" style="float: right; height: auto; margin-left: 0%; margin-right: 15px;">
+								<!-- NOW -->
+								<tiles:insert name="date" />
+								<!-- FI NOW -->
+							</div>
+							<div id="navigation_left" style="margin: 0pt 0% 0pt 0pt;">		
+								<div id="divInfo" class="hide"></div>
+							</div>	
+							
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+				</div>
+				<!-- /wrapper -->
+				<!-- /header -->
+				<div id="sidebar">
+					<div class="wrapper">
+						<div class="links">
+							<div class="wrapper">
+								<div id="g_sidebar">
 									<!-- LEFT -->
 									<tiles:insert name="left" />
 									<!-- FI LEFT -->
-								</td>
-								<td class="contents" width="100%">
-									<!-- BODY -->
-									<tiles:insert name="contents" />
-									<!-- FI BODY -->
-									<div class="foot">
-										<!-- FOOT -->
-										<tiles:insert name="foot" />
-										<!-- FI FOOT -->
-									</div>									
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table>
+								</div>
+							</div>
+							<div style="clear: both;"></div>
+						</div>
+						<!-- /wrapper -->
+						<!-- /links -->
+					</div>
+				</div>
+				<!-- /wrapper -->
+				<!-- /sidebar -->
+				<div id="main-content">
+					<div class="wrapper">
+						<div class="content-item">
+							<div id="g_body">
+								<!-- BODY -->
+								<tiles:insert name="contents" />
+								<!-- FI BODY -->
+								<!-- FOOT -->
+								<div class="foot">
+									<p>&nbsp;</p>
+									<tiles:insert name="foot" />
+								</div>
+								<!-- FI FOOT -->
+							</div>
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+				</div>
+				<!-- /wrapper -->
+				<!-- /main-content -->				
+				<div id="footer">
+					<div class="wrapper">
+						<div id="g_footer">							
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+				</div>
+				<!-- /wrapper -->
+				<!-- /footer -->
+			</div>
 		</div>
+		<!-- /wrapper -->
+		<!-- /container -->
+
+		<div id="extraDiv1"><span></span></div>
+		<div id="extraDiv2"><span></span></div>
+		<div id="extraDiv3"><span></span></div>
+		<div id="extraDiv4"><span></span></div>
+		<div id="extraDiv5"><span></span></div>
+		<div id="extraDiv6"><span></span></div>
+		
 		<div id="sound"></div>
 		<iframe src="" id="util" name="util" width="0" frameborder="0"></iframe>
 		<iframe src="<%=basePath%>mail/session.jsp" id="session" name="session" width="0" frameborder="0"></iframe>		

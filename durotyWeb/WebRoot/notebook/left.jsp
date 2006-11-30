@@ -11,7 +11,6 @@ String path = request.getContextPath();
 <%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<br/>
 <div id="folders" class="folders">
 	<table class="labelsContents" cellpadding="1" cellspacing="0" width="100%">
 	<tr>

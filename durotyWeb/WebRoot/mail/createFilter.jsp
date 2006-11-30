@@ -11,9 +11,8 @@
 <%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<html:form action="mail/insertFilter.drt" method="post" onsubmit="showLoading();return true;" style="padding: 0px; margin: 0px;" target="util" enctype="multipart/form-data">
-	<div id="divCreateFilter" class="hide" style="width: 100%;">
-		<br />
+<div id="divCreateFilter" class="hide" style="margin-left: 10px; margin-right: 10px; padding-top: 10px;">
+	<html:form action="mail/insertFilter.drt" method="post" onsubmit="showLoading();return true;" style="padding: 0px; margin: 0px;" target="util" enctype="multipart/form-data">
 		<table width="100%" border="0" cellspacing="0" cellpadding="2" style="border: 4px solid #008000;" align="center">
 			<tr>
 				<td width="100%">
@@ -30,7 +29,7 @@
 								<table border="0" cellspacing="2" cellpadding="2">
 									<tr>
 										<td style="text-align: right;" nowrap="nowrap">
-											<b><fmt:message key="mail.from" />&nbsp;</b>
+											<b><fmt:message key="mail.from" />:&nbsp;</b>
 										</td>
 										<td width="50%" style="text-align: left;">
 											<html:text property="from" size="20" style="width: 90%;" />
@@ -50,7 +49,7 @@
 											<html:text property="to" size="20" style="width: 90%;" />
 										</td>
 										<td style="text-align: right;" nowrap="nowrap">
-											<b><fmt:message key="mail.doesntHaveWords" />&nbsp;</b>
+											<b><fmt:message key="mail.doesntHaveWords" />:&nbsp;</b>
 										</td>
 										<td width="50%">
 											<html:text property="doesntHaveWords" size="20" style="width: 90%;" />
@@ -58,13 +57,13 @@
 									</tr>
 									<tr>
 										<td style="text-align: right;" nowrap="nowrap">
-											<b><fmt:message key="mail.subject" />&nbsp;</b>
+											<b><fmt:message key="mail.subject" />:&nbsp;</b>
 										</td>
 										<td width="50%" style="text-align: left;">
 											<html:text property="subject" size="20" style="width: 90%;" />
 										</td>
 										<td style="text-align: right;" nowrap="nowrap">
-											<b><fmt:message key="mail.hasAttachment" />&nbsp;</b>
+											<b><fmt:message key="mail.hasAttachment" />:&nbsp;</b>
 										</td>
 										<td width="50%">
 											<html:checkbox property="hasAttachment" />
@@ -75,9 +74,7 @@
 								<table width="100%" border="0" cellspacing="2" cellpadding="2">
 									<tr>
 										<td width="100%" style="text-align: center;">
-											<fmt:message key="mail.filter.operator" />
-											&nbsp;
-											<html:checkbox property="operator" />
+											<fmt:message key="mail.filter.operator" />&nbsp;<html:checkbox property="operator" />
 										</td>
 									</tr>
 								</table>
@@ -183,8 +180,8 @@
 				</td>
 			</tr>
 		</table>
-	</div>
-</html:form>
+	</html:form>
+</div>
 <script language="javascript" type="text/javascript">
 	function nextStep() {	
 		if ((document.formFilter.from.value == null || document.formFilter.from.value == "") && 

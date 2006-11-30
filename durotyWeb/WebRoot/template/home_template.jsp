@@ -7,11 +7,8 @@ response.setHeader("Cache-Control", "max-age=315360000");
 
 <%
 String path = request.getContextPath();
-			String basePath = request.getScheme() + "://"
-					+ request.getServerName() + ":" + request.getServerPort()
-					+ path + "/";
-
-			%>
+String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+%>
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="html" uri="http://struts.apache.org/tags-html"%>
@@ -66,6 +63,23 @@ String path = request.getContextPath();
 		</script>		
 		<div id="cornerLoading"><fmt:message key="general.loading" /></div>
 		<div id="mesh" class="show">
+			<div id="navigation_right" style="float: right; width: 50%; height: auto; margin-left: 0%; margin-right: 0%;">
+				<!-- toolbar -->
+				<tiles:insert name="toolbar" />
+				<!-- fi toolbar-->
+			</div>
+			<div id="navigation_left" style="margin: 0pt 50% 0pt 0pt;">		
+				<table border="0" cellspacing="0" cellpadding="0">
+					<tr>
+						<td nowrap="nowrap" style="padding-left: 5px; padding-top: 5px;">
+							<img src="<%=basePath%>images/duroty.gif" border="0" align="middle" />
+						</td>
+						<td nowrap="nowrap" align="right" style="font-size: 12px;">
+							<input type="button" name="btnFeed" class="BUTTON_ADD_FEED" value="<fmt:message key="mail.home.addFeed" />" onclick="showHideElement('addNewFeed');" />
+						</td>
+					</tr>
+				</table>
+			</div>
 			<table width="0" border="0" cellspacing="0" cellpadding="0" class="mesh">
 				<tr>
 					<td>						

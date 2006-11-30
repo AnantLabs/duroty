@@ -5,34 +5,10 @@ BODY {
 	font-variant: normal;
 	font-weight: normal;
 	font-size: 12px;
-	margin-top: 2px;
+	margin-top: 0px;
 	margin-left: 0px;
 	margin-right: 0px;
 	margin-bottom: 0px;
-}
-
-TR,TD,DIV,P {
-	font-family: arial;
-	font-stretch: normal;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: normal;
-	font-size: 12px;
-	color: #000000;
-}
-
-SELECT,INPUT,TEXTAREA {
-	font-family: arial;
-	font-stretch: normal;
-	font-style: normal;
-	font-variant: normal;
-	font-weight: normal;
-	font-size: 12px;
-	color: #000000;
-}
-
-.BUTTON {
-	border: 1px solid black;
 }
 
 .BUTTON_ADD_FEED {
@@ -43,11 +19,6 @@ SELECT,INPUT,TEXTAREA {
 FORM {
 	margin: 0px;
 	padding: 0px;
-}
-
-SELECT:focus,input:focus,textarea:focus {
-	background-color: lightyellow;
-	color: black;
 }
 
 A,A:VISITED {

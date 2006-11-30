@@ -9,9 +9,9 @@ String path = request.getContextPath();
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<div id="layout" class="layout">
-	<b class="rtop"><b class="r1"></b><b class="r2"></b><b class="r3"></b><b class="r4"></b></b>
-	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tableBorder<c:out value="${clazz}" />">
+<div id="layout">
+	<b class="rtop<c:out value="${clazz}" />"><b class="r1"></b><b class="r2"></b><b class="r3"></b><b class="r4"></b></b>
+	<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tableBorder">
 		<tr>
 			<td width="100%">
 				<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tableHeader">
@@ -34,7 +34,7 @@ String path = request.getContextPath();
 			</td>
 		</tr>
 	</table>
-	<b class="rbottom"><b class="r4"></b><b class="r3"></b><b class="r2"></b><b class="r1"></b></b>
+	<b class="rbottom<c:out value="${clazz}" />"><b class="r4"></b><b class="r3"></b><b class="r2"></b><b class="r1"></b></b>
 </div>
 
 <script type="text/javascript" language="javascript">

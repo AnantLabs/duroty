@@ -12,13 +12,12 @@ String path = request.getContextPath();
 <%@ taglib prefix="x" uri="http://java.sun.com/jsp/jstl/xml"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<div id="divAdvancedSearch" class="hide" style="width: 100%;">
-	<br/>
+<div id="divAdvancedSearch" class="hide" style="margin-left: 10px; margin-right: 10px; padding-top: 10px;">
 	<FORM action="" method="get" name="formAdvancedSearch" onsubmit="Mail.displayLocation('advancedSearch:0*0!0', null);return false;" style="margin: 0px; padding: 0px;">
 		<table width="100%" border="0" cellspacing="0" cellpadding="2" style="border: 4px solid #fbcc4b;" align="center">
 			<tr>
 				<td width="100%">
-					<table width="100%" border="0" cellspacing="0" cellpadding="4" style="background-color: #fbf9c1;">
+					<table width="100%" border="0" cellspacing="3" cellpadding="4" style="background-color: #fbf9c1;">
 						<tr>
 							<td style="text-align: right;" nowrap="nowrap">
 								<b><fmt:message key="mail.from" />:&nbsp;</b>
@@ -29,7 +28,7 @@ String path = request.getContextPath();
 							<td style="text-align: right;" nowrap="nowrap">
 								<b><fmt:message key="mail.hasWords" />:&nbsp;</b>
 							</td>
-							<td width="50%" nowrap="nowrap">
+							<td width="50%" nowrap="nowrap" style="font-size: 10px;">
 								<input type="text" name="hasWords" size="20" style="width: 50%;" />&nbsp;<input type="checkbox" name="hasWordsInBody" checked="checked" />&nbsp;<fmt:message key="mail.hasWords.inBody" />&nbsp;<input type="checkbox" name="hasWordsInAttachment" checked="checked" />&nbsp;<fmt:message key="mail.hasWords.inAttachments" />
 							</td>
 						</tr>
@@ -41,7 +40,7 @@ String path = request.getContextPath();
 								<input type="text" name="to" size="20" style="width: 90%;" />
 							</td>
 							<td style="text-align: right;" nowrap="nowrap">
-								<b><fmt:message key="mail.fileType" />:&nbsp; </b>
+								<b><fmt:message key="mail.fileType" />:&nbsp;</b>
 							</td>
 							<td width="50%">
 								<select size="1" name="filetype">

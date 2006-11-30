@@ -271,7 +271,7 @@ String path = request.getContextPath();
 									</c:choose>
 									
 									<tr style="background: <c:out value="${background}" />;">
-										<td id="td<c:out value='${message.mid}' />" title="<c:out value='${title}' />" style="font-weight: <c:out value="${fontWeight}" />; border-bottom: 1px solid rgb(187, 187, 187); overflow: hidden; width: 100%; white-space: nowrap; font-size: 100%; empty-cells: show; font-family: arial,sans-serif;">
+										<td id="td<c:out value='${message.mid}' />" title="<c:out value='${title}' />" style="font-weight: <c:out value="${fontWeight}" />; border-bottom: 1px solid rgb(187, 187, 187); overflow: hidden; width: 100%; white-space: nowrap; font-size: 100%; empty-cells: show; font-family: arial,sans-serif; padding-left: 5px;">
 											<html:multibox property="mid" styleId="${message.mid}" onclick="Mail.cacheMid(this);">
 												<c:out value="${message.mid}" />
 											</html:multibox>

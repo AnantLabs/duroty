@@ -104,7 +104,7 @@ function Get_Cookie(name) {
                             if (rana <= 0) {
                                 rana = cookieCounter;
                             }
-                            Set_Cookie(nameOfCookie + rana, "none", 60000);
+                            Set_Cookie(nameOfCookie + rana, "none", -500);
                             rana++;
                         }
                     }
@@ -114,23 +114,7 @@ function Get_Cookie(name) {
     };
     ajaxgetfeed.runAJAX();
 } 
-
-function Get_CookieBak(name) {
-    var start = document.cookie.indexOf(name + "=");
-    var len = start + name.length + 1;
-    if ((!start) && (name != document.cookie.substring(0, name.length))) {
-        return null;
-    }
-    if (start == -1) {
-        return null;
-    }
-    var end = document.cookie.indexOf(";", len);
-    if (end == -1) {
-        end = document.cookie.length;
-    }
-    return unescape(document.cookie.substring(len, end));
-} 
-	// This function has been slightly modified
+// This function has been slightly modified
 function Set_Cookie(name, value, expires, path, domain, secure) {
     expires = expires * 60 * 60 * 24 * 1000;
     var today = new Date();
@@ -388,12 +372,25 @@ function saveCookies() {
             var uniqueIdentifier = dragableBoxesArray[boxIndex]["uniqueIdentifier"];
             var state = dragableBoxesArray[boxIndex]["boxState"];
             if (!tmpUrlArray[url]) {
-                tmpUrlArray[url] = true;
-                Set_Cookie(nameOfCookie + cookieCounter, url + "#;#" + columnIndex + "#;#" + maxRssItems + "#;#" + heightOfBox + "#;#" + minutesBeforeReload + "#;#" + uniqueIdentifier + "#;#" + state, 60000);
-                cookieRSSSources[url] = cookieCounter;
-                cookieCounter++;
+            	var controlat = true;
+            	if (!url) {
+            		controlat = false;
+			    	Set_Cookie(nameOfCookie + cookieCounter, "none", -500);
+			    } else {			    	
+			    	var idx = url.toLowerCase().indexOf("http://");
+			    	if (idx <= -1 && url.length < 10) {
+			    		controlat = false;
+			    		Set_Cookie(nameOfCookie + cookieCounter, "none", -500);
+			    	}
+			    }
+			    if (controlat) {
+	                tmpUrlArray[url] = true;
+    	            Set_Cookie(nameOfCookie + cookieCounter, url + "#;#" + columnIndex + "#;#" + maxRssItems + "#;#" + heightOfBox + "#;#" + minutesBeforeReload + "#;#" + uniqueIdentifier + "#;#" + state, 60000);
+        	        cookieRSSSources[url] = cookieCounter;
+            	    cookieCounter++;
+				}
             } else {
-                Set_Cookie(nameOfCookie + cookieCounter, "" + "#;#" + columnIndex + "#;#" + "" + "#;#" + heightOfBox + "#;#" + "" + "#;#" + uniqueIdentifier, 60000);
+                Set_Cookie(nameOfCookie + cookieCounter, "none", -500);
                 cookieCounter++;
             }
         }
@@ -508,19 +505,19 @@ function closeDragableBox(e, inputObj) {
     var numericId = inputObj.id.replace(/[^0-9]/g, "");
     document.getElementById("dragableBox" + numericId).style.display = "none";
     
-    try {
+    /*try {
     	var parent = document.getElementById("dragableBox" + numericId).parentNode;
     	if (parent) {
     		parent.removeChild(document.getElementById("dragableBox" + numericId));
     	}
-    } catch (e) {alert(e);}
+    } catch (e) {alert(e);}*/
     
     var idx = cookieRSSSources[dragableBoxesArray[numericId]["rssUrl"]];
     if (idx > 0) {
     	idx = idx - 1;
     }
     
-    Set_Cookie(nameOfCookie + idx, "none", 60000);
+    Set_Cookie(nameOfCookie + idx, "none", -500);
     setTimeout("dragDropCounter=-5", 5);
 }
 function editRSSContent() {
@@ -728,6 +725,15 @@ function reloadRSSData(numericId) {
     ajaxObjects[ajaxIndex].runAJAX();		// Execute AJAX function			
 }
 function createARSSBox(url, columnIndex, heightOfBox, maxRssItems, minutesBeforeReload, uniqueIdentifier, state) {
+	/*if (!url) {
+    	return;
+    } else {
+    	var idx = url.toLowerCase().indexOf("http://");
+    	if (idx <= -1 && url.length < 10) {
+    		return;
+    	}
+    }*/
+
     if (!heightOfBox) {
         heightOfBox = "0";
     }
@@ -773,7 +779,7 @@ function createARSSBox(url, columnIndex, heightOfBox, maxRssItems, minutesBefore
         };	// Specify function that will be executed after file has been found
         ajaxObjects[ajaxIndex].runAJAX();		// Execute AJAX function
     } else {
-        hideHeaderOptionsForStaticBoxes(tmpIndex);
+        //hideHeaderOptionsForStaticBoxes(tmpIndex);
     }
 }
 function createHelpObjects() {
@@ -924,6 +930,10 @@ function createDefaultBoxes() {
 	createARSSBox("http://www.lavanguardia.es/rss/index.rss", 1, false, 10, 10);
 	createARSSBox("http://www.elpais.es/rss.html", 2, false, 10, 10);
 	createARSSBox("http://feeds.feedburner.com/meneame/published?format=USM", 3, false, 10, 10);
+	createARSSBox("http://rss.cnn.com/rss/cnn_topstories.rss", 2, false, 5, 1);
+    createARSSBox("http://feeds.feedburner.com/reuters/topNews/", 3, false, 5);
+    createARSSBox("http://www.nytimes.com/services/xml/rss/nyt/HomePage.xml", 2, false, 5, 10);
+    createARSSBox("http://rss.pcworld.com/rss/latestnews.rss", 1, false, 5);
 
 	return;
 

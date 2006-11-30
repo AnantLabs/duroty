@@ -19,7 +19,7 @@ String path = request.getContextPath();
 		<input type="hidden" name="mid" value="<c:out value="${message.mid}" />" />
 		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tableHeader">
 			<tr>
-				<td width="100%" class="title">
+				<td width="100%" class="title" style="padding-left: 5px;">
 					<div>
 						<input type="button" class="BUTTON" name="send" value="<fmt:message key="mail.send" />" onclick="javascript:submitFormReply();" />
 						&nbsp;&nbsp;
@@ -102,7 +102,7 @@ String path = request.getContextPath();
 						<tr>
 							<td nowrap="nowrap" align="right" valign="top">
 								<span style="color: blue; text-decoration: underline; cursor: pointer;" onclick="javascript:Mail.attachFile('attachReplyFile');"><fmt:message key="mail.addAttachment" /></span>&nbsp;
-								<img src="<%=basePath%>images/attachment.gif" border="0" style="cursor: pointer;" onclick="javascript:Mail.attachFile('attachReplyFile');" />
+								<img src="<%=basePath%>images/attachment.gif" border="0" style="cursor: pointer; padding-right: 3px;" onclick="javascript:Mail.attachFile('attachReplyFile');" />
 							</td>
 							<td width="100%" id="attachReplyFile">
 							</td>
@@ -141,7 +141,7 @@ String path = request.getContextPath();
 				</td>
 			</tr>
 			<tr>
-				<td width="100%" class="title">
+				<td width="100%" class="title" style="padding-left: 5px;">
 					<div>
 						<input type="button" class="BUTTON" name="send" value="<fmt:message key="mail.send" />" onclick="javascript:submitFormReply();" />
 						&nbsp;&nbsp;
