@@ -8,8 +8,10 @@
 		<attribute name="Dialect">org.hibernate.dialect.PostgreSQLDialect</attribute>
 		<attribute name="CacheProviderClass">org.hibernate.cache.HashtableCacheProvider</attribute>
 		<attribute name="ShowSqlEnabled">false</attribute>
-		<attribute name="DefaultSchema">duroty</attribute>
 		<attribute name="ReflectionOptimizationEnabled">false</attribute>
 		<attribute name="StreamsForBinaryEnabled">true</attribute>
+		<!-- 
+		<attribute name="DefaultSchema">duroty</attribute>
+		-->
 	</mbean>
 </server>
