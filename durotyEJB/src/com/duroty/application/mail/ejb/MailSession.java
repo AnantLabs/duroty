@@ -3,7 +3,6 @@
  */
 package com.duroty.application.mail.ejb;
 
-
 /**
  * Session layer for Mail.
  * @xdoclet-generated at ${TODAY}
@@ -11,61 +10,38 @@ package com.duroty.application.mail.ejb;
  * @author XDoclet
  * @version ${version}
  */
-public class MailSession extends com.duroty.application.mail.ejb.MailBean
-    implements javax.ejb.SessionBean {
-    /**
-          *
-          */
-    private static final long serialVersionUID = -5152091376405944137L;
+public class MailSession
+   extends com.duroty.application.mail.ejb.MailBean
+   implements javax.ejb.SessionBean
+{
+   /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5152091376405944137L;
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @throws javax.ejb.EJBException DOCUMENT ME!
-     * @throws java.rmi.RemoteException DOCUMENT ME!
-     */
-    public void ejbActivate()
-        throws javax.ejb.EJBException, java.rmi.RemoteException {
-        super.ejbActivate();
-    }
+public void ejbActivate() throws javax.ejb.EJBException, java.rmi.RemoteException
+   {
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @throws javax.ejb.EJBException DOCUMENT ME!
-     * @throws java.rmi.RemoteException DOCUMENT ME!
-     */
-    public void ejbPassivate()
-        throws javax.ejb.EJBException, java.rmi.RemoteException {
-        super.ejbPassivate();
-    }
+      super.ejbActivate();
+   }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @param ctx DOCUMENT ME!
-     *
-     * @throws javax.ejb.EJBException DOCUMENT ME!
-     */
-    public void setSessionContext(javax.ejb.SessionContext ctx)
-        throws javax.ejb.EJBException {
-        super.setSessionContext(ctx);
-    }
+   public void ejbPassivate() throws javax.ejb.EJBException, java.rmi.RemoteException
+   {
+      super.ejbPassivate();
+   }
 
-    /**
-     * DOCUMENT ME!
-     */
-    public void unsetSessionContext() {
-    }
+   public void setSessionContext(javax.ejb.SessionContext ctx) throws javax.ejb.EJBException
+   {
+      super.setSessionContext(ctx);
+   }
 
-    /**
-     * DOCUMENT ME!
-     *
-     * @throws javax.ejb.EJBException DOCUMENT ME!
-     * @throws java.rmi.RemoteException DOCUMENT ME!
-     */
-    public void ejbRemove()
-        throws javax.ejb.EJBException, java.rmi.RemoteException {
-        super.ejbRemove();
-    }
+   public void unsetSessionContext() 
+   {
+   }
+
+   public void ejbRemove() throws javax.ejb.EJBException, java.rmi.RemoteException
+   {
+      super.ejbRemove();
+   }
+
 }

@@ -616,19 +616,6 @@
       <description><![CDATA[description not supported yet by ejbdoclet]]></description>
          <role-name>mail</role-name>
       <method >
-         <description><![CDATA[Update contact]]></description>
-         <ejb-name>Preferences</ejb-name>
-         <method-intf>Remote</method-intf>
-         <method-name>updateContact</method-name>
-         <method-params>
-            <method-param>com.duroty.application.mail.utils.ContactObj</method-param>
-         </method-params>
-      </method>
-   </method-permission>
-   <method-permission >
-      <description><![CDATA[description not supported yet by ejbdoclet]]></description>
-         <role-name>mail</role-name>
-      <method >
          <description><![CDATA[Create label and assign messages filter to it]]></description>
          <ejb-name>Preferences</ejb-name>
          <method-intf>Remote</method-intf>
