@@ -20,25 +20,7 @@
 */
 package com.duroty.application.mail.ejb;
 
-import com.duroty.application.mail.exceptions.MailException;
-import com.duroty.application.mail.manager.MailManager;
-import com.duroty.application.mail.utils.Counters;
-import com.duroty.application.mail.utils.FolderObj;
-import com.duroty.application.mail.utils.MessageObj;
-
-import com.duroty.hibernate.Label;
-
-import com.duroty.jmx.mbean.ApplicationConstants;
-import com.duroty.jmx.mbean.Constants;
-
-import com.duroty.utils.GeneralOperations;
-import com.duroty.utils.mail.MailPart;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-
 import java.rmi.RemoteException;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Vector;
@@ -47,12 +29,24 @@ import javax.ejb.CreateException;
 import javax.ejb.EJBException;
 import javax.ejb.SessionBean;
 import javax.ejb.SessionContext;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-
 import javax.sql.DataSource;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+import com.duroty.application.mail.exceptions.MailException;
+import com.duroty.application.mail.manager.MailManager;
+import com.duroty.application.mail.utils.Counters;
+import com.duroty.application.mail.utils.FolderObj;
+import com.duroty.application.mail.utils.MailPartObj;
+import com.duroty.application.mail.utils.MessageObj;
+import com.duroty.hibernate.Label;
+import com.duroty.jmx.mbean.ApplicationConstants;
+import com.duroty.jmx.mbean.Constants;
+import com.duroty.utils.GeneralOperations;
 
 
 /**
@@ -698,11 +692,11 @@ public class MailBean implements SessionBean {
      * @ejb.permission
      *         role-name = "mail"
      *
-     * @return MailPart
+     * @return MailPartObj
      *
      * @throws MailException Thrown if method fails due to system-level error.
      */
-    public MailPart getAttachment(String mid, String hash)
+    public MailPartObj getAttachment(String mid, String hash)
         throws MailException {
         SessionFactory hfactory = null;
 

@@ -20,58 +20,10 @@
 */
 package com.duroty.application.mail.manager;
 
-import com.duroty.application.mail.exceptions.MailException;
-import com.duroty.application.mail.utils.AttachmentObj;
-import com.duroty.application.mail.utils.ContactListObj;
-import com.duroty.application.mail.utils.Counters;
-import com.duroty.application.mail.utils.FolderObj;
-import com.duroty.application.mail.utils.LabelObj;
-import com.duroty.application.mail.utils.MessageObj;
-
-import com.duroty.hibernate.Attachment;
-import com.duroty.hibernate.ContactList;
-import com.duroty.hibernate.LabMes;
-import com.duroty.hibernate.LabMesId;
-import com.duroty.hibernate.Label;
-import com.duroty.hibernate.MailPreferences;
-import com.duroty.hibernate.Message;
-import com.duroty.hibernate.Users;
-
-import com.duroty.jmx.mbean.Constants;
-
-import com.duroty.service.Messageable;
-import com.duroty.service.analyzer.BayesianAnalysisFeeder;
-
-import com.duroty.utils.GeneralOperations;
-import com.duroty.utils.io.NullWriter;
-import com.duroty.utils.log.DLog;
-import com.duroty.utils.mail.MailPart;
-import com.duroty.utils.mail.MessageUtilities;
-import com.duroty.utils.misc.JavaScriptCleaner;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
-
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-import org.hibernate.SQLQuery;
-import org.hibernate.ScrollableResults;
-import org.hibernate.Session;
-
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Restrictions;
-
-import org.w3c.dom.Document;
-
-import org.w3c.tidy.Tidy;
-
 import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
-
 import java.nio.charset.Charset;
-
 import java.text.SimpleDateFormat;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -82,15 +34,51 @@ import java.util.TimeZone;
 import java.util.Vector;
 
 import javax.mail.internet.MimeMessage;
-
 import javax.sql.DataSource;
-
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.SQLQuery;
+import org.hibernate.ScrollableResults;
+import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+import org.w3c.dom.Document;
+import org.w3c.tidy.Tidy;
+
+import com.duroty.application.mail.exceptions.MailException;
+import com.duroty.application.mail.utils.AttachmentObj;
+import com.duroty.application.mail.utils.ContactListObj;
+import com.duroty.application.mail.utils.Counters;
+import com.duroty.application.mail.utils.FolderObj;
+import com.duroty.application.mail.utils.LabelObj;
+import com.duroty.application.mail.utils.MailPartObj;
+import com.duroty.application.mail.utils.MessageObj;
+import com.duroty.hibernate.Attachment;
+import com.duroty.hibernate.ContactList;
+import com.duroty.hibernate.LabMes;
+import com.duroty.hibernate.LabMesId;
+import com.duroty.hibernate.Label;
+import com.duroty.hibernate.MailPreferences;
+import com.duroty.hibernate.Message;
+import com.duroty.hibernate.Users;
+import com.duroty.jmx.mbean.Constants;
+import com.duroty.service.Messageable;
+import com.duroty.service.analyzer.BayesianAnalysisFeeder;
+import com.duroty.utils.GeneralOperations;
+import com.duroty.utils.io.NullWriter;
+import com.duroty.utils.log.DLog;
+import com.duroty.utils.mail.MailPart;
+import com.duroty.utils.mail.MessageUtilities;
+import com.duroty.utils.misc.JavaScriptCleaner;
 
 
 /**
@@ -1378,9 +1366,9 @@ public class MailManager implements MailManagerConstants {
      *
      * @throws MailException DOCUMENT ME!
      */
-    public MailPart getAttachment(Session hsession, String repositoryName,
+    public MailPartObj getAttachment(Session hsession, String repositoryName,
         String mid, String hash) throws MailException {
-        MailPart part = null;
+    	MailPartObj part = null;
 
         try {
             MimeMessage mime = messageable.getMimeMessage(mid,
@@ -1395,7 +1383,12 @@ public class MailManager implements MailManagerConstants {
                     MailPart aux = (MailPart) dmailParts.remove(0);
 
                     if (aux.getId() == Integer.parseInt(hash)) {
-                        part = aux;
+                    	part = new MailPartObj();
+                    	part.setAttachent(IOUtils.toByteArray(aux.getPart().getInputStream()));
+                    	part.setContentType(aux.getContentType());
+                    	part.setId(aux.getId());
+                    	part.setName(aux.getName());
+                    	part.setSize(aux.getSize());
 
                         break;
                     }

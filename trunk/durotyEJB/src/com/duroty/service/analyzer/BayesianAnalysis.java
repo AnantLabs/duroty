@@ -22,23 +22,20 @@
 
 package com.duroty.service.analyzer;
 
-import com.duroty.jmx.mbean.ApplicationConstants;
-import com.duroty.jmx.mbean.Constants;
-
-import com.duroty.utils.mail.RFC2822Headers;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.StringReader;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
+
+import com.duroty.jmx.mbean.ApplicationConstants;
+import com.duroty.jmx.mbean.Constants;
+import com.duroty.utils.mail.RFC2822Headers;
 
 
 /**
@@ -106,7 +103,8 @@ public class BayesianAnalysis implements MailetAnalyzer {
 
             // ignore the message if already analyzed
             if ((headerArray != null) && (headerArray.length > 0)) {
-                return;
+            	message.removeHeader(messageIsSpamProbability);
+            	saveChanges(message);
             }
 
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -123,8 +121,7 @@ public class BayesianAnalysis implements MailetAnalyzer {
                 probability = 0.0;
             }
 
-            message.setHeader(messageIsSpamProbability,
-                Double.toString(probability));
+            message.setHeader(messageIsSpamProbability, Double.toString(probability));
 
             /*DecimalFormat probabilityForm = (DecimalFormat) DecimalFormat.getInstance();
             probabilityForm.applyPattern("##0.##%");*/
@@ -137,6 +134,9 @@ public class BayesianAnalysis implements MailetAnalyzer {
                     ((probability > 0.9) ? " SPAM" : " spam") + "]");
             }*/
             if (probability > 0.9) {
+            	message.removeHeader(messageIsSpam);
+            	saveChanges(message);
+            	
                 message.setHeader(messageIsSpam, "true");
             }
 
