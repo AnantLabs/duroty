@@ -19,13 +19,13 @@ String path = request.getContextPath();
 		<input type="hidden" name="mid" value="<c:out value="${message.mid}" />" />
 		<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tableHeader">
 			<tr>
-				<td width="100%" class="title" style="padding-left: 5px;">
+				<td width="100%" class="title" style="padding-left: 5px; padding-top:5px; padding-bottom: 5px;">
 					<div>
-						<input type="button" class="BUTTON" name="send" value="<fmt:message key="mail.send" />" onclick="javascript:submitFormReply();" />
-						&nbsp;&nbsp;
-						<input type="button" class="BUTTON" name="saveDraft" value="<fmt:message key="mail.saveDraft" />" onclick="javascript:draftFormReply();" />
-						&nbsp;&nbsp;
-						<input type="button" class="BUTTON" name="cancel" value="<fmt:message key="mail.cancel" />" onclick="javascript:Mail.reply();" />
+						<button style="font-size: 95%; white-space: nowrap; font-weight: bold;" onclick="javascript:submitFormReply();return false;"><fmt:message key="mail.send" /></button>
+						&nbsp;
+						<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:draftFormReply();return false;"><fmt:message key="mail.saveDraft" /></button>
+						&nbsp;
+						<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.reply();return false;"><fmt:message key="mail.cancel" /></button>
 					</div>
 				</td>
 			</tr>
@@ -101,8 +101,8 @@ String path = request.getContextPath();
 						</tr>
 						<tr>
 							<td nowrap="nowrap" align="right" valign="top">
-								<span style="color: blue; text-decoration: underline; cursor: pointer;" onclick="javascript:Mail.attachFile('attachReplyFile');"><fmt:message key="mail.addAttachment" /></span>&nbsp;
-								<img src="<%=basePath%>images/attachment.gif" border="0" style="cursor: pointer; padding-right: 3px;" onclick="javascript:Mail.attachFile('attachReplyFile');" />
+								<span style="color: blue; text-decoration: underline; cursor: pointer;" onclick="javascript:Mail.attachFile('attachReplyFile');return false;"><fmt:message key="mail.addAttachment" /></span>&nbsp;
+								<img src="<%=basePath%>images/attachment.gif" border="0" style="cursor: pointer; padding-right: 3px;" onclick="javascript:Mail.attachFile('attachReplyFile');return false;" />
 							</td>
 							<td width="100%" id="attachReplyFile">
 							</td>
@@ -126,7 +126,7 @@ String path = request.getContextPath();
 								<table width="100%" border="0" cellspacing="0" cellpadding="0">
 									<tr>
 										<td style="text-align: right; padding-right: 20px;">
-											<span style="color: blue; text-decoration: underline; cursor: pointer;" onclick="javascript:Mail.textVersion('taReplyBody');"><fmt:message key="mail.textVersion" /></span>&nbsp;&nbsp;<span style="color: blue; text-decoration: underline; cursor: pointer;" onclick="javascript:Mail.htmlVersion('taReplyBody');"><fmt:message key="mail.htmlVersion" /></span>
+											<span style="color: blue; text-decoration: underline; cursor: pointer;" onclick="javascript:Mail.textVersion('taReplyBody');return false;"><fmt:message key="mail.textVersion" /></span>&nbsp;&nbsp;<span style="color: blue; text-decoration: underline; cursor: pointer;" onclick="javascript:Mail.htmlVersion('taReplyBody');return false;"><fmt:message key="mail.htmlVersion" /></span>
 										</td>
 									</tr>
 									<tr>
@@ -141,13 +141,13 @@ String path = request.getContextPath();
 				</td>
 			</tr>
 			<tr>
-				<td width="100%" class="title" style="padding-left: 5px;">
+				<td width="100%" class="title" style="padding-left: 5px; padding-top:5px; padding-bottom: 5px;">
 					<div>
-						<input type="button" class="BUTTON" name="send" value="<fmt:message key="mail.send" />" onclick="javascript:submitFormReply();" />
-						&nbsp;&nbsp;
-						<input type="button" class="BUTTON" name="saveDraft" value="<fmt:message key="mail.saveDraft" />" onclick="javascript:draftFormReply();" />
-						&nbsp;&nbsp;
-						<input type="button" class="BUTTON" name="cancel" value="<fmt:message key="mail.cancel" />" onclick="javascript:Mail.reply();" />
+						<button style="font-size: 95%; white-space: nowrap; font-weight: bold;" onclick="javascript:submitFormReply();return false;"><fmt:message key="mail.send" /></button>
+						&nbsp;
+						<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:draftFormReply();return false;"><fmt:message key="mail.saveDraft" /></button>
+						&nbsp;
+						<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.reply();return false;"><fmt:message key="mail.cancel" /></button>
 					</div>
 				</td>
 			</tr>

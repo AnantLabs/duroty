@@ -93,6 +93,11 @@ public class Configuration {
      * DOCUMENT ME!
      */
     public static final String LOCAL_WEB_SERVER = "LOCAL_WEB_SERVER";
+    
+    /**
+     * DOCUMENT ME!
+     */
+    public static final String MAX_FILE_UPLOAD = "MAX_FILE_UPLOAD";
 
     /**
      * DOCUMENT ME!
@@ -103,18 +108,18 @@ public class Configuration {
      * Creates a new Configuration object.
      */
     private Configuration() {
-    }
+    }    
 
     /**
      * DOCUMENT ME!
      */
     public static void init() {
         try {
-            URL url = Configuration.class.getResource(
-                    "/com/duroty/config/constants.properties");
+            URL url = Configuration.class.getResource("/constants.properties");
 
             properties.load(url.openConnection().getInputStream());
         } catch (Exception ex) {
+        	ex.printStackTrace();
         }
     }
 }

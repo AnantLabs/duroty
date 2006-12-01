@@ -147,25 +147,25 @@ String path = request.getContextPath();
 					<div class="wrapper">
 						<div id="page-title">
 							<div id="g_title">
-								<div id="navigation_right" style="float: right; width: 50%; height: auto; margin-left: 0%; margin-right: 0%;">
+								<div id="navigation_right" style="float: right; width: 25%; height: auto; margin-left: 0%; margin-right: 0%;">
 									<!-- toolbar -->
 									<tiles:insert name="toolbar" />
 									<!-- fi toolbar-->
 								</div>
-								<div id="navigation_left" style="margin: 0pt 50% 0pt 0pt;">		
+								<div id="navigation_left" style="margin: 0pt 10% 0pt 0pt;">		
 									<form action="" method="post" onsubmit="javascript:Mail.displayLocation('simpleSearch:0*0!0', null);return false;" style="margin: 0px; padding: 0px;" enctype="multipart/form-data">
 										<table border="0" cellspacing="0" cellpadding="0">
 											<tr>
-												<td nowrap="nowrap" style="padding-left: 5px; padding-top: 5px;">
+												<td nowrap="nowrap" style="padding-left: 5px; padding-right: 5px; padding-top: 5px;">
 													<img src="<%=basePath%>images/duroty.gif" border="0" align="middle" />
 												</td>
-												<td nowrap="nowrap" align="right" style="font-size: 12px;">
-													<input type="text" size="25" name="token" id="token" class="BUTTON" />
+												<td nowrap="nowrap" align="right" style="padding-top: 3px">
+													<input type="text" size="30" maxlength="1024" name="token" id="token" />
 													<br/>
-													<fmt:message key="mail.search.excludeTrash" />&nbsp;
+													<span style="font-size: 85%;"><fmt:message key="mail.search.excludeTrash" /></span>&nbsp;
 												</td>
 												<td nowrap="nowrap" align="left" style="padding-left: 3px;">
-													<input type="button" name="btnSearch" class="BUTTON" value="<fmt:message key="general.search" />" onclick="javascript:Mail.displayLocation('simpleSearch:0*0!0', null);" style="margin-bottom: 3px;"/>
+													<button style="font-size: 95%; white-space: nowrap; margin-bottom: 5px;" onclick="javascript:Mail.displayLocation('simpleSearch:0*0!0', null);"><fmt:message key="general.search" /></button>
 													<br/>
 													<input type="checkbox" value="true" id="excludeTrash"/>
 												</td>
@@ -220,21 +220,21 @@ String path = request.getContextPath();
 					</div>
 				</div>
 				<!-- /wrapper -->
-				<!-- /sidebar -->
+				<!-- /sidebar -->				
 				<div id="main-content">
 					<div class="wrapper">
-						<div class="content-item">
+						<div class="content-item">							
 							<div id="g_body">
 								<!-- BODY -->
-								<tiles:insert name="contents" />
-								<!-- FI BODY -->
+								<tiles:insert name="contents" />								
+								<!-- FI BODY -->								
 								<!-- FOOT -->
 								<div class="foot">
 									<p>&nbsp;</p>
 									<tiles:insert name="foot" />
 								</div>
 								<!-- FI FOOT -->
-							</div>
+							</div>							
 						</div>
 						<div style="clear: both;"></div>
 					</div>

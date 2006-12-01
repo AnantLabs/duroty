@@ -48,16 +48,13 @@ String path = request.getContextPath();
 			<td width="100%">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tableHeader">
 				<tr>
-					<td width="100%" class="title<c:out value="${clazz}" />">
+					<td width="100%" class="title<c:out value="${clazz}" />" style="padding-bottom: 5px">
 						<c:choose>
 							<c:when test="${param.folder == 'SPAM'}">
 								<div>
-									<input type="button" class="BUTTON" value="<fmt:message key="mail.button.back" />" name="mail.button.back" onclick="javascript:Mail.backWithHash();" />
-									&nbsp;
-									<input type="button" class="BUTTON" value="<fmt:message key='mail.button.notSpam' />" name="mail.button.notSpam" onclick="javascript:Mail.notSpam('<%=basePath%>mail/notSpam.drt');" />
-									&nbsp;
-									<input type="button" class="BUTTON" value="<fmt:message key='mail.button.deleteForever' />" name="mail.button.deleteForever" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', 'folder:<c:out value="${message.box}" />');" />
-									&nbsp;
+									<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.backWithHash();return false;"><fmt:message key="mail.button.back" /></button>
+									<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.notSpam('<%=basePath%>mail/notSpam.drt');return false;"><fmt:message key='mail.button.notSpam' /></button>
+									<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', 'folder:<c:out value="${message.box}" />');return false;"><fmt:message key='mail.button.deleteForever' /></button>
 									<select name="selectMoveMessages" onchange="javascript:Mail.move('<%=basePath%>mail/move.drt', this.options[this.selectedIndex].value);this.selectedIndex = 0;">
 										<option value="" disabled="disabled" selected="selected">
 											<fmt:message key='mail.button.move' />
@@ -89,12 +86,9 @@ String path = request.getContextPath();
 							</c:when>
 							<c:when test="${param.folder == 'TRASH'}">
 								<div>
-									<input type="button" class="BUTTON" value="<fmt:message key="mail.button.back" />" name="mail.button.back" onclick="javascript:Mail.backWithHash();" />
-									&nbsp;
-									<input type="button" class="BUTTON" value="<fmt:message key='mail.button.isSpam' />" name="mail.button.isSpam" onclick="javascript:Mail.spam('<%=basePath%>mail/spam.drt');" />
-									&nbsp;
-									<input type="button" class="BUTTON" value="<fmt:message key='mail.button.deleteForever' />" name="mail.button.deleteForever" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', 'folder:<c:out value="${message.box}" />');" />
-									&nbsp;
+									<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.backWithHash();return false;"><fmt:message key="mail.button.back" /></button>
+									<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.spam('<%=basePath%>mail/spam.drt');return false;"><fmt:message key='mail.button.isSpam' /></button>
+									<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', 'folder:<c:out value="${message.box}" />');return false;"><fmt:message key='mail.button.deleteForever' /></button>
 									<select name="selectMoveMessages" onchange="javascript:Mail.move('<%=basePath%>mail/move.drt', this.options[this.selectedIndex].value);this.selectedIndex = 0;">
 										<option value="" disabled="disabled" selected="selected">
 											<fmt:message key='mail.button.move' />
@@ -126,14 +120,10 @@ String path = request.getContextPath();
 							</c:when>
 							<c:otherwise>
 								<div>
-									<input type="button" class="BUTTON" value="<fmt:message key="mail.button.back" />" name="mail.button.back" onclick="javascript:Mail.backWithHash();" />
-									&nbsp;
-									<input type="button" class="BUTTON" value="<fmt:message key='mail.button.archive' />" name="mail.button.archive" onclick="javascript:Mail.archive('<%=basePath%>mail/archive.drt');"  />
-									&nbsp;
-									<input type="button" class="BUTTON" value="<fmt:message key='mail.button.isSpam' />" name="mail.button.isSpam" onclick="javascript:Mail.spam('<%=basePath%>mail/spam.drt');" />
-									&nbsp;
-									<input type="button" class="BUTTON" value="<fmt:message key='mail.button.delete' />" name="mail.button.delete" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', 'folder:<c:out value="${message.box}" />');" />
-									&nbsp;
+									<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.backWithHash();return false;"><fmt:message key="mail.button.back" /></button>
+									<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.archive('<%=basePath%>mail/archive.drt');return false;"><fmt:message key='mail.button.archive' /></button>
+									<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.spam('<%=basePath%>mail/spam.drt');return false;"><fmt:message key='mail.button.isSpam' /></button>
+									<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', 'folder:<c:out value="${message.box}" />');return false;"><fmt:message key='mail.button.delete' /></button>
 									<select name="selectMoveMessages" onchange="javascript:Mail.move('<%=basePath%>mail/move.drt', this.options[this.selectedIndex].value);this.selectedIndex = 0;">
 										<option value="" disabled="disabled" selected="selected">
 											<fmt:message key='mail.button.move' />
@@ -180,14 +170,14 @@ String path = request.getContextPath();
 										<tr>
 											<td width="100%">
 												<div>
-													<span class="from" onclick="javascript:Mail.reply();"> <c:out value="${message.email}" /> </span>
+													<span class="from" onclick="javascript:Mail.reply();return false;"> <c:out value="${message.email}" /> </span>
 													<c:if test="${message.box == 'DRAFT'}">
-														&nbsp;<input type="button" class="buttonEditDraft" name="mail.button.editDraft" value="<fmt:message key="mail.button.editDraft" />" onclick="javascript:Mail.draft();" />
+														&nbsp;<input type="button" class="buttonEditDraft" name="mail.button.editDraft" value="<fmt:message key="mail.button.editDraft" />" onclick="javascript:Mail.draft();return false;" />
 													</c:if>
 												</div>
 											</td>
 											<td nowrap="nowrap" align="right">
-												<span class="linkUnderline" onclick="javascript:showHideElement('msgOptions')"><fmt:message key="mail.showOptions" /></span>&nbsp;
+												<span class="linkUnderline" onclick="javascript:showHideElement('msgOptions');return false;"><fmt:message key="mail.showOptions" /></span>&nbsp;
 												<c:if test="${message.hasAttachment}">
 													<img src="<%=basePath%>images/attachment.gif" border="0" />&nbsp;
 												</c:if>
@@ -243,7 +233,7 @@ String path = request.getContextPath();
 										</tr>
 										<tr>
 											<td width="100%">
-												<span class="linkUnderline" onclick="javascript:Mail.displayImages('<c:out value="${message.box}" />', '<c:out value="${message.mid}" />');"><fmt:message key="mail.displayImages" /></span>&nbsp;&nbsp;<span class="linkUnderline" onclick="javascript:Mail.reply();"><fmt:message key="mail.reply" /></span>&nbsp;&nbsp;<span class="linkUnderline" onclick="javascript:Mail.replyToAll();"><fmt:message key="mail.replyToAll" /></span>&nbsp;&nbsp;<span class="linkUnderline" onclick="javascript:Mail.forward();"><fmt:message key="mail.forward" /></span>&nbsp;&nbsp;<span class="linkUnderline" onclick="javascript:Mail.properties('<c:out value="${message.mid}" />');"><fmt:message key="mail.properties" /></span>
+												<span class="linkUnderline" onclick="javascript:Mail.displayImages('<c:out value="${message.box}" />', '<c:out value="${message.mid}" />');return false;"><fmt:message key="mail.displayImages" /></span>&nbsp;&nbsp;<span class="linkUnderline" onclick="javascript:Mail.reply();return false;"><fmt:message key="mail.reply" /></span>&nbsp;&nbsp;<span class="linkUnderline" onclick="javascript:Mail.replyToAll();return false;"><fmt:message key="mail.replyToAll" /></span>&nbsp;&nbsp;<span class="linkUnderline" onclick="javascript:Mail.forward();return false;"><fmt:message key="mail.forward" /></span>&nbsp;&nbsp;<span class="linkUnderline" onclick="javascript:Mail.properties('<c:out value="${message.mid}" />');return false;"><fmt:message key="mail.properties" /></span>
 											</td>
 										</tr>
 									</table>
@@ -265,7 +255,7 @@ String path = request.getContextPath();
 								<td id="msgReferencesBefore">
 									<c:if test="${!empty message.referencesBefore}">
 										<c:forEach items="${message.referencesBefore}" var="reference">										
-											<div class="messageReference" onclick="showHideElement('<c:out value="${message.mid}" /><c:out value="${reference.mid}" />');">
+											<div class="messageReference" onclick="showHideElement('<c:out value="${message.mid}" /><c:out value="${reference.mid}" />');return false;">
 												<table width="100%" border="0" cellspacing="0" cellpadding="0">
 													<colgroup>
 														<col style="width: 100%;"/>
@@ -305,7 +295,7 @@ String path = request.getContextPath();
 											</div>
 											<div id="<c:out value="${message.mid}" /><c:out value="${reference.mid}" />" class="hide">
 												<div class="messageReferenceBody">
-													<div style="text-align:right;color: blue; text-decoration: underline; cursor:pointer; font-weight: bold;" onclick="javascript:Mail.displayLocation('read:<c:out value="${reference.box}" />*<c:out value="${reference.mid}" />!0', null);">
+													<div style="text-align:right;color: blue; text-decoration: underline; cursor:pointer; font-weight: bold;" onclick="javascript:Mail.displayLocation('read:<c:out value="${reference.box}" />*<c:out value="${reference.mid}" />!0', null);return false;">
 														<fmt:message key="mail.reference.read" />
 													</div>
 													<c:out value="${reference.body}" escapeXml="No" />
@@ -318,9 +308,9 @@ String path = request.getContextPath();
 							<tr>
 								<td class="print">
 									<div style="height: 5px;"></div>
-									<img src="<%=basePath%>images/decrease.gif" border="0" style="cursor: pointer;" onclick="javascript:decreaseFont('msgBody');" alt="<fmt:message key="mail.button.decrease" />" title="<fmt:message key="mail.button.decrease" />" /><img src="<%=basePath%>images/increase.gif" border="0" style="cursor: pointer;" onclick="javascript:increaseFont('msgBody');" alt="<fmt:message key="mail.button.increase" />" title="<fmt:message key="mail.button.increase" />" />
+									<img src="<%=basePath%>images/decrease.gif" border="0" style="cursor: pointer;" onclick="javascript:decreaseFont('msgBody');return false;" alt="<fmt:message key="mail.button.decrease" />" title="<fmt:message key="mail.button.decrease" />" /><img src="<%=basePath%>images/increase.gif" border="0" style="cursor: pointer;" onclick="javascript:increaseFont('msgBody');return false;" alt="<fmt:message key="mail.button.increase" />" title="<fmt:message key="mail.button.increase" />" />
 									&nbsp;&nbsp;
-									<img src="<%=basePath%>images/print.gif" border="0" style="cursor: pointer;" onclick="javascript:openDialog('<%=basePath%>mail/print.jsp', 'Print', 750, 600, false);" alt="<fmt:message key="mail.button.print" />"
+									<img src="<%=basePath%>images/print.gif" border="0" style="cursor: pointer;" onclick="javascript:openDialog('<%=basePath%>mail/print.jsp', 'Print', 750, 600, false);return false;" alt="<fmt:message key="mail.button.print" />"
 										title="<fmt:message key="mail.button.print" />" />
 								</td>
 							</tr>
@@ -349,7 +339,7 @@ String path = request.getContextPath();
 								<td id="msgReferencesAfter">
 									<c:if test="${!empty message.referencesAfter}">
 										<c:forEach items="${message.referencesAfter}" var="reference">										
-											<div class="messageReference" onclick="showHideElement('<c:out value="${message.mid}" /><c:out value="${reference.mid}" />');">
+											<div class="messageReference" onclick="showHideElement('<c:out value="${message.mid}" /><c:out value="${reference.mid}" />');return false;">
 												<table width="100%" border="0" cellspacing="0" cellpadding="0">
 													<colgroup>
 														<col style="width: 100%;"/>
@@ -389,7 +379,7 @@ String path = request.getContextPath();
 											</div>
 											<div id="<c:out value="${message.mid}" /><c:out value="${reference.mid}" />" class="hide">
 												<div class="messageReferenceBody">
-													<div style="text-align:right;color: blue; text-decoration: underline; cursor:pointer; font-weight: bold;" onclick="javascript:Mail.displayLocation('read:<c:out value="${reference.box}" />*<c:out value="${reference.mid}" />!0', null);">
+													<div style="text-align:right;color: blue; text-decoration: underline; cursor:pointer; font-weight: bold;" onclick="javascript:Mail.displayLocation('read:<c:out value="${reference.box}" />*<c:out value="${reference.mid}" />!0', null);return false;">
 														<fmt:message key="mail.reference.read" />
 													</div>
 													<c:out value="${reference.body}" escapeXml="No" />
@@ -404,16 +394,13 @@ String path = request.getContextPath();
 					</td>
 				</tr>
 				<tr>
-					<td width="100%" class="title<c:out value="${clazz}" />">
+					<td width="100%" class="title<c:out value="${clazz}" />" style="padding-top: 5px">
 						<c:choose>
 							<c:when test="${param.folder == 'SPAM'}">
 								<div>
-									<input type="button" class="BUTTON" value="<fmt:message key="mail.button.back" />" name="mail.button.back" onclick="javascript:Mail.backWithHash();" />
-									&nbsp;
-									<input type="button" class="BUTTON" value="<fmt:message key='mail.button.notSpam' />" name="mail.button.notSpam" onclick="javascript:Mail.notSpam('<%=basePath%>mail/notSpam.drt');" />
-									&nbsp;
-									<input type="button" class="BUTTON" value="<fmt:message key='mail.button.deleteForever' />" name="mail.button.deleteForever" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', 'folder:<c:out value="${message.box}" />');" />
-									&nbsp;
+									<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.backWithHash();return false;"><fmt:message key="mail.button.back" /></button>
+									<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.notSpam('<%=basePath%>mail/notSpam.drt');return false;"><fmt:message key='mail.button.notSpam' /></button>
+									<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', 'folder:<c:out value="${message.box}" />');return false;"><fmt:message key='mail.button.deleteForever' /></button>
 									<select name="selectMoveMessages" onchange="javascript:Mail.move('<%=basePath%>mail/move.drt', this.options[this.selectedIndex].value);this.selectedIndex = 0;">
 										<option value="" disabled="disabled" selected="selected">
 											<fmt:message key='mail.button.move' />
@@ -445,12 +432,9 @@ String path = request.getContextPath();
 							</c:when>
 							<c:when test="${param.folder == 'TRASH'}">
 								<div>
-									<input type="button" class="BUTTON" value="<fmt:message key="mail.button.back" />" name="mail.button.back" onclick="javascript:Mail.backWithHash();" />
-									&nbsp;
-									<input type="button" class="BUTTON" value="<fmt:message key='mail.button.isSpam' />" name="mail.button.isSpam" onclick="javascript:Mail.spam('<%=basePath%>mail/spam.drt');" />
-									&nbsp;
-									<input type="button" class="BUTTON" value="<fmt:message key='mail.button.deleteForever' />" name="mail.button.deleteForever" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', 'folder:<c:out value="${message.box}" />');" />
-									&nbsp;
+									<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.backWithHash();return false;"><fmt:message key="mail.button.back" /></button>
+									<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.spam('<%=basePath%>mail/spam.drt');return false;"><fmt:message key='mail.button.isSpam' /></button>
+									<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', 'folder:<c:out value="${message.box}" />');return false;"><fmt:message key='mail.button.deleteForever' /></button>
 									<select name="selectMoveMessages" onchange="javascript:Mail.move('<%=basePath%>mail/move.drt', this.options[this.selectedIndex].value);this.selectedIndex = 0;">
 										<option value="" disabled="disabled" selected="selected">
 											<fmt:message key='mail.button.move' />
@@ -482,14 +466,10 @@ String path = request.getContextPath();
 							</c:when>
 							<c:otherwise>
 								<div>
-									<input type="button" class="BUTTON" value="<fmt:message key="mail.button.back" />" name="mail.button.back" onclick="javascript:Mail.backWithHash();" />
-									&nbsp;
-									<input type="button" class="BUTTON" value="<fmt:message key='mail.button.archive' />" name="mail.button.archive" onclick="javascript:Mail.archive('<%=basePath%>mail/archive.drt');"  />
-									&nbsp;
-									<input type="button" class="BUTTON" value="<fmt:message key='mail.button.isSpam' />" name="mail.button.isSpam" onclick="javascript:Mail.spam('<%=basePath%>mail/spam.drt');" />
-									&nbsp;
-									<input type="button" class="BUTTON" value="<fmt:message key='mail.button.delete' />" name="mail.button.delete" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', 'folder:<c:out value="${message.box}" />');" />
-									&nbsp;
+									<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.backWithHash();return false;"><fmt:message key="mail.button.back" /></button>
+									<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.archive('<%=basePath%>mail/archive.drt');return false;"><fmt:message key='mail.button.archive' /></button>
+									<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.spam('<%=basePath%>mail/spam.drt');return false;"><fmt:message key='mail.button.isSpam' /></button>
+									<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', 'folder:<c:out value="${message.box}" />');return false;"><fmt:message key='mail.button.delete' /></button>
 									<select name="selectMoveMessages" onchange="javascript:Mail.move('<%=basePath%>mail/move.drt', this.options[this.selectedIndex].value);this.selectedIndex = 0;">
 										<option value="" disabled="disabled" selected="selected">
 											<fmt:message key='mail.button.move' />

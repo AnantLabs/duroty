@@ -71,7 +71,7 @@ window.dhtmlHistory = {
       // most browsers require that we wait a certain amount of time before changing the
       // location, such as 200 milliseconds; rather than forcing external callers to use
       // window.setTimeout to account for this to prevent bugs, we internally handle this
-      // detail by using a 'currentWaitTime' variable and have requests wait in line
+      // detail by using a 'currentWaitTime' variable and have requests wait in line      
       var self = this;
       var addImpl = function() {
          // indicate that the current wait time is now less
@@ -106,7 +106,11 @@ window.dhtmlHistory = {
          }
          
          // store the history data into history storage
-         historyStorage.put(newLocation, historyData);
+         try {
+	         historyStorage.put(newLocation, historyData);
+         } catch (e) {
+         	alert(e);
+         }
          
          // indicate to the browser to ignore this upcomming 
          // location change
@@ -539,7 +543,7 @@ window.historyStorage = {
          key = key.toString();
       
       var matcher = 
-         /^[a-zA-Z0-9_ \!\@\#\$\%\^\&\*\(\)\+\=\:\;\,\.\/\?\|\\\~\{\}\[\]]*$/;
+         /^[a-zA-Z0-9_ \!\-\@\#\$\%\^\&\*\(\)\+\=\:\;\,\.\/\?\|\\\~\{\}\[\]]*$/;
                      
       return matcher.test(key);
    },

@@ -21,13 +21,13 @@ String path = request.getContextPath();
 		<form action="<%=basePath%>mail/send.drt" name="formCompose" method="post" enctype="multipart/form-data" target="util">
 			<table width="100%" border="0" cellspacing="0" cellpadding="0" class="tableHeader">
 				<tr>
-					<td width="100%" class="title">
+					<td width="100%" class="title" style="padding-bottom: 5px">
 						<div>
-							<input type="button" class="BUTTON" name="send" value="<fmt:message key="mail.send" />" onclick="javascript:submitFormCompose();" />
-							&nbsp;&nbsp;
-							<input type="button" class="BUTTON" name="saveDraft" value="<fmt:message key="mail.saveDraft" />" onclick="javascript:draftFormCompose();" />
-							&nbsp;&nbsp;
-							<input type="button" class="BUTTON" name="cancel" value="<fmt:message key="mail.cancel" />" onclick="javascript:Mail.backWithHash();" />
+							<button style="font-size: 95%; white-space: nowrap; font-weight: bold;" onclick="javascript:submitFormCompose();return false;"><fmt:message key="mail.send" /></button>
+							&nbsp;
+							<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:draftFormCompose();return false;"><fmt:message key="mail.saveDraft" /></button>
+							&nbsp;
+							<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.backWithHash();return false;"><fmt:message key="mail.cancel" /></button>
 						</div>
 					</td>
 				</tr>
@@ -79,7 +79,7 @@ String path = request.getContextPath();
 							</tr>
 							<tr>
 								<td nowrap="nowrap" align="right" valign="top">
-									<span style="color: blue; cursor: pointer;" onclick="javascript:showHideElement('tdCC');"><fmt:message key="mail.addCc" /></span>
+									<span style="color: blue; cursor: pointer;" onclick="javascript:showHideElement('tdCC');return false;"><fmt:message key="mail.addCc" /></span>
 								</td>
 								<td width="100%" id="tdCC" class="hide">
 									<textarea name="cc" id="idCc" style="width: 90%; height: 40px;" onkeyup="javascript:ajax_showOptions('mail/suggestContacts.drt', this, 'suggestContacts', event);"></textarea>
@@ -87,7 +87,7 @@ String path = request.getContextPath();
 							</tr>
 							<tr>
 								<td nowrap="nowrap" align="right" valign="top">
-									<span style="color: blue; cursor: pointer;" onclick="javascript:showHideElement('tdBCC');"><fmt:message key="mail.addBcc" /></span>
+									<span style="color: blue; cursor: pointer;" onclick="javascript:showHideElement('tdBCC');return false;"><fmt:message key="mail.addBcc" /></span>
 								</td>
 								<td width="100%" id="tdBCC" class="hide">
 									<textarea name="bcc" id="idBcc" style="width: 90%; height: 40px;" onkeyup="javascript:ajax_showOptions('mail/suggestContacts.drt', this, 'suggestContacts', event);"></textarea>
@@ -103,8 +103,8 @@ String path = request.getContextPath();
 							</tr>
 							<tr>
 								<td nowrap="nowrap" align="right" valign="top">
-									<span style="color: blue; text-decoration: underline; cursor: pointer;" onclick="javascript:Mail.attachFile('attachFile');"><fmt:message key="mail.addAttachment" /></span>&nbsp;
-									<img src="<%=basePath%>images/attachment.gif" border="0" style="cursor: pointer; padding-right: 3px;" onclick="javascript:Mail.attachFile('attachFile');" />
+									<span style="color: blue; text-decoration: underline; cursor: pointer;" onclick="javascript:Mail.attachFile('attachFile');return false;"><fmt:message key="mail.addAttachment" /></span>&nbsp;
+									<img src="<%=basePath%>images/attachment.gif" border="0" style="cursor: pointer; padding-right: 3px;" onclick="javascript:Mail.attachFile('attachFile');return false;" />
 								</td>
 								<td width="100%" id="attachFile">
 								</td>
@@ -123,7 +123,7 @@ String path = request.getContextPath();
 										<tr>
 											<td style="text-align: right; padding-right: 20px;">
 												<DIV style="width: 93%">
-												<span style="color: blue; text-decoration: underline; cursor: pointer;" onclick="javascript:Mail.textVersion('taBody');"><fmt:message key="mail.textVersion" /></span>&nbsp;&nbsp;<span style="color: blue; text-decoration: underline; cursor: pointer;" onclick="javascript:Mail.htmlVersion('taBody');"><fmt:message key="mail.htmlVersion" /></span>
+												<span style="color: blue; text-decoration: underline; cursor: pointer;" onclick="javascript:Mail.textVersion('taBody');return false;"><fmt:message key="mail.textVersion" /></span>&nbsp;&nbsp;<span style="color: blue; text-decoration: underline; cursor: pointer;" onclick="javascript:Mail.htmlVersion('taBody');return false;"><fmt:message key="mail.htmlVersion" /></span>
 												</DIV>
 											</td>
 										</tr>
@@ -139,13 +139,13 @@ String path = request.getContextPath();
 					</td>
 				</tr>
 				<tr>
-					<td width="100%" class="title">
+					<td width="100%" class="title" style="padding-top: 5px">
 						<div>
-							<input type="button" class="BUTTON" name="send" value="<fmt:message key="mail.send" />" onclick="javascript:submitFormCompose();" />
-							&nbsp;&nbsp;
-							<input type="button" class="BUTTON" name="saveDraft" value="<fmt:message key="mail.saveDraft" />" onclick="javascript:draftFormCompose();" />
-							&nbsp;&nbsp;
-							<input type="button" class="BUTTON" name="cancel" value="<fmt:message key="mail.cancel" />" onclick="javascript:Mail.backWithHash();" />
+							<button style="font-size: 95%; white-space: nowrap; font-weight: bold;" onclick="javascript:submitFormCompose();return false;"><fmt:message key="mail.send" /></button>
+							&nbsp;
+							<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:draftFormCompose();return false;"><fmt:message key="mail.saveDraft" /></button>
+							&nbsp;
+							<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.backWithHash();return false;"><fmt:message key="mail.cancel" /></button>
 						</div>
 					</td>
 				</tr>

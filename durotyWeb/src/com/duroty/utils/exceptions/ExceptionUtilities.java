@@ -45,11 +45,17 @@ public class ExceptionUtilities {
      * @return DOCUMENT ME!
      */
     public static String parseMessage(Exception e) {
+    	String message = null;
+    	
         if ((e != null) && (e.getMessage() != null)) {
-            return e.getMessage().replaceAll("\n", "\\n");
+        	message = e.getMessage().replaceAll("\n", "\\n");
+        }
+        
+        if (message != null) {
+        	message = message.replaceAll("'", "\\\\'");
         }
 
-        return null;
+        return message;
     }
 
     /**
@@ -61,7 +67,7 @@ public class ExceptionUtilities {
      */
     public static String parseMessage(String msg) {
         if (msg != null) {
-            return msg.replaceAll("\n", "\\n");
+            return msg.replaceAll("\n", "\\n").replaceAll("'", "\\'");
         }
 
         return null;

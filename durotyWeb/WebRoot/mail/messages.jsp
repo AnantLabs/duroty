@@ -44,14 +44,12 @@ String path = request.getContextPath();
 			<td width="100%" class="title<c:out value="${clazz}" />">
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					<tr>
-						<td width="75%" align="left" style="padding-top: 5px;" nowrap="nowrap">
+						<td width="75%" align="left" style="padding-top: 0px;" nowrap="nowrap">
 							<c:choose>
 								<c:when test="${param.folder == 'SPAM'}">
 									<div>
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.notSpam' />" name="mail.button.notSpam" onclick="javascript:Mail.notSpam('<%=basePath%>mail/notSpam.drt');" />
-										&nbsp;
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.deleteForever' />" name="mail.button.deleteForever" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />');" />
-										&nbsp;
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.notSpam('<%=basePath%>mail/notSpam.drt');return false;"><fmt:message key='mail.button.notSpam' /></button>
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />');return false;"><fmt:message key='mail.button.deleteForever' /></button>
 										<select name="selectMoveMessages" onchange="javascript:Mail.move('<%=basePath%>mail/move.drt', this.options[this.selectedIndex].value);this.selectedIndex = 0;">
 											<option value="" disabled="disabled" selected="selected">
 												<fmt:message key='mail.button.move' />
@@ -79,20 +77,15 @@ String path = request.getContextPath();
 												</option>
 											</c:forEach>
 										</select>
-										&nbsp;
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.deleteLabels' />" name="mail.button.deleteLabels" onclick="javascript:Mail.deleteLabels('<%=basePath%>mail/deleteLabelsFromMessages.drt');" />
-										&nbsp;
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.deleteAll' />" name="mail.button.deleteAll" onclick="javascript:Mail.deleteAll('<%=basePath%>mail/deleteAll.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />', '<fmt:message key='mail.deleteAll' />');" />
-										&nbsp;
-										<span style="cursor: pointer; color: blue; font-size: 13px; text-decoration: underline;" onclick="javascript:Mail.refresh();"><fmt:message key='mail.button.refresh' /></span>
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteLabels('<%=basePath%>mail/deleteLabelsFromMessages.drt');return false;"><fmt:message key='mail.button.deleteLabels' /></button>
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteAll('<%=basePath%>mail/deleteAll.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />', '<fmt:message key='mail.deleteAll' />');return false;"><fmt:message key='mail.button.deleteAll' /></button>
+										<span style="cursor: pointer; color: blue; font-size: 100%; text-decoration: underline;" onclick="javascript:Mail.refresh();return false;"><fmt:message key='mail.button.refresh' /></span>
 									</div>
 								</c:when>
 								<c:when test="${param.folder == 'TRASH'}">
 									<div>
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.isSpam' />" name="mail.button.isSpam" onclick="javascript:Mail.spam('<%=basePath%>mail/spam.drt');" />
-										&nbsp;
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.deleteForever' />" name="mail.button.deleteForever" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />');" />
-										&nbsp;
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.spam('<%=basePath%>mail/spam.drt');return false;"><fmt:message key='mail.button.isSpam' /></button>
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />');return false;"><fmt:message key='mail.button.deleteForever' /></button>
 										<select name="selectMoveMessages" onchange="javascript:Mail.move('<%=basePath%>mail/move.drt', this.options[this.selectedIndex].value);this.selectedIndex = 0;">
 											<option value="" disabled="disabled" selected="selected">
 												<fmt:message key='mail.button.move' />
@@ -120,26 +113,19 @@ String path = request.getContextPath();
 												</option>
 											</c:forEach>
 										</select>
-										&nbsp;
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.deleteLabels' />" name="mail.button.deleteLabels" onclick="javascript:Mail.deleteLabels('<%=basePath%>mail/deleteLabelsFromMessages.drt');" />
-										&nbsp;
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.purgeTrash' />" name="mail.button.purgeTrash" onclick="javascript:Mail.deleteAll('<%=basePath%>mail/deleteAll.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />', '<fmt:message key='mail.purgeTrash' />');" />
-										&nbsp;
-										<span style="cursor: pointer; color: blue; font-size: 13px; text-decoration: underline;" onclick="javascript:Mail.refresh();"><fmt:message key='mail.button.refresh' /></span>
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteLabels('<%=basePath%>mail/deleteLabelsFromMessages.drt');return false;"><fmt:message key='mail.button.deleteLabels' /></button>
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteAll('<%=basePath%>mail/deleteAll.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />', '<fmt:message key='mail.purgeTrash' />');return false;"><fmt:message key='mail.button.purgeTrash' /></button>
+										<span style="cursor: pointer; color: blue; font-size: 100%; text-decoration: underline;" onclick="javascript:Mail.refresh();return false;"><fmt:message key='mail.button.refresh' /></span>
 									</div>								
 								</c:when>
 								<c:otherwise>
 									<div>
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.archive' />" name="mail.button.archive" onclick="javascript:Mail.archive('<%=basePath%>mail/archive.drt');" />
-										&nbsp;
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.isSpam' />" name="mail.button.isSpam" onclick="javascript:Mail.spam('<%=basePath%>mail/spam.drt');" />
-										&nbsp;
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.archive('<%=basePath%>mail/archive.drt');return false;"><fmt:message key='mail.button.archive' /></button>
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.spam('<%=basePath%>mail/spam.drt');return false;"><fmt:message key='mail.button.isSpam' /></button>
 										<c:if test="${action == 'simpleSearch' || action == 'advancedSearch' || action == 'testFilter'}">
-											<input type="button" class="BUTTON" value="<fmt:message key='mail.button.notSpam' />" name="mail.button.notSpam" onclick="javascript:Mail.notSpam('<%=basePath%>mail/notSpam.drt');" />
-											&nbsp;
+											<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.notSpam('<%=basePath%>mail/notSpam.drt');return false;"><fmt:message key='mail.button.notSpam' /></button>
 										</c:if>
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.delete' />" name="mail.button.delete" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />');" />
-										&nbsp;
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />');return false;"><fmt:message key='mail.button.delete' /></button>
 										<select name="selectMoveMessages" onchange="javascript:Mail.move('<%=basePath%>mail/move.drt', this.options[this.selectedIndex].value);this.selectedIndex = 0;">
 											<option value="" disabled="disabled" selected="selected">
 												<fmt:message key='mail.button.move' />
@@ -167,12 +153,9 @@ String path = request.getContextPath();
 												</option>
 											</c:forEach>
 										</select>
-										&nbsp;
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.deleteLabels' />" name="mail.button.deleteLabels" onclick="javascript:Mail.deleteLabels('<%=basePath%>mail/deleteLabelsFromMessages.drt');" />
-										&nbsp;
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.deleteAll' />" name="mail.button.deleteAll" onclick="javascript:Mail.deleteAll('<%=basePath%>mail/deleteAll.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />', '<fmt:message key='mail.deleteAll' />');" />
-										&nbsp; 
-										<span style="cursor: pointer; color: blue; font-size: 13px; text-decoration: underline;" onclick="javascript:Mail.refresh();"><fmt:message key='mail.button.refresh' /></span>
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteLabels('<%=basePath%>mail/deleteLabelsFromMessages.drt');return false;"><fmt:message key='mail.button.deleteLabels' /></button>
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteAll('<%=basePath%>mail/deleteAll.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />', '<fmt:message key='mail.deleteAll' />');return false;"><fmt:message key='mail.button.deleteAll' /></button>
+										<span style="cursor: pointer; color: blue; font-size: 100%; text-decoration: underline;" onclick="javascript:Mail.refresh();return false;"><fmt:message key='mail.button.refresh' /></span>
 									</div>
 								</c:otherwise>
 							</c:choose>
@@ -387,10 +370,8 @@ String path = request.getContextPath();
 							<c:choose>
 								<c:when test="${param.folder == 'SPAM'}">
 									<div>
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.notSpam' />" name="mail.button.notSpam" onclick="javascript:Mail.notSpam('<%=basePath%>mail/notSpam.drt');" />
-										&nbsp;
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.deleteForever' />" name="mail.button.deleteForever" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />');" />
-										&nbsp;
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.notSpam('<%=basePath%>mail/notSpam.drt');return false;"><fmt:message key='mail.button.notSpam' /></button>
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />');return false;"><fmt:message key='mail.button.deleteForever' /></button>
 										<select name="selectMoveMessages" onchange="javascript:Mail.move('<%=basePath%>mail/move.drt', this.options[this.selectedIndex].value);this.selectedIndex = 0;">
 											<option value="" disabled="disabled" selected="selected">
 												<fmt:message key='mail.button.move' />
@@ -418,20 +399,15 @@ String path = request.getContextPath();
 												</option>
 											</c:forEach>
 										</select>
-										&nbsp;
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.deleteLabels' />" name="mail.button.deleteLabels" onclick="javascript:Mail.deleteLabels('<%=basePath%>mail/deleteLabelsFromMessages.drt');" />
-										&nbsp;
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.deleteAll' />" name="mail.button.deleteAll" onclick="javascript:Mail.deleteAll('<%=basePath%>mail/deleteAll.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />', '<fmt:message key='mail.deleteAll' />');" />
-										&nbsp; 
-										<span style="cursor: pointer; color: blue; font-size: 13px; text-decoration: underline;" onclick="javascript:Mail.refresh();"><fmt:message key='mail.button.refresh' /></span>
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteLabels('<%=basePath%>mail/deleteLabelsFromMessages.drt');return false;"><fmt:message key='mail.button.deleteLabels' /></button>
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteAll('<%=basePath%>mail/deleteAll.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />', '<fmt:message key='mail.deleteAll' />');return false;"><fmt:message key='mail.button.deleteAll' /></button>
+										<span style="cursor: pointer; color: blue; font-size: 100%; text-decoration: underline;" onclick="javascript:Mail.refresh();return false;"><fmt:message key='mail.button.refresh' /></span>
 									</div>
 								</c:when>
 								<c:when test="${param.folder == 'TRASH'}">
 									<div>
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.isSpam' />" name="mail.button.isSpam" onclick="javascript:Mail.spam('<%=basePath%>mail/spam.drt');" />
-										&nbsp;
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.deleteForever' />" name="mail.button.deleteForever" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />');" />
-										&nbsp;
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.spam('<%=basePath%>mail/spam.drt');return false;"><fmt:message key='mail.button.isSpam' /></button>
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />');return false;"><fmt:message key='mail.button.deleteForever' /></button>
 										<select name="selectMoveMessages" onchange="javascript:Mail.move('<%=basePath%>mail/move.drt', this.options[this.selectedIndex].value);this.selectedIndex = 0;">
 											<option value="" disabled="disabled" selected="selected">
 												<fmt:message key='mail.button.move' />
@@ -459,26 +435,19 @@ String path = request.getContextPath();
 												</option>
 											</c:forEach>
 										</select>
-										&nbsp;
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.deleteLabels' />" name="mail.button.deleteLabels" onclick="javascript:Mail.deleteLabels('<%=basePath%>mail/deleteLabelsFromMessages.drt');" />
-										&nbsp;
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.purgeTrash' />" name="mail.button.purgeTrash" onclick="javascript:Mail.deleteAll('<%=basePath%>mail/deleteAll.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />', '<fmt:message key='mail.purgeTrash' />');" />
-										&nbsp;
-										<span style="cursor: pointer; color: blue; font-size: 13px; text-decoration: underline;" onclick="javascript:Mail.refresh();"><fmt:message key='mail.button.refresh' /></span>
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteLabels('<%=basePath%>mail/deleteLabelsFromMessages.drt');return false;"><fmt:message key='mail.button.deleteLabels' /></button>
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteAll('<%=basePath%>mail/deleteAll.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />', '<fmt:message key='mail.purgeTrash' />');return false;"><fmt:message key='mail.button.purgeTrash' /></button>
+										<span style="cursor: pointer; color: blue; font-size: 100%; text-decoration: underline;" onclick="javascript:Mail.refresh();return false;"><fmt:message key='mail.button.refresh' /></span>
 									</div>
 								</c:when>
 								<c:otherwise>
 									<div>
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.archive' />" name="mail.button.archive" onclick="javascript:Mail.archive('<%=basePath%>mail/archive.drt');" />
-										&nbsp;
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.isSpam' />" name="mail.button.isSpam" onclick="javascript:Mail.spam('<%=basePath%>mail/spam.drt');" />
-										&nbsp;
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.archive('<%=basePath%>mail/archive.drt');return false;"><fmt:message key='mail.button.archive' /></button>
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.spam('<%=basePath%>mail/spam.drt');return false;"><fmt:message key='mail.button.isSpam' /></button>
 										<c:if test="${action == 'simpleSearch' || action == 'advancedSearch' || action == 'testFilter'}">
-											<input type="button" class="BUTTON" value="<fmt:message key='mail.button.notSpam' />" name="mail.button.notSpam" onclick="javascript:Mail.notSpam('<%=basePath%>mail/notSpam.drt');" />
-											&nbsp;
+											<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.notSpam('<%=basePath%>mail/notSpam.drt');return false;"><fmt:message key='mail.button.notSpam' /></button>
 										</c:if>
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.delete' />" name="mail.button.delete" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />');" />
-										&nbsp;
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteMessages('<%=basePath%>mail/delete.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />');return false;"><fmt:message key='mail.button.delete' /></button>
 										<select name="selectMoveMessages" onchange="javascript:Mail.move('<%=basePath%>mail/move.drt', this.options[this.selectedIndex].value);this.selectedIndex = 0;">
 											<option value="" disabled="disabled" selected="selected">
 												<fmt:message key='mail.button.move' />
@@ -506,12 +475,9 @@ String path = request.getContextPath();
 												</option>
 											</c:forEach>
 										</select>
-										&nbsp;
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.deleteLabels' />" name="mail.button.deleteLabels" onclick="javascript:Mail.deleteLabels('<%=basePath%>mail/deleteLabelsFromMessages.drt');" />
-										&nbsp;
-										<input type="button" class="BUTTON" value="<fmt:message key='mail.button.deleteAll' />" name="mail.button.deleteAll" onclick="javascript:Mail.deleteAll('<%=basePath%>mail/deleteAll.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />', '<fmt:message key='mail.deleteAll' />');" />
-										&nbsp;
-										<span style="cursor: pointer; color: blue; font-size: 13px; text-decoration: underline;" onclick="javascript:Mail.refresh();"><fmt:message key='mail.button.refresh' /></span>
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteLabels('<%=basePath%>mail/deleteLabelsFromMessages.drt');return false;"><fmt:message key='mail.button.deleteLabels' /></button>
+										<button style="font-size: 95%; white-space: nowrap;" onclick="javascript:Mail.deleteAll('<%=basePath%>mail/deleteAll.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />', '<fmt:message key='mail.deleteAll' />');return false;"><fmt:message key='mail.button.deleteAll' /></button>
+										<span style="cursor: pointer; color: blue; font-size: 100%; text-decoration: underline;" onclick="javascript:Mail.refresh();return false;"><fmt:message key='mail.button.refresh' /></span>
 									</div>
 								</c:otherwise>
 							</c:choose>
