@@ -1,7 +1,5 @@
 <!-- Add the FormAuthValve to get access to the exception -->
 <Context cookies="true" crossContext="true">
-	<!-- 
 	<Valve className="org.jboss.web.tomcat.security.CookieFormAuthValve" includePassword="true" />
-	-->
 	<Valve className="org.jboss.web.tomcat.security.FormAuthValve" includePassword="true" />		
 </Context>

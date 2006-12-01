@@ -93,7 +93,8 @@ public abstract class AdminDefaultAction extends DefaultAction {
         throws Exception {
         if (diskFileUpload == null) {
             diskFileUpload = new DiskFileUpload();
-            diskFileUpload.setSizeMax(10485760);
+            long sizeMax = Long.parseLong(Configuration.properties.getProperty(Configuration.MAX_FILE_UPLOAD));
+            diskFileUpload.setSizeMax(sizeMax);
         }
     }
 

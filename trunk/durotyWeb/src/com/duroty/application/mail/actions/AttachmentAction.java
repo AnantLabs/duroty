@@ -25,30 +25,25 @@
  */
 package com.duroty.application.mail.actions;
 
-import com.duroty.application.mail.interfaces.Mail;
-import com.duroty.application.mail.interfaces.MailHome;
-import com.duroty.application.mail.interfaces.MailUtil;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Hashtable;
 
-import com.duroty.config.Configuration;
-
-import com.duroty.controller.actions.DownloadAction;
-
-import com.duroty.utils.log.DLog;
-import com.duroty.utils.log.DMessage;
-import com.duroty.utils.mail.MailPart;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionMapping;
 
-import java.io.IOException;
-import java.io.InputStream;
-
-import java.util.Hashtable;
-
-import javax.mail.MessagingException;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import com.duroty.application.mail.interfaces.Mail;
+import com.duroty.application.mail.interfaces.MailHome;
+import com.duroty.application.mail.interfaces.MailUtil;
+import com.duroty.application.mail.utils.MailPartObj;
+import com.duroty.config.Configuration;
+import com.duroty.controller.actions.DownloadAction;
+import com.duroty.utils.log.DLog;
+import com.duroty.utils.log.DMessage;
 
 
 /**
@@ -115,7 +110,7 @@ public class AttachmentAction extends DownloadAction {
         /**
          * DOCUMENT ME!
          */
-        private MailPart part;
+        private MailPartObj part;
 
         /**
          * Creates a new SI object.
@@ -166,8 +161,8 @@ public class AttachmentAction extends DownloadAction {
         public InputStream getInputStream() throws IOException {
             if (part != null) {
                 try {
-                    return part.getPart().getInputStream();
-                } catch (MessagingException e) {
+                    return new ByteArrayInputStream(part.getAttachent());
+                } catch (Exception e) {
                 }
             }
 

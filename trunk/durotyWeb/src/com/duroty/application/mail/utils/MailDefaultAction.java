@@ -89,8 +89,9 @@ public abstract class MailDefaultAction extends DefaultAction {
         HttpServletRequest request, HttpServletResponse response)
         throws Exception {
         if (diskFileUpload == null) {
-            diskFileUpload = new DiskFileUpload();
-            diskFileUpload.setSizeMax(10485760);
+        	diskFileUpload = new DiskFileUpload();
+        	long sizeMax = Long.parseLong(Configuration.properties.getProperty(Configuration.MAX_FILE_UPLOAD));
+            diskFileUpload.setSizeMax(sizeMax);
         }
     }
 

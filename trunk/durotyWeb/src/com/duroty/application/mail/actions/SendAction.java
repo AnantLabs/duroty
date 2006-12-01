@@ -25,36 +25,11 @@
  */
 package com.duroty.application.mail.actions;
 
-import com.duroty.application.mail.interfaces.Mail;
-import com.duroty.application.mail.interfaces.Preferences;
-import com.duroty.application.mail.interfaces.Send;
-import com.duroty.application.mail.utils.MailDefaultAction;
-
-import com.duroty.constants.Constants;
-import com.duroty.constants.ExceptionCode;
-
-import com.duroty.utils.exceptions.ExceptionUtilities;
-import com.duroty.utils.log.DLog;
-import com.duroty.utils.log.DMessage;
-import com.duroty.utils.mail.MailPart;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUpload;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
-import org.apache.struts.action.ActionMessages;
-
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-
 import java.nio.charset.Charset;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -63,6 +38,27 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUpload;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
+
+import com.duroty.application.mail.interfaces.Mail;
+import com.duroty.application.mail.interfaces.Preferences;
+import com.duroty.application.mail.interfaces.Send;
+import com.duroty.application.mail.utils.MailDefaultAction;
+import com.duroty.application.mail.utils.MailPartObj;
+import com.duroty.constants.Constants;
+import com.duroty.constants.ExceptionCode;
+import com.duroty.utils.exceptions.ExceptionUtilities;
+import com.duroty.utils.log.DLog;
+import com.duroty.utils.log.DMessage;
 
 
 /**
@@ -108,12 +104,10 @@ public class SendAction extends MailDefaultAction {
                     if (item.isFormField()) {
                         if (item.getFieldName().equals("forwardAttachments")) {
                             String[] aux = item.getString().split(":");
-                            MailPart part = mailInstance.getAttachment(aux[0],
-                                    aux[1]);
-                            inputStream = part.getPart().getInputStream();
+                            MailPartObj part = mailInstance.getAttachment(aux[0], aux[1]);
+                            inputStream = new ByteArrayInputStream(part.getAttachent());
 
-                            File dir = new File(System.getProperty("user.home") +
-                                    File.separator + "tmp");
+                            File dir = new File(System.getProperty("user.home") + File.separator + "tmp");
 
                             if (!dir.exists()) {
                                 dir.mkdir();
