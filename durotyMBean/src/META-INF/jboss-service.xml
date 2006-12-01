@@ -8,7 +8,7 @@
 
 		<attribute name="JNDIName">java:/duroty/mail/durotyMailFactory</attribute>
 		<attribute name="Username">postmaster</attribute>
-		<attribute name="Password">password</attribute>
+		<attribute name="Password">Password</attribute>
 		<attribute name="Configuration">
 			<!-- Test -->
 			<configuration>
@@ -186,7 +186,7 @@
 				<property name="attachmentSize" value="1m" />
 				
 				<!-- If the server uses POP3 this it will be the messages factory -->
-				<property name="messagesFactory" value="com.duroty.service.POP3MessageFactory" />	
+				<property name="messagesFactory" value="com.duroty.service.POP3MessageFactory" />
 				
 				<!-- If the server uses IMAP this it will be the messages factory -->
 				<!-- 
@@ -194,7 +194,7 @@
 				-->
 				
 				<!-- The default email domain for a new subscribtors -->
-				<property name="defaultEmailDomain" value="email.domain" />
+				<property name="defaultEmailDomain" value="localhost" />
 				
 				<!-- You use this folders if the server is IMAP,
 				The folders will be created and/or subscribed is if they do not exist in the server.
@@ -204,9 +204,9 @@
 				<!-- The INBOX folder for IMAP/POP3 Server -->
 				<property name="serverInbox" value="INBOX" />
 				<!-- The SENT folder for IMAP Server -->
-				<property name="serverSent" value="SENT" />
+				<property name="serverSent" value="Enviados" />
 				<!-- The DRAFT folder for IMAP Server -->
-				<property name="serverDraft" value="DRAFT" />
+				<property name="serverDraft" value="Borrador" />
 			</configuration>
 		</attribute>
 	</mbean>
