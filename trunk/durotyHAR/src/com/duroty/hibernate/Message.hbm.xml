@@ -258,4 +258,67 @@
 	<query name="delete-labels-by-mid">
     	DELETE FROM LabMes a WHERE a.id.message in (from Message b where b.mesName in (:mids) AND b.users = (from Users i where i.useUsername = :username))
 	</query>
+	
+	<sql-query name="attachments">
+		<return alias="testo" class="com.duroty.hibernate.AttachmentWithDate" />
+		select testo.* from (SELECT i.*, j.MES_DATE FROM ATTACHMENT i, MESSAGE j WHERE ATT_MES_IDINT = MES_IDINT AND ATT_NAME != 'Message Text' AND ATT_MES_IDINT IN 
+		(SELECT MES_IDINT FROM MESSAGE WHERE MES_BOX NOT IN (:no_boxes) 
+		AND MES_USE_IDINT = :user)) as testo
+	</sql-query>
+	
+	<sql-query name="count-attachments">
+		<return-scalar column="count" type="java.lang.Integer" />
+		SELECT COUNT(*) as count FROM ATTACHMENT WHERE ATT_NAME != 'Message Text' AND ATT_MES_IDINT IN 
+		(SELECT MES_IDINT FROM MESSAGE WHERE MES_BOX NOT IN (:no_boxes) 
+		AND MES_USE_IDINT = :user)
+	</sql-query>
+	
+	<sql-query name="attachments-by-folder">
+		<return alias="testo" class="com.duroty.hibernate.AttachmentWithDate" />
+		select testo.* from (SELECT i.*, j.MES_DATE FROM ATTACHMENT i, MESSAGE j WHERE ATT_MES_IDINT = MES_IDINT AND ATT_NAME != 'Message Text' AND ATT_MES_IDINT IN 
+		(SELECT MES_IDINT FROM MESSAGE WHERE MES_BOX IN (:boxes) 
+		AND MES_USE_IDINT = :user)) as testo
+	</sql-query>
+	
+	<sql-query name="count-attachments-by-folder">
+		<return-scalar column="count" type="java.lang.Integer" />
+		SELECT COUNT(*) as count FROM ATTACHMENT WHERE ATT_NAME != 'Message Text' AND ATT_MES_IDINT IN 
+		(SELECT MES_IDINT FROM MESSAGE WHERE MES_BOX IN (:boxes) 
+		AND MES_USE_IDINT = :user)
+	</sql-query>
+	
+	<sql-query name="attachments-by-label">
+		<return alias="testo" class="com.duroty.hibernate.AttachmentWithDate" />
+		select testo.* from (SELECT i.*, j.MES_DATE FROM ATTACHMENT i, MESSAGE j WHERE ATT_MES_IDINT = MES_IDINT AND ATT_NAME != 'Message Text' AND ATT_MES_IDINT IN 
+		(SELECT MES_IDINT FROM LAB_MES WHERE LAB_IDINT = :label) AND ATT_MES_IDINT IN 
+		(SELECT MES_IDINT FROM MESSAGE WHERE MES_USE_IDINT = :user AND MES_BOX NOT IN (:no_boxes))) as testo
+	</sql-query>
+	
+	<sql-query name="count-attachments-by-label">
+		<return-scalar column="count" type="java.lang.Integer" />
+		SELECT COUNT(*) as count FROM ATTACHMENT WHERE ATT_NAME != 'Message Text' AND ATT_MES_IDINT IN 
+		(SELECT MES_IDINT FROM LAB_MES WHERE LAB_IDINT = :label) AND ATT_MES_IDINT IN 
+		(SELECT MES_IDINT FROM MESSAGE WHERE MES_USE_IDINT = :user AND MES_BOX NOT IN (:no_boxes))
+	</sql-query>
+	
+	<sql-query name="attachments-by-folder-label">
+		<return alias="testo" class="com.duroty.hibernate.AttachmentWithDate" />
+		select testo.* from (SELECT i.*, j.MES_DATE FROM ATTACHMENT i, MESSAGE j WHERE ATT_MES_IDINT = MES_IDINT AND ATT_NAME != 'Message Text' AND ATT_MES_IDINT IN 
+		(SELECT MES_IDINT FROM LAB_MES WHERE LAB_IDINT = :label) AND ATT_MES_IDINT IN 
+		(SELECT MES_IDINT FROM MESSAGE WHERE MES_USE_IDINT = :user AND MES_BOX IN (:boxes))) as testo
+	</sql-query>
+	
+	<sql-query name="count-attachments-by-folder-label">
+		<return-scalar column="count" type="java.lang.Integer" />
+		SELECT COUNT(*) as count FROM ATTACHMENT WHERE ATT_NAME != 'Message Text' AND ATT_MES_IDINT IN 
+		(SELECT MES_IDINT FROM LAB_MES WHERE LAB_IDINT = :label) AND ATT_MES_IDINT IN 
+		(SELECT MES_IDINT FROM MESSAGE WHERE MES_USE_IDINT = :user AND MES_BOX IN (:boxes))
+	</sql-query>
+	
+	<sql-query name="messages-by-attachments">
+		<return alias="i" class="com.duroty.hibernate.Message" />
+		SELECT {i.*} FROM MESSAGE {i} WHERE MES_IDINT IN 
+		(SELECT ATT_MES_IDINT FROM ATTACHMENT WHERE ATT_IDINT IN (:idints)) 
+		AND MES_USE_IDINT = :user
+	</sql-query>
 </hibernate-mapping>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 03-ago-2006 12:02:31 by Hibernate Tools 3.1.0.beta5 -->
+<hibernate-mapping>
+    <class name="com.duroty.hibernate.AttachmentWithDate" mutable="false" dynamic-update="false" dynamic-insert="false">
+        <id name="attIdint" type="int">
+            <column name="att_idint" />
+        </id>
+        <many-to-one name="message" class="com.duroty.hibernate.Message" fetch="select">
+            <column name="att_mes_idint" not-null="true" />
+        </many-to-one>
+        <property name="attName" type="string">
+            <column name="att_name" not-null="true" />
+        </property>
+        <property name="attSize" type="int">
+            <column name="att_size" not-null="true" />
+        </property>
+        <property name="attPart" type="int">
+            <column name="att_part" not-null="true" />
+        </property>
+        <property name="attContentType" type="string">
+            <column name="att_content_type" length="50" not-null="true" />
+        </property>
+        <property name="attDate" type="timestamp">
+			<column name="mes_date" length="8" not-null="true" />
+		</property>
+    </class>
+</hibernate-mapping>
