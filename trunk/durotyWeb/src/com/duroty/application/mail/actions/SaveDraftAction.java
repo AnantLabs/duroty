@@ -25,30 +25,8 @@
  */
 package com.duroty.application.mail.actions;
 
-import com.duroty.application.mail.interfaces.Preferences;
-import com.duroty.application.mail.interfaces.Send;
-import com.duroty.application.mail.utils.MailDefaultAction;
-
-import com.duroty.constants.Constants;
-import com.duroty.constants.ExceptionCode;
-
-import com.duroty.utils.exceptions.ExceptionUtilities;
-import com.duroty.utils.log.DLog;
-import com.duroty.utils.log.DMessage;
-
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUpload;
-
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-import org.apache.struts.action.ActionMessage;
-import org.apache.struts.action.ActionMessages;
-
-import java.io.File;
-
+import java.io.ByteArrayOutputStream;
 import java.nio.charset.Charset;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -57,6 +35,26 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUpload;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionMessage;
+import org.apache.struts.action.ActionMessages;
+
+import com.duroty.application.mail.interfaces.Preferences;
+import com.duroty.application.mail.interfaces.Send;
+import com.duroty.application.mail.utils.MailDefaultAction;
+import com.duroty.application.mail.utils.MailPartObj;
+import com.duroty.constants.Constants;
+import com.duroty.constants.ExceptionCode;
+import com.duroty.utils.exceptions.ExceptionUtilities;
+import com.duroty.utils.log.DLog;
+import com.duroty.utils.log.DMessage;
 
 
 /**
@@ -98,17 +96,26 @@ public class SaveDraftAction extends MailDefaultAction {
                     if (item.isFormField()) {
                         fields.put(item.getFieldName(), item.getString());
                     } else {
-                        File dir = new File(System.getProperty("user.home") +
-                                File.separator + "tmp");
+                    	if (!StringUtils.isBlank(item.getName())) {
+                            ByteArrayOutputStream baos = null;
 
-                        if (!dir.exists()) {
-                            dir.mkdir();
+                            try {
+                                baos = new ByteArrayOutputStream();
+
+                                IOUtils.copy(item.getInputStream(), baos);
+
+                                MailPartObj part = new MailPartObj();
+                                part.setAttachent(baos.toByteArray());
+                                part.setContentType(item.getContentType());
+                                part.setName(item.getName());
+                                part.setSize(item.getSize());
+
+                                attachments.addElement(part);
+                            } catch (Exception ex) {
+                            } finally {
+                                IOUtils.closeQuietly(baos);
+                            }
                         }
-
-                        File out = new File(dir, item.getName());
-                        item.write(out);
-
-                        attachments.addElement(out);
                     }
                 }
 

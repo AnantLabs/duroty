@@ -1,0 +1,80 @@
+body {
+	margin: 0;
+	padding: 0;
+	background-color: #ede9e3;	
+}
+
+body {
+	font: 76% sans-serif;
+	font-family: arial, sans-serif;
+}
+
+body {
+	/*font: 80% "Lucida Grande", "Lucida Sans Unicode", sans-serif;*/
+	font: 80% arial, sans-serif;
+	border-top: 1px solid #cac1b3;
+}
+
+#cornerLoading {
+	position: fixed;
+	z-index: 100;
+	top: 0;
+	right: 0;
+	width: 100px;
+	margin: 0px;
+	padding: 5px 5px 5px 5px;
+	font: 11px/ 1.2em "lucida console", "courier new", monospace;
+	text-align: left;
+	color: white;
+	background-color: red;
+	border: 1px solid black;
+	display: none;
+}
+
+/* star html hack - IE only */
+* html #cornerLoading {
+	position: absolute;
+}
+
+/* a bet on future IEs */
+#cornerLoading [id] {
+	position: fixed;
+}
+
+#labels {
+	padding: 5px;
+	background-color: #fff;
+	margin: 5px;
+	border: 1px solid #cac1b3;
+}
+
+#createLabel {
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-top:10px;
+}
+
+.label {
+	color: blue;
+	cursor: pointer;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+.labelSelected {
+	font-weight: bold;
+	cursor: pointer;
+	background-color: #CCCCCC;
+	padding-top: 2px;
+	padding-bottom: 2px;
+}
+
+#trash {
+	padding-top: 25px;
+	cursor: pointer;
+	text-align: center;
+}
+
+.quotaLayer {
+	color: green;
+}

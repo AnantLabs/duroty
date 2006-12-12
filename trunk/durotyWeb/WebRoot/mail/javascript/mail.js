@@ -166,7 +166,7 @@ function Mail() {
     	ajaxContents.setVar("order", order);
     	ajaxContents.setVar("extra", desc);
     	ajaxContents.setVar("excludeTrash", excludeTrash);    	
-    	ajaxContents.selectContents("mail/simpleSearch.drt", false, "messages", toShow, toHide);
+    	ajaxContents.selectContents("mail/simpleSearch.drt", false, "messages", toShow, toHide, true);
     	this.parseLeft(null, 0);
     };
     
@@ -185,7 +185,7 @@ function Mail() {
     	ajaxContents.setVar("extra", desc);
     	
     	var url = this.parseAdvancedSearch(ajaxContents);
-    	ajaxContents.selectContents("mail/advancedSearch.drt?" + url + "&folder=" + folder + "&page=" + page + "&order=" + order + "&extra=" + desc, false, "messages", toShow, toHide);
+    	ajaxContents.selectContents("mail/advancedSearch.drt?" + url + "&folder=" + folder + "&page=" + page + "&order=" + order + "&extra=" + desc, false, "messages", toShow, toHide, true);
     	this.parseLeft(null, 0);
     };
     
@@ -212,7 +212,7 @@ function Mail() {
     	ajaxContents.setVar("extra", desc);
     	
     	var url = this.parseTestFilter(ajaxContents);
-    	ajaxContents.selectContents("mail/testFilter.drt?" + url + "&folder=" + folder + "&page=" + page + "&order=" + order + "&extra=" + desc, false, "messages", toShow, toHide);
+    	ajaxContents.selectContents("mail/testFilter.drt?" + url + "&folder=" + folder + "&page=" + page + "&order=" + order + "&extra=" + desc, false, "messages", toShow, toHide, true);
     	this.parseLeft(null, 0);
     };
     
@@ -229,7 +229,7 @@ function Mail() {
     	ajaxContents.setVar("page", page);
     	ajaxContents.setVar("order", order);
     	ajaxContents.setVar("extra", desc);
-    	ajaxContents.selectContents("mail/messages.drt", false, "messages", toShow, toHide);
+    	ajaxContents.selectContents("mail/messages.drt", false, "messages", toShow, toHide, true);
     	this.parseLeft(folder, 0);
     };
     
@@ -246,7 +246,7 @@ function Mail() {
     	ajaxContents.setVar("page", page);
     	ajaxContents.setVar("order", order);
     	ajaxContents.setVar("extra", desc);
-    	ajaxContents.selectContents("mail/messages.drt", false, "messages", toShow, toHide);
+    	ajaxContents.selectContents("mail/messages.drt", false, "messages", toShow, toHide, true);
     	this.parseLeft(label, 0);
     };
     
@@ -259,7 +259,7 @@ function Mail() {
 		
 		ajaxContents = new AjaxContents();
     	ajaxContents.init();
-    	ajaxContents.selectContents("mail/readMessage.drt?mid=" + mid + "&folder=" + folder, false, "message", toShow, toHide);
+    	ajaxContents.selectContents("mail/readMessage.drt?mid=" + mid + "&folder=" + folder, false, "message", toShow, toHide, true);
     	
     	if (folder == this.FOLDER_HIDDEN) {
     		this.parseLeft(this.FOLDER_ALL, 0);
@@ -351,7 +351,7 @@ function Mail() {
 		
 		ajaxContents = new AjaxContents();
     	ajaxContents.init();
-    	ajaxContents.selectContents("mail/readMessage.drt?mid=" + _mid + "&folder=" + _folder + "&displayImages=true", false, "message", toShow, toHide);
+    	ajaxContents.selectContents("mail/readMessage.drt?mid=" + _mid + "&folder=" + _folder + "&displayImages=true", false, "message", toShow, toHide, true);
     	
     	if (_folder == this.FOLDER_HIDDEN) {
     		this.parseLeft(this.FOLDER_ALL, 0);
@@ -749,7 +749,7 @@ function Mail() {
 			
 			aux.appendChild(newEl);
 		}
-	}
+	};
 	
 	this.removeAttach = function(id, obj) {
 		//var aux = document.getElementById("attachFile");
@@ -760,8 +760,7 @@ function Mail() {
 				aux.removeChild(child);
 			}
 		}
-	}
-	
+	};	
     
     this.removeAllAttach = function(obj) {
 		//var aux = document.getElementById("attachFile");
@@ -772,7 +771,7 @@ function Mail() {
 			}
 			aux.innerHTML = "";
 		}
-	}
+	};
     
     this.parseLeft = function(action, idint) {
     	// clear out the old selected menu item
@@ -839,7 +838,7 @@ function Mail() {
     
 	    ajaxContents = new AjaxContents();
 	    ajaxContents.init();
-    	ajaxContents.selectContents("mail/properties.drt?mid=" + mid, false, "msgProperties", false, false);
+    	ajaxContents.selectContents("mail/properties.drt?mid=" + mid, false, "msgProperties", false, false, true);
     };
     
     this.flagImportant = function(action) {

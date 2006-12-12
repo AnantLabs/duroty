@@ -326,15 +326,19 @@ String path = request.getContextPath();
 								<tr>
 									<td class="attachment">
 										<c:forEach var="attachment" items="${message.attachments}">
-											<a href="<%=basePath%>mail/attachment.drt?mid=<c:out value="${message.mid}" />&part=<c:out value="${attachment.idint}" />" target="_blank"><c:out value="${attachment.name}" /></a>
-											&nbsp;<c:out value="${attachment.size}" />
-											&nbsp;<c:out value="${attachment.contentType}" />
-											<br />
+											<div>
+												<div style="float: left; padding-right: 10px; padding-top: 2px;">
+													<img src="<%=basePath%>files/images/<c:out value="${attachment.extension}" />.gif" border="0" alt="<c:out value="${attachment.contentType}" />" title="<c:out value="${attachment.contentType}" />"/>
+												</div>
+												<div style="">
+													<a href="<%=basePath%>mail/attachment/<c:out value="${attachment.name}" />?mid=<c:out value="${message.mid}" />&part=<c:out value="${attachment.idint}" />" target="_blank"><c:out value="${attachment.name}" /></a>
+													&nbsp;<c:out value="${attachment.size}" />
+												</div>
+											</div>
 										</c:forEach>
 									</td>
 								</tr>
-							</c:if>
-							
+							</c:if>							
 							<tr>					
 								<td id="msgReferencesAfter">
 									<c:if test="${!empty message.referencesAfter}">

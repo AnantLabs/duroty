@@ -103,7 +103,7 @@ function Contacts() {
     	ajaxContents.setVar("page", page);
     	ajaxContents.setVar("order", order);
     	ajaxContents.setVar("extra", desc);
-    	ajaxContents.selectContents("mail/preferences/searchContacts.drt", false, "contacts");
+    	ajaxContents.selectContents("mail/preferences/searchContacts.drt", false, "contacts", null, null, true);
     };
     
     this.searchGroups = function(token, page, order, desc) {    	    
@@ -118,7 +118,7 @@ function Contacts() {
     	ajaxContents.setVar("page", page);
     	ajaxContents.setVar("order", order);
     	ajaxContents.setVar("extra", desc);
-    	ajaxContents.selectContents("mail/preferences/searchGroups.drt", false, "contacts");
+    	ajaxContents.selectContents("mail/preferences/searchGroups.drt", false, "contacts", null, null, true);
     };
     
     this.selectAll = function(_form) {

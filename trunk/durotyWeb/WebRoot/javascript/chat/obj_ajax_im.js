@@ -17,7 +17,7 @@ String.prototype.isAlphaNumeric = function () {
 var useBlinker = true;           // Show new message in titlebar when window isn't active.
 var blinkSpeed = 1000;           // How fast to change between the titles when "blinking" (in milliseconds).
 var pulsateTitles = true;           // Pulsate (blink) IM window titles on new IM when they are not the active window.
-var idle_time = 150000;
+var idle_time = 10000;
 // Server //
 var pingFrequency = 2500;           // How often to ping the server (in milliseconds). Best range between 2500 and 3500 ms.
 var pingTo = "chat/index.drt";  // The file that is the "server".
@@ -154,13 +154,15 @@ function Chat () {
 	        if (state == 1 && lastState == 1 && titlebarBlinker == true) {
 	        	//available and default login
 	        	//si no tinc el focus (estem en blur) titlebarBlinker = true setState(3);
+	        	clearTimeout(self.pingTimer);
 	        	clearTimeout(self.idleTimer);
-	            setTimeout("Chat.setIdle()", 100);
+	            setTimeout("Chat.setIdle()", 500);
 	        } else if (state == 3 && lastState == 1 && titlebarBlinker == false) {
 	        	//idle and default login
 	        	//si no tinc el blur (blur) titlebarBlinker = false sigin;
-	        	clearTimeout(self.idleTimer);
-	            setTimeout("Chat.setIdle()", 100);
+	        	clearTimeout(self.pingTimer);
+	        	clearTimeout(self.idleTimer);	        	
+	            setTimeout("Chat.setIdle()", 500);
 	        } else {
 	        	if (state == 0) {
 					//login
@@ -494,10 +496,32 @@ function Chat () {
 	
 	this.setIdle = function() {
 	    if (titlebarBlinker == false) {    
-	    	self.idleTimer = setTimeout("Chat.signin()", 1000);
+	    	setTimeout("Chat.parseSignin()", 100);
 	    } else {
-	    	self.idleTimer = setTimeout("Chat.setStatus(3, null, 7)", idle_time);
+	    	setTimeout("Chat.parseIdle()", 100);
 		}
+	};
+	
+	this.parseSignin = function() {	
+		clearTimeout(self.pingTimer);
+       	clearTimeout(self.idleTimer);
+       	
+       	self.pingTimer = null;
+       	self.idleTimer = null;
+	
+		self.idleTimer = setTimeout("Chat.signin()", 100);
+	    self.pingTimer = setInterval("Chat.ping()", pingFrequency);
+	};
+	
+	this.parseIdle = function() {	
+		clearTimeout(self.pingTimer);
+       	clearTimeout(self.idleTimer);
+       	
+       	self.pingTimer = null;
+       	self.idleTimer = null;
+	
+		self.idleTimer = setTimeout("Chat.setStatus(3, null, 7)", 100);
+    	self.pingTimer = setInterval("Chat.ping()", pingFrequency);
 	};
 	
 	this.titlebarBlink = function(name, message, alter) {		

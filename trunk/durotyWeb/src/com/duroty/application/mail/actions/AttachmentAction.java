@@ -18,32 +18,36 @@
 * c/Mallorca 295 principal B 08037 Barcelona Spain
 * Phone: +34 625397324
 */
-
-
 /**
  *
  */
 package com.duroty.application.mail.actions;
 
 import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.rmi.RemoteException;
+import java.security.Principal;
 import java.util.Hashtable;
 
+import javax.ejb.CreateException;
+import javax.naming.Context;
+import javax.naming.NamingException;
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
+import org.apache.commons.io.IOUtils;
 
 import com.duroty.application.mail.interfaces.Mail;
 import com.duroty.application.mail.interfaces.MailHome;
 import com.duroty.application.mail.interfaces.MailUtil;
 import com.duroty.application.mail.utils.MailPartObj;
 import com.duroty.config.Configuration;
+import com.duroty.constants.Constants;
 import com.duroty.controller.actions.DownloadAction;
-import com.duroty.utils.log.DLog;
-import com.duroty.utils.log.DMessage;
+import com.duroty.session.SessionManager;
 
 
 /**
@@ -52,18 +56,95 @@ import com.duroty.utils.log.DMessage;
  */
 public class AttachmentAction extends DownloadAction {
     /**
-     * Creates a new AttachmentAction object.
-     */
+         *
+         */
+    private static final long serialVersionUID = 1631746723406641292L;
+
+    /**
+    * Creates a new AttachmentAction object.
+    */
     public AttachmentAction() {
         super();
     }
 
-    /* (non-Javadoc)
-     * @see com.duroty.controller.actions.DownloadAction#getStreamInfo(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
+    /**
+     * DOCUMENT ME!
+     *
+     * @param request DOCUMENT ME!
+     * @param response DOCUMENT ME!
+     *
+     * @throws ServletException DOCUMENT ME!
+     * @throws IOException DOCUMENT ME!
      */
-    protected StreamInfo getStreamInfo(ActionMapping mapping, ActionForm form,
-        HttpServletRequest request, HttpServletResponse response)
-        throws Exception {
+    protected void doDownload(HttpServletRequest request,
+        HttpServletResponse response) throws ServletException, IOException {
+        DataInputStream in = null;
+        ByteArrayInputStream bais = null;
+        ServletOutputStream op = null;
+
+        try {
+            String mid = request.getParameter("mid");
+            String part = request.getParameter("part");
+
+            Mail filesInstance = getMailInstance(request);
+
+            MailPartObj obj = filesInstance.getAttachment(mid, part);
+
+            int length = 0;
+            op = response.getOutputStream();
+
+            String mimetype = obj.getContentType();
+
+            //
+            //  Set the response and go!
+            //
+            //  Yes, I know that the RFC says 'attachment'.  Unfortunately, IE has a typo
+            //  in it somewhere, and Netscape seems to accept this typing as well.
+            //
+            response.setContentType((mimetype != null) ? mimetype
+                                                       : "application/octet-stream");
+            response.setContentLength((int) obj.getSize());
+            response.setHeader("Content-Disposition",
+                "attachement; filename=\"" + obj.getName() + "\"");
+            response.setHeader("Pragma", "public");
+            response.setHeader("Cache-Control", "max-age=0");
+
+            //
+            //  Stream to the requester.
+            //
+            byte[] bbuf = new byte[1024];
+            bais = new ByteArrayInputStream(obj.getAttachent());
+            in = new DataInputStream(bais);
+
+            while ((in != null) && ((length = in.read(bbuf)) != -1)) {
+                op.write(bbuf, 0, length);
+            }
+        } catch (Exception ex) {
+        } finally {
+            try {
+                op.flush();
+            } catch (Exception ex) {
+            }
+
+            IOUtils.closeQuietly(bais);
+            IOUtils.closeQuietly(in);
+            IOUtils.closeQuietly(op);
+        }
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param request DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     *
+     * @throws NamingException DOCUMENT ME!
+     * @throws RemoteException DOCUMENT ME!
+     * @throws CreateException DOCUMENT ME!
+     */
+    protected Mail getMailInstance(HttpServletRequest request)
+        throws NamingException, RemoteException, CreateException {
         MailHome home = null;
 
         Boolean localServer = new Boolean(Configuration.properties.getProperty(
@@ -76,110 +157,46 @@ public class AttachmentAction extends DownloadAction {
             home = MailUtil.getHome(environment);
         }
 
-        Mail mailInstance = home.create();
-
-        String mid = request.getParameter("mid");
-        String part = request.getParameter("part");
-
-        return new SI(mailInstance, mid, part);
-    }
-
-    /* (non-Javadoc)
-     * @see com.duroty.controller.actions.DefaultAction#doInit(org.apache.struts.action.ActionMapping, org.apache.struts.action.ActionForm, javax.servlet.http.HttpServletRequest, javax.servlet.http.HttpServletResponse)
-     */
-    protected void doInit(ActionMapping mapping, ActionForm form,
-        HttpServletRequest request, HttpServletResponse response)
-        throws Exception {
-        // TODO Auto-generated method stub
-    }
-
-    /* (non-Javadoc)
-     * @see com.duroty.controller.actions.DefaultAction#doTrace(javax.servlet.http.HttpServletRequest, int, java.lang.Class, java.lang.String)
-     */
-    protected void doTrace(HttpServletRequest request, int level, Class classe,
-        String message) throws Exception {
-        DLog.log(level, classe, DMessage.toString(request, message));
+        return home.create();
     }
 
     /**
-     * This class represents the pertinent details about the file to be
-     * downloaded.
+     * DOCUMENT ME!
      *
+     * @param request DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
      */
-    public static class SI implements StreamInfo {
-        /**
-         * DOCUMENT ME!
-         */
-        private MailPartObj part;
+    protected Hashtable getContextProperties(HttpServletRequest request) {
+        Hashtable props = (Hashtable) SessionManager.getObject(Constants.CONTEXT_PROPERTIES,
+                request);
 
-        /**
-         * Creates a new SI object.
-         *
-         * @param loginInstance DOCUMENT ME!
-         * @param dmailInstance DOCUMENT ME!
-         * @param uid DOCUMENT ME!
-         * @param hash DOCUMENT ME!
-         */
-        public SI(Mail mailInstance, String mid, String hash) {
-            try {
-                this.part = mailInstance.getAttachment(mid, hash);
-            } catch (Exception e) {
-                this.part = null;
-            }
+        if (props == null) {
+            props = new Hashtable();
+
+            props.put(Context.INITIAL_CONTEXT_FACTORY,
+                Configuration.properties.getProperty(
+                    Configuration.JNDI_INITIAL_CONTEXT_FACTORY));
+            props.put(Context.URL_PKG_PREFIXES,
+                Configuration.properties.getProperty(
+                    Configuration.JNDI_URL_PKG_PREFIXES));
+            props.put(Context.PROVIDER_URL,
+                Configuration.properties.getProperty(
+                    Configuration.JNDI_PROVIDER_URL));
+
+            Principal principal = request.getUserPrincipal();
+            props.put(Context.SECURITY_PRINCIPAL, principal.getName());
+            props.put(Context.SECURITY_CREDENTIALS,
+                SessionManager.getObject(Constants.JAAS_PASSWORD, request));
+
+            props.put(Context.SECURITY_PROTOCOL,
+                Configuration.properties.getProperty(
+                    Configuration.SECURITY_PROTOCOL));
+
+            SessionManager.setObject(Constants.CONTEXT_PROPERTIES, props,
+                request);
         }
 
-        /**
-         * DOCUMENT ME!
-         *
-         * @return DOCUMENT ME!
-         */
-        public String getContentType() {
-            if (part != null) {
-                String contenttype = null;
-
-                if ((part.getContentType() != null) &&
-                        (part.getContentType().equalsIgnoreCase("message/rfc822") ||
-                        part.getContentType().equalsIgnoreCase("message/delivery-status"))) {
-                    contenttype = "text/html";
-                } else {
-                    contenttype = part.getContentType();
-                }
-
-                return contenttype;
-            }
-
-            return null;
-        }
-
-        /**
-         * DOCUMENT ME!
-         *
-         * @return DOCUMENT ME!
-         *
-         * @throws IOException DOCUMENT ME!
-         */
-        public InputStream getInputStream() throws IOException {
-            if (part != null) {
-                try {
-                    return new ByteArrayInputStream(part.getAttachent());
-                } catch (Exception e) {
-                }
-            }
-
-            return null;
-        }
-
-        /**
-         * DOCUMENT ME!
-         *
-         * @return DOCUMENT ME!
-         */
-        public String getName() {
-            if (part != null) {
-                return part.getName();
-            }
-
-            return null;
-        }
+        return props;
     }
 }

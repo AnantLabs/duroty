@@ -189,7 +189,7 @@ String path = request.getContextPath();
 				</table>
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					<tr>
-						<td width="75%" align="left" style="padding-top: 5px;" nowrap="nowrap">
+						<td width="75%" align="left" style="padding-top: 4px; padding-bottom: 4px;" nowrap="nowrap">
 							<fmt:message key="general.select" />:&nbsp;<span class="link" onclick="javascript:Mail.selectAll();"><fmt:message key="mail.selectAll" /></span>, <span class="link" onclick="javascript:Mail.selectRead();"><fmt:message key="mail.selectRead" /></span>, <span class="link" onclick="javascript:Mail.selectUnread();"><fmt:message key="mail.selectUnread" /></span>, <span class="link" onclick="javascript:Mail.markSelection();"><fmt:message key="mail.selectMark" /></span>, <span class="link" onclick="javascript:Mail.flagImportant('<%=basePath%>mail/flag.drt');"><fmt:message key="mail.flagged" /></span>, <span class="link" onclick="javascript:Mail.flagUnread('<%=basePath%>mail/flag.drt');"><fmt:message key="mail.recent" /></span>
 						</td>
 						<td width="25%" align="right" style="padding-right: 8px;">
@@ -356,7 +356,7 @@ String path = request.getContextPath();
 			<td width="100%" class="title<c:out value="${clazz}" />">
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					<tr>
-						<td width="75%" align="left" style="padding-top: 5px;" nowrap="nowrap">
+						<td width="75%" align="left" style="padding-top: 4px; padding-bottom: 4px;" nowrap="nowrap">
 							<fmt:message key="general.select" />&nbsp;<span class="link" onclick="javascript:Mail.selectAll();"><fmt:message key="mail.selectAll" /></span>, <span class="link" onclick="javascript:Mail.selectRead();"><fmt:message key="mail.selectRead" /></span>, <span class="link" onclick="javascript:Mail.selectUnread();"><fmt:message key="mail.selectUnread" /></span>, <span class="link" onclick="javascript:Mail.markSelection();"><fmt:message key="mail.selectMark" /></span>, <span class="link" onclick="javascript:Mail.flagImportant('<%=basePath%>mail/flag.drt');"><fmt:message key="mail.flagged" /></span>, <span class="link" onclick="javascript:Mail.flagUnread('<%=basePath%>mail/flag.drt');"><fmt:message key="mail.recent" /></span>
 						</td>
 						<td width="25%" align="right" style="padding-right: 8px;">
