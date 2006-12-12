@@ -53,6 +53,11 @@ public interface Constants {
      * DOCUMENT ME!
      */
     public static final String PARSE_FACTORY_CONFIG = "parseFactoryConfig";
+    
+    /**
+     * DOCUMENT ME!
+     */
+    public static final String EXTENSION_CONFIG = "extensionConfig";
 
     /**
      * DOCUMENT ME!
@@ -168,6 +173,11 @@ public interface Constants {
      * DOCUMENT ME!
      */
     public static final String MAIL_FOLDER_CHAT = "folderChat";
+    
+    /**
+     * DOCUMENT ME!
+     */
+    public static final String MAIL_FOLDER_FILES = "folderFiles";
 
     /**
      * DOCUMENT ME!

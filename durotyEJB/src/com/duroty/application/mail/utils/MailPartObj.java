@@ -22,11 +22,9 @@
 
 package com.duroty.application.mail.utils;
 
-import org.apache.commons.io.IOUtils;
-
 import java.io.Serializable;
 
-import javax.mail.Part;
+import org.apache.commons.lang.StringUtils;
 
 
 /**
@@ -49,7 +47,7 @@ public class MailPartObj implements Serializable {
     private String contentType;
 
     /** DOCUMENT ME! */
-    private int size;
+    private long size;
 
     /** DOCUMENT ME! */
     private byte[] attachent;
@@ -132,6 +130,18 @@ public class MailPartObj implements Serializable {
      * @param name DOCUMENT ME!
      */
     public void setName(String name) {
+    	if (!StringUtils.isBlank(name)) {
+    		int idx1 = name.lastIndexOf('/');
+    		if (idx1 > -1) {
+    			name = name.substring(idx1 + 1, name.length());
+    		}
+    		
+    		idx1 = name.lastIndexOf('\\');
+    		if (idx1 > -1) {
+    			name = name.substring(idx1 + 1, name.length());
+    		}
+    	}
+    	
         this.name = name;
     }
 
@@ -140,7 +150,7 @@ public class MailPartObj implements Serializable {
      *
      * @return DOCUMENT ME!
      */
-    public int getSize() {
+    public long getSize() {
         return size;
     }
 
@@ -149,7 +159,7 @@ public class MailPartObj implements Serializable {
      *
      * @param size DOCUMENT ME!
      */
-    public void setSize(int size) {
+    public void setSize(long size) {
         this.size = size;
     }
 }

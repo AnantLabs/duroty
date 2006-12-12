@@ -317,7 +317,7 @@ public class POP3ServiceTask implements Schedulable, Servible,
         try {
             BayesianAnalysis bayesianAnalysis = new BayesianAnalysis();
             bayesianAnalysis.init(null);
-            bayesianAnalysis.service(user.getUseUsername() + "_SPAM", null, mime);
+            bayesianAnalysis.service(user.getUseUsername(), null, mime);
 
             String[] aux = mime.getHeader(BayesianAnalysis.messageIsSpamProbability);
 

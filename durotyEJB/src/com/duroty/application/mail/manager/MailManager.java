@@ -29,11 +29,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 import java.util.TimeZone;
 import java.util.Vector;
 
 import javax.mail.internet.MimeMessage;
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import javax.sql.DataSource;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -70,6 +74,7 @@ import com.duroty.hibernate.Label;
 import com.duroty.hibernate.MailPreferences;
 import com.duroty.hibernate.Message;
 import com.duroty.hibernate.Users;
+import com.duroty.jmx.mbean.ApplicationConstants;
 import com.duroty.jmx.mbean.Constants;
 import com.duroty.service.Messageable;
 import com.duroty.service.analyzer.BayesianAnalysisFeeder;
@@ -141,16 +146,22 @@ public class MailManager implements MailManagerConstants {
      * DOCUMENT ME!
      */
     private int quoteSizeAlert;
+    
+    /**
+     * DOCUMENT ME!
+     */
+    private HashMap extensions;
 
     /**
      * Creates a new MailManager object.
      * @throws ClassNotFoundException
      * @throws IllegalAccessException
      * @throws InstantiationException
+     * @throws NamingException 
      */
     public MailManager(HashMap mail)
         throws ClassNotFoundException, InstantiationException, 
-            IllegalAccessException {
+            IllegalAccessException, NamingException {
         super();
 
         String messageFactory = (String) mail.get(Constants.MESSAGES_FACTORY);
@@ -198,6 +209,13 @@ public class MailManager implements MailManagerConstants {
         tidy.setHideComments(false);
         tidy.setPrintBodyOnly(true);
         tidy.setTidyMark(false);
+        
+        Map options = ApplicationConstants.options;
+
+        Context ctx = new InitialContext();
+
+        this.extensions = (HashMap) ctx.lookup((String) options.get(
+                    Constants.EXTENSION_CONFIG));
     }
 
     /**
@@ -1228,6 +1246,14 @@ public class MailManager implements MailManagerConstants {
                         attachmentObj.setSize(((size > 0) ? (size + "") : "<1") +
                             " kB");
                     }
+                    
+                    String extension = (String) this.extensions.get(attachment.getAttContentType());
+                    
+                    if (StringUtils.isBlank(extension)) {
+                    	extension = "generic";
+                    }
+
+                    attachmentObj.setExtension(extension);
 
                     attachmentObj.setContentType(attachment.getAttContentType());
                     attachments.addElement(attachmentObj);
@@ -1698,6 +1724,14 @@ public class MailManager implements MailManagerConstants {
                             attachmentObj.setSize(((size > 0) ? (size + "") : "<1") +
                                 " kB");
                         }
+                        
+                        String extension = (String) this.extensions.get(attachment.getAttContentType());
+                        
+                        if (StringUtils.isBlank(extension)) {
+                        	extension = "generic";
+                        }
+
+                        attachmentObj.setExtension(extension);
 
                         attachmentObj.setContentType(attachment.getAttContentType());
                         attachments.addElement(attachmentObj);

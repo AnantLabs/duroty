@@ -156,6 +156,9 @@ public class SearchManager implements LuceneMessageConstants {
 
     /** DOCUMENT ME */
     private String folderBlog;
+    
+    /** DOCUMENT ME */
+    private String folderFiles;
 
     /** DOCUMENT ME */
 
@@ -193,6 +196,7 @@ public class SearchManager implements LuceneMessageConstants {
         this.folderBlog = (String) mail.get(Constants.MAIL_FOLDER_BLOG);
         this.folderDraft = (String) mail.get(Constants.MAIL_FOLDER_DRAFT);
         this.folderSpam = (String) mail.get(Constants.MAIL_FOLDER_SPAM);
+        this.folderFiles = (String) mail.get(Constants.MAIL_FOLDER_FILES);
 
         //this.folderImportant = (String) mail.get(Constants.MAIL_FOLDER_IMPORTANT);
         this.folderHidden = (String) mail.get(Constants.MAIL_FOLDER_HIDDEN);
@@ -1172,14 +1176,14 @@ public class SearchManager implements LuceneMessageConstants {
             if ((box != null) && box.equals("ALL")) {
                 boxes = new String[] {
                         this.folderInbox, this.folderSent, this.folderDraft,
-                        this.folderHidden, this.folderBlog
+                        this.folderHidden, this.folderBlog, this.folderFiles
                     };
             } else if (box != null) {
                 boxes = new String[] { box };
             } else {
                 boxes = new String[] {
                         this.folderInbox, this.folderSent, this.folderDraft,
-                        this.folderHidden, this.folderBlog
+                        this.folderHidden, this.folderBlog, this.folderFiles
                     };
             }
 
