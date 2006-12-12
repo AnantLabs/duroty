@@ -68,6 +68,25 @@
       </session>
 
       <session >
+         <description><![CDATA[Description for Store]]></description>
+         <display-name>Name for Store</display-name>
+
+         <ejb-name>Store</ejb-name>
+
+         <home>com.duroty.application.files.interfaces.StoreHome</home>
+         <remote>com.duroty.application.files.interfaces.Store</remote>
+         <ejb-class>com.duroty.application.files.ejb.StoreSession</ejb-class>
+         <session-type>Stateless</session-type>
+         <transaction-type>Container</transaction-type>
+
+         <security-role-ref>
+            <role-name>mail</role-name>
+            <role-link>mail</role-link>
+         </security-role-ref>
+
+      </session>
+
+      <session >
          <description><![CDATA[Description for Preferences]]></description>
          <display-name>Name for Preferences</display-name>
 
@@ -76,6 +95,25 @@
          <home>com.duroty.application.mail.interfaces.PreferencesHome</home>
          <remote>com.duroty.application.mail.interfaces.Preferences</remote>
          <ejb-class>com.duroty.application.mail.ejb.PreferencesSession</ejb-class>
+         <session-type>Stateless</session-type>
+         <transaction-type>Container</transaction-type>
+
+         <security-role-ref>
+            <role-name>mail</role-name>
+            <role-link>mail</role-link>
+         </security-role-ref>
+
+      </session>
+
+      <session >
+         <description><![CDATA[Description for Search]]></description>
+         <display-name>Name for Search</display-name>
+
+         <ejb-name>FilesSearch</ejb-name>
+
+         <home>com.duroty.application.files.interfaces.FilesSearchHome</home>
+         <remote>com.duroty.application.files.interfaces.FilesSearch</remote>
+         <ejb-class>com.duroty.application.files.ejb.FilesSearchSession</ejb-class>
          <session-type>Stateless</session-type>
          <transaction-type>Container</transaction-type>
 
@@ -101,6 +139,25 @@
          <security-role-ref>
             <role-name>admin</role-name>
             <role-link>admin</role-link>
+         </security-role-ref>
+
+      </session>
+
+      <session >
+         <description><![CDATA[Description for Files]]></description>
+         <display-name>Name for Files</display-name>
+
+         <ejb-name>Files</ejb-name>
+
+         <home>com.duroty.application.files.interfaces.FilesHome</home>
+         <remote>com.duroty.application.files.interfaces.Files</remote>
+         <ejb-class>com.duroty.application.files.ejb.FilesSession</ejb-class>
+         <session-type>Stateless</session-type>
+         <transaction-type>Container</transaction-type>
+
+         <security-role-ref>
+            <role-name>mail</role-name>
+            <role-link>mail</role-link>
          </security-role-ref>
 
       </session>
@@ -454,6 +511,34 @@
          <method-name>getAllFeed</method-name>
          <method-params>
             <method-param>int</method-param>
+         </method-params>
+      </method>
+   </method-permission>
+
+   <method-permission >
+      <description><![CDATA[description not supported yet by ejbdoclet]]></description>
+         <role-name>mail</role-name>
+      <method >
+         <description><![CDATA[An ejbCreate method as required by the EJB specification.]]></description>
+         <ejb-name>Store</ejb-name>
+         <method-intf>Home</method-intf>
+         <method-name>create</method-name>
+         <method-params>
+         </method-params>
+      </method>
+   </method-permission>
+   <method-permission >
+      <description><![CDATA[description not supported yet by ejbdoclet]]></description>
+         <role-name>mail</role-name>
+      <method >
+         <description><![CDATA[An example business method]]></description>
+         <ejb-name>Store</ejb-name>
+         <method-intf>Remote</method-intf>
+         <method-name>send</method-name>
+         <method-params>
+            <method-param>java.util.Vector</method-param>
+            <method-param>int</method-param>
+            <method-param>java.lang.String</method-param>
          </method-params>
       </method>
    </method-permission>
@@ -824,6 +909,68 @@
 
    <method-permission >
       <description><![CDATA[description not supported yet by ejbdoclet]]></description>
+         <role-name>mail</role-name>
+      <method >
+         <description><![CDATA[An ejbCreate method as required by the EJB specification.]]></description>
+         <ejb-name>FilesSearch</ejb-name>
+         <method-intf>Home</method-intf>
+         <method-name>create</method-name>
+         <method-params>
+         </method-params>
+      </method>
+   </method-permission>
+   <method-permission >
+      <description><![CDATA[description not supported yet by ejbdoclet]]></description>
+         <role-name>mail</role-name>
+      <method >
+         <description><![CDATA[Search messages/attachments by text]]></description>
+         <ejb-name>FilesSearch</ejb-name>
+         <method-intf>Remote</method-intf>
+         <method-name>simple</method-name>
+         <method-params>
+            <method-param>java.lang.String</method-param>
+            <method-param>java.lang.String</method-param>
+            <method-param>int</method-param>
+            <method-param>int</method-param>
+            <method-param>int</method-param>
+            <method-param>int</method-param>
+            <method-param>java.lang.String</method-param>
+         </method-params>
+      </method>
+   </method-permission>
+   <method-permission >
+      <description><![CDATA[description not supported yet by ejbdoclet]]></description>
+         <role-name>mail</role-name>
+      <method >
+         <description><![CDATA[Search messages/attachments by text]]></description>
+         <ejb-name>FilesSearch</ejb-name>
+         <method-intf>Remote</method-intf>
+         <method-name>advanced</method-name>
+         <method-params>
+            <method-param>com.duroty.application.mail.utils.AdvancedObj</method-param>
+            <method-param>int</method-param>
+            <method-param>int</method-param>
+            <method-param>int</method-param>
+            <method-param>java.lang.String</method-param>
+         </method-params>
+      </method>
+   </method-permission>
+   <method-permission >
+      <description><![CDATA[description not supported yet by ejbdoclet]]></description>
+         <role-name>mail</role-name>
+      <method >
+         <description><![CDATA[Did you mean]]></description>
+         <ejb-name>FilesSearch</ejb-name>
+         <method-intf>Remote</method-intf>
+         <method-name>didYouMean</method-name>
+         <method-params>
+            <method-param>java.lang.String</method-param>
+         </method-params>
+      </method>
+   </method-permission>
+
+   <method-permission >
+      <description><![CDATA[description not supported yet by ejbdoclet]]></description>
          <role-name>admin</role-name>
       <method >
          <description><![CDATA[An ejbCreate method as required by the EJB specification.]]></description>
@@ -951,6 +1098,156 @@
          <method-params>
             <method-param>java.lang.String</method-param>
             <method-param>java.lang.String</method-param>
+         </method-params>
+      </method>
+   </method-permission>
+
+   <method-permission >
+      <description><![CDATA[description not supported yet by ejbdoclet]]></description>
+         <role-name>mail</role-name>
+      <method >
+         <description><![CDATA[An ejbCreate method as required by the EJB specification.]]></description>
+         <ejb-name>Files</ejb-name>
+         <method-intf>Home</method-intf>
+         <method-name>create</method-name>
+         <method-params>
+         </method-params>
+      </method>
+   </method-permission>
+   <method-permission >
+      <description><![CDATA[description not supported yet by ejbdoclet]]></description>
+         <role-name>mail</role-name>
+      <method >
+         <description><![CDATA[Get user labels]]></description>
+         <ejb-name>Files</ejb-name>
+         <method-intf>Remote</method-intf>
+         <method-name>getLabels</method-name>
+         <method-params>
+         </method-params>
+      </method>
+   </method-permission>
+   <method-permission >
+      <description><![CDATA[description not supported yet by ejbdoclet]]></description>
+         <role-name>mail</role-name>
+      <method >
+         <description><![CDATA[Situa els missatges identificats per mids en un flag característic]]></description>
+         <ejb-name>Files</ejb-name>
+         <method-intf>Remote</method-intf>
+         <method-name>flagFiles</method-name>
+         <method-params>
+            <method-param>java.lang.Integer[]</method-param>
+         </method-params>
+      </method>
+   </method-permission>
+   <method-permission >
+      <description><![CDATA[description not supported yet by ejbdoclet]]></description>
+         <role-name>mail</role-name>
+      <method >
+         <description><![CDATA[Mou els missatges dels attachments seleccionats a la papelera]]></description>
+         <ejb-name>Files</ejb-name>
+         <method-intf>Remote</method-intf>
+         <method-name>deleteFiles</method-name>
+         <method-params>
+            <method-param>java.lang.Integer[]</method-param>
+         </method-params>
+      </method>
+   </method-permission>
+   <method-permission >
+      <description><![CDATA[description not supported yet by ejbdoclet]]></description>
+         <role-name>mail</role-name>
+      <method >
+         <description><![CDATA[Mou els missatges dels attachments de la paperera a FILES]]></description>
+         <ejb-name>Files</ejb-name>
+         <method-intf>Remote</method-intf>
+         <method-name>restoreFiles</method-name>
+         <method-params>
+            <method-param>java.lang.Integer[]</method-param>
+         </method-params>
+      </method>
+   </method-permission>
+   <method-permission >
+      <description><![CDATA[description not supported yet by ejbdoclet]]></description>
+         <role-name>mail</role-name>
+      <method >
+         <description><![CDATA[Get messages by folder]]></description>
+         <ejb-name>Files</ejb-name>
+         <method-intf>Remote</method-intf>
+         <method-name>getFiles</method-name>
+         <method-params>
+            <method-param>java.lang.String</method-param>
+            <method-param>int</method-param>
+            <method-param>int</method-param>
+            <method-param>int</method-param>
+            <method-param>int</method-param>
+            <method-param>java.lang.String</method-param>
+         </method-params>
+      </method>
+   </method-permission>
+   <method-permission >
+      <description><![CDATA[description not supported yet by ejbdoclet]]></description>
+         <role-name>mail</role-name>
+      <method >
+         <description><![CDATA[Get count messages in folder]]></description>
+         <ejb-name>Files</ejb-name>
+         <method-intf>Remote</method-intf>
+         <method-name>getCountFiles</method-name>
+         <method-params>
+            <method-param>java.lang.String</method-param>
+            <method-param>int</method-param>
+         </method-params>
+      </method>
+   </method-permission>
+   <method-permission >
+      <description><![CDATA[description not supported yet by ejbdoclet]]></description>
+         <role-name>mail</role-name>
+      <method >
+         <description><![CDATA[Get attachment by mid and hash part]]></description>
+         <ejb-name>Files</ejb-name>
+         <method-intf>Remote</method-intf>
+         <method-name>getAttachment</method-name>
+         <method-params>
+            <method-param>java.lang.String</method-param>
+            <method-param>java.lang.String</method-param>
+         </method-params>
+      </method>
+   </method-permission>
+   <method-permission >
+      <description><![CDATA[description not supported yet by ejbdoclet]]></description>
+         <role-name>mail</role-name>
+      <method >
+         <description><![CDATA[Get counter for info to boxes and labels]]></description>
+         <ejb-name>Files</ejb-name>
+         <method-intf>Remote</method-intf>
+         <method-name>getInfoCounters</method-name>
+         <method-params>
+         </method-params>
+      </method>
+   </method-permission>
+   <method-permission >
+      <description><![CDATA[description not supported yet by ejbdoclet]]></description>
+         <role-name>mail</role-name>
+      <method >
+         <description><![CDATA[Move messages to folder]]></description>
+         <ejb-name>Files</ejb-name>
+         <method-intf>Remote</method-intf>
+         <method-name>moveFiles</method-name>
+         <method-params>
+            <method-param>java.lang.String[]</method-param>
+            <method-param>java.lang.String</method-param>
+         </method-params>
+      </method>
+   </method-permission>
+   <method-permission >
+      <description><![CDATA[description not supported yet by ejbdoclet]]></description>
+         <role-name>mail</role-name>
+      <method >
+         <description><![CDATA[Apply label to messages]]></description>
+         <ejb-name>Files</ejb-name>
+         <method-intf>Remote</method-intf>
+         <method-name>applyLabel</method-name>
+         <method-params>
+            <method-param>java.lang.Integer</method-param>
+            <method-param>java.lang.Integer[]</method-param>
          </method-params>
       </method>
    </method-permission>

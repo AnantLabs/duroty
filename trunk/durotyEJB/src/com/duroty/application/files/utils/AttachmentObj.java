@@ -18,9 +18,11 @@
 * c/Mallorca 295 principal B 08037 Barcelona Spain
 * Phone: +34 625397324
 */
-package com.duroty.application.mail.utils;
+package com.duroty.application.files.utils;
 
 import java.io.Serializable;
+
+import java.util.Date;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -31,13 +33,13 @@ import org.apache.commons.lang.StringUtils;
 */
 public class AttachmentObj implements Serializable {
     /**
-     * DOCUMENT ME!
-     */
-    private static final long serialVersionUID = 3705773324313270983L;
+         *
+         */
+    private static final long serialVersionUID = -936331117855691077L;
 
     /**
-     * DOCUMENT ME!
-     */
+    * DOCUMENT ME!
+    */
     private int idint;
 
     /**
@@ -58,15 +60,161 @@ public class AttachmentObj implements Serializable {
     /**
      * DOCUMENT ME!
      */
+    private Date date;
+
+    /**
+     * DOCUMENT ME!
+     */
+    private String dateStr;
+
+    /**
+     * DOCUMENT ME!
+     */
+    private int part;
+
+    /**
+     * DOCUMENT ME!
+     */
     private String extension;
 
     /**
-     * Creates a new AttachmentObj object.
+     * DOCUMENT ME!
      */
+    private boolean flagged;
+
+    /**
+     * DOCUMENT ME!
+     */
+    private String box;
+
+    /**
+     * DOCUMENT ME!
+     */
+    private String label;
+
+    /**
+     * DOCUMENT ME!
+     */
+    private String mid;
+
+    /**
+     * DOCUMENT ME!
+     */
+    private int score;
+
+    /**
+    * Creates a new AttachmentObj object.
+    */
     public AttachmentObj() {
         super();
+    }
 
-        // TODO Auto-generated constructor stub
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public int getScore() {
+        return score;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param score DOCUMENT ME!
+     */
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public String getMid() {
+        return mid;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param mid DOCUMENT ME!
+     */
+    public void setMid(String mid) {
+        this.mid = mid;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public String getBox() {
+        return box;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param box DOCUMENT ME!
+     */
+    public void setBox(String box) {
+        this.box = box;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public boolean isFlagged() {
+        return flagged;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param flagged DOCUMENT ME!
+     */
+    public void setFlagged(boolean flagged) {
+        this.flagged = flagged;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public int getPart() {
+        return part;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param part DOCUMENT ME!
+     */
+    public void setPart(int part) {
+        this.part = part;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public Date getDate() {
+        return date;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param date DOCUMENT ME!
+     */
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     /**
@@ -128,7 +276,7 @@ public class AttachmentObj implements Serializable {
     		
     		idx1 = name.lastIndexOf('\\');
     		if (idx1 > -1) {
-    			name = name.substring(idx1  + 1, name.length());
+    			name = name.substring(idx1 + 1, name.length());
     		}
     	}
     	
@@ -158,6 +306,24 @@ public class AttachmentObj implements Serializable {
      *
      * @return DOCUMENT ME!
      */
+    public String getDateStr() {
+        return dateStr;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param dateStr DOCUMENT ME!
+     */
+    public void setDateStr(String dateStr) {
+        this.dateStr = dateStr;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
     public String getExtension() {
         return extension;
     }
@@ -169,5 +335,23 @@ public class AttachmentObj implements Serializable {
      */
     public void setExtension(String extension) {
         this.extension = extension;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public String getLabel() {
+        return label;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
+     * @param label DOCUMENT ME!
+     */
+    public void setLabel(String label) {
+        this.label = label;
     }
 }

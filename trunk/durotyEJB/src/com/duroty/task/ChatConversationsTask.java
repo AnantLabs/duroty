@@ -39,10 +39,11 @@ import org.hibernate.Criteria;
 import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.jboss.varia.scheduler.Schedulable;
 
-import com.duroty.hibernate.Users;
+import com.duroty.hibernate.Conversations;
 import com.duroty.jmx.mbean.ApplicationConstants;
 import com.duroty.jmx.mbean.Constants;
 import com.duroty.utils.GeneralOperations;
@@ -55,7 +56,7 @@ import com.duroty.utils.log.DLog;
  * @author $author$
  * @version $Revision$
  */
-public class ChatTask implements Schedulable {
+public class ChatConversationsTask implements Schedulable {
     /**
      * DOCUMENT ME!
      */
@@ -72,7 +73,7 @@ public class ChatTask implements Schedulable {
     private String hibernateSessionFactory;
 
     /**
-     * Creates a new ChatTask object.
+     * Creates a new ChatConversationsTask object.
      *
      * @param poolSize DOCUMENT ME!
      *
@@ -82,7 +83,7 @@ public class ChatTask implements Schedulable {
      * @throws IllegalAccessException DOCUMENT ME!
      * @throws IOException DOCUMENT ME!
      */
-    public ChatTask()
+    public ChatConversationsTask()
         throws ClassNotFoundException, NamingException, InstantiationException, 
             IllegalAccessException, IOException {
         super();
@@ -109,7 +110,7 @@ public class ChatTask implements Schedulable {
     public void perform(Date arg0, long arg1) {
         if (isInit()) {
             DLog.log(DLog.DEBUG, this.getClass(),
-                "ChatTask is running and wait.");
+                "ChatConversationsTask is running and wait.");
 
             return;
         }
@@ -148,39 +149,19 @@ public class ChatTask implements Schedulable {
             Calendar cal1 = new GregorianCalendar(cal.get(Calendar.YEAR),
                     cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH),
                     cal.get(Calendar.HOUR_OF_DAY),
-                    cal.get(Calendar.MINUTE) - 5, cal.get(Calendar.SECOND));
+                    cal.get(Calendar.MINUTE) - 1, cal.get(Calendar.SECOND));
             Date date = new Date(cal1.getTimeInMillis());
 
-            Criteria crit = hsession.createCriteria(Users.class);
-            crit.add(Restrictions.le("useLastPing", date));
-            crit.add(Restrictions.not(Restrictions.eq("useIsOnline", new Integer(0))));
-            crit.add(Restrictions.isNotNull("useIsOnline"));
+            Criteria crit = hsession.createCriteria(Conversations.class);
+            crit.add(Restrictions.le("convStamp", date));
+            crit.addOrder(Order.asc("convStamp"));
 
             ScrollableResults scroll = crit.scroll();
 
-            while (scroll.next()) {
-                Users user = (Users) scroll.get(0);
-                user.setUseIsOnline(0);
-                hsession.update(user);
+            while (scroll.next()) {    
+                hsession.delete(scroll.get(0));
                 hsession.flush();
-            }
-
-            /*cal1 = new GregorianCalendar(cal.get(Calendar.YEAR),
-                    cal.get(Calendar.MONTH), cal.get(Calendar.DAY_OF_MONTH),
-                    cal.get(Calendar.HOUR_OF_DAY),
-                    cal.get(Calendar.MINUTE) - 1, cal.get(Calendar.SECOND));
-            date = new Date(cal1.getTimeInMillis());
-
-            crit = hsession.createCriteria(Conversations.class);
-            crit.add(Restrictions.le("convStamp", date));
-
-            scroll = crit.scroll();
-
-            while (scroll.next()) {
-                    Conversations conv = (Conversations) scroll.get(0);
-                hsession.update(conv);
-                hsession.flush();
-            }*/
+            }            
         } catch (Exception e) {
             System.gc();
 
@@ -214,7 +195,7 @@ public class ChatTask implements Schedulable {
      * @return DOCUMENT ME!
      */
     public synchronized boolean isInit() {
-        synchronized (ChatTask.class) {
+        synchronized (ChatConversationsTask.class) {
             return this.init;
         }
     }
@@ -225,7 +206,7 @@ public class ChatTask implements Schedulable {
      * @param init DOCUMENT ME!
      */
     public synchronized void setInit(boolean init) {
-        synchronized (ChatTask.class) {
+        synchronized (ChatConversationsTask.class) {
             this.init = init;
         }
     }

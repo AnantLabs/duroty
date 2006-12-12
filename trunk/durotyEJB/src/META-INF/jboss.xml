@@ -29,13 +29,28 @@
 
 		</session>
 		<session>
+			<ejb-name>Store</ejb-name>
+			<jndi-name>duroty/ejb/Store</jndi-name>
+
+		</session>
+		<session>
 			<ejb-name>Preferences</ejb-name>
 			<jndi-name>duroty/ejb/Preferences</jndi-name>
 
 		</session>
 		<session>
+			<ejb-name>FilesSearch</ejb-name>
+			<jndi-name>duroty/ejb/FilesSearch</jndi-name>
+
+		</session>
+		<session>
 			<ejb-name>Admin</ejb-name>
 			<jndi-name>duroty/ejb/Admin</jndi-name>
+
+		</session>
+		<session>
+			<ejb-name>Files</ejb-name>
+			<jndi-name>duroty/ejb/Files</jndi-name>
 
 		</session>
 		<session>

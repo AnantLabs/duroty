@@ -20,37 +20,10 @@
 */
 package com.duroty.application.mail.manager;
 
-import com.duroty.application.mail.exceptions.MailException;
-
-import com.duroty.hibernate.Identity;
-import com.duroty.hibernate.MailPreferences;
-import com.duroty.hibernate.Message;
-import com.duroty.hibernate.Users;
-
-import com.duroty.jmx.mbean.Constants;
-
-import com.duroty.service.Messageable;
-
-import com.duroty.utils.GeneralOperations;
-import com.duroty.utils.NumberUtils;
-import com.duroty.utils.mail.MessageUtilities;
-import com.duroty.utils.mail.RFC2822Headers;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.mail.Email;
-import org.apache.commons.mail.EmailAttachment;
-import org.apache.commons.mail.HtmlEmail;
-import org.apache.commons.mail.MultiPartEmail;
-
-import org.hibernate.Criteria;
-import org.hibernate.Query;
-
-import org.hibernate.criterion.Restrictions;
-
+import java.io.ByteArrayInputStream;
 import java.io.File;
-
+import java.io.FileOutputStream;
 import java.nio.charset.Charset;
-
 import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
@@ -64,6 +37,28 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.InternetHeaders;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeUtility;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.mail.Email;
+import org.apache.commons.mail.EmailAttachment;
+import org.apache.commons.mail.HtmlEmail;
+import org.apache.commons.mail.MultiPartEmail;
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.criterion.Restrictions;
+
+import com.duroty.application.mail.exceptions.MailException;
+import com.duroty.application.mail.utils.MailPartObj;
+import com.duroty.hibernate.Identity;
+import com.duroty.hibernate.MailPreferences;
+import com.duroty.hibernate.Message;
+import com.duroty.hibernate.Users;
+import com.duroty.jmx.mbean.Constants;
+import com.duroty.service.Messageable;
+import com.duroty.utils.GeneralOperations;
+import com.duroty.utils.NumberUtils;
+import com.duroty.utils.mail.MessageUtilities;
+import com.duroty.utils.mail.RFC2822Headers;
 
 
 /**
@@ -202,22 +197,40 @@ public class SendManager {
             Date now = new Date();
 
             email.setSentDate(now);
+            
+            File dir = new File(System.getProperty("user.home") + File.separator + "tmp");
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
 
             if ((attachments != null) && (attachments.size() > 0)) {
                 for (int i = 0; i < attachments.size(); i++) {
-                    File file = (File) attachments.get(i);
-
-                    if (file.canRead()) {
-                        EmailAttachment attachment = new EmailAttachment();
+                	ByteArrayInputStream bais = null;
+                    FileOutputStream fos = null;
+                    
+                    try {
+	                	MailPartObj obj = (MailPartObj) attachments.get(i);                    
+	
+	                    File file = new File(dir, obj.getName());
+	
+	                    bais = new ByteArrayInputStream(obj.getAttachent());
+	                    fos = new FileOutputStream(file);
+	                    IOUtils.copy(bais, fos);
+	                    
+	                    EmailAttachment attachment = new EmailAttachment();
                         attachment.setPath(file.getPath());
                         attachment.setDisposition(EmailAttachment.ATTACHMENT);
-                        attachment.setDescription("File Attachment: " +
-                            file.getName());
+                        attachment.setDescription("File Attachment: " + file.getName());
                         attachment.setName(file.getName());
 
                         if (email instanceof MultiPartEmail) {
                             ((MultiPartEmail) email).attach(attachment);
                         }
+                    } catch (Exception ex) {
+                    	
+                    } finally {
+                    	IOUtils.closeQuietly(bais);
+                        IOUtils.closeQuietly(fos);
                     }
                 }
             }
@@ -385,22 +398,40 @@ public class SendManager {
             Date now = new Date();
 
             email.setSentDate(now);
+            
+            File dir = new File(System.getProperty("user.home") + File.separator + "tmp");
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
 
             if ((attachments != null) && (attachments.size() > 0)) {
                 for (int i = 0; i < attachments.size(); i++) {
-                    File file = (File) attachments.get(i);
-
-                    if (file.canRead()) {
-                        EmailAttachment attachment = new EmailAttachment();
+                	ByteArrayInputStream bais = null;
+                    FileOutputStream fos = null;
+                    
+                    try {
+	                	MailPartObj obj = (MailPartObj) attachments.get(i);                    
+	
+	                    File file = new File(dir, obj.getName());
+	
+	                    bais = new ByteArrayInputStream(obj.getAttachent());
+	                    fos = new FileOutputStream(file);
+	                    IOUtils.copy(bais, fos);
+	                    
+	                    EmailAttachment attachment = new EmailAttachment();
                         attachment.setPath(file.getPath());
                         attachment.setDisposition(EmailAttachment.ATTACHMENT);
-                        attachment.setDescription("File Attachment: " +
-                            file.getName());
+                        attachment.setDescription("File Attachment: " + file.getName());
                         attachment.setName(file.getName());
 
                         if (email instanceof MultiPartEmail) {
                             ((MultiPartEmail) email).attach(attachment);
                         }
+                    } catch (Exception ex) {
+                    	
+                    } finally {
+                    	IOUtils.closeQuietly(bais);
+                        IOUtils.closeQuietly(fos);
                     }
                 }
             }

@@ -157,6 +157,34 @@ public class FileUtilities {
     /**
      * DOCUMENT ME!
      *
+     * @param filename DOCUMENT ME!
+     * @param lenght DOCUMENT ME!
+     *
+     * @return DOCUMENT ME!
+     */
+    public static String getExtension(String filename, int lenght) {
+        if (filename == null) {
+            return null;
+        }
+
+        String extension = null;
+        int idx = filename.lastIndexOf(".");
+        if (idx > -1) {
+        	extension = filename.substring(idx + 1, filename.length());
+        } else {
+        	return null;
+        }
+
+        if (extension.length() > lenght) {
+            return null;
+        }
+
+        return extension;
+    }
+
+    /**
+     * DOCUMENT ME!
+     *
      * @return DOCUMENT ME!
      */
     static public boolean supportsCaseSensitivePathNames() {

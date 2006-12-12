@@ -25,21 +25,8 @@
  */
 package com.duroty.service;
 
-import com.duroty.hibernate.Users;
-
-import com.duroty.jmx.mbean.Constants;
-
-import com.duroty.lucene.mail.LuceneMessageConstants;
-import com.duroty.lucene.mail.indexer.MailIndexer;
-import com.duroty.lucene.mail.indexer.MailIndexerConstants;
-
-import com.duroty.utils.GeneralOperations;
-
-import com.sun.mail.imap.IMAPFolder;
-
 import java.io.File;
 import java.io.InputStream;
-
 import java.util.HashMap;
 
 import javax.mail.Flags;
@@ -47,10 +34,17 @@ import javax.mail.Folder;
 import javax.mail.Message;
 import javax.mail.Store;
 import javax.mail.internet.MimeMessage;
-
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
+import com.duroty.hibernate.Users;
+import com.duroty.jmx.mbean.Constants;
+import com.duroty.lucene.mail.LuceneMessageConstants;
+import com.duroty.lucene.mail.indexer.MailIndexer;
+import com.duroty.lucene.mail.indexer.MailIndexerConstants;
+import com.duroty.utils.GeneralOperations;
+import com.sun.mail.imap.IMAPFolder;
 
 
 /**
@@ -338,6 +332,33 @@ public class IMAPMessageFactory implements Messageable, LuceneMessageConstants,
      */
     public void storeMessage(String mid, MimeMessage mime, Users user)
         throws Exception, Throwable, OutOfMemoryError {
+    	javax.mail.Session msession = null;
+        Store store = null;
+        Folder sent = null;
+
+        try {
+            msession = (javax.mail.Session) ctx.lookup(durotyMailFactory);
+            store = msession.getStore("imap");
+
+            String imapHost = msession.getProperty("mail.imap.host");
+
+            String repositoryName = user.getUseUsername();
+
+            store.connect(imapHost, repositoryName, user.getUsePassword());
+
+            sent = store.getFolder(this.imapInbox);
+
+            sent.open(Folder.READ_WRITE);
+
+            mime.setFlag(Flags.Flag.SEEN, false);
+
+            sent.appendMessages(new Message[] { mime });
+        } finally {
+            GeneralOperations.closeMailFolder(sent, true);
+            GeneralOperations.closeMailStore(store);
+
+            System.gc();
+        }
     }
 
     /**
@@ -351,6 +372,35 @@ public class IMAPMessageFactory implements Messageable, LuceneMessageConstants,
      */
     public void storeMessage(String mid, InputStream inputStream, Users user)
         throws Exception, Throwable, OutOfMemoryError {
+    	javax.mail.Session msession = null;
+        Store store = null;
+        Folder sent = null;
+
+        try {        	
+            msession = (javax.mail.Session) ctx.lookup(durotyMailFactory);
+            store = msession.getStore("imap");
+
+            String imapHost = msession.getProperty("mail.imap.host");
+
+            String repositoryName = user.getUseUsername();
+
+            store.connect(imapHost, repositoryName, user.getUsePassword());
+
+            sent = store.getFolder(this.imapInbox);
+
+            sent.open(Folder.READ_WRITE);
+
+            MimeMessage newMime = new MimeMessage(msession, inputStream);
+            newMime.saveChanges();
+            newMime.setFlag(Flags.Flag.SEEN, false);
+
+            sent.appendMessages(new Message[] { newMime });
+        } finally {
+            GeneralOperations.closeMailFolder(sent, true);
+            GeneralOperations.closeMailStore(store);
+
+            System.gc();
+        }    	
     }
 
     /**

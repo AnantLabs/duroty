@@ -28,6 +28,7 @@ import com.duroty.hibernate.Roles;
 import com.duroty.hibernate.UserRole;
 import com.duroty.hibernate.UserRoleId;
 import com.duroty.hibernate.Users;
+import com.duroty.lucene.utils.FileUtilities;
 
 import com.duroty.utils.GeneralOperations;
 import com.duroty.utils.log.DLog;
@@ -42,6 +43,7 @@ import org.hibernate.criterion.Restrictions;
 
 import org.jboss.varia.scheduler.Schedulable;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -85,17 +87,27 @@ public class InitServerTask implements Schedulable {
      *
      * @throws ClassNotFoundException DOCUMENT ME!
      * @throws NamingException DOCUMENT ME!
+     * @throws IOException 
      * @throws InstantiationException DOCUMENT ME!
      * @throws IllegalAccessException DOCUMENT ME!
      * @throws IOException DOCUMENT ME!
      */
     public InitServerTask(String hibernateSessionFactory)
-        throws NamingException {
+        throws NamingException, IOException {
         super();
 
         ctx = new InitialContext();
 
         this.hibernateSessionFactory = hibernateSessionFactory;
+        
+        String tempDir = System.getProperty("java.io.tmpdir");
+
+        if (!tempDir.endsWith(File.separator)) {
+            tempDir = tempDir + File.separator;
+        }
+
+        FileUtilities.deleteMotLocks(new File(tempDir));
+        FileUtilities.deleteLuceneLocks(new File(tempDir));
     }
 
     /**
