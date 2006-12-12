@@ -1,0 +1,256 @@
+html,body {
+	margin: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+#header {
+	height: 20%;
+	background-color: #fff;
+}
+
+#content {
+	margin: 0px;
+	height: 70%;
+}
+
+#content div#left {
+	width: 20%;
+	height: 100%;
+	float: left;
+	background-color: #eaeaea;
+	margin: 0px;
+}
+
+#content div#right {
+	/*width: 69%;*/
+	height: 100%;	
+	margin: 0px;
+}
+
+#footer {
+	height: 10%;
+	background-color: #ccc;
+}
+
+html,body {
+	margin: 0px;
+	height: 100%;
+}
+
+#header {
+	height: 80px;
+}
+
+#footer {
+	height: 20px;
+	background-color: #fff;
+	text-align: center
+}
+
+#content div#left {
+	width: 225px;
+	float: left;
+	background-color: #fff;
+	padding-top: 50px;
+	margin-left: 5px;
+}
+
+#content div#right {
+	margin:0 5px 0 230px;	
+}
+
+BUTTON {
+	padding: 1px;
+}
+
+* html BUTTON {
+	padding: 0px;
+	margin-right: 5px;
+}
+
+* html BUTTON {
+	padding: 0px;
+	margin-right: 5px;
+}
+
+* html SELECT {
+	margin-right: 5px;
+}
+
+@media tty {
+	i{content:"\";/*" "*/}} * html #container { height: 1%; } /*";}
+}
+
+h1,h2,h3,h4,h5,h6,pre,code,p {font-size: 1em;}
+dl,li,dt,dd,h1,h2,h3,h4,h5,h6,pre,form,body,html,p,blockquote,fieldset,input {margin: 0; padding: 0;}
+a img,:link img,:visited img {border: none;}
+address {font-style: normal;}
+
+
+
+/*
+	-- -- -- -- -- -- --
+	Type Scheme: Deco
+	-- -- -- -- -- -- --  	
+*/
+
+body {
+	font: 76% sans-serif;
+	font-family: arial, sans-serif;
+}	
+h1, h2, h3, h4, h5, h6, p.description {
+	font-family: arial, sans-serif;
+}
+h1 {
+	font-size: 3em;
+	font-weight: bold;
+	letter-spacing: 2px;
+}
+h2 {
+	font-size: 2em;
+	font-weight: normal;
+}
+h3 {
+	font-size: 1.5em;
+}
+h4 {
+	font-size: 1.2em;
+	letter-spacing: 0.2em;
+}
+h5 {
+	font-size: 1.2em;
+}
+h6 {
+	font-size: 1em;
+	font-weight: bold;
+}
+p, td {
+	line-height: 1.8em;
+}
+code, kbd {
+	font-size: 1.25em;
+}
+
+/* ie5 win */
+@media tty {
+	i{content:"\";/*" "*/}} td, * html th {  } h1 { height: 1%; } /*";}
+}
+
+/* Basic HTML style
+----------------------------------------------- */
+a:link {
+	padding: 0px;
+}
+body {
+	font: 80% arial, sans-serif;
+}
+blockquote {
+      margin: 1em 1em;
+      font-style: italic;
+}
+hr {
+}
+td {
+	padding: 0px;
+}
+th {
+}
+td p {
+}
+ul li {
+}
+ol li {
+}
+
+/* Custom font definitions
+----------------------------------------------- */
+p {
+}
+td, td p {
+	line-height: 1.5;
+}
+h1,h2,h3,h4,h5,h6 {
+	font-family: arial, sans-serif;
+}
+
+/* Custom font definitions
+----------------------------------------------- */
+h1 {
+}
+h2 {
+}
+h3 {
+}
+h4 {
+}
+h5 {
+}
+
+A,A:VISITED {
+	color: blue;
+	text-decoration: underline;
+}
+
+A:HOVER {
+	color: blue;
+	text-decoration: underline;
+}
+
+.toolbarInfo {
+	background-color: #fbcc4b;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	padding-left: 5px;
+}
+
+b.rtop, b.rbottom {
+	display:block;
+	background: #FFF;
+}
+
+b.rtop b, b.rbottom b {
+	display:block;
+	height: 1px;
+    overflow: hidden;
+    background: #c3d9ff;
+}
+
+b.rtop b.r4, b.rbottom b.r4{margin: 0 1px;height: 2px;}
+
+b.r1{margin: 0 5px;}
+b.r2{margin: 0 3px;}
+b.r3{margin: 0 2px;}
+
+#layout {
+
+}
+
+
+td.ctopcolleft {
+	width: 7%;
+	font-size: 12px;
+	background: #c3d9ff;
+}
+
+td.ctopcol {
+	width: 13%;
+	font-size: 12px;
+	border: 1px solid #c3d9ff;
+	background-color: #c3d9ff;
+	text-align: center;
+}
+
+td.ctopcol2 {
+	width: 13%;
+	font-size: 12px;
+	border: 1px solid #fff;
+	background-color: #e8eef7;
+}
+
+td.ccolleft {
+	border: 1px solid #c3d9ff;
+	height:50px;
+	width: 7%;
+	font-size: 12px;
+}

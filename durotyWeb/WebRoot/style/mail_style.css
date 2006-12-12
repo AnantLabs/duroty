@@ -501,6 +501,7 @@ h5 {
 .didyoumean {
 	border-top: 4px solid #74dd82;
 	border-right: 4px solid #74dd82;
+	border-bottom: 4px solid #74dd82;
 	padding: 2px;
 	font-size: 13px;
 	color: red;
@@ -683,14 +684,14 @@ b.r3{margin: 0 2px;}
 	background-color: #74dd82;
 	padding-top: 1px;
 	padding-bottom: 1px;
-	padding-left: 5px;
+	padding-left: 0px;
 }
 
 .tableHeader td.titlespam {
 	background-color: #cccccc;
 	padding-top: 1px;
 	padding-bottom: 1px;
-	padding-left: 5px;
+	padding-left: 0px;
 }
 
 .tableHeader td.area {

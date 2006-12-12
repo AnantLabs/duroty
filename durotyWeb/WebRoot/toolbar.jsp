@@ -1,4 +1,9 @@
-
+<%@ page import="java.util.Date" %>
+<%
+response.setHeader("Expires", (new Date((new Date()).getTime() + 315360000)).toString());
+response.setHeader("Pragma", "public");
+response.setHeader("Cache-Control", "max-age=315360000");
+%>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme() + "://"
@@ -33,6 +38,13 @@
 				}
 			%>
 			<%
+				if (request.isUserInRole("mail")) {
+					%>					
+					<a href="<%=basePath%>files/" target="_top">Files</a>&nbsp;
+					<%
+				}
+			%>
+			<%
 				if (request.isUserInRole("bookmark")) {
 					%>					
 					<a href="<%=basePath%>bookmark/" target="_top">Bookmarks</a>&nbsp;
@@ -61,7 +73,7 @@
 			&nbsp;
 			<b><c:out value="${user}" /></b>
 			&nbsp;
-			<a href="<%=basePath%>mail/preferences/settings.drt"><fmt:message key="general.settings" /></a>
+			<a href="<%=basePath%>mail/preferences/settings.drt" target="main"><fmt:message key="general.settings" /></a>
 			&nbsp;
 			<a href="<%=basePath%>login/logout.drt" target="_top"><fmt:message key="general.logout" /></a>
 		</td>

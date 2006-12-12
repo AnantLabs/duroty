@@ -25,10 +25,7 @@
  */
 package com.duroty.application.mail.actions;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
+import java.io.ByteArrayOutputStream;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -80,8 +77,6 @@ public class SendAction extends MailDefaultAction {
         HttpServletRequest request, HttpServletResponse response)
         throws Exception {
         ActionMessages errors = new ActionMessages();
-        InputStream inputStream = null;
-        FileOutputStream outputStream = null;
 
         try {
             boolean isMultipart = FileUpload.isMultipartContent(request);
@@ -105,39 +100,30 @@ public class SendAction extends MailDefaultAction {
                         if (item.getFieldName().equals("forwardAttachments")) {
                             String[] aux = item.getString().split(":");
                             MailPartObj part = mailInstance.getAttachment(aux[0], aux[1]);
-                            inputStream = new ByteArrayInputStream(part.getAttachent());
-
-                            File dir = new File(System.getProperty("user.home") + File.separator + "tmp");
-
-                            if (!dir.exists()) {
-                                dir.mkdir();
-                            }
-
-                            File out = new File(dir, part.getName());
-                            outputStream = new FileOutputStream(out);
-
-                            IOUtils.copy(inputStream, outputStream);
-
-                            IOUtils.closeQuietly(inputStream);
-                            IOUtils.closeQuietly(outputStream);
-
-                            attachments.addElement(out);
+                            attachments.addElement(part);
                         } else {
                             fields.put(item.getFieldName(), item.getString());
                         }
                     } else {
-                        if (!StringUtils.isBlank(item.getName())) {
-                            File dir = new File(System.getProperty("user.home") +
-                                    File.separator + "tmp");
+                    	if (!StringUtils.isBlank(item.getName())) {
+                            ByteArrayOutputStream baos = null;
 
-                            if (!dir.exists()) {
-                                dir.mkdir();
+                            try {
+                                baos = new ByteArrayOutputStream();
+
+                                IOUtils.copy(item.getInputStream(), baos);
+
+                                MailPartObj part = new MailPartObj();
+                                part.setAttachent(baos.toByteArray());
+                                part.setContentType(item.getContentType());
+                                part.setName(item.getName());
+                                part.setSize(item.getSize());
+
+                                attachments.addElement(part);
+                            } catch (Exception ex) {
+                            } finally {
+                                IOUtils.closeQuietly(baos);
                             }
-
-                            File out = new File(dir, item.getName());
-                            item.write(out);
-
-                            attachments.addElement(out);
                         }
                     }
                 }
@@ -199,8 +185,6 @@ public class SendAction extends MailDefaultAction {
             request.setAttribute("exception", errorMessage);
             doTrace(request, DLog.ERROR, getClass(), errorMessage);
         } finally {
-            IOUtils.closeQuietly(inputStream);
-            IOUtils.closeQuietly(outputStream);
         }
 
         if (errors.isEmpty()) {

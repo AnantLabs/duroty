@@ -84,6 +84,12 @@ function showHideElementByObject(element) {
         }
     }
 }
+function showElement(id) {
+    var element = document.getElementById(id);
+    if (element != null) {
+        element.className = "show";
+    }
+}
 function hideElement(id) {
     var element = document.getElementById(id);
     if (element != null) {
@@ -184,19 +190,21 @@ function AjaxContents() {
     this.name = false;
     this.toShow = false;
     this.toHide = false;
+    this.hideLoading = true;
     this.init = function () {
         this.ajax = new sack();
     };
     this.setVar = function (name, value) {
         this.ajax.setVar(name, value);
     };
-    this.selectContents = function (_url, _obj, _name, _toShow, _toHide) {
+    this.selectContents = function (_url, _obj, _name, _toShow, _toHide, _hideLoading) {
         showLoading();
         var self = this;
         this.obj = _obj;
         this.name = _name;
         this.toShow = _toShow;
         this.toHide = _toHide;
+        this.hideLoading = _hideLoading;
 
         this.ajax.requestFile = _url;
         this.ajax.onCompletion = function () {
@@ -220,7 +228,11 @@ function AjaxContents() {
 	        		this.toHide[i].innerHTML = "";
 	        	} else if (this.toHide[i].id == "message") {	        		
 	        		this.toHide[i].innerHTML = "";
-	        	}	        	
+	        	} else if (this.toHide[i].id == "files") {	        		
+	        		this.toHide[i].innerHTML = "";
+	        	} else if (this.toHide[i].id == "searchFiles") {	        		
+	        		this.toHide[i].innerHTML = "";
+	        	}
         	}
         }
         
@@ -253,8 +265,9 @@ function AjaxContents() {
         }
         
         
-        
-        hideLoading();
+        if (this.hideLoading) {
+	        hideLoading();
+		}
     };
 }
 function showLoading() {

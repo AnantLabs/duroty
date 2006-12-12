@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+	<data-sources />	
+	<form-beans />	
+	<global-exceptions />
+	<global-forwards />
+	<action-mappings>
+		<action path="/files/getLabels"
+			type="com.duroty.application.files.actions.GetLabelsAction"
+			scope="request" 
+			validate="false">
+			<forward name="success" path="/files/getLabels.jsp" />
+			<forward name="failure" path="/files/getLabels.jsp" />
+		</action>
+		
+		<action path="/files/listLabels"
+			type="com.duroty.application.files.actions.ListLabelsAction"
+			scope="request" 
+			validate="false">
+			<forward name="success" path="/files/listLabels.jsp" />
+			<forward name="failure" path="/files/listLabels.jsp" />
+		</action>
+		
+		<action path="/files/getFiles"
+			type="com.duroty.application.files.actions.GetFilesAction"
+			scope="request" 
+			validate="false">
+			<forward name="success" path="/files/getFiles.jsp" />
+			<forward name="failure" path="/files/getFiles.jsp" />
+		</action>
+		
+		<action path="/files/pagination"
+			type="com.duroty.application.files.actions.PaginationAction"
+			scope="request" 
+			validate="false">
+			<forward name="success" path="/files/pagination.jsp" />
+			<forward name="failure" path="/files/pagination.jsp" />
+		</action>
+		
+		<action path="/files/createLabel"
+			type="com.duroty.application.files.actions.CreateLabelAction"
+			scope="request" 
+			validate="false">
+			<forward name="success" path="/files/empty.jsp" />
+			<forward name="failure" path="/files/empty.jsp" />
+		</action>
+		
+		<action path="/files/flag"
+			type="com.duroty.application.files.actions.FlagAction"
+			scope="request" 
+			validate="false">
+			<forward name="success" path="/files/empty.jsp" />
+			<forward name="failure" path="/files/empty.jsp" />
+		</action>
+		
+		<action path="/files/delete"
+			type="com.duroty.application.files.actions.DeleteAction"
+			scope="request" 
+			validate="false">
+			<forward name="success" path="/files/empty.jsp" />
+			<forward name="failure" path="/files/empty.jsp" />
+		</action>
+		
+		<action path="/files/restore"
+			type="com.duroty.application.files.actions.RestoreAction"
+			scope="request" 
+			validate="false">
+			<forward name="success" path="/files/empty.jsp" />
+			<forward name="failure" path="/files/empty.jsp" />
+		</action>
+		
+		<action path="/files/applyLabel"
+			type="com.duroty.application.files.actions.ApplyLabelAction"
+			scope="request" 
+			validate="false">
+			<forward name="success" path="/files/empty.jsp" />
+			<forward name="failure" path="/files/empty.jsp" />
+		</action>
+		
+		<action path="/files/upload"
+			type="com.duroty.application.files.actions.UploadAction"
+			scope="request" 
+			validate="false">
+			<forward name="success" path="/files/upload.jsp" />
+			<forward name="failure" path="/files/upload.jsp" />
+		</action>
+		
+		<action path="/files/simpleSearch"
+			type="com.duroty.application.files.actions.SimpleSearchAction"
+			scope="request" 
+			validate="false">
+			<forward name="success" path="/files/simpleSearch.jsp" />
+			<forward name="failure" path="/files/simpleSearch.jsp" />
+		</action>
+		
+		<action path="/files/advancedSearch"
+			type="com.duroty.application.files.actions.AdvancedSearchAction"
+			scope="request" 
+			validate="false">
+			<forward name="success" path="/files/simpleSearch.jsp" />
+			<forward name="failure" path="/files/simpleSearch.jsp" />
+		</action>
+		
+		<action path="/files/infoCounters"
+			type="com.duroty.application.files.actions.InfoCountersAction"
+			scope="request" 
+			validate="false">
+			<forward name="success" path="/files/infoCounters.jsp" />
+			<forward name="failure" path="/files/infoCounters.jsp" />
+		</action>
+	</action-mappings>
+</struts-config>
+

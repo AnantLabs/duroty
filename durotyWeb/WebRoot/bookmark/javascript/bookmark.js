@@ -110,7 +110,7 @@ function Bookmark() {
     	ajaxContents.setVar("order", order);
     	ajaxContents.setVar("extra", desc);
     	
-    	ajaxContents.selectContents("bookmark/search.drt", false, "results");
+    	ajaxContents.selectContents("bookmark/search.drt", false, "results", null, null, true);
     	this.parseRight(null, 0);
     };    
     
@@ -127,7 +127,7 @@ function Bookmark() {
     	ajaxContents.setVar("order", order);
     	ajaxContents.setVar("extra", desc);
     	
-    	ajaxContents.selectContents("bookmark/search.drt", false, "results");
+    	ajaxContents.selectContents("bookmark/search.drt", false, "results", null, null, true);
     	this.parseRight(action, 0);
     };    
     
@@ -179,7 +179,7 @@ function Bookmark() {
 		}
     
 	    ajaxContents = new AjaxContents();
-    	ajaxContents.selectContents("bookmark/properties.drt?mid=" + mid, false, "msgProperties");
+    	ajaxContents.selectContents("bookmark/properties.drt?mid=" + mid, false, "msgProperties", null, null, true);
     };
     
     this.flag = function(action) {
@@ -282,7 +282,7 @@ function Bookmark() {
     	ajaxContents = new AjaxContents();
     	ajaxContents.init();
     	ajaxContents.setVar("idint", idint);
-    	ajaxContents.selectContents("admin/getUser.drt", false, "updateUser", toShow, toHide);
+    	ajaxContents.selectContents("admin/getUser.drt", false, "updateUser", toShow, toHide, true);
     };
 }
 

@@ -94,7 +94,7 @@ function Admin() {
     	ajaxContents.setVar("token", token);
     	ajaxContents.setVar("page", page);
     	ajaxContents.setVar("byPage", "20");
-    	ajaxContents.selectContents("admin/searchUsers.drt", false, "users", toShow, null);
+    	ajaxContents.selectContents("admin/searchUsers.drt", false, "users", toShow, null, true);
     };
     
     this.selectAll = function(_form) {
@@ -116,7 +116,7 @@ function Admin() {
     
     	ajaxContents = new AjaxContents();
     	ajaxContents.init();
-    	ajaxContents.selectContents("admin/formUser.drt", false, "insertUser", toShow, toHide);
+    	ajaxContents.selectContents("admin/formUser.drt", false, "insertUser", toShow, toHide, true);
     };
     
     this.updateUser = function(idint) {    	    
@@ -127,6 +127,6 @@ function Admin() {
     	ajaxContents = new AjaxContents();
     	ajaxContents.init();
     	ajaxContents.setVar("idint", idint);
-    	ajaxContents.selectContents("admin/getUser.drt", false, "updateUser", toShow, toHide);
+    	ajaxContents.selectContents("admin/getUser.drt", false, "updateUser", toShow, toHide, true);
     };
 }
