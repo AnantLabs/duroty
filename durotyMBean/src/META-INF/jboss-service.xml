@@ -53,6 +53,7 @@
 				<property name="bookmarkConfig" value="java:/duroty/constants/BookmarkConfig" />
 				<property name="chatConfig" value="java:/duroty/constants/ChatConfig" />
 				<property name="parseFactoryConfig" value="java:/duroty/constants/ParseFactoryConfig" />
+				<property name="extensionConfig" value="java:/duroty/constants/ExtensionConfig" />
 			</configuration>
 		</attribute>
 	</mbean>
@@ -138,6 +139,595 @@
 		</attribute>
 	</mbean>
 	
+	<!-- This is the icon for extensions files -->
+	<mbean code="com.duroty.jmx.mbean.ExtensionConfig" name="duroty.com:service=DurotyExtensionConfig">
+		<depends>duroty.com:service=DurotyApplicationConstants</depends>
+		<attribute name="Configuration">
+			<configuration>
+				<!-- 
+				<property name="mimetype" value="icon_image" />
+				-->
+				<property name="image/jpeg" value="jpeg" />
+				<property name="image/gif" value="gif" />
+				<property name="application/zip" value="gif" />
+				<property name="application/open-office-c" value="generic" />
+				<property name="application/open-office-c" value="generic" />
+				<property name="application/open-office-w" value="generic" />
+				<property name="application/excel" value="xls" />
+				<property name="application/mspowerpoint" value="ppt" />
+				<property name="application/msword" value="doc" />
+				<property name="application/pdf" value="pdf" />
+				<property name="application/powerpoint" value="ppt" />
+				<property name="application/rtf" value="rtf" />
+				<property name="application/vnd.ms-excel" value="xls" />
+				<property name="application/vnd.ms-powerpoint" value="ppt" />
+				<property name="application/x-excel" value="xls" />
+				<property name="application/x-javascript" value="txt" />
+				<property name="application/x-msexcel" value="xls" />
+				<property name="application/x-mspowerpoint" value="ppt" />
+				<property name="application/x-rtf" value="txt" />
+				<property name="application/xml" value="txt" />
+				<property name="message/rfc822" value="html" />
+				<property name="text/asp" value="txt" />
+				<property name="text/css" value="txt" />
+				<property name="text/css" value="txt" />
+				<property name="text/html" value="html" />
+				<property name="text/mcf" value="txt" />
+				<property name="text/pascal" value="txt" />
+				<property name="text/plain" value="txt" />
+				<property name="text/richtext" value="txt" />
+				<property name="text/rtf" value="txt" />
+				<property name="text/scriplet" value="txt" />
+				<property name="text/sgml" value="txt" />
+				<property name="text/tab-separated-values" value="txt" />
+				<property name="text/uri-list" value="txt" />
+				<property name="text/vnd.abc" value="txt" />
+				<property name="text/vnd.fmi.flexstor" value="txt" />
+				<property name="text/vnd.rn-realtext" value="txt" />
+				<property name="text/vnd.wap.wml" value="txt" />
+				<property name="text/vnd.wap.wmlscript" value="txt" />
+				<property name="text/webviewhtml" value="txt" />
+				<property name="text/x-asm" value="txt" />
+				<property name="text/x-audiosoft-intra" value="txt" />
+				<property name="text/x-c" value="txt" />
+				<property name="text/x-component" value="txt" />
+				<property name="text/x-fortran" value="txt" />
+				<property name="text/x-h" value="txt" />
+				<property name="text/x-la-asf" value="txt" />
+				<property name="text/x-m" value="txt" />
+				<property name="text/x-pascal" value="txt" />
+				<property name="text/x-script" value="txt" />
+				<property name="text/x-script.csh" value="txt" />
+				<property name="text/x-script.elisp" value="txt" />
+				<property name="text/x-script.guile" value="txt" />
+				<property name="text/x-script.ksh" value="txt" />
+				<property name="text/x-script.lisp" value="txt" />
+				<property name="text/x-script.perl" value="txt" />
+				<property name="text/x-script.perl-module" value="txt" />
+				<property name="text/x-script.phyton" value="txt" />
+				<property name="text/x-script.rexx" value="txt" />
+				<property name="text/x-script.scheme" value="txt" />
+				<property name="text/x-script.sh" value="txt" />
+				<property name="text/x-script.tcl" value="txt" />
+				<property name="text/x-script.tcsh" value="txt" />
+				<property name="text/x-script.zsh" value="txt" />
+				<property name="text/x-server-parsed-html" value="txt" />
+				<property name="text/x-setext" value="txt" />
+				<property name="text/x-sgml" value="txt" />
+				<property name="text/x-speech" value="txt" />
+				<property name="text/x-uil" value="txt" />
+				<property name="text/x-uuencode" value="txt" />
+				<property name="text/x-vcalendar" value="txt" />
+				<property name="application/x-troff-man" value="txt" />
+				<property name="application/EDI-Consent" value="generic" />
+				<property name="application/EDI-X12" value="generic" />
+				<property name="application/EDIFACT" value="generic" />
+				<property name="application/activemessage" value="generic" />
+				<property name="application/andrew-inset" value="generic" />
+				<property name="application/applefile" value="generic" />
+				<property name="application/atomicmail" value="generic" />
+				<property name="application/batch-SMTP" value="generic" />
+				<property name="application/beep+xml" value="generic" />
+				<property name="application/cals-1840" value="generic" />
+				<property name="application/commonground" value="generic" />
+				<property name="application/cybercash" value="generic" />
+				<property name="application/dca-rft" value="generic" />
+				<property name="application/dec-dx" value="generic" />
+				<property name="application/dvcs" value="generic" />
+				<property name="application/eshop" value="generic" />
+				<property name="application/http" value="generic" />
+				<property name="application/hyperstudio" value="generic" />
+				<property name="application/iges" value="generic" />
+				<property name="application/index" value="generic" />
+				<property name="application/index.cmd" value="generic" />
+				<property name="application/index.obj" value="generic" />
+				<property name="application/index.response" value="generic" />
+				<property name="application/index.vnd" value="generic" />
+				<property name="application/iotp" value="generic" />
+				<property name="application/ipp" value="generic" />
+				<property name="application/isup" value="generic" />
+				<property name="application/font-tdpfr" value="generic" />
+				<property name="application/mac-binhex40" value="generic" />
+				<property name="application/mac-compactpro" value="generic" />
+				<property name="application/macwriteii" value="generic" />
+				<property name="application/marc" value="generic" />
+				<property name="application/mathematica" value="generic" />
+				<property name="application/mathematica-old" value="generic" />
+				<property name="application/msword" value="doc" />
+				<property name="application/news-message-id" value="generic" />
+				<property name="application/news-transmission" value="generic" />
+				<property name="application/ocsp-request" value="generic" />
+				<property name="application/ocsp-response" value="generic" />
+				<property name="application/octet-stream" value="generic" />
+				<property name="application/ogg" value="generic" />
+				<property name="application/parityfec" value="generic" />
+				<property name="application/pdf" value="pdf" />
+				<property name="application/pgp-encrypted" value="generic" />
+				<property name="application/pgp-keys" value="generic" />
+				<property name="application/pgp-signature" value="generic" />
+				<property name="application/pkcs10" value="generic" />
+				<property name="application/pkcs7-mime" value="generic" />
+				<property name="application/pkcs7-signature" value="generic" />
+				<property name="application/pkix-cert" value="generic" />
+				<property name="application/pkix-crl" value="generic" />
+				<property name="application/pkixcmp" value="generic" />
+				<property name="application/postscript" value="generic" />
+				<property name="application/prs.alvestrand.titrax-sheet" value="generic" />
+				<property name="application/prs.cww" value="generic" />
+				<property name="application/prs.nprend" value="generic" />
+				<property name="application/qsig" value="generic" />
+				<property name="application/remote-printing" value="generic" />
+				<property name="application/riscos" value="generic" />
+				<property name="application/rtf" value="rtf" />
+				<property name="application/sdp" value="generic" />
+				<property name="application/set-payment" value="generic" />
+				<property name="application/set-payment-initiation" value="generic" />
+				<property name="application/set-registration" value="generic" />
+				<property name="application/set-registration-initiation" value="generic" />
+				<property name="application/sgml" value="generic" />
+				<property name="application/sgml-open-catalog" value="generic" />
+				<property name="application/sieve" value="generic" />
+				<property name="application/slate" value="generic" />
+				<property name="application/smil" value="generic" />
+				<property name="application/timestamp-query" value="generic" />
+				<property name="application/timestamp-reply" value="generic" />
+				<property name="application/vemmi" value="generic" />
+				<property name="application/vnd.3M.Post-it-Notes" value="generic" />
+				<property name="application/vnd.FloGraphIt" value="generic" />
+				<property name="application/vnd.accpac.simply.aso" value="generic" />
+				<property name="application/vnd.accpac.simply.imp" value="generic" />
+				<property name="application/vnd.acucobol" value="generic" />
+				<property name="application/vnd.aether.imp" value="generic" />
+				<property name="application/vnd.anser-web-certificate-issue-initiation" value="generic" />
+				<property name="application/vnd.anser-web-funds-transfer-initiation" value="generic" />
+				<property name="application/vnd.audiograph" value="generic" />
+				<property name="application/vnd.businessobjects" value="generic" />
+				<property name="application/vnd.bmi" value="generic" />
+				<property name="application/vnd.canon-cpdl" value="generic" />
+				<property name="application/vnd.canon-lips" value="generic" />
+				<property name="application/vnd.claymore" value="generic" />
+				<property name="application/vnd.commerce-battelle" value="generic" />
+				<property name="application/vnd.commonspace" value="generic" />
+				<property name="application/vnd.comsocaller" value="generic" />
+				<property name="application/vnd.contact.cmsg" value="generic" />
+				<property name="application/vnd.cosmocaller" value="generic" />
+				<property name="application/vnd.cups-postscript" value="generic" />
+				<property name="application/vnd.cups-raster" value="generic" />
+				<property name="application/vnd.cups-raw" value="generic" />
+				<property name="application/vnd.ctc-posml" value="generic" />
+				<property name="application/vnd.cybank" value="generic" />
+				<property name="application/vnd.dna" value="generic" />
+				<property name="application/vnd.dpgraph" value="generic" />
+				<property name="application/vnd.dxr" value="generic" />
+				<property name="application/vnd.ecdis-update" value="generic" />
+				<property name="application/vnd.ecowin.chart" value="generic" />
+				<property name="application/vnd.ecowin.filerequest" value="generic" />
+				<property name="application/vnd.ecowin.fileupdate" value="generic" />
+				<property name="application/vnd.ecowin.series" value="generic" />
+				<property name="application/vnd.ecowin.seriesrequest" value="generic" />
+				<property name="application/vnd.ecowin.seriesupdate" value="generic" />
+				<property name="application/vnd.enliven" value="generic" />
+				<property name="application/vnd.epson.esf" value="generic" />
+				<property name="application/vnd.epson.msf" value="generic" />
+				<property name="application/vnd.epson.quickanime" value="generic" />
+				<property name="application/vnd.epson.salt" value="generic" />
+				<property name="application/vnd.epson.ssf" value="generic" />
+				<property name="application/vnd.ericsson.quickcall" value="generic" />
+				<property name="application/vnd.eudora.data" value="generic" />
+				<property name="application/vnd.fdf" value="generic" />
+				<property name="application/vnd.ffsns" value="generic" />
+				<property name="application/vnd.framemaker" value="generic" />
+				<property name="application/vnd.fsc.weblaunch" value="generic" />
+				<property name="application/vnd.fujitsu.oasys" value="generic" />
+				<property name="application/vnd.fujitsu.oasys2" value="generic" />
+				<property name="application/vnd.fujitsu.oasys3" value="generic" />
+				<property name="application/vnd.fujitsu.oasysgp" value="generic" />
+				<property name="application/vnd.fujitsu.oasysprs" value="generic" />
+				<property name="application/vnd.fujixerox.ddd" value="generic" />
+				<property name="application/vnd.fujixerox.docuworks" value="generic" />
+				<property name="application/vnd.fujixerox.docuworks.binder" value="generic" />
+				<property name="application/vnd.fut-misnet" value="generic" />
+				<property name="application/vnd.grafeq" value="generic" />
+				<property name="application/vnd.groove-account" value="generic" />
+				<property name="application/vnd.groove-identity-message" value="generic" />
+				<property name="application/vnd.groove-injector" value="generic" />
+				<property name="application/vnd.groove-tool-message" value="generic" />
+				<property name="application/vnd.groove-tool-template" value="generic" />
+				<property name="application/vnd.groove-vcard" value="generic" />
+				<property name="application/vnd.hhe.lesson-player" value="generic" />
+				<property name="application/vnd.hp-HPGL" value="generic" />
+				<property name="application/vnd.hp-PCL" value="generic" />
+				<property name="application/vnd.hp-PCLXL" value="generic" />
+				<property name="application/vnd.hp-hpid" value="generic" />
+				<property name="application/vnd.hp-hps" value="generic" />
+				<property name="application/vnd.httphone" value="generic" />
+				<property name="application/vnd.hzn-3d-crossword" value="generic" />
+				<property name="application/vnd.ibm.afplinedata" value="generic" />
+				<property name="application/vnd.ibm.MiniPay" value="generic" />
+				<property name="application/vnd.ibm.modcap" value="generic" />
+				<property name="application/vnd.informix-visionary" value="generic" />
+				<property name="application/vnd.intercon.formnet" value="generic" />
+				<property name="application/vnd.intertrust.digibox" value="generic" />
+				<property name="application/vnd.intertrust.nncp" value="generic" />
+				<property name="application/vnd.intu.qbo" value="generic" />
+				<property name="application/vnd.intu.qfx" value="generic" />
+				<property name="application/vnd.irepository.package+xml" value="generic" />
+				<property name="application/vnd.is-xpr" value="generic" />
+				<property name="application/vnd.japannet-directory-service" value="generic" />
+				<property name="application/vnd.japannet-jpnstore-wakeup" value="generic" />
+				<property name="application/vnd.japannet-payment-wakeup" value="generic" />
+				<property name="application/vnd.japannet-registration" value="generic" />
+				<property name="application/vnd.japannet-registration-wakeup" value="generic" />
+				<property name="application/vnd.japannet-setstore-wakeup" value="generic" />
+				<property name="application/vnd.japannet-verification" value="generic" />
+				<property name="application/vnd.japannet-verification-wakeup" value="generic" />
+				<property name="application/vnd.koan" value="generic" />
+				<property name="application/vnd.lotus-1-2-3" value="generic" />
+				<property name="application/vnd.lotus-approach" value="generic" />
+				<property name="application/vnd.lotus-freelance" value="generic" />
+				<property name="application/vnd.lotus-notes" value="generic" />
+				<property name="application/vnd.lotus-organizer" value="generic" />
+				<property name="application/vnd.lotus-screencam" value="generic" />
+				<property name="application/vnd.lotus-wordpro" value="generic" />
+				<property name="application/vnd.mcd" value="generic" />
+				<property name="application/vnd.mediastation.cdkey" value="generic" />
+				<property name="application/vnd.meridian-slingshot" value="generic" />
+				<property name="application/vnd.mif" value="generic" />
+				<property name="application/vnd.minisoft-hp3000-save" value="generic" />
+				<property name="application/vnd.mitsubishi.misty-guard.trustweb" value="generic" />
+				<property name="application/vnd.mobius.daf" value="generic" />
+				<property name="application/vnd.mobius.dis" value="generic" />
+				<property name="application/vnd.mobius.msl" value="generic" />
+				<property name="application/vnd.mobius.plc" value="generic" />
+				<property name="application/vnd.mobius.txf" value="generic" />
+				<property name="application/vnd.motorola.flexsuite" value="generic" />
+				<property name="application/vnd.motorola.flexsuite.adsi" value="generic" />
+				<property name="application/vnd.motorola.flexsuite.fis" value="generic" />
+				<property name="application/vnd.motorola.flexsuite.gotap" value="generic" />
+				<property name="application/vnd.motorola.flexsuite.kmr" value="generic" />
+				<property name="application/vnd.motorola.flexsuite.ttc" value="generic" />
+				<property name="application/vnd.motorola.flexsuite.wem" value="generic" />
+				<property name="application/vnd.mozilla.xul+xml" value="generic" />
+				<property name="application/vnd.ms-artgalry" value="generic" />
+				<property name="application/vnd.ms-asf" value="generic" />
+				<property name="application/vnd.ms-excel" value="xls" />
+				<property name="application/vnd.ms-lrm" value="generic" />
+				<property name="application/vnd.ms-powerpoint" value="ppt" />
+				<property name="application/vnd.ms-project" value="generic" />
+				<property name="application/vnd.ms-tnef" value="generic" />
+				<property name="application/vnd.ms-works" value="generic" />
+				<property name="application/vnd.mseq" value="generic" />
+				<property name="application/vnd.msign" value="generic" />
+				<property name="application/vnd.music-niff" value="generic" />
+				<property name="application/vnd.musician" value="generic" />
+				<property name="application/vnd.netfpx" value="generic" />
+				<property name="application/vnd.noblenet-directory" value="generic" />
+				<property name="application/vnd.noblenet-sealer" value="generic" />
+				<property name="application/vnd.noblenet-web" value="generic" />
+				<property name="application/vnd.novadigm.EDM" value="generic" />
+				<property name="application/vnd.novadigm.EDX" value="generic" />
+				<property name="application/vnd.novadigm.EXT" value="generic" />
+				<property name="application/vnd.osa.netdeploy" value="generic" />
+				<property name="application/vnd.palm" value="generic" />
+				<property name="application/vnd.pg.format" value="generic" />
+				<property name="application/vnd.pg.osasli" value="generic" />
+				<property name="application/vnd.powerbuilder6" value="generic" />
+				<property name="application/vnd.powerbuilder6-s" value="generic" />
+				<property name="application/vnd.powerbuilder7" value="generic" />
+				<property name="application/vnd.powerbuilder7-s" value="generic" />
+				<property name="application/vnd.powerbuilder75" value="generic" />
+				<property name="application/vnd.powerbuilder75-s" value="generic" />
+				<property name="application/vnd.previewsystems.box" value="generic" />
+				<property name="application/vnd.publishare-delta-tree" value="generic" />
+				<property name="application/vnd.pvi.ptid1" value="generic" />
+				<property name="application/vnd.pwg-xhtml-print+xml" value="generic" />
+				<property name="application/vnd.rapid" value="generic" />
+				<property name="application/vnd.s3sms" value="generic" />
+				<property name="application/vnd.seemail" value="generic" />
+				<property name="application/vnd.shana.informed.formdata" value="generic" />
+				<property name="application/vnd.shana.informed.formtemplate" value="generic" />
+				<property name="application/vnd.shana.informed.interchange" value="generic" />
+				<property name="application/vnd.shana.informed.package" value="generic" />
+				<property name="application/vnd.sss-cod" value="generic" />
+				<property name="application/vnd.sss-dtf" value="generic" />
+				<property name="application/vnd.sss-ntf" value="generic" />
+				<property name="application/vnd.street-stream" value="generic" />
+				<property name="application/vnd.svd" value="generic" />
+				<property name="application/vnd.swiftview-ics" value="generic" />
+				<property name="application/vnd.triscape.mxs" value="generic" />
+				<property name="application/vnd.trueapp" value="generic" />
+				<property name="application/vnd.truedoc" value="generic" />
+				<property name="application/vnd.tve-trigger" value="generic" />
+				<property name="application/vnd.ufdl" value="generic" />
+				<property name="application/vnd.uplanet.alert" value="generic" />
+				<property name="application/vnd.uplanet.alert-wbxml" value="generic" />
+				<property name="application/vnd.uplanet.bearer-choice-wbxml" value="generic" />
+				<property name="application/vnd.uplanet.bearer-choice" value="generic" />
+				<property name="application/vnd.uplanet.cacheop" value="generic" />
+				<property name="application/vnd.uplanet.cacheop-wbxml" value="generic" />
+				<property name="application/vnd.uplanet.channel" value="generic" />
+				<property name="application/vnd.uplanet.channel-wbxml" value="generic" />
+				<property name="application/vnd.uplanet.list" value="generic" />
+				<property name="application/vnd.uplanet.list-wbxml" value="generic" />
+				<property name="application/vnd.uplanet.listcmd" value="generic" />
+				<property name="application/vnd.uplanet.listcmd-wbxml" value="generic" />
+				<property name="application/vnd.uplanet.signal" value="generic" />
+				<property name="application/vnd.vcx" value="generic" />
+				<property name="application/vnd.vectorworks" value="generic" />
+				<property name="application/vnd.vidsoft.vidconference" value="generic" />
+				<property name="application/vnd.visio" value="generic" />
+				<property name="application/vnd.vividence.scriptfile" value="generic" />
+				<property name="application/vnd.wap.sic" value="generic" />
+				<property name="application/vnd.wap.slc" value="generic" />
+				<property name="application/vnd.wap.wbxml" value="xml" />
+				<property name="application/vnd.wap.wmlc" value="xml" />
+				<property name="application/vnd.wap.wmlscriptc" value="xml" />
+				<property name="application/vnd.webturbo" value="generic" />
+				<property name="application/vnd.wrq-hp3000-labelled" value="generic" />
+				<property name="application/vnd.wt.stf" value="generic" />
+				<property name="application/vnd.xara" value="generic" />
+				<property name="application/vnd.xfdl" value="generic" />
+				<property name="application/vnd.yellowriver-custom-menu" value="generic" />
+				<property name="application/whoispp-query" value="generic" />
+				<property name="application/whoispp-response" value="generic" />
+				<property name="application/wita" value="generic" />
+				<property name="application/wordperfect5.1" value="generic" />
+				<property name="application/x-bcpio" value="zip" />
+				<property name="application/x-bittorrent" value="torrent" />
+				<property name="application/x-bzip2" value="zip" />
+				<property name="application/x-cdlink" value="vcd" />
+				<property name="application/x-chess-pgn" value="png" />
+				<property name="application/x-compress" value="zip" />
+				<property name="application/x-cpio" value="zip" />
+				<property name="application/x-csh" value="generic" />
+				<property name="application/x-director" value="generic" />
+				<property name="application/x-dvi" value="generic" />
+				<property name="application/x-futuresplash" value="generic" />
+				<property name="application/x-gtar" value="zip" />
+				<property name="application/x-gzip" value="zip" />
+				<property name="application/x-hdf" value="generic" />
+				<property name="application/x-javascript" value="txt" />
+				<property name="application/x-kword" value="txt" />
+				<property name="application/x-kspread" value="generic" />
+				<property name="application/x-kpresenter" value="generic" />
+				<property name="application/x-kchart" value="generic" />
+				<property name="application/x-killustrator" value="generic" />
+				<property name="application/x-koan" value="generic" />
+				<property name="application/x-latex" value="generic" />
+				<property name="application/x-netcdf" value="generic" />
+				<property name="application/x-rpm" value="rpm" />
+				<property name="application/x-sh" value="generic" />
+				<property name="application/x-shar" value="generic" />
+				<property name="application/x-shockwave-flash" value="Swf" />
+				<property name="application/x-stuffit" value="generic" />
+				<property name="application/x-sv4cpio" value="generic" />
+				<property name="application/x-sv4crc" value="generic" />
+				<property name="application/x-tar" value="zip" />
+				<property name="application/x-tcl" value="generic" />
+				<property name="application/x-tex" value="generic" />
+				<property name="application/x-texinfo" value="generic" />
+				<property name="application/x-troff" value="generic" />
+				<property name="application/x-troff-man" value="generic" />
+				<property name="application/x-troff-me" value="generic" />
+				<property name="application/x-troff-ms" value="generic" />
+				<property name="application/x-ustar" value="generic" />
+				<property name="application/x-wais-source" value="txt" />
+				<property name="application/x400-bp" value="generic" />
+				<property name="application/xhtml+xml" value="html" />
+				<property name="application/xml" value="xml" />
+				<property name="application/xml-dtd" value="xml" />
+				<property name="application/xml-external-parsed-entity" value="xml" />
+				<property name="application/zip" value="zip" />
+				<property name="audio/32kadpcm" value="generic" />
+				<property name="audio/basic" value="generic" />
+				<property name="audio/g.722.1" value="generic" />
+				<property name="audio/l16" value="generic" />
+				<property name="audio/midi" value="generic" />
+				<property name="audio/mp4a-latm" value="generic" />
+				<property name="audio/mpa-robust" value="generic" />
+				<property name="audio/mpeg" value="generic" />
+				<property name="audio/parityfec" value="generic" />
+				<property name="audio/prs.sid" value="generic" />
+				<property name="audio/telephone-event" value="generic" />
+				<property name="audio/tone" value="generic" />
+				<property name="audio/vnd.cisco.nse" value="generic" />
+				<property name="audio/vnd.cns.anp1" value="generic" />
+				<property name="audio/vnd.cns.inf1" value="generic" />
+				<property name="audio/vnd.digital-winds" value="generic" />
+				<property name="audio/vnd.everad.plj" value="generic" />
+				<property name="audio/vnd.lucent.voice" value="generic" />
+				<property name="audio/vnd.nortel.vbk" value="generic" />
+				<property name="audio/vnd.nuera.ecelp4800" value="generic" />
+				<property name="audio/vnd.nuera.ecelp7470" value="generic" />
+				<property name="audio/vnd.nuera.ecelp9600" value="generic" />
+				<property name="audio/vnd.octel.sbc" value="generic" />
+				<property name="audio/vnd.qcelp" value="generic" />
+				<property name="audio/vnd.rhetorex.32kadpcm" value="generic" />
+				<property name="audio/vnd.vmx.cvsd" value="generic" />
+				<property name="audio/x-aiff" value="generic" />
+				<property name="audio/x-mpegurl" value="generic" />
+				<property name="audio/x-pn-realaudio" value="generic" />
+				<property name="audio/x-realaudio" value="generic" />
+				<property name="audio/x-wav" value="generic" />
+				<property name="chemical/x-pdb" value="generic" />
+				<property name="chemical/x-xyz" value="generic" />
+				<property name="image/bmp" value="Bmp" />
+				<property name="image/cgm" value="generic" />
+				<property name="image/g3fax" value="generic" />
+				<property name="image/gif" value="gif" />
+				<property name="image/ief" value="generic" />
+				<property name="image/jpeg" value="jpeg" />
+				<property name="image/naplps" value="generic" />
+				<property name="image/png" value="png" />
+				<property name="image/prs.btif" value="tif" />
+				<property name="image/prs.pti" value="generic" />
+				<property name="image/tiff" value="tif" />
+				<property name="image/vnd.cns.inf2" value="generic" />
+				<property name="image/vnd.djvu" value="generic" />
+				<property name="image/vnd.dwg" value="generic" />
+				<property name="image/vnd.dxf" value="generic" />
+				<property name="image/vnd.fastbidsheet" value="generic" />
+				<property name="image/vnd.fpx" value="generic" />
+				<property name="image/vnd.fst" value="generic" />
+				<property name="image/vnd.fujixerox.edmics-mmr" value="generic" />
+				<property name="image/vnd.fujixerox.edmics-rlc" value="generic" />
+				<property name="image/vnd.mix" value="generic" />
+				<property name="image/vnd.net-fpx" value="generic" />
+				<property name="image/vnd.svf" value="generic" />
+				<property name="image/vnd.wap.wbmp" value="generic" />
+				<property name="image/vnd.xiff" value="generic" />
+				<property name="image/x-cmu-raster" value="generic" />
+				<property name="image/x-portable-anymap" value="generic" />
+				<property name="image/x-portable-bitmap" value="generic" />
+				<property name="image/x-portable-graymap" value="generic" />
+				<property name="image/x-portable-pixmap" value="generic" />
+				<property name="image/x-rgb" value="generic" />
+				<property name="image/x-xbitmap" value="generic" />
+				<property name="image/x-xpixmap" value="generic" />
+				<property name="image/x-xwindowdump" value="generic" />
+				<property name="message/delivery-status" value="generic" />
+				<property name="message/disposition-notification" value="generic" />
+				<property name="message/external-body" value="generic" />
+				<property name="message/http" value="generic" />
+				<property name="message/news" value="generic" />
+				<property name="message/partial" value="generic" />
+				<property name="message/rfc822" value="generic" />
+				<property name="message/s-http" value="generic" />
+				<property name="model/iges" value="generic" />
+				<property name="model/mesh" value="generic" />
+				<property name="model/vnd.dwf" value="generic" />
+				<property name="model/vnd.flatland.3dml" value="generic" />
+				<property name="model/vnd.gdl" value="generic" />
+				<property name="model/vnd.gs-gdl" value="generic" />
+				<property name="model/vnd.gtw" value="generic" />
+				<property name="model/vnd.mts" value="generic" />
+				<property name="model/vnd.vtu" value="generic" />
+				<property name="model/vrml" value="generic" />
+				<property name="multipart/alternative" value="generic" />
+				<property name="multipart/appledouble" value="generic" />
+				<property name="multipart/byteranges" value="generic" />
+				<property name="multipart/digest" value="generic" />
+				<property name="multipart/encrypted" value="generic" />
+				<property name="multipart/form-data" value="generic" />
+				<property name="multipart/header-set" value="generic" />
+				<property name="multipart/mixed" value="generic" />
+				<property name="multipart/parallel" value="generic" />
+				<property name="multipart/related" value="generic" />
+				<property name="multipart/report" value="generic" />
+				<property name="multipart/signed" value="generic" />
+				<property name="multipart/voice-message" value="generic" />
+				<property name="txt/calendar" value="generic" />
+				<property name="txt/css" value="txt" />
+				<property name="txt/directory" value="generic" />
+				<property name="txt/enriched" value="generic" />
+				<property name="txt/html" value="html" />
+				<property name="txt/parityfec" value="generic" />
+				<property name="txt/plain" value="txt" />
+				<property name="txt/prs.lines.tag" value="generic" />
+				<property name="txt/rfc822-headers" value="generic" />
+				<property name="txt/richtxt" value="generic" />
+				<property name="txt/rtf" value="rtf" />
+				<property name="txt/sgml" value="generic" />
+				<property name="txt/tab-separated-values" value="txt" />
+				<property name="txt/t140" value="generic" />
+				<property name="txt/uri-list" value="generic" />
+				<property name="txt/vnd.DMClientScript" value="generic" />
+				<property name="txt/vnd.IPTC.NITF" value="generic" />
+				<property name="txt/vnd.IPTC.NewsML" value="generic" />
+				<property name="txt/vnd.abc" value="generic" />
+				<property name="txt/vnd.curl" value="generic" />
+				<property name="txt/vnd.flatland.3dml" value="generic" />
+				<property name="txt/vnd.fly" value="generic" />
+				<property name="txt/vnd.fmi.flexstor" value="generic" />
+				<property name="txt/vnd.in3d.3dml" value="generic" />
+				<property name="txt/vnd.in3d.spot" value="generic" />
+				<property name="txt/vnd.latex-z" value="generic" />
+				<property name="txt/vnd.motorola.reflex" value="generic" />
+				<property name="txt/vnd.ms-mediapackage" value="generic" />
+				<property name="txt/vnd.wap.si" value="generic" />
+				<property name="txt/vnd.wap.sl" value="generic" />
+				<property name="txt/vnd.wap.wml" value="generic" />
+				<property name="txt/vnd.wap.wmlscript" value="generic" />
+				<property name="txt/x-setxt" value="txt" />
+				<property name="txt/xml" value="xml" />
+				<property name="txt/xml-external-parsed-entity" value="generic" />
+				<property name="video/mp4v-es" value="generic" />
+				<property name="video/mpeg" value="mpeg" />
+				<property name="video/parityfec" value="generic" />
+				<property name="video/pointer" value="generic" />
+				<property name="video/quicktime" value="generic" />
+				<property name="video/vnd.fvt" value="generic" />
+				<property name="video/vnd.motorola.video" value="generic" />
+				<property name="video/vnd.motorola.videop" value="generic" />
+				<property name="video/vnd.mpegurl" value="generic" />
+				<property name="video/vnd.mts" value="generic" />
+				<property name="video/vnd.nokia.interleaved-multimedia" value="generic" />
+				<property name="video/vnd.vivo" value="generic" />
+				<property name="video/x-msvideo" value="avi" />
+				<property name="video/x-sgi-movie" value="movie" />
+				<property name="x-conference/x-cooltalk" value="generic" />
+				<property name="application/vnd.oasis.opendocument.text" value="oof" />
+				<property name="application/vnd.oasis.opendocument.text" value="oof" />
+				<property name="application/vnd.oasis.opendocument.text-template ott" value="oof" />
+				<property name="application/vnd.oasis.opendocument.text-web oth" value="oof" />
+				<property name="application/vnd.oasis.opendocument.text-master odm" value="oof" />
+				<property name="application/vnd.oasis.opendocument.txt" value="oof" />
+				<property name="application/vnd.oasis.opendocument.txt" value="oof" />
+				<property name="application/vnd.oasis.opendocument.txt-template ott" value="oof" />
+				<property name="application/vnd.oasis.opendocument.txt-web oth" value="oof" />
+				<property name="application/vnd.oasis.opendocument.txt-master odm" value="oof" />
+				<property name="application/vnd.oasis.opendocument.graphics odg" value="oof" />
+				<property name="application/vnd.oasis.opendocument.graphics-template otg" value="oof" />
+				<property name="application/vnd.oasis.opendocument.presentation odp" value="oof" />
+				<property name="application/vnd.oasis.opendocument.presentation-template otp" value="oof" />
+				<property name="application/vnd.oasis.opendocument.spreadsheet ods" value="oof" />
+				<property name="application/vnd.oasis.opendocument.spreadsheet-template ots" value="oof" />
+				<property name="application/vnd.oasis.opendocument.chart odc" value="oof" />
+				<property name="application/vnd.oasis.opendocument.formula odf" value="oof" />
+				<property name="application/vnd.oasis.opendocument.image odi" value="oof" />
+				<property name="application/vnd.sun.xml.writer" value="oof" />
+				<property name="application/vnd.sun.xml.writer sxw" value="oof" />
+				<property name="application/vnd.sun.xml.writer.template stw" value="oof" />
+				<property name="application/vnd.sun.xml.writer.global sxg" value="oof" />
+				<property name="application/vnd.stardivision.writer sdw vor" value="oof" />
+				<property name="application/vnd.stardivision.writer-global sgl" value="oof" />
+				<property name="application/vnd.sun.xml.calc sxc" value="oof" />
+				<property name="application/vnd.sun.xml.calc.template stc" value="oof" />
+				<property name="application/vnd.stardivision.calc sdc" value="oof" />
+				<property name="application/vnd.stardivision.chart sds" value="oof" />
+				<property name="application/vnd.sun.xml.impress sxi" value="oof" />
+				<property name="application/vnd.sun.xml.impress.template sti" value="oof" />
+				<property name="application/vnd.stardivision.impress sdd sdp" value="oof" />
+				<property name="application/vnd.sun.xml.draw sxd" value="oof" />
+				<property name="application/vnd.sun.xml.draw.template std" value="oof" />
+				<property name="application/vnd.stardivision.draw sda" value="oof" />
+				<property name="application/vnd.sun.xml.math sxm" value="oof" />
+				<property name="application/vnd.stardivision.math smf" value="oof" />
+				<property name="application/vnd.sun.xml.base odb" value="oof" />				
+			</configuration>
+		</attribute>
+	</mbean>
+	
 	<mbean code="com.duroty.jmx.mbean.MailConfig" name="duroty.com:service=DurotyMailConfig">
 		<depends>duroty.com:service=DurotyApplicationConstants</depends>
 		<depends>duroty.com:service=DurotyMailFactory</depends>
@@ -163,6 +753,7 @@
 				<property name="folderBlog" value="BLOG" />
 				<property name="folderHidden" value="HIDDEN" />
 				<property name="folderChat" value="CHAT" />
+				<property name="folderFiles" value="FILES" />
 
 				<!-- The lucene analyzer for the email messages -->
 				<property name="luceneAnalyzer" value="com.duroty.lucene.analysis.AnalyzerISOLatin1" />
@@ -355,7 +946,21 @@
 		<attribute name="StartAtStartup">true</attribute>
 		<attribute name="SchedulableClass">com.duroty.task.ChatTask</attribute>
 		<attribute name="InitialStartDate">77000</attribute>
-		<attribute name="SchedulePeriod">300000</attribute>
+		<attribute name="SchedulePeriod">20000</attribute>
+		<attribute name="InitialRepetitions">-1</attribute>
+	</mbean>
+	
+	<mbean code="org.jboss.varia.scheduler.Scheduler" name="duroty.com:service=DurotyChatConversationsTask">
+		<depends>jboss.system:type=Log4jService,service=Logging</depends>
+		<depends>jboss.har:service=DurotyHibernate</depends>
+		<depends>duroty.com:service=DurotyChatConfig</depends>
+
+		<attribute name="SchedulableArguments"></attribute>
+		<attribute name="SchedulableArgumentTypes"></attribute>
+		<attribute name="StartAtStartup">true</attribute>
+		<attribute name="SchedulableClass">com.duroty.task.ChatConversationsTask</attribute>
+		<attribute name="InitialStartDate">88000</attribute>
+		<attribute name="SchedulePeriod">20000</attribute>
 		<attribute name="InitialRepetitions">-1</attribute>
 	</mbean>
 </server>
