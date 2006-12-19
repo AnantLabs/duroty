@@ -225,12 +225,26 @@
 			<forward name="failure" path="/mail/flag.jsp" />
 		</action>
 		
+		<action path="/mail/flagMessage"
+			type="com.duroty.application.mail.actions.FlagMessageAction" scope="request"
+			validate="false">
+			<forward name="success" path="/mail/empty.jsp" />
+			<forward name="failure" path="/mail/empty.jsp" />
+		</action>
+		
 		<action path="/mail/delete"
 			type="com.duroty.application.mail.actions.DeleteAction" scope="request"
 			validate="false"
 			name="messagesForm">
 			<forward name="success" path="/mail/delete.jsp" />
 			<forward name="failure" path="/mail/delete.jsp" />
+		</action>
+		
+		<action path="/mail/deleteMessage"
+			type="com.duroty.application.mail.actions.DeleteMessageAction" scope="request"
+			validate="false">
+			<forward name="success" path="/mail/empty.jsp" />
+			<forward name="failure" path="/mail/empty.jsp" />
 		</action>
 		
 		<action path="/mail/deleteAll"

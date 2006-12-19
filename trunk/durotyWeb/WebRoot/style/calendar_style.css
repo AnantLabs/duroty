@@ -1,3 +1,14 @@
+/* hide a block */
+.hide {
+	display: none;
+	visibility: hidden;
+}
+
+/* show a block */
+.show { /*display: inline;*/
+	visibility: visible;
+}
+
 html,body {
 	margin: 0px;
 	width: 100%;
@@ -43,13 +54,13 @@ html,body {
 }
 
 #footer {
-	height: 20px;
+	height: 25px;
 	background-color: #fff;
-	text-align: center
+	text-align: center;
 }
 
 #content div#left {
-	width: 225px;
+	width: 200px;
 	float: left;
 	background-color: #fff;
 	padding-top: 50px;
@@ -57,7 +68,7 @@ html,body {
 }
 
 #content div#right {
-	margin:0 5px 0 230px;	
+	margin:0 5px 0 205px;	
 }
 
 BUTTON {
@@ -83,7 +94,7 @@ BUTTON {
 }
 
 h1,h2,h3,h4,h5,h6,pre,code,p {font-size: 1em;}
-dl,li,dt,dd,h1,h2,h3,h4,h5,h6,pre,form,body,html,p,blockquote,fieldset,input {margin: 0; padding: 0;}
+dl,li,dt,dd,h1,h2,h3,h4,h5,h6,pre,form,body,html,p,blockquote,fieldset {margin: 0; padding: 0;}
 a img,:link img,:visited img {border: none;}
 address {font-style: normal;}
 
@@ -231,6 +242,7 @@ td.ctopcolleft {
 	width: 7%;
 	font-size: 12px;
 	background: #c3d9ff;
+	border: 2px solid #c3d9ff;
 }
 
 td.ctopcol {
@@ -246,6 +258,9 @@ td.ctopcol2 {
 	font-size: 12px;
 	border: 1px solid #fff;
 	background-color: #e8eef7;
+	vertical-align: top;
+	padding-bottom: 15px;
+	empty-cells: show;
 }
 
 td.ccolleft {
@@ -253,4 +268,36 @@ td.ccolleft {
 	height:50px;
 	width: 7%;
 	font-size: 12px;
+	background: #e8eef7;
+	vertical-align: top;
+	padding-right: 3px;
+	text-align: right;
+}
+
+td.ccol {
+	width: 13%;
+	font-size: 12px;
+	border: 1px solid #c3d9ff;
+	height:50px;
+	cursor: pointer;
+}
+
+div.elementAllDay {
+	font-size: 11px;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	background-color: maroon;
+	color: #fff;
+	border: 1px solid #fff;
+	white-space: nowrap;
+}
+
+div.elementHour {
+	font-size: 11px;
+	overflow: hidden;
+	text-overflow:ellipsis;
+	background-color: maroon;
+	color: #fff;
+	border: 1px solid #fff;
+	white-space: nowrap;
 }

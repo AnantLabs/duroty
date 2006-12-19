@@ -39,8 +39,8 @@ String path = request.getContextPath();
 		<script type="text/javascript" src="<%=basePath%>javascript/jscalendar/calendar.js"></script>
 		<script type="text/javascript" src="<%=basePath%>javascript/jscalendar/lang/calendar-<c:out value='${sessionScope["org.apache.struts.action.LOCALE"]}' />.js"></script>
 		<script type="text/javascript" src="<%=basePath%>javascript/jscalendar/calendar-setup.js"></script>
-		
-		<script type="text/javascript" src="<%=basePath%>calendar/javascript/calendar.js"></script>		
+		<script type="text/javascript" src="<%=basePath%>javascript/nifty/nifty.js"></script>
+		<script type="text/javascript" src="<%=basePath%>calendar/javascript/calendar.js"></script>				
 				
 		<link href="<%=basePath%>style/calendar_style.css" rel="stylesheet" type="text/css" />
 	</head>

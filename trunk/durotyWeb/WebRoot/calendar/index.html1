@@ -1,0 +1,92 @@
+<html>
+<head>
+<script>
+Page = {};
+
+Page.resize = function()
+{
+	var header = document.getElementById('header');
+	var footer = document.getElementById('footer');
+	var content = document.getElementById('content');
+	var left = document.getElementById('left');
+	var right = document.getElementById('right');
+	
+	var contentHeight = document.body.offsetHeight - (header.offsetHeight + footer.offsetHeight + 5) +"px";
+	content.style.height = contentHeight;
+	left.style.height = contentHeight;
+	right.style.height = contentHeight;
+}
+
+onload = onresize = Page.resize;
+</script>
+<style>
+html, body
+{
+	margin: 0px;
+	width: 100%;
+	height: 100%;
+}
+#header
+{
+	height: 20%;
+	background-color: #333;
+	color: #fff;
+}
+#content
+{
+	height: 70%;
+}
+
+#content div#left
+{
+	width: 20%;
+	height: 100%;
+	float: left;
+	background-color: #eaeaea;
+}
+
+#content div#right
+{
+	width: 79%;
+	height: 100%;
+	float: right;
+}
+#footer
+{
+	height: 10%;
+	background-color: #ccc;
+}
+html, body
+{
+	margin: 0px;
+	height: 100%;
+}
+#header
+{
+	height: 100px;
+	background-color: #333;
+	color: #fff;
+}
+#content div#left
+{
+	width: 150px;
+	float: left;
+	background-color: #eaeaea;
+}
+
+#content div#right
+{
+	float: left;
+}
+</style>
+</head>
+<body>
+	<div id="header">Header</div>
+	<div id="content">
+		<div id="left">Content Left</div>
+
+		<div id="right">Content Right</div>
+	</div>
+	<div id="footer">Footer</div>
+</body>
+</html>

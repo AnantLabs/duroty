@@ -17,7 +17,7 @@ String.prototype.isAlphaNumeric = function () {
 var useBlinker = true;           // Show new message in titlebar when window isn't active.
 var blinkSpeed = 1000;           // How fast to change between the titles when "blinking" (in milliseconds).
 var pulsateTitles = true;           // Pulsate (blink) IM window titles on new IM when they are not the active window.
-var idle_time = 10000;
+var idle_time = 15000;
 // Server //
 var pingFrequency = 2500;           // How often to ping the server (in milliseconds). Best range between 2500 and 3500 ms.
 var pingTo = "chat/index.drt";  // The file that is the "server".
@@ -60,7 +60,7 @@ function Chat () {
 	this.durotyLogin = function(aux) {
 		clearTimeout(self.pingTimer);
 		clearTimeout(self.idleTimer);
-	    this.pingTimer = setInterval("Chat.ping()", pingFrequency);
+	    self.pingTimer = setInterval("Chat.ping()", pingFrequency);
 	    
 	    if (aux) {
 		    Dialog.closeInfo();
@@ -79,9 +79,9 @@ function Chat () {
 	    ajaxSack.requestFile = url;
 		ajaxSack.runAJAX();
 		
-		this.durotyLogin();
+		self.durotyLogin();
 	    
-	    this.control_logout = false;
+	    self.control_logout = false;
 	    showOfflineBuddies = true;
 	};
 	
@@ -99,7 +99,7 @@ function Chat () {
 	        }
 	    }
 	    showOfflineBuddies = false;
-	    this.control_logout = true;
+	    self.control_logout = true;
 	};
 	
 	this.signin = function() {
@@ -108,7 +108,7 @@ function Chat () {
 	    ajaxSack.requestFile = url;
 		ajaxSack.runAJAX();
 		
-	    this.control_logout = false;
+	    self.control_logout = false;
 	    showOfflineBuddies = true;
 	};
 	
@@ -122,13 +122,18 @@ function Chat () {
 	    clearTimeout(self.idleTimer);
 	    
 	    $("dbuddy").innerHTML = "";
-	    this.control_logout = true;
+	    self.control_logout = true;
 	    showOfflineBuddies = false;
 	};
 	
 	this.setState = function(state, away_msg) {
 		var ajaxSack = new sack();
-	    var url = pingTo + "?call=state&state=" + state + "&awayMessage=" + encodeURIComponent(away_msg);
+	    //var url = pingTo + "?call=state&state=" + state + "&awayMessage=" + encodeURIComponent(away_msg);
+	    var url = pingTo;
+	    ajaxSack.setVar("call", "state");
+	    ajaxSack.setVar("state", state);
+	    ajaxSack.setVar("awayMessage", away_msg);
+	    
 	    ajaxSack.requestFile = url;
 		ajaxSack.runAJAX();
 	};
@@ -140,7 +145,7 @@ function Chat () {
 	    ajaxSack.onCompletion = function () {	      	        
 	        var i;
 	        if (ajaxSack.response == "not_logged_in") {
-	        	this.lastState = false;
+	        	self.lastState = false;
 	            $("curStatus").innerHTML = $("state6").innerHTML;
 	            return;
 	        }
@@ -148,7 +153,7 @@ function Chat () {
 	        var response = ajaxSack.response.parseJSON();	        
 	        var lastState = response.lastState;
 	        var state = response.state;
-	        this.lastState = state;
+	        self.lastState = state;
 	        var awayMessage = response.awayMessage;
 	        
 	        if (state == 1 && lastState == 1 && titlebarBlinker == true) {
@@ -176,14 +181,14 @@ function Chat () {
 					}
 				} else if (state == 2) {
 					//away
-					if ($("curStatus").innerHTML != ('<img src="images/user_busy.gif" border="0" />&nbsp;' + awayMessage)) {
-				        $("curStatus").innerHTML = '<img src="images/user_busy.gif" border="0" />&nbsp;' + awayMessage;
-					}					
+					if ($("curStatus").innerHTML != ('<img src="images/user_busy.gif" border="0">&nbsp;' + awayMessage)) {
+				        $("curStatus").innerHTML = '<img src="images/user_busy.gif" border="0">&nbsp;' + awayMessage;
+					}	
 				} else if (state == 3) {
 					//idle
-					if ($("curStatus").innerHTML != ('<img src="images/user_idle.gif" border="0" />' + $("state7").innerHTML)) {
-				        $("curStatus").innerHTML = '<img src="images/user_idle.gif" border="0" />' + $("state7").innerHTML;
-					}			        
+					if ($("curStatus").innerHTML != ('<img src="images/user_idle.gif" border="0">' + $("state7").innerHTML)) {
+				        $("curStatus").innerHTML = '<img src="images/user_idle.gif" border="0">' + $("state7").innerHTML;
+					}
 				} else {
 					//login
 			        if ($("curStatus").innerHTML != $("state1").innerHTML) {
@@ -352,7 +357,7 @@ function Chat () {
 	this.keyHandler = function(e, name) {
 	    var asc = document.all ? event.keyCode : e.which;
 	    if (asc == 13) {
-	        this.sendMessage(name);
+	        self.sendMessage(name);
 	    }
 	    return asc != 13;
 	};
@@ -376,7 +381,7 @@ function Chat () {
 	this.onBuddyDblClick = function() {
 	    if (curSelected.length > 0) {
 	        if (!$(curSelected + "_im")) {
-	            this.createIMWindow(curSelected, curSelected);	            
+	            self.createIMWindow(curSelected, curSelected);	            
 	        } else {
 	            if (!IMWindows[curSelected].isVisible()) {
 	                IMWindows[curSelected].show();
@@ -498,36 +503,34 @@ function Chat () {
 	    if (titlebarBlinker == false) {    
 	    	setTimeout("Chat.parseSignin()", 100);
 	    } else {
-	    	setTimeout("Chat.parseIdle()", 100);
+	    	setTimeout("Chat.parseIdle()", idle_time);
 		}
 	};
 	
 	this.parseSignin = function() {	
 		clearTimeout(self.pingTimer);
        	clearTimeout(self.idleTimer);
-       	
-       	self.pingTimer = null;
-       	self.idleTimer = null;
 	
 		self.idleTimer = setTimeout("Chat.signin()", 100);
 	    self.pingTimer = setInterval("Chat.ping()", pingFrequency);
 	};
 	
 	this.parseIdle = function() {	
-		clearTimeout(self.pingTimer);
-       	clearTimeout(self.idleTimer);
-       	
-       	self.pingTimer = null;
-       	self.idleTimer = null;
+		if (titlebarBlinker == true) {
+			clearTimeout(self.pingTimer);
+    	   	clearTimeout(self.idleTimer);
 	
-		self.idleTimer = setTimeout("Chat.setStatus(3, null, 7)", 100);
-    	self.pingTimer = setInterval("Chat.ping()", pingFrequency);
+			self.idleTimer = setTimeout("Chat.setStatus(3, null, 7)", 100);
+    		self.pingTimer = setInterval("Chat.ping()", pingFrequency);
+    	} else {
+    		self.setIdle();
+    	}
 	};
 	
 	this.titlebarBlink = function(name, message, alter) {		
 	    if (titlebarBlinker == false) {	    	
 	        parent.frames.document.title = defaultTitle;
-	        this.ring = 0;	        
+	        self.ring = 0;	        
 	        return;
 	    }
 	    
@@ -547,8 +550,8 @@ function Chat () {
 	    }
 	    
 	    //Call ring flash
-	    if (this.ring == 0) {
-	    	this.ring++;
+	    if (self.ring == 0) {
+	    	self.ring++;
 		    setTimeout("Flash_embedSWF('bicycle_bell.swf', false)", 1000);
 		    setTimeout("Flash_embedSWF('bicycle_bell.swf', false)", 3000);		    
 		} else {

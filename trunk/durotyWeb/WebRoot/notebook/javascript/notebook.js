@@ -110,7 +110,7 @@ function Notebook() {
     	ajaxContents.setVar("order", order);
     	ajaxContents.setVar("extra", desc);
     	
-    	ajaxContents.selectContents("notebook/search.drt", false, "results");
+    	ajaxContents.selectContents("notebook/search.drt", false, "results", null, null, true);
     	this.parseRight(null, 0);
     };    
     
@@ -127,7 +127,7 @@ function Notebook() {
     	ajaxContents.setVar("order", order);
     	ajaxContents.setVar("extra", desc);
     	
-    	ajaxContents.selectContents("notebook/search.drt", false, "results");
+    	ajaxContents.selectContents("notebook/search.drt", false, "results", null, null, true);
     	this.parseRight(action, 0);
     };    
     
@@ -173,7 +173,7 @@ function Notebook() {
 		}
     
 	    ajaxContents = new AjaxContents();
-    	ajaxContents.selectContents("notebook/properties.drt?mid=" + mid, false, "msgProperties");
+    	ajaxContents.selectContents("notebook/properties.drt?mid=" + mid, false, "msgProperties", null, null, true);
     };
     
     this.flag = function(action) {

@@ -976,6 +976,32 @@ function Mail() {
     	document.messagesForm.submit();
     };
     
+    this.flagMes = function(flag, idints) {
+    	var self = this;    
+    	var ajax = new sack();    	
+    	ajax.setVar("flag", flag);
+    	ajax.setVar("idints", idints);
+    	showLoading();    	
+    	ajax.requestFile = "mail/flagMessage.drt";
+        ajax.onCompletion = function () {
+            setTimeout("handleHistoryChange(dhtmlHistory.getCurrentLocation(), null)", 500);
+        };        
+        ajax.runAJAX();
+    };
+    
+    this.deleteMes = function(folder, idints) {
+    	var self = this;    
+    	var ajax = new sack();
+    	ajax.setVar("folder", folder);
+    	ajax.setVar("idints", idints);
+    	showLoading();    	
+    	ajax.requestFile = "mail/deleteMessage.drt";
+        ajax.onCompletion = function () {
+            setTimeout("handleHistoryChange(dhtmlHistory.getCurrentLocation(), null)", 500);
+        };        
+        ajax.runAJAX();
+    };
+    
     this.selectAll = function() {
     	if (document.messagesForm.mid.length == null) {
 			document.messagesForm.mid.checked = this.selectedAll;
