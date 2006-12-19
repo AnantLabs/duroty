@@ -7,44 +7,45 @@ Page.resize = function()
 	var header = document.getElementById('header');
 	var footer = document.getElementById('footer');
 	var content = document.getElementById('content');
-	var merda = document.getElementById('merda');
-	var merda2 = document.getElementById('merda2');
+	var contentsMesh = document.getElementById('contentsMesh');
+	var borderHead = document.getElementById("borderHead");
+	var contentsHead = document.getElementById('contentsHead');
+	var borderFoot = document.getElementById("borderFoot");	
+	var contentsBody = document.getElementById('contentsBody');
 	var left = document.getElementById('left');
 	var right = document.getElementById('right');
+			
+	var contentsHeadHeight = contentsHead.offsetHeight;
+	var borderHeadHeight = borderHead.offsetHeight;
+	var borderFootHeight = borderFoot.offsetHeight;
 	
-	var contentHeight = document.body.offsetHeight - (header.offsetHeight + footer.offsetHeight + 6) +"px";
-	var merdaHeight = document.body.offsetHeight - (header.offsetHeight + footer.offsetHeight + 55) +"px";
-	var merda2Height = document.body.offsetHeight - (header.offsetHeight + footer.offsetHeight + 55) +"px";
+	//alert(borderHeadHeight);
+	//alert(contentsHeadHeight);
+	//alert(borderFootHeight);
+	
+	var contentHeight = document.body.offsetHeight - (header.offsetHeight + footer.offsetHeight + 0) + "px";
+	var contentsMeshHeight = document.body.offsetHeight - (header.offsetHeight + footer.offsetHeight + borderHeadHeight + borderFootHeight + 0) +"px";	
+	var contentsBodyHeight = document.body.offsetHeight - (header.offsetHeight + footer.offsetHeight + borderHeadHeight + borderFootHeight + contentsHeadHeight + 0) +"px";
 	content.style.height = contentHeight;
-	merda.style.height = merdaHeight;
-	merda2.style.height = merda2Height;
-	left.style.height = contentHeight;
+	contentsMesh.style.height = contentsMeshHeight;
+	contentsBody.style.height = contentsBodyHeight;
+	
+	left.style.height = document.body.offsetHeight - (header.offsetHeight + footer.offsetHeight + 50) + "px";
 	right.style.height = contentHeight;
-}
+};
 
 window.onload = initialize;
 window.onresize = Page.resize;
 
 /** Our function that initializes when the page is finished loading. */
 function initialize() {
-	var header = document.getElementById('header');
-	var footer = document.getElementById('footer');
-	var content = document.getElementById('content');
-	var merda = document.getElementById('merda');
-	var merda2 = document.getElementById('merda2');
-	var left = document.getElementById('left');
-	var right = document.getElementById('right');
-	
-	var contentHeight = document.body.offsetHeight - (header.offsetHeight + footer.offsetHeight + 6) +"px";
-	var merdaHeight = document.body.offsetHeight - (header.offsetHeight + footer.offsetHeight + 55) +"px";
-	var merda2Height = document.body.offsetHeight - (header.offsetHeight + footer.offsetHeight + 55) +"px";
-	content.style.height = contentHeight;
-	merda.style.height = merdaHeight;
-	merda2.style.height = merda2Height;
-	left.style.height = contentHeight;
-	right.style.height = contentHeight;
+	Page.resize();
 	
 	createCalendar();
+	
+	RoundedTop("div#day","#fff","#e8eef7");
+	RoundedTop("div#week","#fff","#e8eef7");
+	RoundedTop("div#month","#fff","#e8eef7");
 }
 
 function createCalendar(_change) {
@@ -75,4 +76,17 @@ function dateChanged(calendar) {
 		dcalendarLastDate = new Date(calendar.date.getTime());*/
 		alert(new Date(calendar.date.getTime()));
     }
+}
+
+function getTopPos(inputObj) {
+    var returnValue = inputObj.offsetTop;
+    while ((inputObj = inputObj.offsetParent) != null) {
+        if (inputObj.tagName != "HTML") {
+            returnValue += inputObj.offsetTop;
+        }
+    }
+    return returnValue;
+}
+
+function addEvent() {
 }

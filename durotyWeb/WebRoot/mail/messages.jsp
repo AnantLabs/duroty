@@ -44,7 +44,7 @@ String path = request.getContextPath();
 			<td width="100%" class="title<c:out value="${clazz}" />">
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					<tr>
-						<td width="75%" align="left" style="padding-top: 0px;" nowrap="nowrap">
+						<td width="75%" align="left" style="padding-top: 0px;">
 							<c:choose>
 								<c:when test="${param.folder == 'SPAM'}">
 									<div>
@@ -189,7 +189,7 @@ String path = request.getContextPath();
 				</table>
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					<tr>
-						<td width="75%" align="left" style="padding-top: 4px; padding-bottom: 4px;" nowrap="nowrap">
+						<td width="75%" align="left" style="padding-top: 4px; padding-bottom: 4px;">
 							<fmt:message key="general.select" />:&nbsp;<span class="link" onclick="javascript:Mail.selectAll();"><fmt:message key="mail.selectAll" /></span>, <span class="link" onclick="javascript:Mail.selectRead();"><fmt:message key="mail.selectRead" /></span>, <span class="link" onclick="javascript:Mail.selectUnread();"><fmt:message key="mail.selectUnread" /></span>, <span class="link" onclick="javascript:Mail.markSelection();"><fmt:message key="mail.selectMark" /></span>, <span class="link" onclick="javascript:Mail.flagImportant('<%=basePath%>mail/flag.drt');"><fmt:message key="mail.flagged" /></span>, <span class="link" onclick="javascript:Mail.flagUnread('<%=basePath%>mail/flag.drt');"><fmt:message key="mail.recent" /></span>
 						</td>
 						<td width="25%" align="right" style="padding-right: 8px;">
@@ -262,19 +262,19 @@ String path = request.getContextPath();
 										<td nowrap="nowrap" style="font-weight: <c:out value="${fontWeight}" />; border-bottom: 1px solid rgb(187, 187, 187);">
 											<c:choose>
 												<c:when test="${message.box == 'TRASH'}">
-													<img src="<%=basePath%>images/trash.gif" alt="<fmt:message key='mail.button.deleteForever' />" title="<fmt:message key='mail.button.deleteForever' />" border="0" onclick="javascript:document.getElementById('<c:out value="${message.mid}" />').checked=true;Mail.deleteMessages('<%=basePath%>mail/delete.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />');" />
+													<img src="<%=basePath%>images/trash.gif" alt="<fmt:message key='mail.button.deleteForever' />" title="<fmt:message key='mail.button.deleteForever' />" border="0" onclick="Mail.deleteMes('<c:out value="${param.folder}" />', '<c:out value="${message.mid}" />');" />
 												</c:when>
 												<c:when test="${message.box == 'SPAM'}">
-													<img src="<%=basePath%>images/trash.gif" alt="<fmt:message key='mail.button.deleteForever' />" title="<fmt:message key='mail.button.deleteForever' />" border="0" onclick="javascript:document.getElementById('<c:out value="${message.mid}" />').checked=true;Mail.deleteMessages('<%=basePath%>mail/delete.drt', '<c:out value="${action}" />:<c:out value="${param.folder}" />');" />
+													<img src="<%=basePath%>images/trash.gif" alt="<fmt:message key='mail.button.deleteForever' />" title="<fmt:message key='mail.button.deleteForever' />" border="0" onclick="Mail.deleteMes('<c:out value="${param.folder}" />', '<c:out value="${message.mid}" />');" />
 												</c:when>
 												<c:when test="${message.flagged}">
-													<img src="<%=basePath%>images/star_on_2.gif" alt="<fmt:message key="mail.flagged" />" title="<fmt:message key="mail.flagged" />" border="0" onclick="javascript:document.getElementById('<c:out value="${message.mid}" />').checked=true;Mail.flagImportant('<%=basePath%>mail/flag.drt');" />
+													<img src="<%=basePath%>images/star_on_2.gif" alt="<fmt:message key="mail.flagged" />" title="<fmt:message key="mail.flagged" />" border="0" onclick="Mail.flagMes('FLAGGED', '<c:out value="${message.mid}" />');" />
 												</c:when>
 												<c:when test="${message.recent}">
-													<img src="<%=basePath%>images/star_off_2.gif" alt="<fmt:message key="mail.flagged" />" title="<fmt:message key="mail.flagged" />" border="0" onclick="javascript:document.getElementById('<c:out value="${message.mid}" />').checked=true;Mail.flagImportant('<%=basePath%>mail/flag.drt');" />
+													<img src="<%=basePath%>images/star_off_2.gif" alt="<fmt:message key="mail.flagged" />" title="<fmt:message key="mail.flagged" />" border="0" onclick="Mail.flagMes('FLAGGED', '<c:out value="${message.mid}" />');" />
 												</c:when>
 												<c:otherwise>
-													<img src="<%=basePath%>images/star_off_2.gif" alt="<fmt:message key="mail.flagged" />" title="<fmt:message key="mail.flagged" />" border="0" onclick="javascript:document.getElementById('<c:out value="${message.mid}" />').checked=true;Mail.flagImportant('<%=basePath%>mail/flag.drt');" />
+													<img src="<%=basePath%>images/star_off_2.gif" alt="<fmt:message key="mail.flagged" />" title="<fmt:message key="mail.flagged" />" border="0" onclick="Mail.flagMes('FLAGGED', '<c:out value="${message.mid}" />');" />
 												</c:otherwise>
 											</c:choose>										
 										</td>
@@ -356,7 +356,7 @@ String path = request.getContextPath();
 			<td width="100%" class="title<c:out value="${clazz}" />">
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					<tr>
-						<td width="75%" align="left" style="padding-top: 4px; padding-bottom: 4px;" nowrap="nowrap">
+						<td width="75%" align="left" style="padding-top: 4px; padding-bottom: 4px;">
 							<fmt:message key="general.select" />&nbsp;<span class="link" onclick="javascript:Mail.selectAll();"><fmt:message key="mail.selectAll" /></span>, <span class="link" onclick="javascript:Mail.selectRead();"><fmt:message key="mail.selectRead" /></span>, <span class="link" onclick="javascript:Mail.selectUnread();"><fmt:message key="mail.selectUnread" /></span>, <span class="link" onclick="javascript:Mail.markSelection();"><fmt:message key="mail.selectMark" /></span>, <span class="link" onclick="javascript:Mail.flagImportant('<%=basePath%>mail/flag.drt');"><fmt:message key="mail.flagged" /></span>, <span class="link" onclick="javascript:Mail.flagUnread('<%=basePath%>mail/flag.drt');"><fmt:message key="mail.recent" /></span>
 						</td>
 						<td width="25%" align="right" style="padding-right: 8px;">
@@ -366,7 +366,7 @@ String path = request.getContextPath();
 				</table>
 				<table width="100%" border="0" cellspacing="0" cellpadding="0">
 					<tr>
-						<td width="75%" align="left" style="padding-top: 5px;" nowrap="nowrap">
+						<td width="75%" align="left" style="padding-top: 5px;">
 							<c:choose>
 								<c:when test="${param.folder == 'SPAM'}">
 									<div>
