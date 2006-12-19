@@ -269,6 +269,10 @@ public class AttachmentObj implements Serializable {
      */
     public void setName(String name) {
     	if (!StringUtils.isBlank(name)) {
+    		name = name.replaceAll("\\?", "");
+    		name = name.replaceAll("&", "");
+    		name = name.replaceAll("=", "");
+    		
     		int idx1 = name.lastIndexOf('/');
     		if (idx1 > -1) {
     			name = name.substring(idx1 + 1, name.length());
