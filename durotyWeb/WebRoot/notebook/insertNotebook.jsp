@@ -25,7 +25,7 @@
 		<SCRIPT LANGUAGE="JavaScript">
 			if (window == top) {
 				alert('It is not allowed to see the frame individually');
-				top.location.href = "<%=basePath%>bookmark/";
+				top.location.href = "<%=basePath%>notebook/";
 			}
 		</SCRIPT>
 		<c:choose>
