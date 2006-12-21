@@ -102,13 +102,13 @@ String path = request.getContextPath();
 		</table>
 	</c:otherwise>
 </c:choose>
-<form action="" method="post" onsubmit="document.getElementById('token').value=this.token.value;Bookmark.displayLocation('search:0*0!0', null);return false;" name="form2" enctype="multipart/form-data">
+<form action="" method="post" onsubmit="document.getElementById('token').value=this.token.value;Notebook.displayLocation('search:0*0!0', null);return false;" name="form2" enctype="multipart/form-data">
 	<table style="border-top: 1px solid #800000; background-color: #d7c5bf; padding-top: 10px; padding-bottom: 10px;" border="0" cellpadding="2" width="100%">
 		<tbody>
 			<tr>
 				<td style="font-size: 13px; text-align: center; color: black;" width="100%">
 					<c:out value="${pagination}" escapeXml="No"/>&nbsp;&nbsp;
-					<input type="text" size="25" name="token" class="BUTTON" value="<c:out value="${param.token}" />"/>&nbsp;<input type="button" name="btnSearch" class="BUTTON" value="<fmt:message key="general.search" />" onclick="document.getElementById('token').value=this.form.token.value;Bookmark.displayLocation('search:0*0!0', null);" />
+					<input type="text" size="25" name="token" class="BUTTON" value="<c:out value="${param.token}" />"/>&nbsp;<input type="button" name="btnSearch" class="BUTTON" value="<fmt:message key="general.search" />" onclick="document.getElementById('token').value=this.form.token.value;Notebook.displayLocation('search:0*0!0', null);" />
 				</td>					
 			</tr>
 		</tbody>
